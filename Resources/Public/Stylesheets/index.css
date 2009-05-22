@@ -1,0 +1,41 @@
+body {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 13px;
+} 
+
+.tx_addresses_pi1_index ul {
+    list-style-type: none;
+    display: inline;
+    margin: 0;
+    padding: 0;
+} 
+
+.tx_addresses_pi1_index h3 {
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding: 0;
+    font-size: 110%;
+} 
+
+.tx_addresses_pi1_index a {
+    color: #006F24;
+    text-decoration: none;
+} 
+
+.tx_addresses_pi1_index a:hover {
+    color: #EF8100;
+} 
+
+.tx_addresses_pi1_index p {
+    margin-top: 3px;
+}
+
+.tx_addresses_pi1_index .previous {
+	padding-right:30px;
+	color:#666;
+}
+
+.tx_addresses_pi1_index .next {
+	padding-left:30px;
+	color:#666;
+}

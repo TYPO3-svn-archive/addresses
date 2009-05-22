@@ -1,0 +1,35 @@
+{namespace addr=Tx_Addresses_ViewHelpers}
+
+<div class="tx_addresses_pi1_show">
+	<h3> 
+		<f:translate key="{address.gender}">Mr./Mrs.</f:translate>
+		{address.title} 
+		{address.firstname} 
+		{address.lastname}
+	</h3>
+	<f:image src="uploads/pics/{address.image}" alt="{address.name}" maxWidth="140" />
+	<address>
+		<f:format.Nl2br>{address.address}</f:format.Nl2br><br />
+					{address.zip} {address.city} <br />
+					{address.country}
+	</address>
+	<p>
+		<addr:brIfSet key="{address.phone}"><f:translate key="phone">Phone:</f:translate> {address.phone}</addr:brIfSet>
+		<addr:brIfSet key="{address.mobile}"><f:translate key="mobile">Mobile:</f:translate> {address.mobile}</addr:brIfSet>
+		<addr:brIfSet key="{address.fax}"><f:translate key="fax">Fax</f:translate> {address.fax}</addr:brIfSet>
+		<addr:brIfSet key="{address.email}"><f:translate key="email">Email:</f:translate> <f:link.email email="{address.email}" /></addr:brIfSet>
+		<addr:brIfSet key="{address.www}"><f:translate key="www">WWW:</f:translate> <f:link.external uri="{address.www}">{address.www}</f:link.external></addr:brIfSet>	
+	</p>
+	
+	<p>
+		<addr:brIfSet key="{address.company}"><f:translate key="company">Company:</f:translate> {address.company}</addr:brIfSet>
+		<addr:brIfSet key="{address.room}"><f:translate key="room">Room:</f:translate> {address.room}</addr:brIfSet>
+		<addr:brIfSet key="{address.building}"><f:translate key="building">Building:</f:translate> {address.building}</addr:brIfSet>
+	</p>
+	<!--
+	<f:for each="{address.addressgroups}" as="group">
+		<f:translate key="group">Group:</f:translate> {group}<br />
+	</f:for>
+	-->
+	<f:link.action action="index" controller="Address" arguments="{address : address}"><f:translate key="back_to_list">Back to list</f:translate></f:link.action>
+</div>

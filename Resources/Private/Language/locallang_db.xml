@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'blogexample'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_addresses_domain_model_address.mobile">Mobile</label>
+			<label index="tx_addresses_domain_model_address.firstname">First name</label>
+			<label index="tx_addresses_domain_model_address.lastname">Last name</label>
+			<label index="tx_addresses_domain_model_address.gender">Gender</label>
+			<label index="tx_addresses_domain_model_address.gender.m">Mr.</label>
+			<label index="tx_addresses_domain_model_address.gender.f">Mrs.</label>
+			<label index="tx_addresses_domain_model_address.birthday">Birthday</label>
+			<label index="tx_addresses_domain_model_address.region">Region</label>
+			<label index="tx_addresses_domain_model_address.room">Room</label>
+			<label index="tx_addresses_domain_model_address.building">Building</label>
+			<label index="tx_addresses_domain_model_address.addressgroup">Addressgroup</label>
+		</languageKey>
+	</data>
+</T3locallang>

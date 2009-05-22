@@ -1,0 +1,38 @@
+<div class="tx_addresses_pi1_index">
+	<ul>
+		<f:for each="{addresses}" as="address">
+			<li>
+				<h3><f:link.action action="show" arguments="{address : address}">{address.title} {address.firstname} {address.lastname}</f:link.action></h3>
+				<p>
+					<f:format.Nl2br>{address.address}</f:format.Nl2br><br />
+					{address.zip} {address.city} <br />
+					{address.country}
+				</p>
+			</li>
+		</f:for>
+	</ul>
+	<div class="pagebrowser">
+		<span class="previous">
+			<f:if condition="{params.previous}">
+				<f:then>
+					<f:link.page additionalParams="{additionalParamsPrev}"><f:translate key="previous">Previous</f:translate></f:link.page>
+				</f:then>
+				<f:else>
+					<f:translate key="previous">Previous</f:translate>
+				</f:else>
+			</f:if>
+		</span>
+			<f:translate key="page">Page</f:translate> {params.currentPage} 
+			<f:translate key="outof">out of</f:translate>  {params.Pages} 
+		<span class="next">
+			<f:if condition="{params.next}">
+				<f:then>
+					<f:link.page additionalParams="{additionalParamsNxt}"><f:translate key="next">Next</f:translate></f:link.page>
+				</f:then>
+				<f:else>
+					<f:translate key="next">Next</f:translate>
+				</f:else>
+			</f:if>
+		</span>
+	</div>
+</div>

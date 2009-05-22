@@ -1,0 +1,13 @@
+plugin.tx_addresses {
+	controllers {
+		Address {
+			actions {
+				index {
+					maxItems = 10
+					#Can be set if implemented: groups = 1
+					sortBy = firstname				
+				}
+			}
+		}	
+	}
+}

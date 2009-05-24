@@ -13,11 +13,13 @@
 			<label index="f">Mrs.</label>
 			<label index="m">Mr.</label>
 			<label index="back_to_list">Back to list</label>
+			<label index="next">next</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="phone">Telefon:</label>
 			<label index="fax">Fax:</label>
 			<label index="back_to_list">Zurück zur Übersicht</label>
+			<label index="next">next</label>
 		</languageKey>
 	</data>
 </T3locallang>

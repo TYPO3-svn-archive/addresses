@@ -43,7 +43,7 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	 */
 	public function initializeAction() {		
 		$this->addressRepository = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');	
-		$this->groupRepository = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressgroupRepository');	
+		//$this->groupRepository = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressgroupRepository');	
 	}
 
 	/**
@@ -63,25 +63,17 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 		/*Group queries do not work (see AdressRepository for more info)
 		if($this->indexConf['groups']) {
 			// gets the page browser (includes initialization and logic)
-			$this->getPageBrowser($this->addressRepository->findWithGroup($this->indexConf['groups']));
-			$limit = $this->indexConf['maxItems'] * ($this->currentPage-1) . ',' . $this->indexConf['maxItems'];
 			$data = $this->addressRepository->findWithGroup($this->indexConf['groups'], $limit);
 		} else {
 		*/
-			// gets the page browser (includes initialization and logic)
-			$this->getPageBrowser($this->addressRepository->findAll());
-			$limit = $this->indexConf['maxItems'] * ($this->currentPage-1) . ',' . $this->indexConf['maxItems'];
+			$this->currentPage = $_GET['tx_addresses_pi1']['page'];
+			$limit = $this->indexConf['maxItems'] * ($this->currentPage) . ',' . $this->indexConf['maxItems'];
 	
 			$data = $this->addressRepository->findLimit($limit,$this->indexConf['sortBy']);
 		//}
-		
-		//We have to have the additionalParams as an array, so convert and reassign them
-		$this->view->assign('additionalParamsNxt', Array('tx_addresses_pi1[page]' => $this->nextPage)); 
-		$this->view->assign('additionalParamsPrev', Array('tx_addresses_pi1[page]' => $this->previousPage)); 
-		
-		//Assign the pagebrowser variables to the view for displaying it
-		$this->view->assign('params', $this->pageBrowser); 
-		
+	
+		$this->view->assign('maxItems', $this->indexConf['maxItems']); 
+		$this->view->assign('totalPages', count($this->addressRepository->findAll())); 
 		$this->view->assign('addresses', $data);
 		
 	}
@@ -95,36 +87,6 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	public function showAction(Tx_Addresses_Domain_Model_Address $address) {
 		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . t3lib_extMgm::siteRelPath('addresses') . 'Resources/Public/Stylesheets/show.css" />');
 		$this->view->assign('address', $address);
-	}
-	
-	/**
-	 * Generates the page browser (sets the corresponding vars)
-	 * 
-	 * @param array An array of all objects to count (and calculate the page count)
-	 * @return void
-	 */
-	public function getPageBrowser($items) {
-		$this->pageBrowser = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_Pagebrowser');		
-		$this->pageBrowser->setPages(ceil(count($items) / $this->indexConf['maxItems']));
-		$this->pageBrowser->setCurrentPage($_GET['tx_addresses_pi1']['page']+1);
-		$this->pageBrowser->setNextPage($_GET['tx_addresses_pi1']['page']+1);
-		$this->pageBrowser->setPreviousPage($_GET['tx_addresses_pi1']['page']-1);
-		
-		$this->pages = $this->pageBrowser->getPages();
-		$this->currentPage = $this->pageBrowser->getCurrentPage();
-		$this->nextPage = $this->pageBrowser->getNextPage();
-		$this->previousPage = $this->pageBrowser->getPreviousPage();
-	
-		if($this->currentPage >= $this->pages) {
-			$this->pageBrowser->setNext(FALSE);
-		} else {
-			$this->pageBrowser->setNext(TRUE);
-		}
-		if($this->currentPage-1 == 0) {
-			$this->pageBrowser->setPrevious(FALSE);
-		} else {
-			$this->pageBrowser->setPrevious(TRUE);
-		}
 	}
 
 }

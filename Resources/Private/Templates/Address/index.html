@@ -1,3 +1,5 @@
+{namespace addr=Tx_Addresses_ViewHelpers}
+
 <div class="tx_addresses_pi1_index">
 	<ul>
 		<f:for each="{addresses}" as="address">
@@ -11,28 +13,8 @@
 			</li>
 		</f:for>
 	</ul>
+
 	<div class="pagebrowser">
-		<span class="previous">
-			<f:if condition="{params.previous}">
-				<f:then>
-					<f:link.page additionalParams="{additionalParamsPrev}"><f:translate key="previous">Previous</f:translate></f:link.page>
-				</f:then>
-				<f:else>
-					<f:translate key="previous">Previous</f:translate>
-				</f:else>
-			</f:if>
-		</span>
-			<f:translate key="page">Page</f:translate> {params.currentPage} 
-			<f:translate key="outof">out of</f:translate>  {params.Pages} 
-		<span class="next">
-			<f:if condition="{params.next}">
-				<f:then>
-					<f:link.page additionalParams="{additionalParamsNxt}"><f:translate key="next">Next</f:translate></f:link.page>
-				</f:then>
-				<f:else>
-					<f:translate key="next">Next</f:translate>
-				</f:else>
-			</f:if>
-		</span>
+			<addr:pagebrowser items="{totalPages}" max="{maxItems}" />
 	</div>
 </div>

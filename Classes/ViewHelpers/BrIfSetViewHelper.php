@@ -32,12 +32,11 @@ class Tx_Addresses_ViewHelpers_BrIfSetViewHelper extends Tx_Fluid_Core_AbstractV
 
 
 	/**
-	 * renders <f:then> child if $condition is true, otherwise renders <f:else> child.
+	 * renders a <br /> after the content, if the content is not empty
 	 *
-	 * @param  string asdas
+	 * @param  string the variable to be checked - if it contains content, the <br /> is rendered
 	 * @return string the rendered string
-	 * @author Sebastian Kurfürst <sebastian@typo3.org>
-	 * @author Bastian Waidelich <bastian@typo3.org>
+	 * @author Susanne Moog <typo3@susanne-moog.de>
 	 */
 	public function render($key='') {
 		$content = $this->renderChildren();

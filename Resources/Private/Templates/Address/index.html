@@ -4,7 +4,7 @@
 	<ul>
 		<f:for each="{addresses}" as="address">
 			<li>
-				<h3><f:link.action action="show" arguments="{address : address}">{address.title} {address.firstname} {address.lastname}</f:link.action></h3>
+				<h3><f:link.action action="show" arguments="{address : address}">{address.title} {address.first_name} {address.last_name}</f:link.action></h3>
 				<p>
 					<f:format.Nl2br>{address.address}</f:format.Nl2br><br />
 					{address.zip} {address.city} <br />

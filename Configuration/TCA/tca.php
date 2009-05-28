@@ -2,7 +2,7 @@
 $TCA['tx_addresses_domain_model_address'] = Array (
 	'ctrl' => $TCA['tx_addresses_domain_model_address']['ctrl'],
 	'interface' => Array (
-		'showRecordFieldList' => 'gender,firstname,lastname,birthday,address,city,zip,country,phone,fax,email,www,title,company,room,building,image,addressgroups,region'
+		'showRecordFieldList' => 'gender,first_name,last_name,birthday,address,city,zip,country,phone,fax,email,www,title,company,room,building,image,addressgroups,region'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_address']['feInterface'],
 	'columns' => Array (
@@ -49,16 +49,16 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				)
 			)
 		),
-		'firstname' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.firstname',
+		'first_name' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '40',
 				'max' => '256'
 			)
 		),
-		'lastname' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.lastname',
+		'last_name' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.last_name',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '40',
@@ -270,7 +270,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 	),
 	'types' => Array (
-		'1' => Array('showitem' => 'hidden;;;;1-1-1, gender, firstname, lastname;;2;;3-3-3,company;;6, address, zip, city;;3, email;;5, phone;;4, image;;;;4-4-4, description;;;;4-4-4, addressgroups')
+		'1' => Array('showitem' => 'hidden;;;;1-1-1, gender, first_name, last_name;;2;;3-3-3,company;;6, address, zip, city;;3, email;;5, phone;;4, image;;;;4-4-4, description;;;;4-4-4, addressgroups')
 	),
 	'palettes' => Array (
 		'2' => Array('showitem' => 'title, birthday'),

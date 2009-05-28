@@ -136,7 +136,7 @@ class tx_addresses_model_address {
 	 */
 	protected function getSort() {
 		$parameters = t3lib_div::_GET();
-		$sort = 'lastname DESC';
+		$sort = 'last_name DESC';
 		if (isset($parameters['sort']) && isset($parameters['dir'])) {
 			if ($parameters['dir'] == 'ASC' || $parameters['dir'] == 'DESC') {
 				$sort = filter_input(INPUT_GET, 'sort', FILTER_SANITIZE_STRING);

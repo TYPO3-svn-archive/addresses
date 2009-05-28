@@ -25,10 +25,10 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Addresses');
 
 $TCA['tx_addresses_domain_model_address'] = Array (
 	'ctrl' => Array (
-	'label' => 'lastname',
-	'label_alt' => 'firstname',
+	'label' => 'last_name',
+	'label_alt' => 'first_name',
 	'label_alt_force' => 1,
-	'default_sortby' => 'ORDER BY lastname',
+	'default_sortby' => 'ORDER BY last_name',
 	'tstamp' => 'tstamp',
 	'prependAtCopy' => 'LLL:EXT:lang/locallang_general.php:LGL.prependAtCopy',
 	'delete' => 'deleted',
@@ -41,7 +41,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 	'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_address.gif'
 	),
 	'feInterface' => Array (
-	'fe_admin_fieldList' => 'pid,hidden,firstname,lastname,title,address,phone,fax,mobile,www,email,city,zip,company,country,description'
+	'fe_admin_fieldList' => 'pid,hidden,first_name,last_name,title,address,phone,fax,mobile,www,email,city,zip,company,country,description'
 	)
 );
 
@@ -80,16 +80,16 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 		'dataIndex' => 'uid',
 		),
 		array(
-		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.firstname',
+		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
 		'width' => 120,
 		'sortable' => TRUE,
-		'dataIndex' => 'firstname',
+		'dataIndex' => 'first_name',
 		),
 		array(
-		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.lastname',
+		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.last_name',
 		'width' => 120,
 		'sortable' => TRUE,
-		'dataIndex' => 'lastname',
+		'dataIndex' => 'last_name',
 		),
 		array(
 		'header' => 'LLL:EXT:lang/locallang_general.php:LGL.city',
@@ -142,7 +142,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 
 	$TCA['tx_addresses_domain_model_address']['types']['module']['showitem'] =
 		'--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.type.I.0,' .
-		'firstname, lastname, gender,birthday, country, marital_status, zip:0.25 / city:0.75,';
+		'first_name, last_name, gender,birthday, country, marital_status, zip:0.25 / city:0.75,';
 }
 
 // Registers BE module

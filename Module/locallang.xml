@@ -22,8 +22,8 @@
 			<label index="delete_selected">Delete selected</label>
 			<label index="edit_selected">Edit selected</label>
 			<label index="gender">gender</label>
-			<label index="firstname">first name</label>
-			<label index="lastname">last name</label>
+			<label index="first_name">first name</label>
+			<label index="last_name">last name</label>
 			<label index="middle_name">middle name</label>
 			<label index="email">email</label>
 			<label index="birthday">birthday</label>
@@ -87,8 +87,8 @@
 			<label index="delete_selected">Supprimer la sélection</label>
 			<label index="edit_selected">Editer la sélection</label>
 			<label index="gender">genre</label>
-			<label index="firstname">Prénom</label>
-			<label index="lastname">Nom</label>
+			<label index="first_name">Prénom</label>
+			<label index="last_name">Nom</label>
 			<label index="middle_name">middle name</label>
 			<label index="email">email</label>
 			<label index="birthday">anniversaire</label>

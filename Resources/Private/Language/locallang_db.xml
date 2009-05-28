@@ -7,8 +7,8 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tx_addresses_domain_model_address.mobile">Mobile</label>
-			<label index="tx_addresses_domain_model_address.firstname">First name</label>
-			<label index="tx_addresses_domain_model_address.lastname">Last name</label>
+			<label index="tx_addresses_domain_model_address.first_name">First name</label>
+			<label index="tx_addresses_domain_model_address.last_name">Last name</label>
 			<label index="tx_addresses_domain_model_address.gender">Gender</label>
 			<label index="tx_addresses_domain_model_address.gender.m">Mr.</label>
 			<label index="tx_addresses_domain_model_address.gender.f">Mrs.</label>

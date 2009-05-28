@@ -46,7 +46,7 @@ Addresses.Main = function(){
 	 */
 	this.expander = new Ext.grid.RowExpander({
 		tpl : new Ext.Template(
-			'<p style="margin-left:45px;"><b>' + Addresses.lang.name + ' :</b> {firstname} {lastname}</p>' +
+			'<p style="margin-left:45px;"><b>' + Addresses.lang.name + ' :</b> {first_name} {last_name}</p>' +
 			'<br/>'
 			)
 	});
@@ -226,7 +226,7 @@ Addresses.Main = function(){
 
 
 	/**
-	 * Returns a formated string: "firstname lastname"
+	 * Returns a formated string: "first_name last_name"
 	 *
 	 * @return String
 	 */
@@ -239,7 +239,7 @@ Addresses.Main = function(){
 			if (index > 0) {
 				names += ', ';
 			}
-			names += item.data.firstname + ' ' + item.data.lastname;
+			names += item.data.first_name + ' ' + item.data.last_name;
 		}
 		return names;
 	}

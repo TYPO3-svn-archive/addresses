@@ -37,7 +37,7 @@ class Tx_Addresses_Domain_Model_AddressRepository extends Tx_Extbase_Persistence
 	 * @param string $sortBy Field to sort the result set
 	 * @return array An array of objects, an empty array if no objects found
 	 */
-	public function findLimit($limit,$sortBy='lastname') {
+	public function findLimit($limit,$sortBy='last_name') {
 		//return $this->findWhere($where, $groupBy = '', $orderBy = '', $limit, $useEnableFields = TRUE);
 		return $this->findWhere('', '', $sortBy, $limit);
 	}

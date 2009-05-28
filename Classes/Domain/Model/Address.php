@@ -42,18 +42,18 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	protected $gender = '';
 
 	/**
-	 * The contact's firstname
+	 * The contact's first_name
 	 *
 	 * @var string
 	 */
-	protected $firstname = '';
+	protected $first_name = '';
 
 	/**
-	 * The contact's lastname
+	 * The contact's last_name
 	 *
 	 * @var string
 	 */
-	protected $lastname = '';
+	protected $last_name = '';
 
 	/**
 	 * A contact's title
@@ -202,13 +202,13 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	}
 	
 	/**
-	 * Sets this contact's firstname
+	 * Sets this contact's first_name
 	 *
-	 * @param string $name The contact's firstname
+	 * @param string $name The contact's first_name
 	 * @return void
 	 */
-	public function setFirstname($firstname) {
-		$this->firstname = $firstname;
+	public function setfirst_name($first_name) {
+		$this->first_name = $first_name;
 	}
 
 	/**
@@ -216,27 +216,27 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 *
 	 * @return string The contact's name
 	 */
-	public function getFirstname() {
-		return $this->firstname;
+	public function getfirst_name() {
+		return $this->first_name;
 	}
 	
 		/**
-	 * Sets this contact's lastname
+	 * Sets this contact's last_name
 	 *
-	 * @param string $lastname The contact's lastname
+	 * @param string $last_name The contact's last_name
 	 * @return void
 	 */
-	public function setLastname($lastname) {
-		$this->lastname = $lastname;
+	public function setlast_name($last_name) {
+		$this->last_name = $last_name;
 	}
 
 	/**
-	 * Returns the contact's lastname
+	 * Returns the contact's last_name
 	 *
-	 * @return string The contact's lastname
+	 * @return string The contact's last_name
 	 */
-	public function getLastname() {
-		return $this->lastname;
+	public function getlast_name() {
+		return $this->last_name;
 	}
 	
 	/**
@@ -580,7 +580,7 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 * @return string
 	 */
 	public function __toString() {
-		return $this->firstname . ' ' . $this->lastname;
+		return $this->first_name . ' ' . $this->last_name;
 	}
 }
 ?>

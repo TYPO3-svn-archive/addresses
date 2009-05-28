@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for module &quot;web_txaddressesM1&quot; - header, description</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="mlang_tabs_tab">Addreses</label>
+			<label index="mlang_labels_tabdescr">create / edit addresses</label>
+			<label index="mlang_labels_tablabel">Addresses manager</label>
+		</languageKey>
+		<languageKey index="fr" type="array">
+			<label index="mlang_tabs_tab">Personne</label>
+			<label index="mlang_labels_tabdescr">Module gérant des personnes</label>
+			<label index="mlang_labels_tablabel">Gestionnaire de personne</label>
+		</languageKey>
+	</data>
+</T3locallang>

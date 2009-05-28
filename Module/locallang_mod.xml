@@ -7,13 +7,13 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="mlang_tabs_tab">Addreses</label>
-			<label index="mlang_labels_tabdescr">create / edit addresses</label>
+			<label index="mlang_labels_tabdescr">Create / edit addresses</label>
 			<label index="mlang_labels_tablabel">Addresses manager</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
-			<label index="mlang_tabs_tab">Personne</label>
-			<label index="mlang_labels_tabdescr">Module gérant des personnes</label>
-			<label index="mlang_labels_tablabel">Gestionnaire de personne</label>
+			<label index="mlang_tabs_tab">Adresses</label>
+			<label index="mlang_labels_tabdescr">Module gérant des adresses</label>
+			<label index="mlang_labels_tablabel">Gestionnaire d'adresses</label>
 		</languageKey>
 	</data>
 </T3locallang>

@@ -47,7 +47,7 @@ Addresses.Edition = function()
 				var submit = {
 					clientValidation: true,
 					method: 'GET',
-					url: '/typo3/ajax.php',
+					url: Addresses.statics.ajaxController,
 					params:{
 						ajaxID: 'tx_addresses::saveAction'
 					},

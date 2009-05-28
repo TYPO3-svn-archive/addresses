@@ -33,16 +33,11 @@
  * @version $Id$
  */
 
-if (TYPO3_MODE != 'BE') {
-	die ('Access denied!');
-}
-
-// Check whether the user has access
+// Check whether the user has access to the module
 global $BE_USER;
-require(t3lib_extMgm::extPath('addresses') . 'Module/conf.php');
-
-// Check user permissions
-$BE_USER->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
+$MCONF['name'] = 'user_txaddresses';
+$MCONF['access'] = 'user,group';
+$BE_USER->modAccess($MCONF, 1);	// This checks makes sure the user has the permissions. Exits if that not the case.
 
 // Pre-Include all models and views
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/class.tx_addresses_model_address.php'));

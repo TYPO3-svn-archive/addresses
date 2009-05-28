@@ -39,6 +39,7 @@ Addresses.Main = function(){
 	 * Defines the resource path
 	 */
 	this.iconsPath = '../Resources/Public/Icons/';
+	this.ajaxPath = '../../../../';
 
 	/**
 	 * Row expander (plugins)
@@ -95,7 +96,7 @@ Addresses.Main = function(){
 
 			form.load({
 				method: 'GET',
-				url: '/typo3/ajax.php',
+				url: Addresses.statics.ajaxController,
 				params:{
 					method: 'GET',
 					ajaxID: 'tx_addresses::editAction',
@@ -155,7 +156,7 @@ Addresses.Main = function(){
 		//		},
 		proxy: new Ext.data.HttpProxy({
 			method: 'GET',
-			url: '/typo3/ajax.php'
+			url: Addresses.statics.ajaxController
 		}),
 		listeners : {
 			load: function (element, data) {
@@ -303,7 +304,7 @@ Addresses.Main = function(){
 						var conn = new Ext.data.Connection();
 						conn.request({
 							method: 'GET',
-							url: '/typo3/ajax.php',
+							url: Addresses.statics.ajaxController,
 							params:{
 								ajaxID: 'tx_addresses::deleteAction',
 								data: Ext.util.JSON.encode(data)

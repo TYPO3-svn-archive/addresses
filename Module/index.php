@@ -113,8 +113,8 @@ class  tx_addresses_module extends t3lib_SCbase {
 		parent::init();
 		$this->doc = t3lib_div::makeInstance('template');
 		$this->doc->setModuleTemplate(t3lib_extMgm::extPath('addresses') . 'Module/template.html');
-//		$this->doc->backPath = '../../../../typo3/';
-		$this->doc->backPath = '/typo3/';
+		$this->doc->backPath = '../../../../typo3/';
+//		$this->doc->backPath = '/typo3/';
 
 		$this->relativePath = t3lib_extMgm::extRelPath('addresses');
 		$this->absolutePath = t3lib_extMgm::extPath('addresses');
@@ -288,7 +288,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 			'path' => t3lib_extMgm::extRelPath('addresses'),
 			'isSSL' => t3lib_div::getIndpEnv('TYPO3_SSL'),
 			'editionHeight' => 50 * $this->getNumberOfFields($fieldsEdition) + 150,
-			'ajaxController' => $this->doc->backPath . 'ajax.php?ajaxID=tx_addresses::controller',
+			'ajaxController' => $this->doc->backPath . 'ajax.php',
 		);
 		return $configuration;
 	}

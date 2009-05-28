@@ -6,6 +6,31 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_address']['feInterface'],
 	'columns' => Array (
+		'uid' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.hidden',
+			'config' => Array (
+				'type' => 'passthrough'
+			)
+		),
+		'cruser_id' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
+			'config' => Array (
+				'type' => 'passthrough',
+			),
+		),
+		'upuser_id' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
+			'config' => Array (
+				'type' => 'passthrough',
+			),
+		),
+		'crdate' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.crdate',
+			'config' => Array (
+				'type' => 'passthrough',
+			),
+		),
 		'hidden' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.hidden',
@@ -219,6 +244,28 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'foreign_class' => 'Tx_Addresses_Domain_Model_Addressgroup',
 				'foreign_table' => 'tx_addresses_domain_model_addressgroup',
 				'MM' => 'tx_addresses_address_addressgroup_mm'
+			)
+		),
+		'marital_status' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.marital_status',
+			'config' => Array (
+				'type' => 'select',
+				'items' => Array (
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:single', '1'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:married', '2'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:divorced', '3'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:widowed', '4'),
+					Array('Célibataire', '1'),
+					Array('Marié', '2'),
+					Array('Divorcé', '3'),
+					Array('Veuf(ve)', '4'),
+				),
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
+				'editable' => FALSE,
 			)
 		),
 	),

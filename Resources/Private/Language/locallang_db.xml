@@ -2,7 +2,7 @@
 <T3locallang>
 	<meta type="array">
 		<type>database</type>
-		<description>Language labels for database tables/fields belonging to extension 'blogexample'</description>
+		<description>Language labels for database tables/fields belonging to extension 'addresses'</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
@@ -12,11 +12,20 @@
 			<label index="tx_addresses_domain_model_address.gender">Gender</label>
 			<label index="tx_addresses_domain_model_address.gender.m">Mr.</label>
 			<label index="tx_addresses_domain_model_address.gender.f">Mrs.</label>
+			<label index="tx_addresses_domain_model_address.gender.I.1">Mr.</label>
+			<label index="tx_addresses_domain_model_address.gender.I.2">Mrs.</label>
+			<label index="tx_addresses_domain_model_address.gender.I.3">Miss</label>
 			<label index="tx_addresses_domain_model_address.birthday">Birthday</label>
 			<label index="tx_addresses_domain_model_address.region">Region</label>
 			<label index="tx_addresses_domain_model_address.room">Room</label>
 			<label index="tx_addresses_domain_model_address.building">Building</label>
 			<label index="tx_addresses_domain_model_address.addressgroup">Addressgroup</label>
+			<label index="tx_addresses_domain_model_address.uid">ID</label>
+			<label index="tx_addresses_domain_model_address.marital_status">Marital status</label>
+			<label index="tx_addresses_domain_model_address.type.I.0">Addresse</label>
+			<label index="tx_addresses_domain_model_address.cruser_id">Create user</label>
+			<label index="tx_addresses_domain_model_address.upuser_id">Update user</label>
+			<label index="tx_addresses_domain_model_address.crdate">Create date</label>
 		</languageKey>
 	</data>
 </T3locallang>

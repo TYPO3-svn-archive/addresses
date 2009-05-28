@@ -8,10 +8,29 @@
 		<languageKey index="default" type="array">
 			<label index="address">Address</label>
 			<label index="addressgroup">Addressgroup</label>
+			<label index="select_value">Select value...</label>
+			<label index="single">Single</label>
+			<label index="married">Married</label>
+			<label index="divorced">Divorced</label>
+			<label index="widowed">Windowed</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="address">Addresse</label>
 			<label index="addressgroup">Gruppe</label>
+			<label index="select_value">Select value...</label>
+			<label index="single">Single</label>
+			<label index="married">Married</label>
+			<label index="divorced">Divorced</label>
+			<label index="widowed">Windowed</label>
+		</languageKey>
+		<languageKey index="fr" type="array">
+			<label index="address">Addresse</label>
+			<label index="addressgroup">Groupe</label>
+			<label index="select_value">Sélectionner une valeur...</label>
+			<label index="single">Célibataire</label>
+			<label index="married">Marié</label>
+			<label index="divorced">Divorcé</label>
+			<label index="widowed">Veuf(ve)</label>
 		</languageKey>
 	</data>
 </T3locallang>

@@ -57,6 +57,54 @@ class tx_addresses_model_address {
 	}
 
 	/**
+	 * Get addresses for the grid
+	 *
+	 * @return	string
+	 */
+	public function findAll() {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TYPO3_DB;
+
+		$request = $TYPO3_DB->SELECTquery(
+			$this->getFields(),
+			'tx_addresses_domain_model_address',
+			'deleted = 0 AND hidden = 0' . $this->getClause(),
+			'', // groupBy
+			$this->getSort(), // orderBy
+			$this->getOrderBy()
+		);
+
+
+		if ($this->debug) {
+			t3lib_div::devLog('Select records: ' . $request, 'addresses', -1);
+		}
+		// Log the search
+		if ($this->debug && isset($parameters['filterTxt']) && $parameters['filterTxt'] != '') {
+			t3lib_div::devLog('Search records: ' . $request, 'addresses', 0);
+		}
+
+		$res = $TYPO3_DB->sql_query($request);
+
+		$records = array();
+		if (!$TYPO3_DB->sql_error()) {
+			while($records[] = $TYPO3_DB->sql_fetch_assoc($res));
+			array_pop($records);
+			$TYPO3_DB->sql_free_result($res);
+		}
+
+		$results = $TYPO3_DB->exec_SELECTgetRows(
+			'count(*) as total',
+			'tx_addresses_domain_model_address',
+			'deleted = 0 AND hidden = 0' . $this->getClause()
+		);
+
+		$output['success'] = TRUE;
+		$output['total'] = $results[0]['total'];
+		$output['data'] = $records;
+		return $output;
+	}
+
+	/**
 	 * Get address(es) for the grid
 	 *
 	 * @param array $data: the uid of the address
@@ -163,55 +211,6 @@ class tx_addresses_model_address {
 		}
 		return $request;
 	}
-
-	/**
-	 * Get addresses for the grid
-	 *
-	 * @return	string
-	 */
-	public function findAll() {
-		/* @var $TYPO3_DB t3lib_DB */
-		global $TYPO3_DB;
-
-		$request = $TYPO3_DB->SELECTquery(
-			$this->getFields(),
-			'tx_addresses_domain_model_address',
-			'deleted = 0 AND hidden = 0' . $this->getClause(),
-			'', // groupBy
-			$this->getSort(), // orderBy
-			$this->getOrderBy()
-		);
-
-
-		if ($this->debug) {
-			t3lib_div::devLog('Select records: ' . $request, 'addresses', -1);
-		}
-		// Log the search
-		if ($this->debug && isset($parameters['filterTxt']) && $parameters['filterTxt'] != '') {
-			t3lib_div::devLog('Search records: ' . $request, 'addresses', 0);
-		}
-
-		$res = $TYPO3_DB->sql_query($request);
-
-		$records = array();
-		if (!$TYPO3_DB->sql_error()) {
-			while($records[] = $TYPO3_DB->sql_fetch_assoc($res));
-			array_pop($records);
-			$TYPO3_DB->sql_free_result($res);
-		}
-
-		$results = $TYPO3_DB->exec_SELECTgetRows(
-			'count(*) as total',
-			'tx_addresses_domain_model_address',
-			'deleted = 0 AND hidden = 0' . $this->getClause()
-		);
-
-		$output['success'] = TRUE;
-		$output['total'] = $results[0]['total'];
-		$output['data'] = $records;
-		return $output;
-	}
-
 
 	/**
 	 * Builds up the clause e.g.uid=10 AND uid=8

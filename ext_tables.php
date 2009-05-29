@@ -65,6 +65,7 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array (
 	)
 );
 
+// This lines will changed the TCA for the BE module
 if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !== FALSE
 	|| strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'typo3/ajax.php') !== FALSE) {
 
@@ -80,6 +81,13 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 		'dataIndex' => 'uid',
 		),
 		array(
+		'id' => 'pid',
+		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.pid',
+		'width' => 40,
+		'sortable' => TRUE,
+		'dataIndex' => 'pid',
+		),
+		array(
 		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
 		'width' => 120,
 		'sortable' => TRUE,
@@ -92,7 +100,19 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 		'dataIndex' => 'last_name',
 		),
 		array(
-		'header' => 'LLL:EXT:lang/locallang_general.php:LGL.city',
+		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
+		'width' => 120,
+		'sortable' => TRUE,
+		'dataIndex' => 'address',
+		),
+		array(
+		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.zip',
+		'width' => 120,
+		'sortable' => TRUE,
+		'dataIndex' => 'zip',
+		),
+		array(
+		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.city',
 		'width' => 120,
 		'sortable' => TRUE,
 		'dataIndex' => 'city',
@@ -145,8 +165,9 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 		'first_name, last_name, gender,birthday, country, marital_status, zip:0.25 / city:0.75,';
 }
 
+$configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);
 // Registers BE module
-if (TYPO3_MODE=='BE') {
+if (TYPO3_MODE=='BE' && $configurations['loadBEModule']) {
 	t3lib_extMgm::addModule('user', 'txaddresses', 'bottom', t3lib_extMgm::extPath($_EXTKEY).'Module/');
 }
 ?>

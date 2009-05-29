@@ -1,4 +1,7 @@
-# cat=basic/enable; type=boolean; label=Debug: Turn debugging on or off
+# cat=basic/enable; type=boolean; label=Load BE module: Will load a BE module that is convenient for managing many addresses. Note: you will need to reload the whole BE, in order this option takes effect.
+loadBEModule = 1
+
+# cat=basic/enable; type=boolean; label=Debug: Turn debugging on or off.
 debug = 0
 
 TSConstantEditor.basic {

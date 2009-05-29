@@ -53,10 +53,10 @@ Event.observe(window, 'load', function() {
 	Addresses.fieldsColumns.unshift(main.checkbox, main.expander); // add checkbox + expander to the grid
 	Addresses.fieldsColumns.push(main.controller);
 	main.columns = Addresses.fieldsColumns;
-	main.init();
+//	main.init();
 
 	// Prepare editing window
 	edition = new Addresses.Edition();
 	edition.init();
-//	edition.w.show();
+	edition.w.show();
 });

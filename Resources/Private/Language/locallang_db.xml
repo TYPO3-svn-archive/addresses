@@ -26,6 +26,11 @@
 			<label index="tx_addresses_domain_model_address.cruser_id">Create user</label>
 			<label index="tx_addresses_domain_model_address.upuser_id">Update user</label>
 			<label index="tx_addresses_domain_model_address.crdate">Create date</label>
+			<label index="tx_addresses_domain_model_address.address">Address</label>
+			<label index="tx_addresses_domain_model_address.pid">PID</label>
+			<label index="tx_addresses_domain_model_address.zip">ZIP</label>
+			<label index="tx_addresses_domain_model_address.city">City</label>
+			<label index="tx_addresses_domain_model_address.preferred_language">Language</label>
 		</languageKey>
 	</data>
 </T3locallang>

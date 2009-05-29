@@ -8,7 +8,12 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 	'columns' => Array (
 		'uid' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.hidden',
+			'config' => Array (
+				'type' => 'passthrough'
+			)
+		),
+		'pid' => Array (
+			'exclude' => 1,
 			'config' => Array (
 				'type' => 'passthrough'
 			)
@@ -86,7 +91,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			)
 		),
 		'address' => Array (
-			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.address',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '20',
@@ -257,15 +262,21 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:married', '2'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:divorced', '3'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:widowed', '4'),
-					Array('Célibataire', '1'),
-					Array('Marié', '2'),
-					Array('Divorcé', '3'),
-					Array('Veuf(ve)', '4'),
 				),
 				'size' => 1,
 				'minitems' => 0,
 				'maxitems' => 1,
 				'editable' => FALSE,
+			)
+		),
+		'preferred_language' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:partner/locallang_db.xml:tx_partner_main.preferred_language',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'eval' => 'trim',
+				'max' => '30'
 			)
 		),
 	),

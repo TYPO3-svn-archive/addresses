@@ -13,15 +13,9 @@
 			<label index="married">Married</label>
 			<label index="divorced">Divorced</label>
 			<label index="widowed">Windowed</label>
-		</languageKey>
-		<languageKey index="de" type="array">
-			<label index="address">Addresse</label>
-			<label index="addressgroup">Gruppe</label>
-			<label index="select_value">Select value...</label>
-			<label index="single">Single</label>
-			<label index="married">Married</label>
-			<label index="divorced">Divorced</label>
-			<label index="widowed">Windowed</label>
+			<label index="english">English</label>
+			<label index="german">German</label>
+			<label index="french">French</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="address">Addresse</label>
@@ -31,6 +25,11 @@
 			<label index="married">Marié</label>
 			<label index="divorced">Divorcé</label>
 			<label index="widowed">Veuf(ve)</label>
+			<label index="english">Anglais</label>
+			<label index="german">Allemand</label>
+			<label index="french">Français</label>
+		</languageKey>
+		<languageKey index="de" type="array">
 		</languageKey>
 	</data>
 </T3locallang>

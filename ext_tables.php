@@ -74,48 +74,48 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 	t3lib_div::loadTCA('tx_addresses_domain_model_address');
 	$TCA['tx_addresses_domain_model_address']['interface']['showRecordFieldGrid'] = array(
 		array(
-		'id' => 'uid',
-		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.uid',
-		'width' => 40,
-		'sortable' => TRUE,
-		'dataIndex' => 'uid',
+			'id' => 'uid',
+			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.uid',
+			'width' => 40,
+			'sortable' => TRUE,
+			'dataIndex' => 'uid',
 		),
 		array(
-		'id' => 'pid',
-		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.pid',
-		'width' => 40,
-		'sortable' => TRUE,
-		'dataIndex' => 'pid',
+			'id' => 'pid',
+			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.pid',
+			'width' => 40,
+			'sortable' => TRUE,
+			'dataIndex' => 'pid',
 		),
 		array(
-		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
-		'width' => 120,
-		'sortable' => TRUE,
-		'dataIndex' => 'first_name',
+			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
+			'width' => 120,
+			'sortable' => TRUE,
+			'dataIndex' => 'first_name',
 		),
 		array(
-		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.last_name',
-		'width' => 120,
-		'sortable' => TRUE,
-		'dataIndex' => 'last_name',
+			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.last_name',
+			'width' => 120,
+			'sortable' => TRUE,
+			'dataIndex' => 'last_name',
 		),
 		array(
-		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
-		'width' => 120,
-		'sortable' => TRUE,
-		'dataIndex' => 'address',
+			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
+			'width' => 120,
+			'sortable' => TRUE,
+			'dataIndex' => 'address',
 		),
 		array(
-		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.zip',
-		'width' => 120,
-		'sortable' => TRUE,
-		'dataIndex' => 'zip',
+			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.zip',
+			'width' => 120,
+			'sortable' => TRUE,
+			'dataIndex' => 'zip',
 		),
 		array(
-		'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.city',
-		'width' => 120,
-		'sortable' => TRUE,
-		'dataIndex' => 'city',
+			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.city',
+			'width' => 120,
+			'sortable' => TRUE,
+			'dataIndex' => 'city',
 		),
 	);
 
@@ -124,20 +124,20 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 		'exclude' => 1,
 		'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender',
 		'config' => Array (
-		'type' => 'select',
-		'items' => Array (
-		Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.1', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.1'),
-		Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.2', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.2'),
-		Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.3', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.3'),
-		),
-		'itemsProcFunc' => 'tx_addresses_tce->getRecords',
-		'itemsProcFunc.' => array (
-		'table' => 'tx_addresses_domain_model_address',
-		'field' => 'gender',
-		),
-		'size' => 1,
-		'minitems' => 0,
-		'maxitems' => 1,
+			'type' => 'select',
+			'items' => Array (
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.1', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.1'),
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.2', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.2'),
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.3', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.3'),
+			),
+			'itemsProcFunc' => 'tx_addresses_tce->getRecords',
+			'itemsProcFunc.' => array (
+				'table' => 'tx_addresses_domain_model_address',
+				'field' => 'gender',
+			),
+			'size' => 1,
+			'minitems' => 0,
+			'maxitems' => 1,
 		)
 	);
 
@@ -145,24 +145,45 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 		'exclude' => 1,
 		'label' => 'LLL:EXT:lang/locallang_general.php:LGL.country',
 		'config' => Array (
-		'type' => 'select',
-		'items' => Array (
-		Array('Suisse','Suisse'),
-		),
-		'itemsProcFunc' => 'tx_addresses_tce->getRecords',
-		'itemsProcFunc.' => array (
-		'table' => 'tx_addresses_domain_model_address',
-		'field' => 'country',
-		),
-		'size' => 1,
-		'minitems' => 0,
-		'maxitems' => 1,
+			'type' => 'select',
+			'items' => Array (
+				Array('Suisse','Suisse'),
+			),
+			'itemsProcFunc' => 'tx_addresses_tce->getRecords',
+			'itemsProcFunc.' => array (
+				'table' => 'tx_addresses_domain_model_address',
+				'field' => 'country',
+			),
+			'size' => 1,
+			'minitems' => 0,
+			'maxitems' => 1,
+		)
+	);
+	
+	$TCA['tx_addresses_domain_model_address']['columns']['preferred_language'] = array(
+		'exclude' => 1,
+		'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.preferred_language',
+		'config' => Array (
+			'type' => 'select',
+			'items' => Array (
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:english','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:english'),
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:french','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:french'),
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:german','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:german'),
+			),
+			'itemsProcFunc' => 'tx_addresses_tce->getRecords',
+			'itemsProcFunc.' => array (
+				'table' => 'tx_addresses_domain_model_address',
+				'field' => 'preferred_language',
+			),
+			'size' => 1,
+			'minitems' => 0,
+			'maxitems' => 1,
 		)
 	);
 
 	$TCA['tx_addresses_domain_model_address']['types']['module']['showitem'] =
 		'--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.type.I.0,' .
-		'first_name, last_name, gender,birthday, country, marital_status, zip:0.25 / city:0.75,';
+		'first_name, last_name, gender,birthday, country, marital_status, preferred_language, zip:0.25 | city:0.75,';
 }
 
 $configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);

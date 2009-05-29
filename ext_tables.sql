@@ -32,6 +32,7 @@ CREATE TABLE tx_addresses_domain_model_address (
   description text NOT NULL,
   addressgroups int(11) DEFAULT '0' NOT NULL,
   marital_status int(11) unsigned DEFAULT '0' NOT NULL,
+  preferred_language varchar(40) DEFAULT '' NOT NULL,
   PRIMARY KEY (uid),
   KEY parent (pid),
   KEY pid (pid,email)

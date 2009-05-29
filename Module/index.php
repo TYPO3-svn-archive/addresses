@@ -451,11 +451,11 @@ class  tx_addresses_module extends t3lib_SCbase {
 		// Means this is normal field
 			if (strpos($item, '--div--') === FALSE ) {
 
-				if (strpos($item, '/') === FALSE ) {
+				if (strpos($item, '|') === FALSE ) {
 					$configuration = $this->getConfiguration($TCA['tx_addresses_domain_model_address']['columns'], $item);
 				}
 				else {
-					$fields = explode('/', $item);
+					$fields = explode('|', $item);
 					$fields = array_map('trim', $fields);
 
 					$_configurations = $configuration = $columnWidth = array();

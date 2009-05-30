@@ -46,14 +46,22 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 *
 	 * @var string
 	 */
-	protected $first_name = '';
+	protected $firstName = '';
 
 	/**
 	 * The contact's last_name
 	 *
 	 * @var string
 	 */
-	protected $last_name = '';
+	protected $lastName = '';
+
+	/**
+	 * The contact's marital status
+	 * 
+	 * @var int marital_status
+	 */
+	
+	protected $maritalStatus = '';
 
 	/**
 	 * A contact's title
@@ -145,7 +153,15 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 * @var string
 	 */
 	protected $country = '';
-
+	
+	/**
+	 * The preferred_language
+	 * 
+	 * @var string
+	 */
+	protected $preferredLanguage = '';
+	
+	
 	/**
 	 * The image of the contact
 	 * 
@@ -207,8 +223,8 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 * @param string $name The contact's first_name
 	 * @return void
 	 */
-	public function setfirst_name($first_name) {
-		$this->first_name = $first_name;
+	public function setFirstName($firstName) {
+		$this->firstName = $firstName;
 	}
 
 	/**
@@ -216,18 +232,18 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 *
 	 * @return string The contact's name
 	 */
-	public function getfirst_name() {
-		return $this->first_name;
+	public function getFirstName() {
+		return $this->firstName;
 	}
 	
-		/**
+	/**
 	 * Sets this contact's last_name
 	 *
 	 * @param string $last_name The contact's last_name
 	 * @return void
 	 */
-	public function setlast_name($last_name) {
-		$this->last_name = $last_name;
+	public function setLastName($lastName) {
+		$this->lastName = $lastName;
 	}
 
 	/**
@@ -235,8 +251,27 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 *
 	 * @return string The contact's last_name
 	 */
-	public function getlast_name() {
-		return $this->last_name;
+	public function getLastName() {
+		return $this->lastName;
+	}
+	
+	/**
+	 * Sets the contact's marital status
+	 * 
+	 * @param  integer	the contact's marital status
+	 * @return void
+	 */
+	public function setMaritalStatus($maritalStatus) {
+		$this->maritalStatus = $maritalStatus;
+	}
+	
+	/**
+	 * Returns the contact's marital status
+	 * 
+	 * @return integer the contact's marital status
+	 */
+	public function getMaritalStatus() {
+		return $this->maritalStatus;
 	}
 	
 	/**
@@ -487,6 +522,25 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
+	 * Sets the contact's preferred_language
+	 * 
+	 * @param  string the contact's preferred_language
+	 * @return void
+	 */
+	public function setPreferredLanguage($preferredLanguage) {
+		$this->preferredLanguage = $preferredLanguage;
+	}
+	
+	/**
+	 * Returns the contact's marital preferred_language
+	 * 
+	 * @return string the contact's preferred_language
+	 */
+	public function getPreferredLanguage() {
+		return $this->preferredLanguage;
+	}
+
+	/**
 	 * Sets this contact's image
 	 *
 	 * @param string $image The contact's image
@@ -580,7 +634,7 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 * @return string
 	 */
 	public function __toString() {
-		return $this->first_name . ' ' . $this->last_name;
+		return $this->firstName . ' ' . $this->lastName;
 	}
 }
 ?>

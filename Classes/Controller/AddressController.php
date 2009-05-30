@@ -49,30 +49,24 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Index action for this controller. Displays a list of addresses.
 	 *
+	 * @param  integer The current page
 	 * @return string The rendered view
 	 */
-	public function indexAction() {
+	public function indexAction($currentPage = NULL) {
+		$limit = ''; // used to fetch this count of addresses from the database with a given offset (example: 0,5)
+		$data = Array(); // used to store the objects fetched from the repository
 		
 		// Stylesheet
 		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . t3lib_extMgm::siteRelPath('addresses') . 'Resources/Public/Stylesheets/index.css" />');
 		
 		// TS Config transformed to shorter variable
-		$this->indexConf = $this->settings['controllers']['Address']['actions']['index'];
+		$this->indexSettings = $this->settings['controllers']['Address']['actions']['index'];
+			
+		$limit = $this->indexSettings['maxItems'] * ($currentPage) . ',' . $this->indexSettings['maxItems'];
 
-		//Get the actual data to be displayed
-		/*Group queries do not work (see AdressRepository for more info)
-		if($this->indexConf['groups']) {
-			// gets the page browser (includes initialization and logic)
-			$data = $this->addressRepository->findWithGroup($this->indexConf['groups'], $limit);
-		} else {
-		*/
-			$this->currentPage = $_GET['tx_addresses_pi1']['page'];
-			$limit = $this->indexConf['maxItems'] * ($this->currentPage) . ',' . $this->indexConf['maxItems'];
+		$data = $this->addressRepository->findLimit($limit,$this->indexSettings['sortBy']);
 	
-			$data = $this->addressRepository->findLimit($limit,$this->indexConf['sortBy']);
-		//}
-	
-		$this->view->assign('maxItems', $this->indexConf['maxItems']); 
+		$this->view->assign('maxItems', $this->indexSettings['maxItems']); 
 		$this->view->assign('totalPages', count($this->addressRepository->findAll())); 
 		$this->view->assign('addresses', $data);
 		

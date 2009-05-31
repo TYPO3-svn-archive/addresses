@@ -28,7 +28,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @scope prototype
  */
-class Tx_Addresses_ViewHelpers_BrIfSetViewHelper extends Tx_Fluid_Core_AbstractViewHelper {
+class Tx_Addresses_ViewHelpers_BrIfSetViewHelper extends Tx_Fluid_Core_ViewHelper_TagBasedViewHelper {
 
 
 	/**

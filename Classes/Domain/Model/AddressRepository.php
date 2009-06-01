@@ -48,10 +48,22 @@ class Tx_Addresses_Domain_Model_AddressRepository extends Tx_Extbase_Persistence
 	 * @param int $group The ID of the group(s) to fetch records from
 	 * @param string $limit[optional] The limit string (like 0,5) 
 	 */
-	public function findWithGroup($groups, $limit=NULL) {
-		$condition = Array('addressgroups' => $groups);
+	public function findWithGroups($groups, $limit=NULL, $sortBy='last_name') {
 
-		return $this->findByConditions($condition, '', '', $limit);
+		$select = 'tx_addresses_domain_model_address.uid';
+		$local_table = 'tx_addresses_domain_model_address';
+		$mm_table = 'tx_addresses_address_addressgroup_mm';
+		$foreign_table = 'tx_addresses_domain_model_addressgroup';
+		$whereClause = 'AND tx_addresses_domain_model_addressgroup.uid IN (' . $groups . ')';
+		
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECT_mm_query($select,$local_table,$mm_table,$foreign_table,$whereClause,'',$sortBy,$limit); 
+		
+		$rows = Array();
+		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			$rows[] = $row['uid'];	
+		}
+		$foundAddressesList = implode(',', $rows);
+		return $this->findWhere('uid IN (' . $foundAddressesList . ')', '', $sortBy);
 	}
 	
 

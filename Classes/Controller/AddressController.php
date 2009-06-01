@@ -62,11 +62,15 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 		$this->indexSettings = $this->settings['controllers']['Address']['actions']['index'];
 			
 		$limit = $this->indexSettings['maxItems'] * ($currentPage) . ',' . $this->indexSettings['maxItems'];
-
-		$data = $this->addressRepository->findLimit($limit,$this->indexSettings['sortBy']);
+		if(isset($this->indexSettings['groups']) && $this->indexSettings['groups'] != '') {
+			$data = $this->addressRepository->findWithGroups($this->indexSettings['groups'], $limit, $this->indexSettings['sortBy']); 
+			$this->view->assign('totalPages', count($this->addressRepository->findWithGroups($this->indexSettings['groups'])));
+		} else {
+			$data = $this->addressRepository->findLimit($limit,$this->indexSettings['sortBy']);
+			$this->view->assign('totalPages', count($this->addressRepository->findAll()));
+		}
 
 		$this->view->assign('maxItems', $this->indexSettings['maxItems']); 
-		$this->view->assign('totalPages', count($this->addressRepository->findAll())); 
 		$this->view->assign('addresses', $data);
 		
 	}

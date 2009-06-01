@@ -50,6 +50,7 @@ class Tx_Addresses_ViewHelpers_PagebrowserViewHelper extends Tx_Fluid_Core_ViewH
 	 * @author Susanne Moog <typo3@susanne-moog.de>
 	 */
 public function render($totalCountOfAddresses=NULL,$maxAddressesToDisplay=5) {
+
 	$pagesTotal = ceil($totalCountOfAddresses/$maxAddressesToDisplay);
 	if($this->controllerContext->getRequest()->hasArgument('currentPage')) {
 		$currentPage = $this->controllerContext->getRequest()->getArgument('currentPage');

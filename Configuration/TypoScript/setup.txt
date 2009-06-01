@@ -4,7 +4,7 @@ plugin.tx_addresses {
 			actions {
 				index {
 					maxItems = 5 
-					groups = 1,2
+					groups = 
 					sortBy = first_name				
 				}
 			}

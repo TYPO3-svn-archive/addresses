@@ -39,3 +39,11 @@ body {
 	padding-left:30px;
 	color:#666;
 }
+
+.tx_addresses_pi1_index .download {
+	margin-top:10px;
+}
+
+.tx_addresses_pi1_index .download a img {
+	border:none;
+}

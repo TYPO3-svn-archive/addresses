@@ -48,8 +48,8 @@ class Tx_Addresses_Domain_Model_AddressRepository extends Tx_Extbase_Persistence
 	 * @param int $group The ID of the group(s) to fetch records from
 	 * @param string $limit[optional] The limit string (like 0,5) 
 	 */
-	public function findWithGroup($group, $limit=NULL) {
-		$condition = Array('addressgroups' => $group);
+	public function findWithGroup($groups, $limit=NULL) {
+		$condition = Array('addressgroups' => $groups);
 
 		return $this->findByConditions($condition, '', '', $limit);
 	}

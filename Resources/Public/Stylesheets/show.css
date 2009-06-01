@@ -19,6 +19,10 @@ body {
     color: #EF8100;
 } 
 
-.tx_addresses_pi1_index p {
+.tx_addresses_pi1_show p {
     margin-top: 3px;
+}
+
+.tx_addresses_pi1_show .download a img {
+	border:none;
 }

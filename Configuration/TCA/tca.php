@@ -2,7 +2,7 @@
 $TCA['tx_addresses_domain_model_address'] = Array (
 	'ctrl' => $TCA['tx_addresses_domain_model_address']['ctrl'],
 	'interface' => Array (
-		'showRecordFieldList' => 'gender,first_name,last_name,birthday,address,city,zip,country,phone,fax,email,www,title,company,room,building,image,addressgroups,region'
+		'showRecordFieldList' => 'gender,first_name,last_name,birthday,marital_status,address,city,zip,country,preferred_language,phone,fax,email,www,title,company,room,building,image,addressgroups,region'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_address']['feInterface'],
 	'columns' => Array (
@@ -271,7 +271,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'preferred_language' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:partner/locallang_db.xml:tx_partner_main.preferred_language',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.preferred_language',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -284,8 +284,8 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		'1' => Array('showitem' => 'hidden;;;;1-1-1, gender, first_name, last_name;;2;;3-3-3,company;;6, address, zip, city;;3, email;;5, phone;;4, image;;;;4-4-4, description;;;;4-4-4, addressgroups')
 	),
 	'palettes' => Array (
-		'2' => Array('showitem' => 'title, birthday'),
-		'3' => Array('showitem' => 'country, region'),
+		'2' => Array('showitem' => 'title, birthday, marital_status'),
+		'3' => Array('showitem' => 'country, region, preferred_language'),
 		'4' => Array('showitem' => 'mobile, fax'),
 		'5' => Array('showitem' => 'www'),
 		'6' => Array('showitem' => 'room, building')

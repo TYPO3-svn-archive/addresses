@@ -6,18 +6,15 @@ if (TYPO3_MODE=='BE')	{
 	require_once(t3lib_extMgm::extPath($_EXTKEY).'class.tx_addresses_tce.php');
 }
 
-/**
- * A fully configured omnipotent plugin
- */
 Tx_Extbase_Utility_Plugin::registerPlugin(
 	'Addresses',																	// The name of the extension in UpperCamelCase
 	'Pi1',																			// A unique name of the plugin in UpperCamelCase
 	'Address Management',															// A title shown in the backend dropdown field
 	array(																			// An array holding the controller-action-combinations that are accessible
-	'Address' => 'index,show',													// The first controller and its first action will be the default
+	'Address' => 'index,show,vcard,vcards',													// The first controller and its first action will be the default
 	),
 	array(
-	'Address' => 'index,show',																				// An array of non-cachable controller-action-combinations (they must already be enabled)
+	'Address' => 'index,show,vcard,vcards',																				// An array of non-cachable controller-action-combinations (they must already be enabled)
 	)
 );
 
@@ -47,7 +44,6 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 
 t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_address');
 t3lib_extMgm::addToInsertRecords('tx_addresses_domain_model_address');
-//t3lib_extMgm::addLLrefForTCAdescr('tx_addresses_domain_model_address','EXT:tt_address/locallang_csh_ttaddr.php');
 
 t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_addressgroup');
 $TCA['tx_addresses_domain_model_addressgroup'] = array (

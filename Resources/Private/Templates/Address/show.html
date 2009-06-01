@@ -4,8 +4,8 @@
 	<h3> 
 		<f:translate key="{address.gender}">Mr./Mrs.</f:translate>
 		{address.title} 
-		{address.first_name} 
-		{address.last_name}
+		{address.firstName} 
+		{address.lastName}
 	</h3>
 	<f:image src="uploads/pics/{address.image}" alt="{address.name}" maxWidth="140" />
 	<address>
@@ -31,5 +31,11 @@
 		<f:translate key="group">Group:</f:translate> {group}<br />
 	</f:for>
 	-->
-	<f:link.action action="index" controller="Address" arguments="{address : address}"><f:translate key="back_to_list">Back to list</f:translate></f:link.action>
+	<div class="download">
+		<f:link.action action="vcard" arguments="{address : address}">
+			<f:image src="typo3conf/ext/addresses/Resources/Private/Icons/v-vcard.png" maxWidth="140" alt="vCard" />
+			<!--<f:translate key="download_vcard">Download as vCard</f:translate> -->
+		</f:link.action>
+	</div>
+	<f:link.action action="index"><f:translate key="back_to_list">Back to list</f:translate></f:link.action>
 </div>

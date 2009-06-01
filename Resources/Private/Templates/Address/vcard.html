@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:{address.lastName};{address.firstName}
+FN:{address.firstName} {address.lastName}
+ORG:{address.company}
+URL:{address.www}
+EMAIL;TYPE=INTERNET:{address.email}
+TEL;TYPE=voice,work,pref:{address.phone}
+ADR;TYPE=intl,work,postal,parcel:;;{address.address};{address.city};;{address.zip};{address.country}
+END:VCARD

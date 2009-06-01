@@ -26,7 +26,7 @@
 /**
  * The address controller for the Address package
  *
- * @version $Id:$
+ * @version $Id: $
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  */
 class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controller_ActionController {
@@ -43,7 +43,6 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	 */
 	public function initializeAction() {		
 		$this->addressRepository = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');	
-		//$this->groupRepository = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressgroupRepository');	
 	}
 
 	/**
@@ -55,7 +54,7 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	public function indexAction($currentPage = NULL) {
 		$limit = ''; // used to fetch this count of addresses from the database with a given offset (example: 0,5)
 		$data = Array(); // used to store the objects fetched from the repository
-		
+			
 		// Stylesheet
 		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . t3lib_extMgm::siteRelPath('addresses') . 'Resources/Public/Stylesheets/index.css" />');
 		
@@ -65,7 +64,7 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 		$limit = $this->indexSettings['maxItems'] * ($currentPage) . ',' . $this->indexSettings['maxItems'];
 
 		$data = $this->addressRepository->findLimit($limit,$this->indexSettings['sortBy']);
-	
+
 		$this->view->assign('maxItems', $this->indexSettings['maxItems']); 
 		$this->view->assign('totalPages', count($this->addressRepository->findAll())); 
 		$this->view->assign('addresses', $data);
@@ -81,6 +80,35 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	public function showAction(Tx_Addresses_Domain_Model_Address $address) {
 		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . t3lib_extMgm::siteRelPath('addresses') . 'Resources/Public/Stylesheets/show.css" />');
 		$this->view->assign('address', $address);
+	}
+	
+	/**
+	 * Exports a single address to vCard
+	 *
+	 * @param Tx_Addresses_Domain_Model_Address $address The address to show
+	 * @return string The rendered view of a single address
+	 */
+	public function vcardAction(Tx_Addresses_Domain_Model_Address $address) {
+		$this->view->assign('address', $address);
+		header('Content-Type: text/x-vCard');
+		header('Content-Disposition: attachment; filename= "' . $address->getFirstName() . '_' . $address->getLastName() . '.vcf"');
+		echo $this->view->render();
+		exit;
+	}
+	
+	/**
+	 * vCards action for this controller. Accumulates all addresses into a vcf file
+	 *
+	 * @return string The rendered view
+	 */
+	public function vcardsAction() {
+		$data = Array();
+		$data = $this->addressRepository->findAll(); 
+		$this->view->assign('addresses', $data);
+		header('Content-Type: text/x-vCard');
+		header('Content-Disposition: attachment; filename= "addresses.vcf"');
+		echo $this->view->render();
+		exit;
 	}
 
 }

@@ -68,7 +68,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * @var $javascriptFiles array
 	 */
-	protected $javascriptFiles = array('grid', 'window', 'init');
+	protected $javascriptFiles = array('ext_expander', 'search_field', 't3_addresses_init', 't3_addresses_grid', 't3_addresses_window');
 
 	/**
 	 * @var $relativePath string
@@ -91,6 +91,16 @@ class  tx_addresses_module extends t3lib_SCbase {
 	protected $pagingSize = 200;
 
 	/**
+	 * @var $minifyJavascript string
+	 */
+	protected $minifyJavascript = FALSE;
+
+	/**
+	 * @var $version string
+	 */
+	protected $version = '1.0.0';
+
+	/**
 	 * @var $store array
 	 */
 	protected $store = array();
@@ -99,8 +109,34 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * Constructor
 	 */
 	public function __construct() {
+		parent::init();
+
+		$this->doc = t3lib_div::makeInstance('template');
+		$this->doc->setModuleTemplate(t3lib_extMgm::extPath('addresses') . 'Module/template.html');
+		$this->doc->backPath = '../../../../typo3/';
+
+		//don't access in workspace
+		if ($GLOBALS['BE_USER']->workspace !== 0) {
+			$this->isAccessibleForCurrentUser = false;
+		}
+
+		//read configuration
+		$modTS = $GLOBALS['BE_USER']->getTSConfig('mod.addresses');
+		if (isset($modTS['properties']['pagingSize']) && intval($modTS['properties']['pagingSize']) > 0) {
+			$this->pagingSize = intval($modTS['properties']['pagingSize']);
+		}
+		
 		$configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);
 		$this->pageSize = (int) $configurations['PAGE_SIZE'];
+		$this->minifyJavascript = (boolean) $configurations['minifyJavascript'];
+		$this->relativePath = t3lib_extMgm::extRelPath('addresses');
+		$this->absolutePath = t3lib_extMgm::extPath('addresses');
+		$this->resourcesPath = $this->relativePath . 'Resources/Public/';
+
+		// Get version number
+		$_EXTKEY = 'addresses';
+		require($this->absolutePath .'/ext_emconf.php');
+		$this->version = $EM_CONF['addresses']['version'];
 	}
 
 
@@ -114,7 +150,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 		$this->doc = t3lib_div::makeInstance('template');
 		$this->doc->setModuleTemplate(t3lib_extMgm::extPath('addresses') . 'Module/template.html');
 		$this->doc->backPath = '../../../../typo3/';
-//		$this->doc->backPath = '/typo3/';
+		//		$this->doc->backPath = '/typo3/';
 
 		$this->relativePath = t3lib_extMgm::extRelPath('addresses');
 		$this->absolutePath = t3lib_extMgm::extPath('addresses');
@@ -176,36 +212,56 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * @return	void
 	 */
 	protected function loadHeaderData() {
-	// Load CSS Stylesheets:
-		$this->loadStylesheet('contrib/extjs/resources/css/ext-all.css');
-		$this->loadStylesheet('contrib/extjs/resources/css/xtheme-gray.css');
+
+		// Loads extjs
+		$this->doc->loadExtJS();
+		//		$this->doc->enableExtJsDebug(); // use for debug
+
+		// Load special CSS Stylesheets:
 		$this->loadStylesheet($this->resourcesPath . 'Stylesheets/customExtJs.css');
-		// Load Ext JS:
-		$this->doc->loadJavascriptLib('contrib/extjs/adapter/ext/ext-base.js');
-		$this->doc->loadJavascriptLib('contrib/extjs/ext-all-debug.js');
-		//$this->doc->loadJavascriptLib('contrib/extjs/ext-all.js');
+
+		// Load special JS
+		if ($this->minifyJavascript) {
+			$tempFolder = PATH_site . 'typo3temp/tx_addresses/';
+			$tempFileName = 'addresse-' . $this->version . '.js';
+			$tempFile = $tempFolder . $tempFileName;
+			if (!is_dir($tempFolder)) {
+				t3lib_div::mkdir($tempFolder);
+			}
+
+			if (!is_file($tempFile)) {
+				$fileContent = '';
+				foreach($this->javascriptFiles as $file) {
+					$filename = $this->absolutePath . 'Resources/Public/Javascript/' . $file . '.js';
+					$fileContent .= t3lib_div::minifyJavaScript(file_get_contents($filename));
+				}
+				t3lib_div::writeFileToTypo3tempDir($tempFile, $fileContent);
+			}
+			$this->loadJavaScript('../typo3temp/tx_addresses/' . $tempFileName);
+		}
+		else {
+			// Load Plugins JavaScript:
+			foreach($this->javascriptFiles as $file) {
+				$this->loadJavaScript($this->resourcesPath . 'Javascript/' . $file . '.js');
+			}
+		}
+
+
 		// Integrate dynamic JavaScript such as configuration or lables:
 		$fieldsColumns = $this->getFieldsColumns();
 		$fieldsName = $this->getFieldsName($fieldsColumns);
 		$fieldsEdition = $this->getFieldsEdition();
 
 		$this->store[] = $this->getLocationStore();
-		$this->doc->JScode.= t3lib_div::wrapJS('
-			Ext.namespace("' . $this->namespace . '");
+
+		$this->doc->extJScode .= '
 			' . $this->namespace . '.store = {' . implode(',', $this->store) . '};
 			' . $this->namespace . '.statics = ' . json_encode($this->getStaticConfiguration($fieldsEdition)) . ';
 			' . $this->namespace . '.fieldsColumns = ' . json_encode($fieldsColumns) . ';
 			' . $this->namespace . '.fieldsName = ' . json_encode($fieldsName) . ';
 			' . $this->namespace . '.fieldsEdition = ' . $this->removesQuotesAroundObject(json_encode($fieldsEdition)) . ';
-			' . $this->namespace . '.lang = ' . json_encode($this->getLabels()) . ';'
-		);
-
-		// Load addresses JavaScript:
-		$this->loadJavaScript($this->resourcesPath . 'Javascript/ext_expander.js');
-		$this->loadJavaScript($this->resourcesPath . 'Javascript/search_field.js');
-		foreach($this->javascriptFiles as $file) {
-			$this->loadJavaScript($this->resourcesPath . 'Javascript/t3_' . strtolower($this->namespace) . '_' . $file . '.js');
-		}
+			' . $this->namespace . '.lang = ' . json_encode($this->getLabels()) . ';
+			Addresses.initialize();' . chr(10);
 	}
 
 	protected function getLocationStore() {
@@ -632,7 +688,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 		//
 		// Regular expression to extract the necessary labels from the javascrip file
 		foreach	($this->javascriptFiles as $file) {
-			$content = file_get_contents($this->absolutePath . '/Resources/Public/Javascript/t3_' . strtolower($this->namespace) . '_' . $file . '.js');
+			$content = file_get_contents($this->absolutePath . '/Resources/Public/Javascript/' . $file . '.js');
 			preg_match_all('/' . $this->namespace .'\.lang\.([\w]+)/is', $content, $matches, PREG_SET_ORDER);
 			foreach ($matches as  $match) {
 				$key = $match[1];
@@ -713,7 +769,7 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/address
 
 // Make instance:
 $SOBE = t3lib_div::makeInstance('tx_addresses_module');
-$SOBE->initialize();
+//$SOBE->initialize();
 
 // Include files?
 foreach($SOBE->include_once as $INC_FILE) {

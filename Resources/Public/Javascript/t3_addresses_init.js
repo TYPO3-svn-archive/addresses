@@ -21,9 +21,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// Global object
-var main, edition;
-
 /**
  * ExtJS for the 'addresses' extension.
  * Contains the Addresses functions
@@ -36,27 +33,21 @@ var main, edition;
  * @version $Id$
  */
 
-Event.observe(window, 'load', function() {
-	//Quicktips initialisieren
-//	Ext.QuickTips.init();
+Ext.namespace("Addresses");
 
-	// @todo: description
-	// Ext.form.Field.prototype.msgTarget = 'side';
-
-	// disable loadindicator
-//	Ext.UpdateManager.defaults.showLoadIndicator = false;
+Addresses.initialize = function() {
 	
 	// fire addresses grid
-	main = new Addresses.Main();
+	Addresses.grid = new Addresses.Grid();
 	
 	// adjust columns layout + render the grid
-	Addresses.fieldsColumns.unshift(main.checkbox, main.expander); // add checkbox + expander to the grid
-	Addresses.fieldsColumns.push(main.controller);
-	main.columns = Addresses.fieldsColumns;
-	main.init();
+	Addresses.fieldsColumns.unshift(Addresses.grid.checkbox, Addresses.grid.expander); // add checkbox + expander to the grid
+	Addresses.fieldsColumns.push(Addresses.grid.controller);
+	Addresses.grid.columns = Addresses.fieldsColumns;
+	Addresses.grid.init();
 
 	// Prepare editing window
-	edition = new Addresses.Edition();
-	edition.init();
-//	edition.w.show();
-});
+	Addresses.window = new Addresses.Window();
+	Addresses.window.init();
+//	Addresses.window.w.show();
+};

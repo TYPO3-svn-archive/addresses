@@ -33,7 +33,7 @@
  * @version $Id$
  */
 
-Addresses.Main = function(){
+Addresses.Grid = function(){
 
 	/**
 	 * Defines the resource path
@@ -64,8 +64,8 @@ Addresses.Main = function(){
 	this.controller = new Object({
 		width: 50,
 		renderer: function(val) {
-			output = '<img id="edit-' + val + '" class="pointer" src="' + main.iconsPath + 'pencil.png" onclick="main.showWindow(this)"/>&nbsp;&nbsp;';
-			output += '<img id="copy-' + val + '" class="pointer" src="' + main.iconsPath + 'clip_copy.gif" onclick="main.showWindow(this)"/>';
+			output = '<img id="edit-' + val + '" class="pointer" src="' + Addresses.grid.iconsPath + 'pencil.png" onclick="Addresses.grid.showWindow(this)"/>&nbsp;&nbsp;';
+			output += '<img id="copy-' + val + '" class="pointer" src="' + Addresses.grid.iconsPath + 'clip_copy.gif" onclick="Addresses.grid.showWindow(this)"/>';
 			return output;
 		},
 		dataIndex: 'uid'
@@ -88,11 +88,11 @@ Addresses.Main = function(){
 
 		if (data.length > 0) {
 			var w = Ext.ComponentMgr.get('addresses_window');
-			var form = w.getComponent('editForm').getForm()
+			var form = w.getComponent('editForm').getForm();
 			form.reset(); // clear form
 
 			Ext.Msg.progress(Addresses.lang.loading, '');
-			main.startInterval();
+			Addresses.grid.startInterval();
 
 			form.load({
 				method: 'GET',
@@ -118,15 +118,15 @@ Addresses.Main = function(){
 						w.setTitle(Addresses.lang.copy_record); // set title
 					}
 
-					window.clearInterval(Addresses.Main.interval);
+					window.clearInterval(Addresses.Grid.interval);
 					Ext.Msg.hide();
 					w.show();
 
-					main.focusOnFirstVisibleField();
+					Addresses.grid.focusOnFirstVisibleField();
 				}
 			});
 		}
-	}
+	};
 
 	/**
 	 * Visible columns part of the grid
@@ -184,7 +184,7 @@ Addresses.Main = function(){
 
 		// Defines interval
 		var count = 0;
-		Addresses.Main.interval = window.setInterval(function() {
+		Addresses.Grid.interval = window.setInterval(function() {
 			count = count + 0.04;
 
 			Ext.Msg.updateProgress(count);
@@ -203,7 +203,7 @@ Addresses.Main = function(){
 	 */
 	this.getSelection = function() {
 		return this.grid.getSelectionModel().getSelections();
-	}
+	};
 
 
 	/**
@@ -222,7 +222,7 @@ Addresses.Main = function(){
 			};
 		}
 		return data;
-	}
+	};
 
 
 	/**
@@ -242,20 +242,20 @@ Addresses.Main = function(){
 			names += item.data.first_name + ' ' + item.data.last_name;
 		}
 		return names;
-	}
+	};
 
 	/**
 	 * Set focus on the first field
 	 */
 	this.focusOnFirstVisibleField = function() {
 		try {
-			var firstVisibleElement = Addresses.fieldsEdition[0].items[1].id
+			var firstVisibleElement = Addresses.fieldsEdition[0].items[1].id;
 			Ext.ComponentMgr.get(firstVisibleElement).focus(true,100); // wait for 100 miliseconds
 		}
 		catch (e) {
 			console.log(e);
 		}
-	}
+	};
 
 	/**
 	 * Top bar which is attached to the grid
@@ -268,10 +268,10 @@ Addresses.Main = function(){
 		handler: function() {
 			var w = Ext.ComponentMgr.get('addresses_window');
 			w.setTitle(Addresses.lang.new_record); // set title
-			var form = w.getComponent('editForm').getForm()
+			var form = w.getComponent('editForm').getForm();
 			form.reset(); // clear form
 			w.show();
-			main.focusOnFirstVisibleField();
+			Addresses.grid.focusOnFirstVisibleField();
 		}
 	},
 	'-',
@@ -282,7 +282,7 @@ Addresses.Main = function(){
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			main.showWindow(this);
+			Addresses.grid.showWindow(this);
 		}
 	},
 	'-',
@@ -293,12 +293,12 @@ Addresses.Main = function(){
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			var data = main.getSelectedUids()
+			var data = Addresses.grid.getSelectedUids();
 
 			Ext.Msg.show({
 				title: Addresses.lang.remove,
 				buttons: Ext.MessageBox.YESNO,
-				msg: Addresses.lang.are_you_sure + ' ' + main.getSelectedNames() + '?',
+				msg: Addresses.lang.are_you_sure + ' ' + Addresses.grid.getSelectedNames() + '?',
 				fn: function(btn){
 					if (btn == 'yes' && data.length > 0){
 						var conn = new Ext.data.Connection();
@@ -327,7 +327,7 @@ Addresses.Main = function(){
 						});
 					}
 				}
-			})
+			});
 		}
 	},
 	'->',
@@ -395,8 +395,8 @@ Addresses.Main = function(){
 				// Other possible writing
 				//				var toolbar = this.grid.getTopToolbar();
 				//				toolbar.items.get('multipleEditionButton').setDisabled(false);
-				Ext.ComponentMgr.get('multipleEditionButton').setDisabled(selModel.getCount() == 0);
-				Ext.ComponentMgr.get('deleteButton').setDisabled(selModel.getCount() == 0);
+				Ext.ComponentMgr.get('multipleEditionButton').setDisabled(selModel.getCount() === 0);
+				Ext.ComponentMgr.get('deleteButton').setDisabled(selModel.getCount() === 0);
 			},
 			this,
 			{
@@ -416,7 +416,7 @@ Addresses.Main = function(){
 	//			var cssStyle = (record.data.change<0.7 ? (record.data.change<0.5 ? (record.data.change<0.2 ? 'red-row' : 'green-row') : 'blue-row') : '');
 	//			return 'red-row';
 	//		};
-	}
+	};
 };
 
 Ext.Message = function(){

@@ -8,6 +8,7 @@ preg_match('/(typo3|typo3conf)\/ext\/addresses\/Module\/index\.php$/i', $_SERVER
 // Handle path like: 
 // * http://localhost/mywebsite/
 // * http://mywebsite/
+// * when addresses is somewhere else on the hardrive but linked by the mean of a symlink
 if (strpos($_SERVER['SCRIPT_NAME'], 'ext/addresses/Module/index.php') !== FALSE) {
 	if (empty($match)) {
 		//$BACK_PATH='../../../../typo3/';

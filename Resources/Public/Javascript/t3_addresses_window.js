@@ -33,7 +33,7 @@
  * @version $Id$
  */
 
-Addresses.Edition = function()
+Addresses.Window = function()
 {
 	/**
 	 * Buttons: save - cancel attached to the form panel
@@ -64,7 +64,7 @@ Addresses.Edition = function()
 							Ext.Msg.alert(Addresses.lang.warning, a.result.errormsg);
 						}
 					}
-				}
+				};
 
 				var w = Ext.ComponentMgr.get('addresses_window');
 				var form = w.getComponent('editForm').getForm();
@@ -143,7 +143,7 @@ Addresses.Edition = function()
 
 		// formPanel that contains a tabPanel
 		items: this.formPanel
-	})
+	});
 
 	/**
 	 * Generic method for adding a listner on a combobox. It will store new data into the SimpleStore componenent
@@ -175,7 +175,7 @@ Addresses.Edition = function()
 			}
 		}
 
-	}
+	};
 
 
 	/**
@@ -223,7 +223,7 @@ Addresses.Edition = function()
 				);
 		}
 
-	}
+	};
 
 	/**
 	 * Initialize function
@@ -245,5 +245,5 @@ Addresses.Edition = function()
 			},
 			stopEvent: true
 		});
-	}
+	};
 };

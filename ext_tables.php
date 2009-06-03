@@ -139,7 +139,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 
 	$TCA['tx_addresses_domain_model_address']['columns']['country'] = array(
 		'exclude' => 1,
-		'label' => 'LLL:EXT:lang/locallang_general.php:LGL.country',
+		'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.country',
 		'config' => Array (
 			'type' => 'select',
 			'items' => Array (

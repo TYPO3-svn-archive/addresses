@@ -43,7 +43,7 @@ require_once(PATH_t3lib . 'class.t3lib_scbase.php');
 
 // Check user permissions
 $BE_USER->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
-$LANG->includeLLFile('EXT:addresses/Module/locallang.xml');
+$LANG->includeLLFile('EXT:addresses/Module/Resources/Private/Language/locallang.xml');
 
 /**
  * Module 'addresses' for the 'addresses' extension.

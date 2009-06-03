@@ -44,6 +44,14 @@
 			<label index="tx_addresses_domain_model_address.street">Street</label>
 			<label index="tx_addresses_domain_model_address.street_number">Street number</label>
 			<label index="tx_addresses_domain_model_address.remarks">Remarks</label>
+			<label index="tx_addresses_domain_model_address.title">Title</label>
+			<label index="tx_addresses_domain_model_address.phone">Phone</label>
+			<label index="tx_addresses_domain_model_address.fax">Fax</label>
+			<label index="tx_addresses_domain_model_address.email">Email</label>
+			<label index="tx_addresses_domain_model_address.company">Company</label>
+			<label index="tx_addresses_domain_model_address.country">Country</label>
+			<label index="tx_addresses_domain_model_address.hidden">Hidden</label>
+			<label index="tx_addresses_domain_model_address.image">Image</label>
 		</languageKey>
 		<languageKey index="default" type="fr">
 			<label index="tx_addresses_domain_model_address.mobile">Mobile</label>
@@ -84,6 +92,14 @@
 			<label index="tx_addresses_domain_model_address.street">Rue</label>
 			<label index="tx_addresses_domain_model_address.street_number">Numéro</label>
 			<label index="tx_addresses_domain_model_address.remarks">Remarque</label>
+			<label index="tx_addresses_domain_model_address.title">Titre</label>
+			<label index="tx_addresses_domain_model_address.phone">Téléphone</label>
+			<label index="tx_addresses_domain_model_address.fax">Fax</label>
+			<label index="tx_addresses_domain_model_address.email">Email</label>
+			<label index="tx_addresses_domain_model_address.company">Companie</label>
+			<label index="tx_addresses_domain_model_address.country">Pays</label>
+			<label index="tx_addresses_domain_model_address.hidden">Caché</label>
+			<label index="tx_addresses_domain_model_address.image">Image</label>
 		</languageKey>
 	</data>
 </T3locallang>

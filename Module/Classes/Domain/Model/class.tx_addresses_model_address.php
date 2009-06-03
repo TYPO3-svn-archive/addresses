@@ -33,7 +33,7 @@
  * @version $Id$
  */
 
-class tx_addresses_model_address {
+class AddressRepository {
 
 	/**
 	 *

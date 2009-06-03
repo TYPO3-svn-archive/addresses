@@ -50,7 +50,7 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/cla
  * @subpackage	tx_addresses
  * @version 	$Id$
  */
-class tx_addresses_controller {
+class AddressController {
 	/**
 	 * Stores relevant data from extJS
 	 * Example: Json format
@@ -129,10 +129,10 @@ class tx_addresses_controller {
 	 * @param	string		$data: The data to be stored in the session
 	 * @return	void
 	 */
-	protected function setDataInSession($identifier, $data) {
-		$GLOBALS['BE_USER']->uc['tx_addresses'][$identifier] = $data;
-		$GLOBALS['BE_USER']->writeUC();
-	}
+//	protected function setDataInSession($identifier, $data) {
+//		$GLOBALS['BE_USER']->uc['tx_addresses'][$identifier] = $data;
+//		$GLOBALS['BE_USER']->writeUC();
+//	}
 }
 
 

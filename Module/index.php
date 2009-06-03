@@ -131,7 +131,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 		$this->minifyJavascript = (boolean) $configurations['minifyJavascript'];
 		$this->relativePath = t3lib_extMgm::extRelPath('addresses');
 		$this->absolutePath = t3lib_extMgm::extPath('addresses');
-		$this->resourcesPath = $this->relativePath . 'Resources/Public/';
+		$this->resourcesPath = $this->relativePath . 'Module/Resources/Public/';
 
 		// Get version number
 		$_EXTKEY = 'addresses';
@@ -154,7 +154,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 
 		$this->relativePath = t3lib_extMgm::extRelPath('addresses');
 		$this->absolutePath = t3lib_extMgm::extPath('addresses');
-		$this->resourcesPath = $this->relativePath . 'Resources/Public/';
+		$this->resourcesPath = $this->relativePath . 'Module/Resources/Public/';
 
 		//don't access in workspace
 		if ($GLOBALS['BE_USER']->workspace !== 0) {
@@ -229,7 +229,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 			if (!is_file($tempFile)) {
 				$fileContent = '';
 				foreach($this->javascriptFiles as $file) {
-					$filename = $this->absolutePath . 'Resources/Public/Javascript/' . $file . '.js';
+					$filename = $this->absolutePath . 'Module/Resources/Public/Javascript/' . $file . '.js';
 					$fileContent .= t3lib_div::minifyJavaScript(file_get_contents($filename));
 				}
 				t3lib_div::writeFileToTypo3tempDir($tempFile, $fileContent);
@@ -694,7 +694,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 		//
 		// Regular expression to extract the necessary labels from the javascrip file
 		foreach	($this->javascriptFiles as $file) {
-			$content = file_get_contents($this->absolutePath . '/Resources/Public/Javascript/' . $file . '.js');
+			$content = file_get_contents($this->absolutePath . 'Module/Resources/Public/Javascript/' . $file . '.js');
 			preg_match_all('/' . $this->namespace .'\.lang\.([\w]+)/is', $content, $matches, PREG_SET_ORDER);
 			foreach ($matches as  $match) {
 				$key = $match[1];

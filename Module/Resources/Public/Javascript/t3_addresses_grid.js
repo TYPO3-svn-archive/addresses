@@ -38,7 +38,7 @@ Addresses.Grid = function(){
 	/**
 	 * Defines the resource path
 	 */
-	this.iconsPath = '../Resources/Public/Icons/';
+	this.iconsPath = '../Module/Resources/Public/Icons/';
 	this.ajaxPath = '../../../../';
 
 	/**

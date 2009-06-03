@@ -40,7 +40,7 @@ $MCONF['access'] = 'user,group';
 $BE_USER->modAccess($MCONF, 1);	// This checks makes sure the user has the permissions. Exits if that not the case.
 
 // Pre-Include all models and views
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/class.tx_addresses_model_address.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/AddressRepository.php'));
 
 /**
  * Controller class for the 'addresses' extension. Handles the AJAX Requests
@@ -66,7 +66,7 @@ class AddressController {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->model = t3lib_div::makeInstance('tx_addresses_model_address');
+		$this->model = t3lib_div::makeInstance('AddressRepository');
 		$this->data = json_decode(t3lib_div::_GP('data'));
 	}
 
@@ -76,7 +76,7 @@ class AddressController {
 	 * @return void
 	 **/
 	public function indexAction() {
-		$this->model = t3lib_div::makeInstance('tx_addresses_model_address');
+		$this->model = t3lib_div::makeInstance('AddressRepository');
 		$message = $this->model->findAll();
 		echo json_encode($message);
 	}

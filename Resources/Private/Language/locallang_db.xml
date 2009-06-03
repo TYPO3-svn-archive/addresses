@@ -65,7 +65,7 @@
 			<label index="tx_addresses_domain_model_address.cruser_id">Créé par</label>
 			<label index="tx_addresses_domain_model_address.upuser_id">Mis à jour par</label>
 			<label index="tx_addresses_domain_model_address.crdate">Date de création</label>
-			<label index="tx_addresses_domain_model_address.address">Addresse</label>
+			<label index="tx_addresses_domain_model_address.address">Adresse</label>
 			<label index="tx_addresses_domain_model_address.pid">PID</label>
 			<label index="tx_addresses_domain_model_address.postal_code">Code postal</label>
 			<label index="tx_addresses_domain_model_address.locality">Localité</label>

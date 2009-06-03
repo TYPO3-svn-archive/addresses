@@ -46,7 +46,7 @@ class Tx_Addresses_Domain_Model_Addressgroup extends Tx_Extbase_DomainObject_Abs
 	 *
 	 * @var string
 	 */
-	protected $description = '';
+	protected $remarks = '';
 
 
 	/**
@@ -77,22 +77,22 @@ class Tx_Addresses_Domain_Model_Addressgroup extends Tx_Extbase_DomainObject_Abs
 	}
 
 	/**
-	 * Sets the description for the addressgroup
+	 * Sets the remarks for the addressgroup
 	 *
-	 * @param string $description
+	 * @param string $remarks
 	 * @return void
 	 */
-	public function setDescription($description) {
-		$this->description = $description;
+	public function setRemarks($remarks) {
+		$this->remarks = $remarks;
 	}
 
 	/**
-	 * Returns the description
+	 * Returns the remarks
 	 *
 	 * @return string
 	 */
-	public function getDescription() {
-		return $this->description;
+	public function getRemarks() {
+		return $this->remarks;
 	}
 
 

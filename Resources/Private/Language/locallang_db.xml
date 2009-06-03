@@ -15,7 +15,6 @@
 			<label index="tx_addresses_domain_model_address.gender.I.1">Mr.</label>
 			<label index="tx_addresses_domain_model_address.gender.I.2">Mrs.</label>
 			<label index="tx_addresses_domain_model_address.gender.I.3">Miss</label>
-			<label index="tx_addresses_domain_model_address.birthday">Birthday</label>
 			<label index="tx_addresses_domain_model_address.region">Region</label>
 			<label index="tx_addresses_domain_model_address.room">Room</label>
 			<label index="tx_addresses_domain_model_address.building">Building</label>
@@ -28,9 +27,24 @@
 			<label index="tx_addresses_domain_model_address.crdate">Create date</label>
 			<label index="tx_addresses_domain_model_address.address">Address</label>
 			<label index="tx_addresses_domain_model_address.pid">PID</label>
-			<label index="tx_addresses_domain_model_address.zip">ZIP</label>
-			<label index="tx_addresses_domain_model_address.city">City</label>
+			<label index="tx_addresses_domain_model_address.postal_code">Postal code</label>
+			<label index="tx_addresses_domain_model_address.locality">Locality</label>
 			<label index="tx_addresses_domain_model_address.preferred_language">Language</label>
+			<label index="tx_addresses_domain_model_address.status">Status</label>
+			<label index="tx_addresses_domain_model_address.type">Type</label>
+			<label index="tx_addresses_domain_model_address.type">Type</label>
+			<label index="tx_addresses_domain_model_address.birth_date">Birth date</label>
+			<label index="tx_addresses_domain_model_address.birth_place">Birth place</label>
+			<label index="tx_addresses_domain_model_address.death_date">Death Date</label>
+			<label index="tx_addresses_domain_model_address.death_place">Death place</label>
+			<label index="tx_addresses_domain_model_address.nationality">Nationality</label>
+			<label index="tx_addresses_domain_model_address.religion">Religion</label>
+			<label index="tx_addresses_domain_model_address.org_type">Organisation type</label>
+			<label index="tx_addresses_domain_model_address.org_name">Organisation name</label>
+			<label index="tx_addresses_domain_model_address.website">Website</label>
+			<label index="tx_addresses_domain_model_address.street">Street</label>
+			<label index="tx_addresses_domain_model_address.street_number">Street number</label>
+			<label index="tx_addresses_domain_model_address.remarks">Remarks</label>
 		</languageKey>
 	</data>
 </T3locallang>

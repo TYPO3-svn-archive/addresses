@@ -7,7 +7,7 @@
 				<h3><f:link.action action="show" arguments="{address : address}">{address.title} {address.firstName} {address.lastName}</f:link.action></h3>
 				<p>
 					<f:format.Nl2br>{address.address}</f:format.Nl2br><br />
-					{address.zip} {address.city} <br />
+					{address.postalCode} {address.locality} <br />
 					{address.country}
 				</p>
 			</li>

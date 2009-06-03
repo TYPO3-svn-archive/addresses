@@ -33,13 +33,27 @@
  * @entity
  */
 class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_AbstractEntity {
-	
+
 	/**
 	 * The contact's gender
 	 *
 	 * @var string
 	 */
 	protected $gender = '';
+
+	/**
+	 * The contact's status
+	 *
+	 * @var int
+	 */
+	protected $status = '';
+
+	/**
+	 * The contact's type
+	 *
+	 * @var int
+	 */
+	protected $type = '';
 
 	/**
 	 * The contact's first_name
@@ -57,10 +71,10 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 
 	/**
 	 * The contact's marital status
-	 * 
+	 *
 	 * @var int marital_status
 	 */
-	
+
 	protected $maritalStatus = '';
 
 	/**
@@ -69,13 +83,62 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 * @var string
 	 */
 	protected $title = '';
-	
+
 	/**
-	 * A contact's birthday
+	 * A contact's birthDate
 	 *
 	 * @var DateTime
 	 */
-	protected $birthday = '';
+	protected $birthDate = '';
+
+	/**
+	 * A contact's birthPlace
+	 *
+	 * @var string
+	 */
+	protected $birthPlace = '';
+
+	/**
+	 * A contact's deathDate
+	 *
+	 * @var DateTime
+	 */
+	protected $deathDate = '';
+
+	/**
+	 * A contact's deathPlace
+	 *
+	 * @var string
+	 */
+	protected $deathPlace = '';
+
+	/**
+	 * A contact's nationality
+	 *
+	 * @var string
+	 */
+	protected $nationality = '';
+
+	/**
+	 * A contact's religion
+	 *
+	 * @var string
+	 */
+	protected $religion = '';
+
+	/**
+	 * A contact's orgType
+	 *
+	 * @var string
+	 */
+	protected $orgType = '';
+
+	/**
+	 * A contact's orgName
+	 *
+	 * @var string
+	 */
+	protected $orgName = '';
 
 	/**
 	 * The email address
@@ -93,99 +156,113 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 
 	/**
 	 * The mobile phone number
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $mobile = '';
 
 	/**
-	 * The web address
-	 * 
+	 * The website address
+	 *
 	 * @var string
 	 */
-	protected $www = '';
+	protected $website = '';
 
 	/**
-	 * The address (street and number)
-	 * 
+	 * The address
+	 *
 	 * @var string
 	 */
 	protected $address = '';
 
 	/**
+	 * The street
+	 *
+	 * @var string
+	 */
+	protected $street = '';
+
+	/**
+	 * The streetNumber
+	 *
+	 * @var string
+	 */
+	protected $streetNumber = '';
+
+	/**
 	 * The company
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $company = '';
-	
+
 	/**
 	 * The room
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $room = '';
-	
+
 	/**
 	 * The building
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $building = '';
 
 	/**
-	 * The city
-	 * 
+	 * The locality
+	 *
 	 * @var string
 	 */
-	protected $city = '';
+	protected $locality = '';
 
 	/**
-	 * The zip code
-	 * 
+	 * The postalCode code
+	 *
 	 * @var string
 	 */
-	protected $zip = '';
+	protected $postalCode = '';
 
 	/**
 	 * The country
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $country = '';
-	
+
 	/**
 	 * The preferred_language
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $preferredLanguage = '';
-	
-	
+
+
 	/**
 	 * The image of the contact
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $image = '';
 
 	/**
 	 * The fax number
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $fax = '';
 
 	/**
-	 * The description of the contact
-	 * 
+	 * The remarks of the contact
+	 *
 	 * @var string
 	 */
-	protected $description = '';
-	
+	protected $remarks = '';
+
 	/**
 	 * The addressgroups of the contact
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $addressgroups = array();
@@ -197,7 +274,7 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 */
 	public function __construct() {
 	}
-	
+
 	/**
 	 * Sets this contact's gender
 	 *
@@ -216,7 +293,45 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	public function getGender() {
 		return $this->gender;
 	}
-	
+
+	/**
+	 * Sets this contact's status
+	 *
+	 * @param string $status The contact's status
+	 * @return void
+	 */
+	public function setStatus($status) {
+		$this->status = $status;
+	}
+
+	/**
+	 * Returns the contact's status
+	 *
+	 * @return string The contact's status
+	 */
+	public function getStatus() {
+		return $this->status;
+	}
+
+	/**
+	 * Sets this contact's type
+	 *
+	 * @param string $type The contact's type
+	 * @return void
+	 */
+	public function setType($type) {
+		$this->type = $type;
+	}
+
+	/**
+	 * Returns the contact's type
+	 *
+	 * @return string The contact's type
+	 */
+	public function getType() {
+		return $this->type;
+	}
+
 	/**
 	 * Sets this contact's first_name
 	 *
@@ -235,7 +350,7 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	public function getFirstName() {
 		return $this->firstName;
 	}
-	
+
 	/**
 	 * Sets this contact's last_name
 	 *
@@ -254,26 +369,26 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	public function getLastName() {
 		return $this->lastName;
 	}
-	
+
 	/**
 	 * Sets the contact's marital status
-	 * 
+	 *
 	 * @param  integer	the contact's marital status
 	 * @return void
 	 */
 	public function setMaritalStatus($maritalStatus) {
 		$this->maritalStatus = $maritalStatus;
 	}
-	
+
 	/**
 	 * Returns the contact's marital status
-	 * 
+	 *
 	 * @return integer the contact's marital status
 	 */
 	public function getMaritalStatus() {
 		return $this->maritalStatus;
 	}
-	
+
 	/**
 	 * Sets this contact's title
 	 *
@@ -292,26 +407,159 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	public function getTitle() {
 		return $this->title;
 	}
-	
+
 	/**
-	 * Sets this contact's birthday
+	 * Sets this contact's birthDate
 	 *
-	 * @param DateTime $birthday The contact's birthday
+	 * @param DateTime $birthDate The contact's birthDate
 	 * @return void
 	 */
-	public function setBirthday(DateTime $birthday) {
-		$this->birthday = $birthday;
+	public function setBirthDate(DateTime $birthDate) {
+		$this->birthDate = $birthDate;
 	}
 
 	/**
-	 * Returns the contact's birthday
+	 * Returns the contact's birthDate
 	 *
 	 * @return DateTime
 	 */
-	public function getBirthday() {
-		return $this->birthday;
+	public function getBirthDate() {
+		return $this->birthDate;
 	}
-	
+
+	/**
+	 * Sets this contact's bearthPlace
+	 *
+	 * @param string $bearthPlace The contact's bearthPlace
+	 * @return void
+	 */
+	public function setBearthPlace(DateTime $bearthPlace) {
+		$this->bearthPlace = $bearthPlace;
+	}
+
+	/**
+	 * Returns the contact's bearthPlace
+	 *
+	 * @return string
+	 */
+	public function getBearthPlace() {
+		return $this->bearthPlace;
+	}
+
+	/**
+	 * Sets this contact's deathDate
+	 *
+	 * @param DateTime $deathDate The contact's deathDate
+	 * @return void
+	 */
+	public function setDeathDate(DateTime $deathDate) {
+		$this->deathDate = $deathDate;
+	}
+
+	/**
+	 * Returns the contact's deathDate
+	 *
+	 * @return DateTime
+	 */
+	public function getDeathDate() {
+		return $this->deathDate;
+	}
+
+	/**
+	 * Sets this contact's deathPlace
+	 *
+	 * @param string $deathPlace The contact's deathPlace
+	 * @return void
+	 */
+	public function setDeathPlace(DateTime $deathPlace) {
+		$this->deathPlace = $deathPlace;
+	}
+
+	/**
+	 * Returns the contact's deathPlace
+	 *
+	 * @return string
+	 */
+	public function getDeathPlace() {
+		return $this->deathPlace;
+	}
+
+	/**
+	 * Sets this contact's nationality
+	 *
+	 * @param string $nationality The contact's nationality
+	 * @return void
+	 */
+	public function setNationality(DateTime $nationality) {
+		$this->nationality = $nationality;
+	}
+
+	/**
+	 * Returns the contact's nationality
+	 *
+	 * @return string
+	 */
+	public function getNationality() {
+		return $this->nationality;
+	}
+
+	/**
+	 * Sets this contact's religion
+	 *
+	 * @param string $religion The contact's religion
+	 * @return void
+	 */
+	public function setReligion(DateTime $religion) {
+		$this->religion = $religion;
+	}
+
+	/**
+	 * Returns the contact's religion
+	 *
+	 * @return string
+	 */
+	public function getReligion() {
+		return $this->religion;
+	}
+
+	/**
+	 * Sets this contact's orgType
+	 *
+	 * @param string $orgType The contact's orgType
+	 * @return void
+	 */
+	public function setOrgType(DateTime $orgType) {
+		$this->orgType = $orgType;
+	}
+
+	/**
+	 * Returns the contact's orgType
+	 *
+	 * @return string
+	 */
+	public function getOrgType() {
+		return $this->orgType;
+	}
+
+	/**
+	 * Sets this contact's orgName
+	 *
+	 * @param string $orgName The contact's orgName
+	 * @return void
+	 */
+	public function setOrgName(DateTime $orgName) {
+		$this->orgName = $orgName;
+	}
+
+	/**
+	 * Returns the contact's orgName
+	 *
+	 * @return string
+	 */
+	public function getOrgName() {
+		return $this->orgName;
+	}
+
 	/**
 	 * Sets this contact's email address
 	 *
@@ -349,7 +597,7 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	public function getPhone() {
 		return $this->phone;
 	}
-	
+
 	/**
 	 * Sets this contact's mobile
 	 *
@@ -370,24 +618,24 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
-	 * Sets this contact's web address
+	 * Sets this contact's website address
 	 *
-	 * @param string $www The contact's web address
+	 * @param string $website The contact's website address
 	 * @return void
 	 */
-	public function setWww($www) {
-		$this->www = $www;
+	public function setWebsite($website) {
+		$this->website = $website;
 	}
 
 	/**
-	 * Returns the contact's web address
+	 * Returns the contact's website address
 	 *
-	 * @return string The contact's web address
+	 * @return string The contact's website address
 	 */
-	public function getWww() {
-		return $this->www;
-	}	
-	
+	public function getWebsite() {
+		return $this->website;
+	}
+
 	/**
 	 * Sets this contact's address (street and number)
 	 *
@@ -405,6 +653,44 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 */
 	public function getAddress() {
 		return $this->address;
+	}
+
+	/**
+	 * Sets this contact's street
+	 *
+	 * @param string $street The contact's street
+	 * @return void
+	 */
+	public function setStreet($street) {
+		$this->street = $street;
+	}
+
+	/**
+	 * Returns the contact's street
+	 *
+	 * @return string The contact's street
+	 */
+	public function getStreet() {
+		return $this->street;
+	}
+
+	/**
+	 * Sets this contact's streetNumber
+	 *
+	 * @param string $streetNumber The contact's street
+	 * @return void
+	 */
+	public function setStreetNumber($streetNumber) {
+		$this->streetNumber = $streetNumber;
+	}
+
+	/**
+	 * Returns the contact's streetNumber
+	 *
+	 * @return string The contact's streetNumber
+	 */
+	public function getStreetNumber() {
+		return $this->streetNumber;
 	}
 
 	/**
@@ -465,43 +751,43 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
-	 * Sets this contact's city
+	 * Sets this contact's locality
 	 *
-	 * @param string $city The contact's city
+	 * @param string $locality The contact's locality
 	 * @return void
 	 */
-	public function setCity($city) {
-		$this->city = $city;
+	public function setLocality($locality) {
+		$this->locality = $locality;
 	}
 
 	/**
-	 * Returns the contact's city
+	 * Returns the contact's locality
 	 *
-	 * @return string The contact's city
+	 * @return string The contact's locality
 	 */
-	public function getCity() {
-		return $this->city;
-	}	
+	public function getLocality() {
+		return $this->locality;
+	}
 
 	/**
-	 * Sets this contact's zip code
+	 * Sets this contact's postalCode code
 	 *
-	 * @param string $zip The contact's zip code
+	 * @param string $postalCode The contact's postalCode code
 	 * @return void
 	 */
-	public function setZip($zip) {
-		$this->zip = $zip;
+	public function setPostalCode($postalCode) {
+		$this->postalCode = $postalCode;
 	}
 
 	/**
-	 * Returns the contact's zip code
+	 * Returns the contact's postalCode code
 	 *
-	 * @return string The contact's zip code
+	 * @return string The contact's postalCode code
 	 */
-	public function getZip() {
-		return $this->zip;
+	public function getPostalCode() {
+		return $this->postalCode;
 	}
-	
+
 	/**
 	 * Sets this contact's country
 	 *
@@ -523,17 +809,17 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 
 	/**
 	 * Sets the contact's preferred_language
-	 * 
+	 *
 	 * @param  string the contact's preferred_language
 	 * @return void
 	 */
 	public function setPreferredLanguage($preferredLanguage) {
 		$this->preferredLanguage = $preferredLanguage;
 	}
-	
+
 	/**
 	 * Returns the contact's marital preferred_language
-	 * 
+	 *
 	 * @return string the contact's preferred_language
 	 */
 	public function getPreferredLanguage() {
@@ -579,24 +865,24 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
-	 * Sets the description for the contact
+	 * Sets the remarks for the contact
 	 *
-	 * @param string $description
+	 * @param string $remarks
 	 * @return void
 	 */
-	public function setDescription($description) {
-		$this->description = $description;
+	public function setRemarks($remarks) {
+		$this->remarks = $remarks;
 	}
 
 	/**
-	 * Returns the description
+	 * Returns the remarks
 	 *
 	 * @return string
 	 */
-	public function getDescription() {
-		return $this->description;
+	public function getRemarks() {
+		return $this->remarks;
 	}
-	
+
 	/**
 	 * Sets the addressgroups for the contact
 	 *
@@ -605,7 +891,7 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	 */
 	public function setAddressgroups(array $addressgroups) {
 		foreach ($addressgroups as $addressgroup) {
-			$this->addAddressgroup($addressgroup);			
+			$this->addAddressgroup($addressgroup);
 		}
 	}
 
@@ -617,7 +903,7 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	public function getAddressgroups() {
 		return $this->addressgroups;
 	}
-	
+
 	/**
 	 * Adds a addressgroup to this contact
 	 *

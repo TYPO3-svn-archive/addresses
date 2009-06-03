@@ -10,7 +10,7 @@
 	<f:image src="uploads/pics/{address.image}" alt="{address.name}" maxWidth="140" />
 	<address>
 		<f:format.Nl2br>{address.address}</f:format.Nl2br><br />
-					{address.zip} {address.city} <br />
+					{address.postalCode} {address.locality} <br />
 					{address.country}
 	</address>
 	<p>
@@ -18,7 +18,7 @@
 		<addr:brIfSet key="{address.mobile}"><f:translate key="mobile">Mobile:</f:translate> {address.mobile}</addr:brIfSet>
 		<addr:brIfSet key="{address.fax}"><f:translate key="fax">Fax</f:translate> {address.fax}</addr:brIfSet>
 		<addr:brIfSet key="{address.email}"><f:translate key="email">Email:</f:translate> <f:link.email email="{address.email}" /></addr:brIfSet>
-		<addr:brIfSet key="{address.www}"><f:translate key="www">WWW:</f:translate> <f:link.external uri="{address.www}">{address.www}</f:link.external></addr:brIfSet>	
+		<addr:brIfSet key="{address.website}"><f:translate key="website">WWW:</f:translate> <f:link.external uri="{address.website}">{address.website}</f:link.external></addr:brIfSet>
 	</p>
 	
 	<p>

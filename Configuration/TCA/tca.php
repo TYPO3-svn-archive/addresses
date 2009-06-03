@@ -2,7 +2,7 @@
 $TCA['tx_addresses_domain_model_address'] = Array (
 	'ctrl' => $TCA['tx_addresses_domain_model_address']['ctrl'],
 	'interface' => Array (
-		'showRecordFieldList' => 'gender,first_name,last_name,birthday,marital_status,address,city,zip,country,preferred_language,phone,fax,email,www,title,company,room,building,image,addressgroups,region'
+		'showRecordFieldList' => 'gender,first_name,last_name,birth_date,marital_status,address,locality,postal_code,country,preferred_language,phone,fax,email,website,title,company,room,building,image,addressgroups,region'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_address']['feInterface'],
 	'columns' => Array (
@@ -43,6 +43,22 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'type' => 'check'
 			)
 		),
+		'status' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.status',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '40',
+				'max' => '256'
+			)
+		),
+		'type' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.type',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '40',
+				'max' => '256'
+			)
+		),
 		'gender' => array (
 			'label'  => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender',
 			'config' => array (
@@ -80,9 +96,9 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'max' => '40'
 			)
 		),
-		'birthday' => array (
+		'birth_date' => array (
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.birthday',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.birth_date',
 			'config'  => array (
 				'type' => 'input',
 				'eval' => 'date',
@@ -90,8 +106,94 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'max'  => '20'
 			)
 		),
+		'birth_place' => Array (
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.birth_place',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'eval' => 'trim',
+				'max' => '40'
+			)
+		),
+		'death_date' => array (
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.death_date',
+			'config'  => array (
+				'type' => 'input',
+				'eval' => 'date',
+				'size' => '8',
+				'max'  => '20'
+			)
+		),
+		'death_place' => Array (
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.death_place',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'eval' => 'trim',
+				'max' => '40'
+			)
+		),
+		'nationality' => Array (
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nationality',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'eval' => 'trim',
+				'max' => '40'
+			)
+		),
+		'religion' => Array (
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.religion',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'eval' => 'trim',
+				'max' => '40'
+			)
+		),
+		'org_type' => Array (
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.org_type',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'eval' => 'trim',
+				'max' => '40'
+			)
+		),
+		'org_name' => Array (
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.org_name',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'eval' => 'trim',
+				'max' => '40'
+			)
+		),
 		'address' => Array (
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '20',
+				'rows' => '3'
+			)
+		),
+		'street' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.street',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '20',
+				'rows' => '3'
+			)
+		),
+		'street_number' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.street_number',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '20',
@@ -127,9 +229,9 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'max' => '30'
 			)
 		),
-		'www' => Array (
+		'website' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.www',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.website',
 			'config' => Array (
 				'type' => 'input',
 				'eval' => 'trim',
@@ -174,8 +276,8 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'max'  => '15'
 			)
 		),
-		'city' => Array (
-			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.city',
+		'locality' => Array (
+			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.locality',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -183,8 +285,8 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'max' => '80'
 			)
 		),
-		'zip' => Array (
-			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.zip',
+		'postal_code' => Array (
+			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.postal_code',
 			'config' => Array (
 				'type' => 'input',
 				'eval' => 'trim',
@@ -227,9 +329,9 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'minitems' => '0'
 			)
 		),
-		'description' => Array (
+		'remarks' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.php:LGL.description',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.remarks',
 			'config' => Array (
 				'type' => 'text',
 				'rows' => 5,
@@ -281,13 +383,13 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 	),
 	'types' => Array (
-		'1' => Array('showitem' => 'hidden;;;;1-1-1, gender, first_name, last_name;;2;;3-3-3,company;;6, address, zip, city;;3, email;;5, phone;;4, image;;;;4-4-4, description;;;;4-4-4, addressgroups')
+		'1' => Array('showitem' => 'hidden;;;;1-1-1, gender, first_name, last_name;;2;;3-3-3,company;;6, address, postal_code, locality;;3, email;;5, phone;;4, image;;;;4-4-4, remarks;;;;4-4-4, addressgroups')
 	),
 	'palettes' => Array (
-		'2' => Array('showitem' => 'title, birthday, marital_status'),
+		'2' => Array('showitem' => 'title, birth_date, marital_status'),
 		'3' => Array('showitem' => 'country, region, preferred_language'),
 		'4' => Array('showitem' => 'mobile, fax'),
-		'5' => Array('showitem' => 'www'),
+		'5' => Array('showitem' => 'website'),
 		'6' => Array('showitem' => 'room, building')
 	)
 );
@@ -295,7 +397,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 $TCA['tx_addresses_domain_model_addressgroup'] = array(
 	'ctrl' => $TCA['tx_addresses_domain_model_addressgroup']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'hidden,title,description'
+		'showRecordFieldList' => 'hidden,title,remarks'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_addressgroup']['feInterface'],
 	'columns' => array(
@@ -316,9 +418,9 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array(
 				'eval' => 'required',
 			)
 		),
-		'description' => array(
+		'remarks' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.description',
+			'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.remarks',
 			'config'  => array(
 				'type' => 'text',
 				'cols' => '30',
@@ -327,7 +429,7 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'hidden;;;;1-1-1, title;;;;2-2-2, description')
+		'0' => array('showitem' => 'hidden;;;;1-1-1, title;;;;2-2-2, remarks')
 	),
 	'palettes' => array(
 

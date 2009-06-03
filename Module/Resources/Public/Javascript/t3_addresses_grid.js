@@ -149,9 +149,9 @@ Addresses.Grid = function(){
 			limit: Addresses.statics.pagingSize
 		},
 		remoteSort: true,
-		//		groupField: 'city',
+		//		groupField: 'locality',
 		//		sortInfo: {
-		//			field: 'city',
+		//			field: 'locality',
 		//			direction: "ASC"
 		//		},
 		proxy: new Ext.data.HttpProxy({

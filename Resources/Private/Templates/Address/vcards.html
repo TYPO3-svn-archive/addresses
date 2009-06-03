@@ -4,9 +4,9 @@ VERSION:3.0
 N:{address.lastName};{address.firstName}
 FN:{address.firstName} {address.lastName}
 ORG:{address.company}
-URL:{address.www}
+URL:{address.website}
 EMAIL;TYPE=INTERNET:{address.email}
 TEL;TYPE=voice,work,pref:{address.phone}
-ADR;TYPE=intl,work,postal,parcel:;;{address.address};{address.city};;{address.zip};{address.country}
+ADR;TYPE=intl,work,postal,parcel:;;{address.address};{address.locality};;{address.postalCode};{address.country}
 END:VCARD
 </f:for>

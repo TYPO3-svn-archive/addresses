@@ -8,7 +8,7 @@
 		<languageKey index="default" type="array">
 			<label index="phone">Telephone:</label>
 			<label index="fax">Fax number:</label>
-			<label index="www">Website:</label>
+			<label index="website">Website:</label>
 			<label index="email">Email:</label>
 			<label index="f">Mrs.</label>
 			<label index="m">Mr.</label>

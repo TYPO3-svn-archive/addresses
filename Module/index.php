@@ -273,12 +273,12 @@ class  tx_addresses_module extends t3lib_SCbase {
 	protected function getLocationStore() {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
-		$resource = $TYPO3_DB->exec_SELECTquery('distinct(zip) , city', 'tx_addresses_domain_model_address', 'hidden=0 AND deleted=0 AND zip != "" AND city != ""');
+		$resource = $TYPO3_DB->exec_SELECTquery('distinct(postal_code) , locality', 'tx_addresses_domain_model_address', 'hidden=0 AND deleted=0 AND postal_code != "" AND locality != ""');
 		$records = array();
 		while ($row = $TYPO3_DB->sql_fetch_row($resource)) {
 			$records[] = array($row[0], $row[1]);
 		}
-		return '"localities": new Ext.data.SimpleStore({id:0, "fields": ["city_id", "city_text"],"data" : ' . json_encode($records) . '})';
+		return '"localities": new Ext.data.SimpleStore({id:0, "fields": ["locality_id", "locality_text"],"data" : ' . json_encode($records) . '})';
 	}
 
 	/**

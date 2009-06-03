@@ -179,15 +179,15 @@ Addresses.Window = function()
 
 
 	/**
-	 * Add listner on fields zip + city
+	 * Add listner on fields postal_code + locality
 	 */
-	this.addListnerTocity = function() {
+	this.addListnerTolocality = function() {
 
-		// Add a listener to the field zip
-		// terms of reference: when a postal code is given tries to find out the city.
-		var postalCode = this.w.findById('zip');
-		var city = this.w.findById('city');
-		if (city != null && postalCode != null) {
+		// Add a listener to the field postal_code
+		// terms of reference: when a postal code is given tries to find out the locality.
+		var postalCode = this.w.findById('postal_code');
+		var locality = this.w.findById('locality');
+		if (locality != null && postalCode != null) {
 			postalCode.on(
 				'blur',
 				function(el) {
@@ -195,28 +195,28 @@ Addresses.Window = function()
 					if (value != '') {
 						var record = Addresses.store.localities.getById(value);
 						if (typeof(record) == 'undefined') {
-							city.setValue('');
+							locality.setValue('');
 						}
 						else {
-							city.setValue(record.get('city_text'));
+							locality.setValue(record.get('locality_text'));
 						}
 					}
 				}
 				);
 
-			city.on(
+			locality.on(
 				'blur',
 				function(el) {
 					var postalCodeValue = postalCode.getValue();
-					var cityValue = city.getValue();
-					if (postalCodeValue != '' && cityValue != '') {
+					var localityValue = locality.getValue();
+					if (postalCodeValue != '' && localityValue != '') {
 						var record = Addresses.store.localities.getById(postalCodeValue);
 						
 						// Add a new value to the store object
 						if (typeof(record) == 'undefined') {
 
 							// Add this record
-							Addresses.store.localities.add(new Ext.data.Record({city_id: postalCodeValue, city_text: cityValue},postalCodeValue));
+							Addresses.store.localities.add(new Ext.data.Record({locality_id: postalCodeValue, locality_text: localityValue},postalCodeValue));
 						}
 					}
 				}
@@ -234,7 +234,7 @@ Addresses.Window = function()
 		this.w.show(); this.w.hide();
 
 		this.addListnerToCombobox();
-		this.addListnerTocity();
+		this.addListnerTolocality();
 
 		// map one key by key code
 		new Ext.KeyMap("editForm", {

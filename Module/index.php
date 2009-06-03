@@ -125,7 +125,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 		if (isset($modTS['properties']['pagingSize']) && intval($modTS['properties']['pagingSize']) > 0) {
 			$this->pagingSize = intval($modTS['properties']['pagingSize']);
 		}
-		
+
 		$configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);
 		$this->pageSize = (int) $configurations['PAGE_SIZE'];
 		$this->minifyJavascript = (boolean) $configurations['minifyJavascript'];
@@ -207,13 +207,10 @@ class  tx_addresses_module extends t3lib_SCbase {
 	}
 
 	/**
-	 * Loads data in the HTML head section (e.g. JavaScript or stylesheet information).
-	 *
-	 * @return	void
+	 * Loads ExtJS staff: JS + CSS
 	 */
-	protected function loadHeaderData() {
-
-		// Loads extjs
+	protected function loadExtJSStaff() {
+	// Loads extjs
 		$this->doc->loadExtJS();
 		//		$this->doc->enableExtJsDebug(); // use for debug
 
@@ -240,12 +237,21 @@ class  tx_addresses_module extends t3lib_SCbase {
 			$this->loadJavaScript('../typo3temp/tx_addresses/' . $tempFileName);
 		}
 		else {
-			// Load Plugins JavaScript:
+		// Load Plugins JavaScript:
 			foreach($this->javascriptFiles as $file) {
 				$this->loadJavaScript($this->resourcesPath . 'Javascript/' . $file . '.js');
 			}
 		}
 
+	}
+
+	/**
+	 * Loads data in the HTML head section (e.g. JavaScript or stylesheet information).
+	 *
+	 * @return	void
+	 */
+	protected function loadHeaderData() {
+		$this->loadExtJSStaff();
 
 		// Integrate dynamic JavaScript such as configuration or lables:
 		$fieldsColumns = $this->getFieldsColumns();

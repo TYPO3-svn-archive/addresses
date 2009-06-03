@@ -112,7 +112,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 		parent::init();
 
 		$this->doc = t3lib_div::makeInstance('template');
-		$this->doc->setModuleTemplate(t3lib_extMgm::extPath('addresses') . 'Module/template.html');
+		$this->doc->setModuleTemplate(t3lib_extMgm::extPath('addresses') . 'Module/Resources/Private/Templates/index.html');
 		$this->doc->backPath = '../../../../typo3/';
 
 		//don't access in workspace

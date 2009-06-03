@@ -56,7 +56,7 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 		$data = Array(); // used to store the objects fetched from the repository
 			
 		// Stylesheet
-		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . t3lib_extMgm::siteRelPath('addresses') . 'Module/Resources/Public/Stylesheets/index.css" />');
+		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . t3lib_extMgm::siteRelPath('addresses') . 'Resources/Public/Stylesheets/index.css" />');
 		
 		// TS Config transformed to shorter variable
 		$this->indexSettings = $this->settings['controllers']['Address']['actions']['index'];
@@ -82,7 +82,7 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	 * @return string The rendered view of a single address
 	 */
 	public function showAction(Tx_Addresses_Domain_Model_Address $address) {
-		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . t3lib_extMgm::siteRelPath('addresses') . 'Module/Resources/Public/Stylesheets/show.css" />');
+		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . t3lib_extMgm::siteRelPath('addresses') . 'Resources/Public/Stylesheets/show.css" />');
 		$this->view->assign('address', $address);
 	}
 	

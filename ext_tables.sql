@@ -30,7 +30,7 @@ CREATE TABLE tx_addresses_domain_model_address (
   phone varchar(30) DEFAULT '' NOT NULL,
   mobile varchar(30) DEFAULT '' NOT NULL,
   fax varchar(30) DEFAULT '' NOT NULL,
-  website tinytext DEFAULT '' NOT NULL,
+  website tinytext NOT NULL,
   street tinytext NOT NULL,
   street_number tinytext NOT NULL,
   address tinytext NOT NULL,

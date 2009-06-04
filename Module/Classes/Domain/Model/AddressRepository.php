@@ -33,7 +33,7 @@
  * @version $Id$
  */
 
-class AddressRepository {
+class Tx_Addresses_Domain_Model_AddressRepository {
 
 	/**
 	 *
@@ -87,11 +87,12 @@ class AddressRepository {
 
 		$records = array();
 		if (!$TYPO3_DB->sql_error()) {
-			while($records[] = $TYPO3_DB->sql_fetch_assoc($res));
-			array_pop($records);
+			while($record = $TYPO3_DB->sql_fetch_assoc($res)) {
+				array_push($records, $this->tstampToDate($record));
+			}
 			$TYPO3_DB->sql_free_result($res);
 		}
-
+		
 		$results = $TYPO3_DB->exec_SELECTgetRows(
 			'count(*) as total',
 			'tx_addresses_domain_model_address',
@@ -111,8 +112,6 @@ class AddressRepository {
 	 * @return	array
 	 */
 	public function findById($data) {
-		global $TCA, $TYPO3_CONF_VARS;
-		t3lib_div::loadTCA('tx_addresses_domain_model_address');
 
 		$clause = $this->getUidClause($data);
 		$output['success'] = FALSE;
@@ -134,15 +133,31 @@ class AddressRepository {
 				$output['data'] = $_record;
 			}
 
-			// Traverses all $field in order to format the date fields
-			foreach ($output['data'] as $fieldName => $value) {
-				if (isset($TCA['tx_addresses_domain_model_address']['columns'][$fieldName])) {
-					$tca = $TCA['tx_addresses_domain_model_address']['columns'][$fieldName];
-					if (isset($tca['config']['eval'])
-						&& strpos($tca['config']['eval'], 'date') !== FALSE
-						&& $value) {
-						$output['data'][$fieldName] = date($TYPO3_CONF_VARS['SYS']['ddmmyy'], $value);
-					}
+			$output['data'] = $this->tstampToDate($output['data']);
+		}
+		return $output;
+	}
+
+	/**
+	 * Traverses the record and transforms tstamp to human date
+	 * 
+	 * @param array $input
+	 * @return array
+	 */
+	protected function tstampToDate($input) {
+		$output = array();
+		// Traverses all $field in order to format the date fields
+		foreach ($input as $fieldName => $value) {
+			$columns = Tx_Addresses_Utility_TCA::getColumns();
+			if (isset($columns[$fieldName])) {
+				$tca = $columns[$fieldName];
+				if (isset($tca['config']['eval'])
+					&& strpos($tca['config']['eval'], 'date') !== FALSE
+					&& $value) {
+					$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
+				}
+				else {
+					$output[$fieldName] = $value;
 				}
 			}
 		}
@@ -167,7 +182,7 @@ class AddressRepository {
 				$fieldType = $row[1];
 				if (strpos($fieldType, 'char') !== FALSE
 					|| strpos($fieldType, 'text')  !== FALSE) {
-						$fields[] = $fieldName;
+					$fields[] = $fieldName;
 				}
 			}
 			$searchClause = ' LIKE "%' . $search . '%"';
@@ -218,9 +233,9 @@ class AddressRepository {
 	 * @return string
 	 */
 	protected function getFields() {
-		global $TCA, $BE_USER;
+		global $BE_USER;
 		t3lib_div::loadTCA('tx_addresses_domain_model_address');
-		$columns = $TCA['tx_addresses_domain_model_address']['columns'];
+		$columns = Tx_Addresses_Utility_TCA::getColumns();
 		$fields = array();
 		foreach (array_keys($columns) as $field) {
 			if ($BE_USER->isAdmin() ||
@@ -330,18 +345,18 @@ class AddressRepository {
 	 * @param string $value
 	 * @return boolean
 	 */
-//	protected function isDefaultValue($configuration, $value) {
-//		global $LANG;
-//		$result = FALSE;
-//
-//		// Check whether it is not the default value
-//		if (isset($configuration['emptyText'])) {
-//			if ($value == $LANG->sL($configuration['emptyText'])) {
-//				$result = TRUE;
-//			}
-//		}
-//		return $result;
-//	}
+	//	protected function isDefaultValue($configuration, $value) {
+	//		global $LANG;
+	//		$result = FALSE;
+	//
+	//		// Check whether it is not the default value
+	//		if (isset($configuration['emptyText'])) {
+	//			if ($value == $LANG->sL($configuration['emptyText'])) {
+	//				$result = TRUE;
+	//			}
+	//		}
+	//		return $result;
+	//	}
 
 	/**
 	 * Save address(es): UPDATE or INSERT depending on the uid
@@ -353,8 +368,9 @@ class AddressRepository {
 		t3lib_div::loadTCA('tx_addresses_domain_model_address');
 		global $TCA, $LANG, $BE_USER, $TYPO3_DB;
 		foreach ($values as $fieldName => $value) {
-			if (isset($TCA['tx_addresses_domain_model_address']['columns'][$fieldName])) {
-				$tca = $TCA['tx_addresses_domain_model_address']['columns'][$fieldName];
+			$columns = Tx_Addresses_Utility_TCA::getColumns();
+			if (isset($columns[$fieldName])) {
+				$tca = $columns[$fieldName];
 
 				// Makes sure the field can be saved
 				if ($this->checkPermission($tca, $fieldName)) {
@@ -485,10 +501,6 @@ class AddressRepository {
 		}
 		return $hasPermission;
 	}
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/addresses/Module/Classes/Domain/Model/class.tx_addresses_model_tables.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/addresses/Module/Classes/Domain/Model/class.tx_addresses_model_tables.php']);
 }
 
 ?>

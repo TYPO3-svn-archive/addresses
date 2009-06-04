@@ -41,6 +41,8 @@ $BE_USER->modAccess($MCONF, 1);	// This checks makes sure the user has the permi
 
 // Pre-Include all models and views
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/AddressRepository.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Configuration.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
 
 /**
  * Controller class for the 'addresses' extension. Handles the AJAX Requests
@@ -50,7 +52,7 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/Add
  * @subpackage	tx_addresses
  * @version 	$Id$
  */
-class AddressController {
+class Tx_Addresses_Controller_AddressController {
 	/**
 	 * Stores relevant data from extJS
 	 * Example: Json format
@@ -66,7 +68,7 @@ class AddressController {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->model = t3lib_div::makeInstance('AddressRepository');
+		$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');
 		$this->data = json_decode(t3lib_div::_GP('data'));
 	}
 
@@ -76,7 +78,7 @@ class AddressController {
 	 * @return void
 	 **/
 	public function indexAction() {
-		$this->model = t3lib_div::makeInstance('AddressRepository');
+		$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');
 		$message = $this->model->findAll();
 		echo json_encode($message);
 	}
@@ -133,11 +135,6 @@ class AddressController {
 //		$GLOBALS['BE_USER']->uc['tx_addresses'][$identifier] = $data;
 //		$GLOBALS['BE_USER']->writeUC();
 //	}
-}
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/addresses/Module/Classes/controller/class.tx_addresses_controller.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/addresses/Module/Classes/controller/class.tx_addresses_controller.php']);
 }
 
 ?>

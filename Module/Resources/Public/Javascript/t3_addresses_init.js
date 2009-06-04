@@ -41,9 +41,9 @@ Addresses.initialize = function() {
 	Addresses.grid = new Addresses.Grid();
 	
 	// adjust columns layout + render the grid
-	Addresses.fieldsColumns.unshift(Addresses.grid.checkbox, Addresses.grid.expander); // add checkbox + expander to the grid
-	Addresses.fieldsColumns.push(Addresses.grid.controller);
-	Addresses.grid.columns = Addresses.fieldsColumns;
+	Addresses.fieldsGrid.unshift(Addresses.grid.checkbox, Addresses.grid.expander); // add checkbox + expander to the grid
+	Addresses.fieldsGrid.push(Addresses.grid.controller);
+	Addresses.grid.columns = Addresses.fieldsGrid;
 	Addresses.grid.init();
 
 	// Prepare editing window

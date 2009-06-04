@@ -108,7 +108,7 @@ Addresses.Window = function()
 			bodyStyle:'padding:5px'
 		//					autoHeight: true,
 		},
-		items: Addresses.fieldsEdition
+		items: Addresses.fieldsWindow
 	};
 	
 	/*

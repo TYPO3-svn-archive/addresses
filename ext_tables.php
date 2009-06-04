@@ -69,49 +69,80 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 // This section describes the columns of the grid.
 	t3lib_div::loadTCA('tx_addresses_domain_model_address');
 	$TCA['tx_addresses_domain_model_address']['interface']['showRecordFieldGrid'] = array(
-		array(
-			'id' => 'uid',
-			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.uid',
-			'width' => 40,
-			'sortable' => TRUE,
-			'dataIndex' => 'uid',
+		'uid' => array(
+			'id' => TRUE,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.uid',
+			'config' => Array (
+				'type' => 'input',
+				'width' => 40,
+				'sortable' => TRUE,
+			)
 		),
-		array(
-			'id' => 'pid',
-			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.pid',
-			'width' => 40,
-			'sortable' => TRUE,
-			'dataIndex' => 'pid',
+		'pid' => array(
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.pid',
+			'config' => Array (
+				'type' => 'input',
+				'width' => 40,
+				'sortable' => TRUE,
+			)
 		),
-		array(
-			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
-			'width' => 120,
-			'sortable' => TRUE,
-			'dataIndex' => 'first_name',
+		'first_name' => array(
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
+			'config' => Array (
+				'type' => 'input',
+				'width' => 120,
+				'sortable' => TRUE,
+			)
 		),
-		array(
-			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.last_name',
-			'width' => 120,
-			'sortable' => TRUE,
-			'dataIndex' => 'last_name',
+		'last_name' => array(
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.last_name',
+			'config' => Array (
+				'type' => 'input',
+				'width' => 120,
+				'sortable' => TRUE,
+			)
 		),
-		array(
-			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
-			'width' => 120,
-			'sortable' => TRUE,
-			'dataIndex' => 'address',
+		'address' => array(
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
+			'config' => Array (
+				'type' => 'input',
+				'width' => 120,
+				'sortable' => TRUE,
+			)
 		),
-		array(
-			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.postal_code',
-			'width' => 120,
-			'sortable' => TRUE,
-			'dataIndex' => 'postal_code',
+		'postal_code' => array(
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.postal_code',
+			'config' => Array (
+				'type' => 'input',
+				'width' => 120,
+				'sortable' => TRUE,
+			)
 		),
-		array(
-			'header' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.locality',
-			'width' => 120,
-			'sortable' => TRUE,
-			'dataIndex' => 'locality',
+		'locality' => array(
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.locality',
+			'config' => Array (
+				'type' => 'input',
+				'width' => 120,
+				'sortable' => TRUE,
+			)
+		),
+		'tstamp' => array(
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.tstamp',
+			'config' => Array (
+				'type' => 'input',
+				'width' => 100,
+				'sortable' => TRUE,
+				'eval' => 'date',
+			)
+		),
+		'upuser_id' => array(
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
+			'config' => Array (
+				'type' => 'user',
+				'userFunc' => 'tx_partner_tce_user->fieldVisibility',
+				'width' => 120,
+				'sortable' => TRUE,
+			)
 		),
 	);
 

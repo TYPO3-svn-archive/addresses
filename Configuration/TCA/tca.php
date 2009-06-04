@@ -18,6 +18,13 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'type' => 'passthrough'
 			)
 		),
+		'tstamp' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.tstamp',
+			'config' => Array (
+				'type' => 'passthrough',
+				'eval' => 'date'
+			),
+		),
 		'cruser_id' => Array (
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
 			'config' => Array (
@@ -34,6 +41,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.crdate',
 			'config' => Array (
 				'type' => 'passthrough',
+				'eval' => 'date'
 			),
 		),
 		'hidden' => Array (

@@ -22,9 +22,10 @@
 			<label index="tx_addresses_domain_model_address.uid">ID</label>
 			<label index="tx_addresses_domain_model_address.marital_status">Marital status</label>
 			<label index="tx_addresses_domain_model_address.type.I.0">Address</label>
+			<label index="tx_addresses_domain_model_address.tstamp">Update date</label>
+			<label index="tx_addresses_domain_model_address.crdate">Create date</label>
 			<label index="tx_addresses_domain_model_address.cruser_id">Create user</label>
 			<label index="tx_addresses_domain_model_address.upuser_id">Update user</label>
-			<label index="tx_addresses_domain_model_address.crdate">Create date</label>
 			<label index="tx_addresses_domain_model_address.address">Address</label>
 			<label index="tx_addresses_domain_model_address.pid">PID</label>
 			<label index="tx_addresses_domain_model_address.postal_code">Postal code</label>
@@ -53,7 +54,7 @@
 			<label index="tx_addresses_domain_model_address.hidden">Hidden</label>
 			<label index="tx_addresses_domain_model_address.image">Image</label>
 		</languageKey>
-		<languageKey index="default" type="fr">
+		<languageKey index="fr" type="array">
 			<label index="tx_addresses_domain_model_address.mobile">Mobile</label>
 			<label index="tx_addresses_domain_model_address.first_name">Prénom</label>
 			<label index="tx_addresses_domain_model_address.last_name">Nom</label>
@@ -70,9 +71,10 @@
 			<label index="tx_addresses_domain_model_address.uid">ID</label>
 			<label index="tx_addresses_domain_model_address.marital_status">Etat civil</label>
 			<label index="tx_addresses_domain_model_address.type.I.0">Addresse</label>
+			<label index="tx_addresses_domain_model_address.tstamp">Date de modification</label>
+			<label index="tx_addresses_domain_model_address.crdate">Date de création</label>
 			<label index="tx_addresses_domain_model_address.cruser_id">Créé par</label>
 			<label index="tx_addresses_domain_model_address.upuser_id">Mis à jour par</label>
-			<label index="tx_addresses_domain_model_address.crdate">Date de création</label>
 			<label index="tx_addresses_domain_model_address.address">Adresse</label>
 			<label index="tx_addresses_domain_model_address.pid">PID</label>
 			<label index="tx_addresses_domain_model_address.postal_code">Code postal</label>

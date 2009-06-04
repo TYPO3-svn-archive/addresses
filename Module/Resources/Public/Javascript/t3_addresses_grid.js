@@ -140,7 +140,7 @@ Addresses.Grid = function(){
 		storeId: 'addresses_datasource',
 		autoLoad: true,
 		reader: new Ext.data.JsonReader({
-			fields: Addresses.fieldsName,
+			fields: Addresses.fieldsStore,
 			root: 'data',
 			totalProperty: 'total'
 		}),
@@ -249,7 +249,7 @@ Addresses.Grid = function(){
 	 */
 	this.focusOnFirstVisibleField = function() {
 		try {
-			var firstVisibleElement = Addresses.fieldsEdition[0].items[1].id;
+			var firstVisibleElement = Addresses.fieldsWindow[0].items[1].id;
 			Ext.ComponentMgr.get(firstVisibleElement).focus(true,100); // wait for 100 miliseconds
 		}
 		catch (e) {

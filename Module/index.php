@@ -40,6 +40,8 @@ require('conf.php');
 require($BACK_PATH . 'init.php');
 require($BACK_PATH . 'template.php');
 require_once(PATH_t3lib . 'class.t3lib_scbase.php');
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Configuration.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
 
 // Check user permissions
 $BE_USER->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
@@ -174,7 +176,6 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * @return	void
 	 */
 	public function render() {
-		global $BE_USER,$LANG,$BACK_PATH,$TCA_DESCR,$TCA,$CLIENT,$TYPO3_CONF_VARS;
 		if ($this->isAccessibleForCurrentUser) {
 			$this->loadHeaderData();
 			// div container for renderTo
@@ -191,7 +192,8 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * @return	void
 	 */
 	public function flush() {
-		$content = $this->doc->startPage($GLOBALS['LANG']->getLL('title'));
+		global $LANG;
+		$content = $this->doc->startPage($LANG->getLL('title'));
 		$content.= $this->doc->moduleBody(
 			$this->pageRecord,
 			$this->getDocHeaderButtons(),
@@ -254,18 +256,18 @@ class  tx_addresses_module extends t3lib_SCbase {
 		$this->loadExtJSStaff();
 
 		// Integrate dynamic JavaScript such as configuration or lables:
-		$fieldsColumns = $this->getFieldsColumns();
-		$fieldsName = $this->getFieldsName($fieldsColumns);
-		$fieldsEdition = $this->getFieldsEdition();
+		$fieldsGrid = $this->getGridConfiguration();
+		$fieldsStore = $this->getStoreConfiguration();
+		$fieldsWindow = $this->getWindowConfiguration();
 
 		$this->store[] = $this->getLocationStore();
 
 		$this->doc->extJScode .= '
 			' . $this->namespace . '.store = {' . implode(',', $this->store) . '};
-			' . $this->namespace . '.statics = ' . json_encode($this->getStaticConfiguration($fieldsEdition)) . ';
-			' . $this->namespace . '.fieldsColumns = ' . json_encode($fieldsColumns) . ';
-			' . $this->namespace . '.fieldsName = ' . json_encode($fieldsName) . ';
-			' . $this->namespace . '.fieldsEdition = ' . $this->removesQuotesAroundObject(json_encode($fieldsEdition)) . ';
+			' . $this->namespace . '.statics = ' . json_encode($this->getStaticConfiguration($fieldsWindow)) . ';
+			' . $this->namespace . '.fieldsGrid = ' . $this->removesQuotesAroundRenderer(json_encode($fieldsGrid)) . ';
+			' . $this->namespace . '.fieldsStore = ' . json_encode($fieldsStore) . ';
+			' . $this->namespace . '.fieldsWindow = ' . $this->removesQuotesAroundObject(json_encode($fieldsWindow)) . ';
 			' . $this->namespace . '.lang = ' . json_encode($this->getLabels()) . ';
 			Addresses.initialize();' . chr(10);
 	}
@@ -282,6 +284,16 @@ class  tx_addresses_module extends t3lib_SCbase {
 	}
 
 	/**
+	 * Removes quotes around renderer e.g. "Ext.util.Format.dateRenderer('d.m.Y')"
+	 *
+	 * @param string $json
+	 * @return string
+	 */
+	protected function removesQuotesAroundRenderer($json) {
+		return preg_replace('/\"(Ext.util.Format.dateRenderer\(.+\))\"/isU', '$1', $json);
+	}
+
+	/**
 	 * Removes quotes around object e.g. "Addresses.store.blabla" becomes Addresses.store.blabla
 	 *
 	 * @param string $json
@@ -294,13 +306,13 @@ class  tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * Count the number of fields. Useful for determining the height of the editing window.
 	 *
-	 * @param array $fieldsEdition
+	 * @param array $fieldsWindow
 	 * @return int
 	 */
-	function getNumberOfFields(Array $fieldsEdition) {
+	function getNumberOfFields(Array $fieldsWindow) {
 		$numberOfItems = 0;
-		for ($index = 0; $index < count($fieldsEdition); $index++) {
-			$items = $fieldsEdition[$index];
+		for ($index = 0; $index < count($fieldsWindow); $index++) {
+			$items = $fieldsWindow[$index];
 			if (isset($items['items'])) {
 			// decrease the number of items as there is hidden fields
 				$_numberOfItems = count($items['items']);
@@ -343,13 +355,13 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * @param	array
 	 * @return	array		The JavaScript configuration
 	 */
-	protected function getStaticConfiguration($fieldsEdition) {
+	protected function getStaticConfiguration($fieldsWindow) {
 		$configuration = array(
 			'pagingSize' => $this->pagingSize,
 			'renderTo' => 'addressesContent',
 			'path' => t3lib_extMgm::extRelPath('addresses'),
 			'isSSL' => t3lib_div::getIndpEnv('TYPO3_SSL'),
-			'editionHeight' => 50 * $this->getNumberOfFields($fieldsEdition) + 150,
+			'editionHeight' => 50 * $this->getNumberOfFields($fieldsWindow) + 150,
 			'ajaxController' => $this->doc->backPath . 'ajax.php',
 		);
 		return $configuration;
@@ -362,7 +374,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * @return array $configuration
 	 */
 	protected function getConfiguration(&$columns, $field) {
-		global $LANG, $TYPO3_CONF_VARS;
+		global $LANG;
 
 		$tca =  $columns[$field]['config'];
 		$configuration = array();
@@ -407,7 +419,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 									break;
 								case 'date':
 									$configuration['xtype'] = 'datefield';
-									$configuration['format'] = $TYPO3_CONF_VARS['SYS']['ddmmyy'];
+									$configuration['format'] = Tx_Addresses_Utility_Configuration::getDateFormat();
 									$configuration['invalidText'] = $LANG->getLL('invalidDate');
 									break;
 							}
@@ -498,12 +510,13 @@ class  tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * Returns an array containing the fields configuration
 	 *
+	 * @global Language $LANG
 	 * @return	array
 	 */
-	protected function getFieldsEdition() {
+	protected function getWindowConfiguration() {
 		t3lib_div::loadTCA('tx_addresses_domain_model_address');
-		global $TCA, $LANG, $TYPO3_CONF_VARS;
-		$items = explode(',', $TCA['tx_addresses_domain_model_address']['types']['module']['showitem']);
+		global $LANG;
+		$items = explode(',', Tx_Addresses_Utility_TCA::getShowItems());
 		$items = array_map('trim', $items);
 		$index = -1;
 		$configurations = array();
@@ -514,7 +527,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 			if (strpos($item, '--div--') === FALSE ) {
 
 				if (strpos($item, '|') === FALSE ) {
-					$configuration = $this->getConfiguration($TCA['tx_addresses_domain_model_address']['columns'], $item);
+					$configuration = $this->getConfiguration(Tx_Addresses_Utility_TCA::getColumns(), $item);
 				}
 				else {
 					$fields = explode('|', $item);
@@ -528,7 +541,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 						$_properties = explode(':', $field);
 						$field = $_properties[0];
 
-						$_array = $this->getConfiguration($TCA['tx_addresses_domain_model_address']['columns'], $field);
+						$_array = $this->getConfiguration(Tx_Addresses_Utility_TCA::getColumns(), $field);
 						if (!empty($_array)) {
 
 							$_configurations[$i]['defaults'] = array(
@@ -635,30 +648,61 @@ class  tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * Gets the configuration for the Ext JS interface. The return array is going to be converted into JSON.
 	 *
+	 * @global Language $LANG
 	 * @return	array
 	 */
-	protected function getFieldsColumns() {
-		t3lib_div::loadTCA('tx_addresses_domain_model_address');
-		global $TCA, $LANG;
-		$configurations = $TCA['tx_addresses_domain_model_address']['interface']['showRecordFieldGrid'];
-		foreach ($configurations as &$configuration) {
-			$configuration['header'] = $LANG->sL($configuration['header']);
+	protected function getGridConfiguration() {
+		global $LANG;
+		$configurations = Tx_Addresses_Utility_TCA::getFieldsGrid();
+		
+		$fields = array();
+		foreach ($configurations as $fieldName => $configuration) {
+			$_array = array();
+
+			// Defines staff
+			$_array['header'] = $LANG->sL($configuration['label']);
+			$_array['dataIndex'] = $fieldName;
+			
+			if (isset($configuration['config']['width'])) {
+				$_array['width'] = (int)$configuration['config']['width'];
+			}
+
+			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
+				$_array['renderer'] = "Ext.util.Format.dateRenderer('m/d/Y')";
+			}
+
+			if (isset($configuration['config']['sortable'])) {
+				$_array['sortable'] = (boolean)$configuration['config']['sortable'];
+			}
+
+			// Check whether it is an id
+			if (isset($configuration['id']) && $configuration['id']) {
+				$_array['id'] = $fieldName;;
+			}
+
+			array_push($fields, $_array);
 		}
-		return $configurations;
+		return $fields;
 	}
 
 	/**
 	 * Extracts the JavaScript configuration fields name.
 	 *
-	 * @param array $fields: a configuration array
 	 * @return array
 	 */
-	protected function getFieldsName($fields) {
-		$configuration = array();
-		foreach ($fields as $field) {
-			$configuration[] = $field['dataIndex'];
+	protected function getStoreConfiguration() {
+		$result = array();
+		foreach	(Tx_Addresses_Utility_TCA::getFieldsGrid() as $field => $configuration) {
+			$_array = array();
+			$_array['name'] = $field;
+			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
+				$_array['type'] = 'date';
+				$_array['dateFormat'] = Tx_Addresses_Utility_Configuration::getDateFormat();
+			}
+			array_push($result, $_array);
 		}
-		return $configuration;
+
+		return $result;
 	}
 
 	/**
@@ -716,10 +760,6 @@ class  tx_addresses_module extends t3lib_SCbase {
 			'shortcut'	=> $this->getShortcutButton(),
 			'save'		=> ''
 		);
-
-		// SAVE button
-		$buttons['save'] = ''; //<input type="image" class="c-inputButton" name="submit" value="Update"' . t3lib_iconWorks::skinImg($this->doc->backPath, 'gfx/savedok.gif', '') . ' title="' . $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.php:rm.saveDoc', 1) . '" />';
-
 		return $buttons;
 	}
 

@@ -68,7 +68,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 
 // This section describes the columns of the grid.
 	t3lib_div::loadTCA('tx_addresses_domain_model_address');
-	$TCA['tx_addresses_domain_model_address']['interface']['showRecordFieldGrid'] = array(
+	$TCA['tx_addresses_domain_model_address']['interface']['showRecordFieldsGrid'] = array(
 		'uid' => array(
 			'id' => TRUE,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.uid',
@@ -84,6 +84,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 				'type' => 'input',
 				'width' => 40,
 				'sortable' => TRUE,
+				'eval' => 'int',
 			)
 		),
 		'first_name' => array(
@@ -139,7 +140,11 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
 			'config' => Array (
 				'type' => 'user',
-				'userFunc' => 'tx_partner_tce_user->fieldVisibility',
+				'userFunc' => 'tx_addresses_tce->getValueById',
+				'userFunc.' => array (
+					'table' => 'be_users',
+					'field' => 'username',
+				),
 				'width' => 120,
 				'sortable' => TRUE,
 			)

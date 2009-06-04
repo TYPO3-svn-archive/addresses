@@ -250,7 +250,7 @@ Addresses.Grid = function(){
 	this.focusOnFirstVisibleField = function() {
 		try {
 			var firstVisibleElement = Addresses.fieldsWindow[0].items[1].id;
-			Ext.ComponentMgr.get(firstVisibleElement).focus(true,100); // wait for 100 miliseconds
+			Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait for 100 miliseconds
 		}
 		catch (e) {
 			console.log(e);

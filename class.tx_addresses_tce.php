@@ -32,19 +32,21 @@
 class tx_addresses_tce {
 
 	/**
-	 * This function is called by the ['config']['userFunc']
-	 * configuration in $TCA and creates the relationships overview.
+	 * This function is called by the ['config']['itemsProcFunc']
 	 *
-	 * @param	array		$PA: The TYPO3 standard array
-	 * @param	object		$fobj: An instance of the current TCE Forms Object
-	 * @return	string		HTML for the relationships overview
+	 * @param	string		$table
+	 * @param	string		$field
+	 * @return	array
 	 */
 	function getRecords($table, $field) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 		$_records = array();
 		if (is_string($table) && is_string($field)) {
-			$records = $TYPO3_DB->exec_SELECTgetRows('distinct(' . $field . ')', $table, 'deleted = 0 AND hidden = 0');
+			$clause = 'deleted = 0 ';
+			$clause .= t3lib_BEfunc::BEenableFields($table);
+			$records = $TYPO3_DB->exec_SELECTgetRows('distinct(' . $field . ')', $table, $clause);
+
 			// TRUE Means the uid of the option will be the same as the value
 			if (!strpos($field, ',')) {
 				foreach($records as $record) {
@@ -54,7 +56,29 @@ class tx_addresses_tce {
 					);
 				}
 			}
-			return $_records;
+		}
+		return $_records;
+	}
+
+	/**
+	 * This function is called by the ['config']['userFunc']
+	 *
+	 * @param	string		$table
+	 * @param	string		$field
+	 * @return	string
+	 */
+	function getValueById($table, $field, $uid) {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TYPO3_DB;
+		$result = '';
+		if (is_string($table) && is_string($field) && (int)$uid > 0) {
+			$clause = "deleted = 0 AND uid = $uid ";
+			$clause .= t3lib_BEfunc::BEenableFields($table);
+			$records = $TYPO3_DB->exec_SELECTgetRows('distinct(' . $field . ')', $table, $clause);
+			if (isset($records[0])) {
+				$result = $records[0][$field];
+			}
+			return $result;
 		}
 	}
 }

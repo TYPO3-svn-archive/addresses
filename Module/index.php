@@ -141,35 +141,6 @@ class  tx_addresses_module extends t3lib_SCbase {
 		$this->version = $EM_CONF['addresses']['version'];
 	}
 
-
-	/**
-	 * Initializes the Module
-	 *
-	 * @return	void
-	 */
-	public function initialize() {
-		parent::init();
-		$this->doc = t3lib_div::makeInstance('template');
-		$this->doc->setModuleTemplate(t3lib_extMgm::extPath('addresses') . 'Module/template.html');
-		$this->doc->backPath = '../../../../typo3/';
-		//		$this->doc->backPath = '/typo3/';
-
-		$this->relativePath = t3lib_extMgm::extRelPath('addresses');
-		$this->absolutePath = t3lib_extMgm::extPath('addresses');
-		$this->resourcesPath = $this->relativePath . 'Module/Resources/Public/';
-
-		//don't access in workspace
-		if ($GLOBALS['BE_USER']->workspace !== 0) {
-			$this->isAccessibleForCurrentUser = false;
-		}
-
-		//read configuration
-		$modTS = $GLOBALS['BE_USER']->getTSConfig('mod.addresses');
-		if (isset($modTS['properties']['pagingSize']) && intval($modTS['properties']['pagingSize']) > 0) {
-			$this->pagingSize = intval($modTS['properties']['pagingSize']);
-		}
-	}
-
 	/**
 	 * Renders the contente of the module.
 	 *
@@ -668,7 +639,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 			}
 
 			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
-				$_array['renderer'] = "Ext.util.Format.dateRenderer('m/d/Y')";
+				$_array['renderer'] = "Ext.util.Format.dateRenderer('" . Tx_Addresses_Utility_Configuration::getDateFormat() . "')";
 			}
 
 			if (isset($configuration['config']['sortable'])) {
@@ -698,6 +669,10 @@ class  tx_addresses_module extends t3lib_SCbase {
 			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
 				$_array['type'] = 'date';
 				$_array['dateFormat'] = Tx_Addresses_Utility_Configuration::getDateFormat();
+			}
+
+			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'int') {
+				$_array['type'] = 'int';
 			}
 			array_push($result, $_array);
 		}
@@ -815,7 +790,6 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/address
 
 // Make instance:
 $SOBE = t3lib_div::makeInstance('tx_addresses_module');
-//$SOBE->initialize();
 
 // Include files?
 foreach($SOBE->include_once as $INC_FILE) {

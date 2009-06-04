@@ -88,7 +88,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 		$records = array();
 		if (!$TYPO3_DB->sql_error()) {
 			while($record = $TYPO3_DB->sql_fetch_assoc($res)) {
-				array_push($records, $this->tstampToDate($record));
+				array_push($records, $this->formatRecordForHumans($record));
 			}
 			$TYPO3_DB->sql_free_result($res);
 		}
@@ -133,7 +133,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 				$output['data'] = $_record;
 			}
 
-			$output['data'] = $this->tstampToDate($output['data']);
+			$output['data'] = $this->formatRecordForHumans($output['data']);
 		}
 		return $output;
 	}
@@ -144,17 +144,24 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 	 * @param array $input
 	 * @return array
 	 */
-	protected function tstampToDate($input) {
+	protected function formatRecordForHumans($input) {
 		$output = array();
 		// Traverses all $field in order to format the date fields
 		foreach ($input as $fieldName => $value) {
-			$columns = Tx_Addresses_Utility_TCA::getColumns();
+			$columns = array_merge(Tx_Addresses_Utility_TCA::getColumns(), Tx_Addresses_Utility_TCA::getFieldsGrid());
 			if (isset($columns[$fieldName])) {
 				$tca = $columns[$fieldName];
+				// eval function
 				if (isset($tca['config']['eval'])
 					&& strpos($tca['config']['eval'], 'date') !== FALSE
 					&& $value) {
 					$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
+				}
+				// userFunc
+				else if (isset($tca['config']['type']) && $tca['config']['type'] == 'user') {
+					$table = $tca['config']['userFunc.']['table'];
+					$field = $tca['config']['userFunc.']['field'];
+					$output[$fieldName] = call_user_func_array(explode('->', $tca['config']['userFunc']), array($table, $field, $value));
 				}
 				else {
 					$output[$fieldName] = $value;
@@ -425,6 +432,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 			}
 
 			$fields['tstamp'] = time();
+			$fields['upuser_id'] = $BE_USER->user['uid'];
 			$fields['pid'] = $this->pid;
 			$request = $TYPO3_DB->UPDATEquery(
 				'tx_addresses_domain_model_address',
@@ -438,10 +446,11 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 			if ($result) $result = 'UPDATE';
 		}
 		else {
-			$fields['cruser_id'] = $BE_USER->user['uid'];
+			$fields['pid'] = $this->pid;
 			$fields['tstamp'] = time();
 			$fields['crdate'] = time();
-			$fields['pid'] = $this->pid;
+			$fields['cruser_id'] = $BE_USER->user['uid'];
+			$fields['upuser_id'] = $BE_USER->user['uid'];
 			$request = $TYPO3_DB->INSERTquery(
 				'tx_addresses_domain_model_address',
 				$fields

@@ -94,12 +94,10 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	 */
 	public function vcardAction(Tx_Addresses_Domain_Model_Address $address) {
 		$this->view->assign('address', $address);
-		header('Content-Type: text/x-vCard');
-		header('Content-Disposition: attachment; filename= "' . $address->getFirstName() . '_' . $address->getLastName() . '.vcf"');
-		echo $this->view->render();
-		exit;
+		$this->response->setHeader('Content-Type','text/x-vCard');
+		$this->response->setHeader('Content-Disposition','attachment; filename= "' . $address->getFirstName() . '_' . $address->getLastName() . '.vcf');
 	}
-	
+
 	/**
 	 * vCards action for this controller. Accumulates all addresses into a vcf file
 	 *
@@ -107,12 +105,10 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	 */
 	public function vcardsAction() {
 		$data = Array();
-		$data = $this->addressRepository->findAll(); 
+		$data = $this->addressRepository->findAll();
 		$this->view->assign('addresses', $data);
-		header('Content-Type: text/x-vCard');
-		header('Content-Disposition: attachment; filename= "addresses.vcf"');
-		echo $this->view->render();
-		exit;
+		$this->response->setHeader('Content-Type','text/x-vCard');
+		$this->response->setHeader('Content-Disposition','attachment; filename= "addresses.vcf"');
 	}
 
 }

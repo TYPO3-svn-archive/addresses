@@ -63,6 +63,7 @@ Addresses.Grid = function(){
 	 */
 	this.controller = new Object({
 		width: 50,
+		header : '&nbsp;',
 		renderer: function(val) {
 			output = '<img id="edit-' + val + '" class="pointer" src="' + Addresses.grid.iconsPath + 'pencil.png" onclick="Addresses.grid.showWindow(this)"/>&nbsp;&nbsp;';
 			output += '<img id="copy-' + val + '" class="pointer" src="' + Addresses.grid.iconsPath + 'clip_copy.gif" onclick="Addresses.grid.showWindow(this)"/>';
@@ -104,7 +105,7 @@ Addresses.Grid = function(){
 				},
 				text: 'Loading',
 				success: function() {
-					
+
 					// Set title
 					if (element.id == 'multipleEditionButton') {
 						w.setTitle(Addresses.lang.multiple_update_record); // set title
@@ -397,6 +398,20 @@ Addresses.Grid = function(){
 				//				toolbar.items.get('multipleEditionButton').setDisabled(false);
 				Ext.ComponentMgr.get('multipleEditionButton').setDisabled(selModel.getCount() === 0);
 				Ext.ComponentMgr.get('deleteButton').setDisabled(selModel.getCount() === 0);
+			},
+			this,
+			{
+				buffer:10
+			}
+			);
+		this.grid.on(
+			'dblclick',
+			function(e) {
+				// @TODO
+//				var sm = this.grid.getSelectionModel();
+//				var selection = sm.getSelected();
+//				var element = Ext.get('edit-' + )
+//				this.showWindow(selection.data.uid, 'edit');
 			},
 			this,
 			{

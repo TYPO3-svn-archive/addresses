@@ -26,7 +26,6 @@
 			<label index="no">no</label>
 			<label index="keywords">keywords...</label>
 			<label index="loading">Loading...</label>
-			<label index="title">Addresses</label>
 			<label index="search">Search</label>
 			<label index="add">Add</label>
 			<label index="remove">Remove</label>
@@ -70,7 +69,6 @@
 			<label index="no">non</label>
 			<label index="keywords">recherche...</label>
 			<label index="loading">Chargement...</label>
-			<label index="title">Adresses</label>
 			<label index="search">Recherche</label>
 			<label index="add">Ajouter un enregistrement</label>
 			<label index="remove">Supprimer</label>

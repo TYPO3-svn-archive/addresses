@@ -104,6 +104,7 @@ Addresses.Window = function()
 		xtype:'tabpanel',
 		height: Addresses.statics.editionHeight,
 		activeTab: 0,
+		deferredRender: false,
 		defaults:{
 			bodyStyle:'padding:5px'
 		//					autoHeight: true,
@@ -122,7 +123,38 @@ Addresses.Window = function()
 		bodyStyle:'padding: 0',
 		labelAlign: 'top',
 		buttons: this.buttons,
-		items: this.tabPanel
+		//		items: this.tabPanel
+		items: {
+			xtype: 'panel',
+			layout:'column',
+			items: [{
+				columnWidth: .60,
+				items: this.tabPanel
+			},{
+				title: 'Informations',
+				columnWidth: .40,
+				xtype : 'panel',
+				layout:'form',
+				bodyStyle:'padding: 5px 0 5px 5px',
+				items: [{
+					"xtype":"textarea",
+					"height" : 150,
+					"name":"remarks",
+					"id":"remarks",
+					"fieldLabel":"Remarque",
+					"selectOnFocus":true,
+					"anchor":"95%",
+					"blankText":"Champ obligatoire",
+					"labelSeparator":""
+				},{
+					xtype: 'dataview',
+					tpl: new Ext.Template(
+						'<p style="margin-left:45px;"><b>asdf</b>first_name</p>'
+						)
+
+				}]
+			}]
+		}
 	};
 
 	/*
@@ -130,7 +162,7 @@ Addresses.Window = function()
 	 */
 	this.w = new Ext.Window({
 		id: 'addresses_window',
-		width: 600,
+		width: 700,
 		height: Addresses.statics.editionHeight,
 		modal: true,
 		layout: 'fit',
@@ -146,9 +178,28 @@ Addresses.Window = function()
 	});
 
 	/**
+	 * Generic method for adding a listner on a textarea. Enables the key stroke "enter"
+	 */
+	this.addListnerToTextareas = function() {
+		var textareas = this.w.findByType('textarea');
+		for (var index = 0; index < textareas.length; index++) {
+			var textarea = textareas[index];
+			textarea.on({
+				'keydown' :	function(el, e) {
+					var key = Ext.EventObject.getKey();
+					if (key === 13){
+						e.stopPropagation();
+					}
+
+				}
+			});
+		}
+	};
+
+	/**
 	 * Generic method for adding a listner on a combobox. It will store new data into the SimpleStore componenent
 	 */
-	this.addListnerToCombobox = function() {
+	this.addListnerToComboboxes = function() {
 
 		var comboboxes = this.w.findByType('combo');
 		for (var index = 0; index < comboboxes.length; index++) {
@@ -216,7 +267,10 @@ Addresses.Window = function()
 						if (typeof(record) == 'undefined') {
 
 							// Add this record
-							Addresses.store.localities.add(new Ext.data.Record({locality_id: postalCodeValue, locality_text: localityValue},postalCodeValue));
+							Addresses.store.localities.add(new Ext.data.Record({
+								locality_id: postalCodeValue,
+								locality_text: localityValue
+							},postalCodeValue));
 						}
 					}
 				}
@@ -233,7 +287,8 @@ Addresses.Window = function()
 		// Do that for generating the DOM, otherwise it won't have a mapping btw fields and data'
 		this.w.show(); this.w.hide();
 
-		this.addListnerToCombobox();
+		this.addListnerToTextareas();
+		this.addListnerToComboboxes();
 		this.addListnerTolocality();
 
 		// map one key by key code

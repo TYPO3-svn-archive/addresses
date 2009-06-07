@@ -16,6 +16,11 @@
 			<label index="english">English</label>
 			<label index="german">German</label>
 			<label index="french">French</label>
+			<label index="person">Person</label>
+			<label index="contact">Contact</label>
+			<label index="switzerland">Switzerland</label>
+			<label index="france">France</label>
+			<label index="germany">Germany</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="address">Addresse</label>
@@ -28,6 +33,11 @@
 			<label index="english">Anglais</label>
 			<label index="german">Allemand</label>
 			<label index="french">Français</label>
+			<label index="person">Personne</label>
+			<label index="contact">Coordonnées</label>
+			<label index="switzerland">Suisse</label>
+			<label index="france">France</label>
+			<label index="germany">Allemagne</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 		</languageKey>

@@ -8,19 +8,6 @@ body .x-panel { margin-bottom:20px; }
 	border-top:0 none;
 }
 
-/*
-.loadingClass { top:200px !important; }
-
-.ext-el-mask-msg { width:200px; }
-
-.ext-el-mask-msg div {
-	height:30px;
-	background-image: url('../extJS/resources/images/default/shared/large-loading.gif');
-	background-position: 155px 3px;
-	background-repeat: no-repeat;
-}
-*/
-
 .delete { background-image: url('../icons/delete.gif') !important; }
 .undelete {	background-image: url('../icons/arrow_rotate_anticlockwise.png') !important; }
 .backup { background-image: url('../icons/database_save.png') !important; }
@@ -60,3 +47,28 @@ body .x-panel { margin-bottom:20px; }
 .my-icon { background: url(../icons/filter_refresh.png) 0 6px no-repeat !important;}
 
 body .x-panel {margin-bottom:0}
+
+.x-tbar-page-number {
+	padding-top: 2px
+}
+
+.x-panel-header {
+	background-color: #EBEBEB;
+	border-color: #D0D0D0;
+	background-image: url(/typo3/contrib/extjs/resources/images/typo3be/tabs/tab-strip-bg.gif);
+	border-left-width: 0;
+	padding-bottom: 3px;
+}
+
+.x-tab-strip, .x-tab-panel-header {
+	border-bottom-width: 0px;
+	padding-bottom: 0px;
+}
+
+.x-tab-panel-body, .x-tab-panel-header {
+	border-right-width: 0;
+}
+.x-panel {
+	background-color: #EFEFEF;
+	background-color: #FFF;
+}

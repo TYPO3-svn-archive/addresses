@@ -244,7 +244,8 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'type' => 'input',
 				'eval' => 'trim',
 				'size' => '20',
-				'max' => '80'
+				'max' => '80',
+				'default' => 'http://',
 			)
 		),
 		'email' => Array (

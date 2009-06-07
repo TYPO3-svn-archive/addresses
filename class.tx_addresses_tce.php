@@ -38,7 +38,7 @@ class tx_addresses_tce {
 	 * @param	string		$field
 	 * @return	array
 	 */
-	function getRecords($table, $field) {
+	function getArrayForSelect($table, $field) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 		$_records = array();

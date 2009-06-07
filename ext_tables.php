@@ -66,7 +66,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 	|| strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'typo3/ajax.php') !== FALSE) {
 
 
-// This section describes the columns of the grid.
+	// This section describes the columns of the grid.
 	t3lib_div::loadTCA('tx_addresses_domain_model_address');
 	$TCA['tx_addresses_domain_model_address']['interface']['showRecordFieldsGrid'] = array(
 		'uid' => array(
@@ -162,7 +162,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.2', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.2'),
 				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.3', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.3'),
 			),
-			'itemsProcFunc' => 'tx_addresses_tce->getRecords',
+			'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
 			'itemsProcFunc.' => array (
 				'table' => 'tx_addresses_domain_model_address',
 				'field' => 'gender',
@@ -181,7 +181,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 			'items' => Array (
 				Array('Suisse','Suisse'),
 			),
-			'itemsProcFunc' => 'tx_addresses_tce->getRecords',
+			'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
 			'itemsProcFunc.' => array (
 				'table' => 'tx_addresses_domain_model_address',
 				'field' => 'country',
@@ -191,7 +191,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 			'maxitems' => 1,
 		)
 	);
-	
+
 	$TCA['tx_addresses_domain_model_address']['columns']['preferred_language'] = array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.preferred_language',
@@ -202,7 +202,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:french','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:french'),
 				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:german','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:german'),
 			),
-			'itemsProcFunc' => 'tx_addresses_tce->getRecords',
+			'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
 			'itemsProcFunc.' => array (
 				'table' => 'tx_addresses_domain_model_address',
 				'field' => 'preferred_language',
@@ -213,9 +213,33 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 		)
 	);
 
-	$TCA['tx_addresses_domain_model_address']['types']['module']['showitem'] =
-		'--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.type.I.0,' .
-		'first_name, last_name, gender,birth_date, country, marital_status, preferred_language, postal_code:0.25 | locality:0.75,';
+	$TCA['tx_addresses_domain_model_address']['columns']['nationality'] = array(
+		'exclude' => 1,
+		'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nationality',
+		'config' => Array (
+			'type' => 'select',
+			'items' => Array (
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:switzerland','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:switzerland'),
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:germany','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:germany'),
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:france','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:france'),
+			),
+			'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
+			'itemsProcFunc.' => array (
+				'table' => 'tx_addresses_domain_model_address',
+				'field' => 'nationality',
+			),
+			'size' => 1,
+			'minitems' => 0,
+			'maxitems' => 1,
+		)
+	);
+
+	$TCA['tx_addresses_domain_model_address']['types']['module']['showitem'] = <<< EOF
+--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person,
+first_name, last_name, gender, preferred_language, birth_date, marital_status, nationality,
+--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contact,
+address, postal_code:0.25 | locality:0.75, country, website,
+EOF;
 }
 
 $configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);

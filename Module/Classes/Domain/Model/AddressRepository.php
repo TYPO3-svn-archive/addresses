@@ -387,6 +387,9 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 
 					// Does some additional control
 					switch ($tca['config']['type']) {
+						case 'text':
+							$fields[$fieldName] = $value;
+							break;
 						case 'input':
 							$fields[$fieldName] = $value;
 							// Evaluates the date
@@ -407,7 +410,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 				}
 			}
 		} // end foreach
-
+		
 		// Defines here whether it is a "multiple" update or "single" update
 		$uids = array();
 		if ($values['uid'] != '') {
@@ -475,6 +478,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 	protected function sanitizeField(Array $configuration, $key, $value) {
 		switch($configuration['type']) {
 			case 'input':
+			case 'text':
 			case 'select':
 			// Shortens size of string
 				if (isset($configuration['size'])) {
@@ -486,7 +490,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 				break;
 			default:
 				t3lib_div::debug($configuration, '$configuration');
-				die('<b>Invalid configuration</b>');
+				die('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
 				break;
 		}
 		return trim($value);

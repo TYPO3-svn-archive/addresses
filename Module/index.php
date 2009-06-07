@@ -275,12 +275,13 @@ class  tx_addresses_module extends t3lib_SCbase {
 	}
 
 	/**
-	 * Count the number of fields. Useful for determining the height of the editing window.
+	 * Count the number of fields that will be displayed on the editing window.
+	 * Useful for determining the height of the editing window.
 	 *
 	 * @param array $fieldsWindow
 	 * @return int
 	 */
-	function getNumberOfFields(Array $fieldsWindow) {
+	protected function getNumberOfFields(Array $fieldsWindow) {
 		$numberOfItems = 0;
 		for ($index = 0; $index < count($fieldsWindow); $index++) {
 			$items = $fieldsWindow[$index];
@@ -341,12 +342,13 @@ class  tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * Return configuration of array
 	 *
-	 * @param array $columns that corresponds to $TCA['tx_addresses_domain_model_address']['columns']
+	 * @param string the field name;
 	 * @return array $configuration
 	 */
-	protected function getConfiguration(&$columns, $field) {
+	protected function getConfiguration($field) {
 		global $LANG;
-
+		$columns = Tx_Addresses_Utility_TCA::getColumns();
+		
 		$tca =  $columns[$field]['config'];
 		$configuration = array();
 
@@ -362,17 +364,23 @@ class  tx_addresses_module extends t3lib_SCbase {
 			$configuration['selectOnFocus'] = true;
 
 			switch($tca['type']) {
+				case 'text':
+					// Set default xtype
+					$configuration['xtype'] = 'textarea';
+					$configuration['enableKeyEvents'] = TRUE;
+					break;
 				case 'input':
-				// max length
+
+					// Set default xtype
+					$configuration['xtype'] = 'textfield';
+
+					// Defines max length
 					if (isset($tca['max'])) {
 						$configuration['maxLength'] = (int) $tca['max'];
 					}
 					if (isset($tca['default'])) {
-						$configuration['value'] = $tca['default'];
+						$configuration['value'] = $LANG->sL($tca['default']);
 					}
-
-					// Set default xtype
-					$configuration['xtype'] = 'textfield';
 
 					// validators
 					if (isset($tca['eval'])) {
@@ -404,6 +412,10 @@ class  tx_addresses_module extends t3lib_SCbase {
 					$configuration['displayField'] = $field .'_text';
 					$configuration['triggerAction'] = 'all';
 					$configuration['editable'] = isset($tca['editable']) ? $tca['editable'] : TRUE;
+
+					if (isset($tca['default'])) {
+						$configuration['value'] = $LANG->sL($tca['default']);
+					}
 
 					// Add configuration for non-editable field
 					if (isset($tca['editable']) && !$tca['editable']) {
@@ -450,7 +462,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 				default;
 					t3lib_div::debug($field, '$field');
 					t3lib_div::debug($tca, '$tca');
-					die('Invalid field configuration');
+					die('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
 			} //end switch
 		} // end if
 
@@ -498,7 +510,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 			if (strpos($item, '--div--') === FALSE ) {
 
 				if (strpos($item, '|') === FALSE ) {
-					$configuration = $this->getConfiguration(Tx_Addresses_Utility_TCA::getColumns(), $item);
+					$configuration = $this->getConfiguration($item);
 				}
 				else {
 					$fields = explode('|', $item);
@@ -512,7 +524,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 						$_properties = explode(':', $field);
 						$field = $_properties[0];
 
-						$_array = $this->getConfiguration(Tx_Addresses_Utility_TCA::getColumns(), $field);
+						$_array = $this->getConfiguration($field);
 						if (!empty($_array)) {
 
 							$_configurations[$i]['defaults'] = array(
@@ -553,6 +565,9 @@ class  tx_addresses_module extends t3lib_SCbase {
 					$configurations[$index]['items'][] = $configuration;
 				}
 			}
+			// IMPORTANT:
+			// The "else" bellow will define the informations for the head of the tabpanel.
+			// In other words, this is a new tab!
 			else {
 				$index++;
 				$_temp = explode(';', $item);
@@ -601,12 +616,12 @@ class  tx_addresses_module extends t3lib_SCbase {
 	}
 
 	/**
-	 * Removes tabs that contain no fields
+	 * Removes tabs that contain no fields from the tabpanel
 	 *
 	 * @param array $configurations
 	 * @return array
 	 */
-	function sanitizeConfigurations(Array $configurations) {
+	protected function sanitizeConfigurations(Array $configurations) {
 		$_configurations = Array();
 		foreach ($configurations as &$configuration) {
 			if (isset($configuration['items'])) {

@@ -6,7 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="mlang_tabs_tab">Addreses</label>
+			<label index="mlang_tabs_tab">Addresses</label>
 			<label index="mlang_labels_tabdescr">Create / edit addresses</label>
 			<label index="mlang_labels_tablabel">Addresses manager</label>
 		</languageKey>

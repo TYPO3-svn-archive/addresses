@@ -57,9 +57,9 @@ $LANG->includeLLFile('EXT:addresses/Module/Resources/Private/Language/locallang.
  */
 class  tx_addresses_module extends t3lib_SCbase {
 
-	/**
-	 * @var template
-	 */
+/**
+ * @var template
+ */
 	public $doc;
 
 	/**
@@ -139,6 +139,9 @@ class  tx_addresses_module extends t3lib_SCbase {
 		$_EXTKEY = 'addresses';
 		require($this->absolutePath .'/ext_emconf.php');
 		$this->version = $EM_CONF['addresses']['version'];
+
+		// @TODO: remove this line when the core will be fixed
+		$GLOBALS['TBE_STYLES']['extJS']['theme'] = $this->doc->backPath . 'contrib/extjs/resources/css/xtheme-gray.css';
 	}
 
 	/**
@@ -183,8 +186,9 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * Loads ExtJS staff: JS + CSS
 	 */
 	protected function loadExtJSStaff() {
-	// Loads extjs
-		$this->doc->loadExtJS();
+
+		// Loads extjs
+		$this->doc->loadExtJS(true, xtheme-gray.css);
 		//		$this->doc->enableExtJsDebug(); // use for debug
 
 		// Load special CSS Stylesheets:
@@ -348,7 +352,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	protected function getConfiguration($field) {
 		global $LANG;
 		$columns = Tx_Addresses_Utility_TCA::getColumns();
-		
+
 		$tca =  $columns[$field]['config'];
 		$configuration = array();
 
@@ -365,13 +369,13 @@ class  tx_addresses_module extends t3lib_SCbase {
 
 			switch($tca['type']) {
 				case 'text':
-					// Set default xtype
+				// Set default xtype
 					$configuration['xtype'] = 'textarea';
 					$configuration['enableKeyEvents'] = TRUE;
 					break;
 				case 'input':
 
-					// Set default xtype
+				// Set default xtype
 					$configuration['xtype'] = 'textfield';
 
 					// Defines max length
@@ -640,7 +644,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	protected function getGridConfiguration() {
 		global $LANG;
 		$configurations = Tx_Addresses_Utility_TCA::getFieldsGrid();
-		
+
 		$fields = array();
 		foreach ($configurations as $fieldName => $configuration) {
 			$_array = array();
@@ -648,7 +652,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 			// Defines staff
 			$_array['header'] = $LANG->sL($configuration['label']);
 			$_array['dataIndex'] = $fieldName;
-			
+
 			if (isset($configuration['config']['width'])) {
 				$_array['width'] = (int)$configuration['config']['width'];
 			}

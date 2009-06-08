@@ -55,7 +55,7 @@ body .x-panel {margin-bottom:0}
 .x-panel-header {
 	background-color: #EBEBEB;
 	border-color: #D0D0D0;
-	background-image: url(/typo3/contrib/extjs/resources/images/typo3be/tabs/tab-strip-bg.gif);
+	background-image: url(/typo3/contrib/extjs/resources/images/gray/tabs/tab-strip-bg.gif);
 	border-left-width: 0;
 	padding-bottom: 3px;
 }

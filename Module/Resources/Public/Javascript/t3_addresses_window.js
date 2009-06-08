@@ -66,10 +66,8 @@ Addresses.Window = function()
 					}
 				};
 
-				var w = Ext.ComponentMgr.get('addresses_window');
-				var form = w.getComponent('editForm').getForm();
-
 				// case multiple edition -> don't validate form
+				var form = Addresses.form
 				var uid = form.findField('uid').getValue();
 				if (uid == '' || uid.search(',') == -1) {
 					if (form.isValid()) {
@@ -131,27 +129,29 @@ Addresses.Window = function()
 				columnWidth: .60,
 				items: this.tabPanel
 			},{
-				title: 'Informations',
+				title: Addresses.lang.information,
 				columnWidth: .40,
 				xtype : 'panel',
 				layout:'form',
-				bodyStyle:'padding: 5px 0 5px 5px',
+				bodyStyle: 'padding: 5px 0 5px 5px',
 				items: [{
-					"xtype":"textarea",
-					"height" : 150,
-					"name":"remarks",
-					"id":"remarks",
-					"fieldLabel":"Remarque",
-					"selectOnFocus":true,
-					"anchor":"95%",
-					"blankText":"Champ obligatoire",
-					"labelSeparator":""
+					xtype: "textarea",
+					height: 150,
+					name: "remarks",
+					id: "remarks",
+					fieldLabel: Addresses.lang.remarks,
+					selectOnFocus:true,
+					anchor: "95%",
+					blankText: Addresses.lang.fieldMandatory,
+					labelSeparator: ""
 				},{
-					xtype: 'dataview',
-					tpl: new Ext.Template(
-						'<p style="margin-left:45px;"><b>asdf</b>first_name</p>'
-						)
-
+					xtype: 'panel',
+					id: 'informationPanel',
+					tpl: new Ext.Template([
+						'<div style="margin-top:10px;">' + Addresses.lang.visa + '</div>',
+						'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
+						'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
+						])
 				}]
 			}]
 		}
@@ -174,7 +174,14 @@ Addresses.Window = function()
 		iconCls: 'my-icon',
 
 		// formPanel that contains a tabPanel
-		items: this.formPanel
+		items: this.formPanel,
+		listeners: {
+			show: function() {
+				var informationPanel = Addresses.w.findById('informationPanel');
+				var tpl = informationPanel.tpl;
+				tpl.overwrite(informationPanel.body,Addresses.data);
+			}
+		}
 	});
 
 	/**
@@ -200,7 +207,6 @@ Addresses.Window = function()
 	 * Generic method for adding a listner on a combobox. It will store new data into the SimpleStore componenent
 	 */
 	this.addListnerToComboboxes = function() {
-
 		var comboboxes = this.w.findByType('combo');
 		for (var index = 0; index < comboboxes.length; index++) {
 			var combobox = comboboxes[index];
@@ -283,6 +289,10 @@ Addresses.Window = function()
 	 * Initialize function
 	 */
 	this.init = function() {
+
+		Addresses.w = this.w
+		Addresses.formPanel = this.w.getComponent('editForm');
+		Addresses.form = Addresses.formPanel.getForm();
 
 		// Do that for generating the DOM, otherwise it won't have a mapping btw fields and data'
 		this.w.show(); this.w.hide();

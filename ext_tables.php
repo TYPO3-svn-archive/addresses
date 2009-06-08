@@ -136,6 +136,20 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 				'eval' => 'date',
 			)
 		),
+		'cruser_id' => array(
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
+			'config' => Array (
+				'type' => 'user',
+				'userFunc' => 'tx_addresses_tce->getValueById',
+				'userFunc.' => array (
+					'table' => 'be_users',
+					'field' => 'username',
+				),
+				'width' => 100,
+				'sortable' => TRUE,
+				'hidden' => TRUE,
+			)
+		),
 		'upuser_id' => array(
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
 			'config' => Array (
@@ -145,27 +159,26 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 					'table' => 'be_users',
 					'field' => 'username',
 				),
-				'width' => 120,
+				'width' => 100,
 				'sortable' => TRUE,
 			)
 		),
 	);
-
-	// This section modifies some field configuration for the ExtJS purpose
-	$TCA['tx_addresses_domain_model_address']['columns']['gender'] = array(
+	
+	$TCA['tx_addresses_domain_model_address']['columns']['title'] = array(
 		'exclude' => 1,
-		'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender',
+		'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title',
 		'config' => Array (
 			'type' => 'select',
 			'items' => Array (
-				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.1', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.1'),
-				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.2', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.2'),
-				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.3', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.I.3'),
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.1', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.1'),
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.2', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.2'),
+				Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.3', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.3'),
 			),
 			'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
 			'itemsProcFunc.' => array (
 				'table' => 'tx_addresses_domain_model_address',
-				'field' => 'gender',
+				'field' => 'title',
 			),
 			'size' => 1,
 			'minitems' => 0,
@@ -236,7 +249,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 
 	$TCA['tx_addresses_domain_model_address']['types']['module']['showitem'] = <<< EOF
 --div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person,
-first_name, last_name, gender, preferred_language, birth_date, marital_status, nationality,
+gender, title, first_name, last_name, preferred_language, birth_date, marital_status, nationality,
 --div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contact,
 address, postal_code:0.25 | locality:0.75, country, website,
 EOF;

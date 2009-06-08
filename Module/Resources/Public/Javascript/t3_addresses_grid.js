@@ -65,8 +65,8 @@ Addresses.Grid = function(){
 		width: 50,
 		header : '&nbsp;',
 		renderer: function(val) {
-			output = '<img id="edit-' + val + '" class="pointer" src="' + Addresses.grid.iconsPath + 'pencil.png" onclick="Addresses.grid.showWindow(this)"/>&nbsp;&nbsp;';
-			output += '<img id="copy-' + val + '" class="pointer" src="' + Addresses.grid.iconsPath + 'clip_copy.gif" onclick="Addresses.grid.showWindow(this)"/>';
+			output = '<img class="pointer" src="' + Addresses.grid.iconsPath + 'pencil.png" onclick="Addresses.grid.showWindow(\'edit\')"/>&nbsp;&nbsp;';
+			output += '<img class="pointer" src="' + Addresses.grid.iconsPath + 'clip_copy.gif" onclick="Addresses.grid.showWindow(\'copy\')"/>';
 			return output;
 		},
 		dataIndex: 'uid'
@@ -75,7 +75,7 @@ Addresses.Grid = function(){
 	/**
 	 * Mode could be either copy or new
 	 */
-	this.showWindow = function(element) {
+	this.showWindow = function(state) {
 		var sm = this.grid.getSelectionModel();
 		var selections = sm.getSelections();
 		var data = new Array();
@@ -88,14 +88,12 @@ Addresses.Grid = function(){
 		}
 
 		if (data.length > 0) {
-			var w = Ext.ComponentMgr.get('addresses_window');
-			var form = w.getComponent('editForm').getForm();
-			form.reset(); // clear form
+			Addresses.form.reset(); // clear form
 
 			Ext.Msg.progress(Addresses.lang.loading, '');
 			Addresses.grid.startInterval();
 
-			form.load({
+			Addresses.form.load({
 				method: 'GET',
 				url: Addresses.statics.ajaxController,
 				params:{
@@ -104,26 +102,26 @@ Addresses.Grid = function(){
 					data: Ext.util.JSON.encode(data)
 				},
 				text: 'Loading',
-				success: function() {
-
+				success: function(form,call) {
 					// Set title
-					if (element.id == 'multipleEditionButton') {
-						w.setTitle(Addresses.lang.multiple_update_record); // set title
+					if (state == 'multipleEdit') {
+						Addresses.w.setTitle(Addresses.lang.multiple_update_record); // set title
 					}
-					else if(element.id.search('edit-') != -1) {
-						w.setTitle(Addresses.lang.update_record); // set title
+					else if (state == 'edit') {
+						Addresses.w.setTitle(Addresses.lang.update_record); // set title
 					}
-					else {
+					else if (state == 'copy'){
 						// Removes the id so that the server will consider the data as a new record
 						form.findField('uid').setValue('');
-						w.setTitle(Addresses.lang.copy_record); // set title
+						Addresses.w.setTitle(Addresses.lang.copy_record); // set title
 					}
 
 					window.clearInterval(Addresses.Grid.interval);
 					Ext.Msg.hide();
-					w.show();
-
+					Addresses.data = call.result.data;
+					Addresses.w.show();
 					Addresses.grid.focusOnFirstVisibleField();
+					Addresses.w.findById('informationPanel').setVisible(true);
 				}
 			});
 		}
@@ -267,11 +265,10 @@ Addresses.Grid = function(){
 		icon: this.iconsPath + 'accept.png',
 		cls: 'x-btn-text-icon',
 		handler: function() {
-			var w = Ext.ComponentMgr.get('addresses_window');
-			w.setTitle(Addresses.lang.new_record); // set title
-			var form = w.getComponent('editForm').getForm();
-			form.reset(); // clear form
-			w.show();
+			Addresses.w.setTitle(Addresses.lang.new_record); // set title
+			Addresses.form.reset(); // clear form
+			Addresses.w.findById('informationPanel').setVisible(false);
+			Addresses.w.show();
 			Addresses.grid.focusOnFirstVisibleField();
 		}
 	},
@@ -283,7 +280,7 @@ Addresses.Grid = function(){
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			Addresses.grid.showWindow(this);
+			Addresses.grid.showWindow('multipleEdit');
 		}
 	},
 	'-',
@@ -366,7 +363,6 @@ Addresses.Grid = function(){
 	 **/
 	this.init = function() {
 		
-		// EXPERIMENTAL GRID
 		this.grid = new Ext.grid.GridPanel({
 			id: 'addresses_grid',
 			renderTo: Addresses.statics.renderTo,
@@ -407,11 +403,7 @@ Addresses.Grid = function(){
 		this.grid.on(
 			'dblclick',
 			function(e) {
-				// @TODO
-//				var sm = this.grid.getSelectionModel();
-//				var selection = sm.getSelected();
-//				var element = Ext.get('edit-' + )
-//				this.showWindow(selection.data.uid, 'edit');
+				this.showWindow('edit');
 			},
 			this,
 			{

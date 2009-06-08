@@ -47,6 +47,12 @@
 			<label index="maxLengthText">The maximum length for this field is {0} characters</label>
 			<label index="copy_record">Copy record</label>
 			<label index="select_value">Select a value...</label>
+			<label index="visa">Visa</label>
+			<label index="information">Information</label>
+			<label index="remarks">Remarks</label>
+			<label index="createdOn">Created on the</label>
+			<label index="updatedOn">Updated on the</label>
+			<label index="by">by</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>
@@ -90,6 +96,12 @@
 			<label index="maxLengthText">La longueur maximum pour ce champ est de {0} caractères</label>
 			<label index="copy_record">Copier enregistrement</label>
 			<label index="select_value">Sélectionner une valeur...</label>
+			<label index="visa">Suivi</label>
+			<label index="information">Information</label>
+			<label index="remarks">Remarques</label>
+			<label index="createdOn">Créé le</label>
+			<label index="updatedOn">Modifié le</label>
+			<label index="by">par</label>
 		</languageKey>
 	</data>
 </T3locallang>

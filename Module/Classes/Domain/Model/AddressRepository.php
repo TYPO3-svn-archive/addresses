@@ -194,6 +194,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 			}
 			$searchClause = ' LIKE "%' . $search . '%"';
 			$this->clause = implode($searchClause . ' OR ', $fields) . $searchClause ;
+			$this->clause = '(' . $this->clause . ')';
 		}
 		$and = $this->clause == '' ? '' : ' AND ';
 		return $and . $this->clause;

@@ -46,6 +46,8 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'
 // Check user permissions
 $BE_USER->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
 $LANG->includeLLFile('EXT:addresses/Module/Resources/Private/Language/locallang.xml');
+$LANG->includeLLFile('EXT:addresses/Resources/Private/Language/locallang_db.xml');
+$LANG->includeLLFile('EXT:addresses/Resources/Private/Language/locallang_tca.xml');
 
 /**
  * Module 'addresses' for the 'addresses' extension.
@@ -244,6 +246,10 @@ class  tx_addresses_module extends t3lib_SCbase {
 			' . $this->namespace . '.fieldsStore = ' . json_encode($fieldsStore) . ';
 			' . $this->namespace . '.fieldsWindow = ' . $this->removesQuotesAroundObject(json_encode($fieldsWindow)) . ';
 			' . $this->namespace . '.lang = ' . json_encode($this->getLabels()) . ';
+			' . $this->namespace . '.w = new Object();
+			' . $this->namespace . '.formPanel = new Object();
+			' . $this->namespace . '.form = new Object();
+			' . $this->namespace . '.data = new Object();
 			Addresses.initialize();' . chr(10);
 	}
 
@@ -657,6 +663,10 @@ class  tx_addresses_module extends t3lib_SCbase {
 				$_array['width'] = (int)$configuration['config']['width'];
 			}
 
+			if (isset($configuration['config']['hidden'])) {
+				$_array['hidden'] = (boolean)$configuration['config']['hidden'];
+			}
+
 			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
 				$_array['renderer'] = "Ext.util.Format.dateRenderer('" . Tx_Addresses_Utility_Configuration::getDateFormat() . "')";
 			}
@@ -725,21 +735,15 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 */
 	protected function getLabelsFromLocallang($selectionPrefix = 'js.', $stripFromSelectionName = '') {
 		$extraction = array();
-		//		$labels = array_merge(
-		//			(array)$GLOBALS['LOCAL_LANG']['default'],
-		//			(array)$GLOBALS['LOCAL_LANG'][$GLOBALS['LANG']->lang]
-		//		);
-		//
 		// Regular expression to extract the necessary labels from the javascrip file
 		foreach	($this->javascriptFiles as $file) {
 			$content = file_get_contents($this->absolutePath . 'Module/Resources/Public/Javascript/' . $file . '.js');
-			preg_match_all('/' . $this->namespace .'\.lang\.([\w]+)/is', $content, $matches, PREG_SET_ORDER);
+			preg_match_all('/' . $this->namespace .'\.lang\.([\w]+)/is', $content, $matches, PREG_SET_ORDER); //[^ \),;\n}]
 			foreach ($matches as  $match) {
 				$key = $match[1];
 				$extraction[$key] = $GLOBALS['LANG']->getLL($key);
 			}
 		}
-
 		return $extraction;
 	}
 

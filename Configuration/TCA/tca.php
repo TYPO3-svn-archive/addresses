@@ -70,13 +70,18 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		'gender' => array (
 			'label'  => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender',
 			'config' => array (
-				'type'    => 'radio',
-				'default' => 'm',
+				'type' => 'select',
 				'items'   => array(
-					array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.m', 'm'),
-					array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.f', 'f')
-				)
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.m', 'm'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.f', 'f')
+				),
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
+				'editable' => FALSE,
 			)
+
 		),
 		'first_name' => Array (
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',

@@ -44,10 +44,10 @@ Addresses.initialize = function() {
 	Addresses.fieldsGrid.unshift(Addresses.grid.checkbox, Addresses.grid.expander); // add checkbox + expander to the grid
 	Addresses.fieldsGrid.push(Addresses.grid.controller);
 	Addresses.grid.columns = Addresses.fieldsGrid;
-//	Addresses.grid.init();
+	Addresses.grid.init();
 
 	// Prepare editing window
 	Addresses.window = new Addresses.Window();
 	Addresses.window.init();
-	Addresses.window.w.show();
+//	Addresses.window.w.show();
 };

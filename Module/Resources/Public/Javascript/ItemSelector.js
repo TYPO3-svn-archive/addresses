@@ -379,8 +379,13 @@ Ext.ux.ItemSelector = Ext.extend(Ext.form.Field,  {
 			}
 		}
 
-		this.toMultiselect.view.refresh();
-		this.fromMultiselect.view.refresh();
+		// Prevent a possible error when the itemselector has never been generated
+		try {
+			this.fromMultiselect.view.refresh();
+			this.toMultiselect.view.refresh();
+		}
+		catch (e){}
+
 		var si = this.toMultiselect.store.sortInfo;
 		if(si){
 			this.toMultiselect.store.sort(si.field, si.direction);
@@ -441,6 +446,8 @@ Ext.ux.ItemSelector = Ext.extend(Ext.form.Field,  {
 	},
 
 	reset: function(){
+//		if (typeof(this.toMultiselect) != 'undefined') {
+
 		range = this.toMultiselect.store.getRange();
 		this.toMultiselect.store.removeAll();
 		this.fromMultiselect.store.add(range);
@@ -449,7 +456,8 @@ Ext.ux.ItemSelector = Ext.extend(Ext.form.Field,  {
 			this.fromMultiselect.store.sort(si.field, si.direction);
 		}
 		this.valueChanged(this.toMultiselect.store);
-	}
+		}
+//	}
 });
 
 Ext.reg("itemselector", Ext.ux.ItemSelector);

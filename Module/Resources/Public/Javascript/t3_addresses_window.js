@@ -101,7 +101,7 @@ Addresses.Window = function()
 	this.tabPanel = {
 		xtype:'tabpanel',
 		height: Addresses.statics.editionHeight,
-		activeTab: 2,
+		activeTab: 0,
 		deferredRender: false,
 		defaults:{
 			bodyStyle:'padding:5px'

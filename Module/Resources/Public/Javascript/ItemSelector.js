@@ -351,34 +351,36 @@ Ext.ux.ItemSelector = Ext.extend(Ext.form.Field,  {
 	setValue: function(values) {
 		this.reset();
 		ids = values.split(',');
-
 		var records = [];
-		for (var i = 0; i < ids.length; i++) {
-			var id = ids[i];
+		
+		if (ids.length > 0 && values != 0) {
+			for (var i = 0; i < ids.length; i++) {
+				var id = ids[i];
 
-			var record = this.fromMultiselect.view.store.getById(id);
-			records.push(record);
-		}
-
-		if(!this.allowDup) {
-			selectionsArray = [];
-		}
-
-		for (var j = 0; j < records.length; j++) {
-			record = records[j];
-			if(this.allowDup){
-				var x = new Ext.data.Record();
-				record.id = x.id;
-				delete x;
-				this.toMultiselect.view.store.add(record);
+				var record = this.fromMultiselect.view.store.getById(id);
+				records.push(record);
 			}
-			else {
-				this.fromMultiselect.view.store.remove(record);
-				this.toMultiselect.view.store.add(record);
-				selectionsArray.push((this.toMultiselect.view.store.getCount() - 1));
+
+			if(!this.allowDup) {
+				selectionsArray = [];
+			}
+
+			for (var j = 0; j < records.length; j++) {
+				record = records[j];
+				if(this.allowDup){
+					var x = new Ext.data.Record();
+					record.id = x.id;
+					delete x;
+					this.toMultiselect.view.store.add(record);
+				}
+				else {
+					this.fromMultiselect.view.store.remove(record);
+					this.toMultiselect.view.store.add(record);
+					selectionsArray.push((this.toMultiselect.view.store.getCount() - 1));
+				}
 			}
 		}
-
+		
 		// Prevent a possible error when the itemselector has never been generated
 		try {
 			this.fromMultiselect.view.refresh();
@@ -390,7 +392,7 @@ Ext.ux.ItemSelector = Ext.extend(Ext.form.Field,  {
 		if(si){
 			this.toMultiselect.store.sort(si.field, si.direction);
 		}
-//		this.toMultiselect.view.select(selectionsArray);
+	//		this.toMultiselect.view.select(selectionsArray);
 
 	},
 
@@ -446,7 +448,7 @@ Ext.ux.ItemSelector = Ext.extend(Ext.form.Field,  {
 	},
 
 	reset: function(){
-//		if (typeof(this.toMultiselect) != 'undefined') {
+		//		if (typeof(this.toMultiselect) != 'undefined') {
 
 		range = this.toMultiselect.store.getRange();
 		this.toMultiselect.store.removeAll();
@@ -456,7 +458,7 @@ Ext.ux.ItemSelector = Ext.extend(Ext.form.Field,  {
 			this.fromMultiselect.store.sort(si.field, si.direction);
 		}
 		this.valueChanged(this.toMultiselect.store);
-		}
+	}
 //	}
 });
 

@@ -72,7 +72,6 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			'config' => array (
 				'type' => 'select',
 				'items'   => array(
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.m', 'm'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.f', 'f')
 				),
@@ -250,7 +249,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'eval' => 'trim',
 				'size' => '20',
 				'max' => '80',
-				'default' => 'http://',
+				'validation' => 'http://',
 			)
 		),
 		'email' => Array (
@@ -364,7 +363,10 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'multiple' => 1,
 				'foreign_class' => 'Tx_Addresses_Domain_Model_Addressgroup',
 				'foreign_table' => 'tx_addresses_domain_model_addressgroup',
-				'MM' => 'tx_addresses_address_addressgroup_mm'
+				'MM' => 'tx_addresses_address_addressgroup_mm',
+				'MM_match_fields' => array(
+					'tablenames' => 'tx_addresses_domain_model_addressgroup'
+				),
 			)
 		),
 		'marital_status' => array(
@@ -373,7 +375,6 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			'config' => Array (
 				'type' => 'select',
 				'items' => Array (
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:single', '1'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:married', '2'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:divorced', '3'),

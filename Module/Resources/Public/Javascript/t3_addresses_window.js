@@ -101,7 +101,7 @@ Addresses.Window = function()
 	this.tabPanel = {
 		xtype:'tabpanel',
 		height: Addresses.statics.editionHeight,
-		activeTab: 0,
+		activeTab: 2,
 		deferredRender: false,
 		defaults:{
 			bodyStyle:'padding:5px'
@@ -121,7 +121,6 @@ Addresses.Window = function()
 		bodyStyle:'padding: 0',
 		labelAlign: 'top',
 		buttons: this.buttons,
-		//		items: this.tabPanel
 		items: {
 			xtype: 'panel',
 			layout:'column',
@@ -177,9 +176,9 @@ Addresses.Window = function()
 		items: this.formPanel,
 		listeners: {
 			show: function() {
-				var informationPanel = Addresses.w.findById('informationPanel');
-				var tpl = informationPanel.tpl;
-				tpl.overwrite(informationPanel.body,Addresses.data);
+							var informationPanel = Addresses.w.findById('informationPanel');
+							var tpl = informationPanel.tpl;
+							tpl.overwrite(informationPanel.body,Addresses.data);
 			}
 		}
 	});
@@ -293,14 +292,14 @@ Addresses.Window = function()
 		Addresses.w = this.w
 		Addresses.formPanel = this.w.getComponent('editForm');
 		Addresses.form = Addresses.formPanel.getForm();
-
+		
 		// Do that for generating the DOM, otherwise it won't have a mapping btw fields and data'
 		this.w.show(); this.w.hide();
 
 		this.addListnerToTextareas();
 		this.addListnerToComboboxes();
 		this.addListnerTolocality();
-
+		
 		// map one key by key code
 		new Ext.KeyMap("editForm", {
 			key: 13, // or Ext.EventObject.ENTER

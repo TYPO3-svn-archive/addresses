@@ -42,6 +42,7 @@ require($BACK_PATH . 'template.php');
 require_once(PATH_t3lib . 'class.t3lib_scbase.php');
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Configuration.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCE.php'));
 
 // Check user permissions
 $BE_USER->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
@@ -72,7 +73,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * @var $javascriptFiles array
 	 */
-	protected $javascriptFiles = array('ext_expander', 'search_field', 't3_addresses_init', 't3_addresses_grid', 't3_addresses_window');
+	protected $javascriptFiles = array('MultiSelect', 'ItemSelector', 'ext_expander', 'search_field', 't3_addresses_init', 't3_addresses_grid', 't3_addresses_window');
 
 	/**
 	 * @var $relativePath string
@@ -142,8 +143,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 		require($this->absolutePath .'/ext_emconf.php');
 		$this->version = $EM_CONF['addresses']['version'];
 
-		// @TODO: remove this line when the core will be fixed
-		$GLOBALS['TBE_STYLES']['extJS']['theme'] = $this->doc->backPath . 'contrib/extjs/resources/css/xtheme-gray.css';
+	//$GLOBALS['TBE_STYLES']['extJS']['theme'] = $this->doc->backPath . 'contrib/extjs/resources/css/xtheme-gray.css';
 	}
 
 	/**
@@ -189,7 +189,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 */
 	protected function loadExtJSStaff() {
 
-		// Loads extjs
+	// Loads extjs
 		$this->doc->loadExtJS(true, xtheme-gray.css);
 		//		$this->doc->enableExtJsDebug(); // use for debug
 
@@ -281,7 +281,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * @return string
 	 */
 	protected function removesQuotesAroundObject($json) {
-		return preg_replace('/\"(Addresses\.store\..+)\"/isU', '$1', $json);
+		return preg_replace('/\"(' . $this->namespace . '\.store\..+)\"/isU', '$1', $json);
 	}
 
 	/**
@@ -355,149 +355,52 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * @param string the field name;
 	 * @return array $configuration
 	 */
-	protected function getConfiguration($field) {
+	protected function getConfiguration($fieldName) {
 		global $LANG;
 		$columns = Tx_Addresses_Utility_TCA::getColumns();
-
-		$tca =  $columns[$field]['config'];
-		$configuration = array();
+		$tca = $columns[$fieldName]['config'];
 
 		// Makes sure the user has the permission
-		if ($this->checkPermission($columns, $field)) {
+		if ($this->checkPermission($columns, $fieldName)) {
+
 
 		// field name + label which are default values
-			$configuration['name'] = $field;
-			$configuration['id'] = $field;
-			if (isset($columns[$field]['label'])) {
-				$configuration['fieldLabel'] = $LANG->sL($columns[$field]['label']);
+			if (isset($columns[$fieldName]['label'])) {
+			//				$configuration['fieldLabel'] = $LANG->sL($columns[$fieldName]['label']);
 			}
-			$configuration['selectOnFocus'] = true;
 
 			switch($tca['type']) {
 				case 'text':
-				// Set default xtype
-					$configuration['xtype'] = 'textarea';
-					$configuration['enableKeyEvents'] = TRUE;
+					$configuration = Tx_Addresses_Utility_TCE::getTextAreaConfiguration($columns, $fieldName);
 					break;
 				case 'input':
-
-				// Set default xtype
-					$configuration['xtype'] = 'textfield';
-
-					// Defines max length
-					if (isset($tca['max'])) {
-						$configuration['maxLength'] = (int) $tca['max'];
-					}
-					if (isset($tca['default'])) {
-						$configuration['value'] = $LANG->sL($tca['default']);
-					}
-
-					// validators
-					if (isset($tca['eval'])) {
-						$evals = explode(',', $tca['eval']);
-						foreach ($evals as $eval) {
-							switch ($eval) {
-								case 'required':
-									$configuration['allowBlank'] = FALSE;
-									break;
-								case 'email':
-									$configuration['vtype'] = 'email';
-									break;
-								case 'int':
-									$configuration['vtype'] = 'int';
-									break;
-								case 'date':
-									$configuration['xtype'] = 'datefield';
-									$configuration['format'] = Tx_Addresses_Utility_Configuration::getDateFormat();
-									$configuration['invalidText'] = $LANG->getLL('invalidDate');
-									break;
-							}
-						}
-					}
+					$configuration = Tx_Addresses_Utility_TCE::getTextFieldConfiguration($columns, $fieldName);
 					break;
 				case 'select':
-					$configuration['xtype'] = 'combo';
-					$configuration['mode'] = 'local';
-					$configuration['store'] = 'Addresses.store.' . $field;
-					$configuration['displayField'] = $field .'_text';
-					$configuration['triggerAction'] = 'all';
-					$configuration['editable'] = isset($tca['editable']) ? $tca['editable'] : TRUE;
-
-					if (isset($tca['default'])) {
-						$configuration['value'] = $LANG->sL($tca['default']);
-					}
-
-					// Add configuration for non-editable field
-					if (isset($tca['editable']) && !$tca['editable']) {
-						$configuration['value'] = '0'; // assume value 0 is defined in the combobox
-						$configuration['valueField'] = $field;
-						$configuration['hiddenName'] = $field;
-						$configuration['id'] = $field . '_id'; // Must be different to avoid conflict. 2 fiels are created. One is hidden
-					}
-
-					// Fetches the value
-					$options = array();
-					if (isset($tca['items']) && is_array($tca['items'])) {
-						foreach ($tca['items'] as $elements) {
-							$options[] = array(
-								$LANG->sL($elements[1]),
-								$LANG->sL($elements[0]),
-							);
+					if ($tca['maxitems'] > 1) {
+						if (isset($tca['foreign_table'])) {
+							$configuration = Tx_Addresses_Utility_TCE::getItemSelectorConfiguration($columns, $fieldName);
+							$this->store[] = Tx_Addresses_Utility_TCE::getStoreConfiguration($fieldName, $tca['foreign_table']);
 						}
-					}
-
-					// Check wheter an external function must be called
-					if (isset($tca['itemsProcFunc'])) {
-						$table = $tca['itemsProcFunc.']['table'];
-						$field = $tca['itemsProcFunc.']['field'];
-						if ($table != '' && $field != '') {
-							$records = call_user_func_array(explode('->', $tca['itemsProcFunc']), array($table, $field));
+						else {
+							t3lib_div::debug($fieldName, '$field');
+							t3lib_div::debug($tca, '$tca');
+							throw new Exception('<b>Invalid configuration</b>, foreign_table key expected in ' . __FILE__ . ', line: ' . __LINE__);
 						}
-						// Merges array
-						$options = array_merge($options, $records);
-						$options = $this->arrayUnique($options);
+
 					}
-
-					// Obtain a list of columns. For sorting purpose
-					foreach ($options as $key => $row) {
-						$values[$key] = $row[0];
+					else {
+						$configuration = Tx_Addresses_Utility_TCE::getComboBoxConfiguration($columns, $fieldName);
+						$this->store[] = Tx_Addresses_Utility_TCE::getLastStoreConfiguration($fieldName);
 					}
-
-					// Sort the data with values options
-					array_multisort($values, SORT_ASC, $options);
-
-					// Initialize a store object
-					$this->store[] = '"' . $field . '": new Ext.data.SimpleStore({id:0, "fields": ["' .  $field . '", "' . $field . '_text' . '"],"data" : ' . json_encode($options) . '})';
 					break;
 				default;
-					t3lib_div::debug($field, '$field');
+					t3lib_div::debug($fieldName, '$field');
 					t3lib_div::debug($tca, '$tca');
-					die('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
+					throw new Exception('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
 			} //end switch
 		} // end if
-
 		return $configuration;
-	}
-
-	/**
-	 * Eliminates doublon
-	 *
-	 * @param array $myArray
-	 * @return array
-	 */
-	protected function arrayUnique($myArray) {
-
-		foreach ($myArray as &$myvalue) {
-			$myvalue = serialize($myvalue);
-		}
-
-		$myArray = array_unique($myArray);
-
-		foreach ($myArray as &$myvalue) {
-			$myvalue = unserialize($myvalue);
-		}
-
-		return $myArray;
 	}
 
 	/**
@@ -811,14 +714,19 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/address
 
 
 
+try {
 // Make instance:
-$SOBE = t3lib_div::makeInstance('tx_addresses_module');
+	$SOBE = t3lib_div::makeInstance('tx_addresses_module');
 
-// Include files?
-foreach($SOBE->include_once as $INC_FILE) {
-	include_once($INC_FILE);
+	// Include files?
+	foreach($SOBE->include_once as $INC_FILE) {
+		include_once($INC_FILE);
+	}
+
+	$SOBE->render();
+	$SOBE->flush();
 }
-
-$SOBE->render();
-$SOBE->flush();
+catch (Exception $e) {
+	print $e->getMessage();
+}
 ?>

@@ -35,10 +35,10 @@
 
 class Tx_Addresses_Domain_Model_AddressRepository {
 
-	/**
-	 *
-	 * @var string
-	 */
+/**
+ *
+ * @var string
+ */
 	protected $clause = '';
 
 	/**
@@ -48,12 +48,25 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 	protected $debug = FALSE;
 
 	/**
+	 *
+	 * @var boolean
+	 */
+	protected $tableName = FALSE;
+
+	/**
+	 *
+	 * @var array
+	 */
+	protected $foreignTables = FALSE;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		$configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);
 		$this->debug = (boolean) $configurations['debug'];
 		$this->pid = (int) $configurations['PID'];
+		$this->tableName = 'tx_addresses_domain_model_address';
 	}
 
 	/**
@@ -67,7 +80,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 
 		$request = $TYPO3_DB->SELECTquery(
 			$this->getFields(),
-			'tx_addresses_domain_model_address',
+			$this->tableName,
 			'deleted = 0 AND hidden = 0' . $this->getClause(),
 			'', // groupBy
 			$this->getSort(), // orderBy
@@ -92,10 +105,10 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 			}
 			$TYPO3_DB->sql_free_result($res);
 		}
-		
+
 		$results = $TYPO3_DB->exec_SELECTgetRows(
 			'count(*) as total',
-			'tx_addresses_domain_model_address',
+			$this->tableName,
 			'deleted = 0 AND hidden = 0' . $this->getClause()
 		);
 
@@ -112,15 +125,18 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 	 * @return	array
 	 */
 	public function findById($data) {
-
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TYPO3_DB;
 		$clause = $this->getUidClause($data);
 		$output['success'] = FALSE;
 		if ($clause != '') {
-			$records = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+			$records = $TYPO3_DB->exec_SELECTgetRows(
 				$this->getFields(),
-				'tx_addresses_domain_model_address',
+				$this->tableName,
 				'deleted = 0 AND hidden = 0 AND ' . $clause
 			);
+
+			$records = $this->getMMRelations($data[0]->uid, $records);
 
 			// Get the intersection of the array
 			if (!empty($records)) {
@@ -132,15 +148,37 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 				$output['success'] = TRUE;
 				$output['data'] = $_record;
 			}
-
 			$output['data'] = $this->formatRecordForHumans($output['data']);
 		}
 		return $output;
 	}
 
 	/**
+	 * Get the uid from a MM relation
+	 *
+	 * @global t3lib_DB $TYPO3_DB
+	 * @param int $uid
+	 * @param array $records
+	 * @return array
+	 */
+	protected function getMMRelations($uid, &$records) {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TYPO3_DB;
+		foreach($this->foreignTables as $fieldName => $tca) {
+			$rows = array();
+			$res = $TYPO3_DB->exec_SELECTquery('uid_foreign', $tca['config']['MM'], 'uid_local=' . $uid, '', 'sorting ASC');
+			while ($row = $TYPO3_DB->sql_fetch_row($res)) {
+				$rows[] = $row[0];
+			}
+			$records[0][$fieldName] = implode(',', $rows);
+		}
+		return $records;
+
+	}
+
+	/**
 	 * Traverses the record and transforms tstamp to human date
-	 * 
+	 *
 	 * @param array $input
 	 * @return array
 	 */
@@ -159,13 +197,13 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 				}
 				// userFunc
 				else if (isset($tca['config']['type']) && $tca['config']['type'] == 'user') {
-					$table = $tca['config']['userFunc.']['table'];
-					$field = $tca['config']['userFunc.']['field'];
-					$output[$fieldName] = call_user_func_array(explode('->', $tca['config']['userFunc']), array($table, $field, $value));
-				}
-				else {
-					$output[$fieldName] = $value;
-				}
+						$table = $tca['config']['userFunc.']['table'];
+						$field = $tca['config']['userFunc.']['field'];
+						$output[$fieldName] = call_user_func_array(explode('->', $tca['config']['userFunc']), array($table, $field, $value));
+					}
+					else {
+						$output[$fieldName] = $value;
+					}
 			}
 		}
 		return $output;
@@ -182,7 +220,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 		$parameters = t3lib_div::_GET();
 		if (isset($parameters['filterTxt']) && $parameters['filterTxt'] != '' && $this->clause == '') {
 			$search = filter_input(INPUT_GET, 'filterTxt', FILTER_SANITIZE_STRING);
-			$res = $TYPO3_DB->sql_query('SHOW COLUMNS from tx_addresses_domain_model_address;');
+			$res = $TYPO3_DB->sql_query('SHOW COLUMNS from ' . $this->tableName);
 			$fields = array();
 			while ($row = $TYPO3_DB->sql_fetch_row($res)) {
 				$fieldName = $row[0];
@@ -242,15 +280,23 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 	 */
 	protected function getFields() {
 		global $BE_USER;
-		t3lib_div::loadTCA('tx_addresses_domain_model_address');
+		t3lib_div::loadTCA($this->tableName);
 		$columns = Tx_Addresses_Utility_TCA::getColumns();
 		$fields = array();
-		foreach (array_keys($columns) as $field) {
-			if ($BE_USER->isAdmin() ||
-				!isset($columns[$field]['exclude']) ||
-				(isset($columns[$field]['exclude']) && !$columns[$field]['exclude']) ||
-				$BE_USER->check('non_exclude_fields','tx_addresses_domain_model_address:' . $field)) {
-				$fields[] = $field;
+		foreach (array_keys($columns) as $fieldName) {
+			if ($BE_USER->isAdmin()
+				|| !isset($columns[$fieldName]['exclude'])
+				|| (isset($columns[$fieldName]['exclude']) && !$columns[$fieldName]['exclude'])
+				|| $BE_USER->check('non_exclude_fields', $this->tableName . ':' . $fieldName)) {
+
+				$fields[] = $fieldName;
+
+				// Stores foreign table for later use
+				if (isset($columns[$fieldName]['config']['foreign_table'])
+					&& isset($columns[$fieldName]['config']['MM'])) {
+
+					$this->foreignTables[$fieldName] = $columns[$fieldName];
+				}
 			}
 		}
 		return implode(',', $fields);
@@ -307,7 +353,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 
 		// Executes query
 		$request = $TYPO3_DB->UPDATEquery(
-			'tx_addresses_domain_model_address',
+			$this->tableName,
 			$clause,
 			array('deleted' => 1)
 		);
@@ -373,8 +419,13 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 	 */
 	public function save() {
 		$values = t3lib_div::_GET();
-		t3lib_div::loadTCA('tx_addresses_domain_model_address');
-		global $TCA, $LANG, $BE_USER, $TYPO3_DB;
+		t3lib_div::loadTCA($this->tableName);
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TCA, $LANG, $TYPO3_DB;
+
+		// Init variables
+		$fields = $foreignTables = array();
+
 		foreach ($values as $fieldName => $value) {
 			$columns = Tx_Addresses_Utility_TCA::getColumns();
 			if (isset($columns[$fieldName])) {
@@ -401,7 +452,11 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 							}
 							break;
 						case 'select':
-							if ($this->validateComboboxValue($tca['config'], $value)) {
+							if (isset($tca['config']['foreign_table'])) {
+								$foreignTables[$fieldName] = $value;
+								$fields[$fieldName] = count(explode(',', $value));
+							}
+							elseif ($this->validateComboboxValue($tca['config'], $value)) {
 								$fields[$fieldName] = $value;
 							}
 							break;
@@ -411,16 +466,17 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 				}
 			}
 		} // end foreach
-		
+
 		// Defines here whether it is a "multiple" update or "single" update
 		$uids = array();
 		if ($values['uid'] != '') {
 			$uids = explode(',', $values['uid']);
 		}
-		// Checks wheter $uids contains array
+
+		// Checks wheter $uid are arrays
 		foreach($uids as $uid) {
 			if ((int) $uid < 1) {
-				die('uid should be an integer');
+				throw new Exception('uid field should be an integer');
 			}
 		}
 
@@ -428,44 +484,125 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 		if ((int) $uids > 0) {
 		// TRUE means multiple edit
 			if (count($uids) > 1) {
+			// Removes empty field
 				foreach ($fields as $key => &$field) {
 					if ($field == '') {
 						unset($fields[$key]);
 					}
 				}
 			}
+			$result = $this->saveUpdate($uids, $fields, $foreignTables);
 
-			$fields['tstamp'] = time();
-			$fields['upuser_id'] = $BE_USER->user['uid'];
-			$fields['pid'] = $this->pid;
-			$request = $TYPO3_DB->UPDATEquery(
-				'tx_addresses_domain_model_address',
-				'uid=' .implode(' OR uid=', $uids),
-				$fields
-			);
-			if ($this->debug) {
-				t3lib_div::devLog('Update record: ' . $request, 'addresses', -1);
-			}
-			$result = $TYPO3_DB->sql_query($request);
-			if ($result) $result = 'UPDATE';
 		}
 		else {
-			$fields['pid'] = $this->pid;
-			$fields['tstamp'] = time();
-			$fields['crdate'] = time();
-			$fields['cruser_id'] = $BE_USER->user['uid'];
-			$fields['upuser_id'] = $BE_USER->user['uid'];
-			$request = $TYPO3_DB->INSERTquery(
-				'tx_addresses_domain_model_address',
-				$fields
-			);
-			if ($this->debug) {
-				t3lib_div::devLog('New record: ' . $request, 'addresses', -1);
-			}
-			$result = $TYPO3_DB->sql_query($request);
-			if ($result) $result = 'INSERT';
+			$result = $this->saveInsert($fields, $foreignTables);
 		}
 		return $result;
+	}
+
+
+	/**
+	 * Update a record
+	 *
+	 * @global  $BE_USER
+	 * @global t3lib_DB $TYPO3_DB
+	 * @param array $uids
+	 * @param array $fields
+	 * @return string
+	 */
+	protected function saveUpdate($uids, $fields, $foreignTables) {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $BE_USER, $TYPO3_DB;
+		$fields['tstamp'] = time();
+		$fields['upuser_id'] = $BE_USER->user['uid'];
+		$fields['pid'] = $this->pid;
+		$request = $TYPO3_DB->UPDATEquery(
+			$this->tableName,
+			'uid=' .implode(' OR uid=', $uids),
+			$fields
+		);
+		if ($this->debug) {
+			t3lib_div::devLog('Update record: ' . $request, 'addresses', -1);
+		}
+		if ($TYPO3_DB->sql_query($request)) {
+
+			if (!empty($foreignTables)) {
+				$this->saveMMRelation($uids, $foreignTables);
+			}
+		}
+		return 'UPDATE';
+	}
+
+	/**
+	 * Insert a new record
+	 *
+	 * @global  $BE_USER
+	 * @global t3lib_DB $TYPO3_DB
+	 * @param array $fields
+	 * @return string
+	 */
+	protected function saveInsert($fields, $foreignTables) {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $BE_USER, $TYPO3_DB;
+
+		$fields['pid'] = $this->pid;
+		$fields['tstamp'] = time();
+		$fields['crdate'] = time();
+		$fields['cruser_id'] = $BE_USER->user['uid'];
+		$fields['upuser_id'] = $BE_USER->user['uid'];
+		$request = $TYPO3_DB->INSERTquery(
+			$this->tableName,
+			$fields
+		);
+		if ($this->debug) {
+			t3lib_div::devLog('New record: ' . $request, 'addresses', -1);
+		}
+
+		if ($TYPO3_DB->sql_query($request)) {
+
+			if (!empty($foreignTables)) {
+				$uid = $TYPO3_DB->sql_insert_id();
+				$this->saveMMRelation(array($uid), $foreignTables);
+			}
+		}
+		return 'INSERT';
+	}
+
+	/**
+	 * Saves multi relation
+	 *
+	 * @global t3lib_DB $TYPO3_DB
+	 * @param array $uids
+	 * @param string $foreignTables
+	 */
+	protected function saveMMRelation($uids, $foreignTables) {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TYPO3_DB;
+		$columns = Tx_Addresses_Utility_TCA::getColumns();
+
+		foreach ($foreignTables as $tableName => $values) {
+			$tca = $columns[$tableName];
+			if (isset($tca['config']['MM']) || isset($tca['config']['foreign_table'])) {
+
+			// Delete all record
+				$table = $tca['config']['MM'];
+				foreach ($uids as $uid) {
+					$TYPO3_DB->exec_DELETEquery($table, 'uid_local = ' . $uid);
+
+					$index = 1;
+					foreach ( explode(',', $values) as $value) {
+						$fields_values['uid_local'] = $uid;
+						$fields_values['uid_foreign'] = $value;
+						$fields_values['tablenames'] = $tca['config']['foreign_table'];
+						$fields_values['sorting'] = $index++;
+						$TYPO3_DB->exec_INSERTquery($table, $fields_values);
+					}
+				}
+			}
+			else {
+				throw new Exception('<b>Missing configuration</b> "MM" or "foreign_table" in ' . __FILE__ . ', line: ' . __LINE__);
+			}
+		}
 	}
 
 	/**
@@ -491,7 +628,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 				break;
 			default:
 				t3lib_div::debug($configuration, '$configuration');
-				die('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
+				throw new Exception('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
 				break;
 		}
 		return trim($value);
@@ -510,7 +647,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 		$hasPermission = FALSE;
 		if ($BE_USER->isAdmin() ||
 			(isset($tca[$field]['exclude']) && !$tca[$field]['exclude']) ||
-			$BE_USER->check('non_exclude_fields','tx_addresses_domain_model_address:' . $field)) {
+			$BE_USER->check('non_exclude_fields', $this->tableName . ':' . $field)) {
 			$hasPermission = TRUE;
 		}
 		return $hasPermission;

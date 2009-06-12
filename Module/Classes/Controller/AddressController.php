@@ -53,13 +53,13 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'
  * @version 	$Id$
  */
 class Tx_Addresses_Controller_AddressController {
-	/**
-	 * Stores relevant data from extJS
-	 * Example: Json format
-	 * [ ["pages",1],["pages",2],["tt_content",34] ]
-	 *
-	 * @var	string
-	 */
+/**
+ * Stores relevant data from extJS
+ * Example: Json format
+ * [ ["pages",1],["pages",2],["tt_content",34] ]
+ *
+ * @var	string
+ */
 	protected $data;
 
 	/**
@@ -78,9 +78,14 @@ class Tx_Addresses_Controller_AddressController {
 	 * @return void
 	 **/
 	public function indexAction() {
-		$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');
-		$message = $this->model->findAll();
-		echo json_encode($message);
+		try {
+			$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');
+			$message = $this->model->findAll();
+			echo json_encode($message);
+		}
+		catch (Exception $e) {
+			print $e->getMessage();
+		}
 	}
 
 	/**
@@ -89,11 +94,16 @@ class Tx_Addresses_Controller_AddressController {
 	 * @return void
 	 **/
 	public function editAction() {
-		$message['success'] = FALSE;
-		if (!empty($this->data)) {
-			$message = $this->model->findById($this->data);
+		try {
+			$message['success'] = FALSE;
+			if (!empty($this->data) && (int)$this->data[0]->uid > 0) {
+				$message = $this->model->findById($this->data);
+			}
+			echo json_encode($message);
 		}
-		echo json_encode($message);
+		catch (Exception $e) {
+			print $e->getMessage();
+		}
 	}
 
 	/**
@@ -102,11 +112,16 @@ class Tx_Addresses_Controller_AddressController {
 	 * @return void
 	 **/
 	public function deleteAction() {
-		$message['success'] = FALSE;
-		if (!empty($this->data)) {
-			$message['success'] = $this->model->delete($this->data);
+		try {
+			$message['success'] = FALSE;
+			if (!empty($this->data)) {
+				$message['success'] = $this->model->delete($this->data);
+			}
+			echo json_encode($message);
 		}
-		echo json_encode($message);
+		catch (Exception $e) {
+			print $e->getMessage();
+		}
 	}
 
 	/**
@@ -115,22 +130,28 @@ class Tx_Addresses_Controller_AddressController {
 	 * @return void
 	 **/
 	public function saveAction() {
-		$message['success'] = FALSE;
-		$request = $this->model->save();
-		if ($request) {
-			$message['success'] = TRUE;
-			$message['request'] = $request;
+		try {
+			$message['success'] = FALSE;
+			$request = $this->model->save();
+
+			if ($request) {
+				$message['success'] = TRUE;
+				$message['request'] = $request;
+			}
+			echo json_encode($message);
 		}
-		echo json_encode($message);
+		catch (Exception $e) {
+			print $e->getMessage();
+		}
 	}
 
-	/**
-	 * Sets data in the session of the current backend user.
-	 *
-	 * @param	string		$identifier: The identifier to be used to set the data
-	 * @param	string		$data: The data to be stored in the session
-	 * @return	void
-	 */
+/**
+ * Sets data in the session of the current backend user.
+ *
+ * @param	string		$identifier: The identifier to be used to set the data
+ * @param	string		$data: The data to be stored in the session
+ * @return	void
+ */
 //	protected function setDataInSession($identifier, $data) {
 //		$GLOBALS['BE_USER']->uc['tx_addresses'][$identifier] = $data;
 //		$GLOBALS['BE_USER']->writeUC();

@@ -21,6 +21,7 @@
 			<label index="switzerland">Switzerland</label>
 			<label index="france">France</label>
 			<label index="germany">Germany</label>
+			<label index="relations">Relations</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="address">Addresse</label>
@@ -38,6 +39,7 @@
 			<label index="switzerland">Suisse</label>
 			<label index="france">France</label>
 			<label index="germany">Allemagne</label>
+			<label index="relations">Relations</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 		</languageKey>

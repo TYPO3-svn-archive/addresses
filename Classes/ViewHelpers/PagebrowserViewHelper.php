@@ -82,8 +82,8 @@ public function render($totalCountOfAddresses=NULL,$maxAddressesToDisplay=5) {
 	 */
 	private function getLink($page,$linktext='') {
 		$URIBuilder = $this->controllerContext->getURIBuilder();
-		$uri = $URIBuilder->URIFor($GLOBALS['TSFE']->id, 'index', Array('currentPage' => $page), $controllerName = NULL, $extensionName = NULL, $pluginName = NULL, $pageType = 0, $noCache = FALSE, $useCacheHash = TRUE, $section = '', $linkAccessRestrictedPages = FALSE, $additionalParams = '');
-		
+		//$uri = $URIBuilder->URIFor($GLOBALS['TSFE']->id, 'index', Array('currentPage' => $page), $controllerName = NULL, $extensionName = NULL, $pluginName = NULL, $pageType = 0, $noCache = FALSE, $useCacheHash = TRUE, $section = '', $linkAccessRestrictedPages = FALSE, $additionalParams = '');
+		$uri = $URIBuilder->URIFor($GLOBALS['TSFE']->id, 'index', Array('currentPage' => $page));
 		$this->tag->addAttribute('href', $uri);
 		$this->tag->setContent($linktext);
 

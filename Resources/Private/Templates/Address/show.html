@@ -32,9 +32,8 @@
 	</f:for>
 	-->
 	<div class="download">
-		<f:link.action action="vcard" arguments="{address : address}">
-			<f:image src="typo3conf/ext/addresses/Resources/Private/Icons/v-vcard.png" maxWidth="140" alt="vCard" />
-			<!--<f:translate key="download_vcard">Download as vCard</f:translate> -->
+		<f:link.action action="vcard" arguments="{address : address}" additionalParams="{eID : 'vcard'}">
+			<f:image src="typo3conf/ext/addresses/Resources/Private/Icons/v-vcard.png" maxWidth="140" alt="<f:translate key='download_vcard'>Download as vCard</f:translate>" />
 		</f:link.action>
 	</div>
 	<f:link.action action="index"><f:translate key="back_to_list">Back to list</f:translate></f:link.action>

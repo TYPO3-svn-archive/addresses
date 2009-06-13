@@ -18,9 +18,8 @@
 			<addr:pagebrowser totalCountOfAddresses="{totalPages}" maxAddressesToDisplay="{maxItems}" />
 	</div>
 	<div class="download">
-		<f:link.action action="vcards">
+		<f:link.action action="vcards" additionalParams="{eID : 'vcard'}">
 			<f:image src="typo3conf/ext/addresses/Resources/Private/Icons/v-vcards.png" maxWidth="140" alt="<f:translate key='download_vcards'>Download all as vCards</f:translate>" />
-			
 		</f:link.action>
 	</div>
 </div>

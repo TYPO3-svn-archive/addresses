@@ -58,11 +58,13 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 		// TS Config transformed to shorter variable
 		$this->indexSettings = $this->settings['controllers']['Address']['actions']['index'];
 		
-		// "EXT:" shortcut replaced with the extension path
-		$this->indexSettings['stylesheet'] = str_replace('EXT:', t3lib_extMgm::siteRelPath('addresses'), $this->indexSettings['stylesheet']);
-		
-		// Stylesheet
-		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . $this->indexSettings['stylesheet'] .  '" />');
+		if($this->indexSettings['stylesheet'] != '') {
+			// "EXT:" shortcut replaced with the extension path
+			$this->indexSettings['stylesheet'] = str_replace('EXT:', t3lib_extMgm::siteRelPath('addresses'), $this->indexSettings['stylesheet']);
+			
+			// Stylesheet
+			$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . $this->indexSettings['stylesheet'] .  '" />');
+		}
 		
 		//SQL limit - like 5,5	
 		$limit = $this->indexSettings['maxItems'] * ($currentPage) . ',' . $this->indexSettings['maxItems'];
@@ -93,12 +95,14 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 		// Transform show settings to shorter variable
 		$this->showSettings = $this->settings['controllers']['Address']['actions']['show'];
 		
-		// "EXT:" shortcut replaced with the extension path
-		$this->showSettings['stylesheet'] = str_replace('EXT:', t3lib_extMgm::siteRelPath('addresses'), $this->showSettings['stylesheet']);
+		if($this->showSettings['stylesheet'] != '') {
+			// "EXT:" shortcut replaced with the extension path
+			$this->showSettings['stylesheet'] = str_replace('EXT:', t3lib_extMgm::siteRelPath('addresses'), $this->showSettings['stylesheet']);
 				
-		// Stylesheet
-		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . $this->showSettings['stylesheet'] .  '" />');
-
+			// Stylesheet
+			$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . $this->showSettings['stylesheet'] .  '" />');
+		}
+		
 		$this->view->assign('address', $address);
 	}
 	

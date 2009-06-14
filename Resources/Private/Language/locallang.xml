@@ -13,7 +13,10 @@
 			<label index="f">Mrs.</label>
 			<label index="m">Mr.</label>
 			<label index="back_to_list">Back to list</label>
-			<label index="next">next</label>
+			<label index="nextLabel">next</label>
+			<label index="pageLabel">Page</label>
+			<label index="previousLabel">previous</label>
+			<label index="outOfLabel">out of</label>
 			<label index="download_vcard">Download as vCard</label>
 			<label index="download_vcards">Download whole list as vCards</label>
 		</languageKey>
@@ -21,7 +24,10 @@
 			<label index="phone">Telefon:</label>
 			<label index="fax">Fax:</label>
 			<label index="back_to_list">Zurück zur Übersicht</label>
-			<label index="next">next</label>
+			<label index="nextLabel">Nächster Eintrag</label>
+			<label index="previousLabel">Vorheriger Eintrag</label>
+			<label index="pageLabel">Seite</label>
+			<label index="outOfLabel">von</label>
 			<label index="download_vcard">vCard-Download</label>
 			<label index="download_vcards">Alle Adressen als vCard herunterladen</label>
 		</languageKey>

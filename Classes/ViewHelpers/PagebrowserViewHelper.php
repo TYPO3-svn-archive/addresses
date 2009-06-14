@@ -46,10 +46,14 @@ class Tx_Addresses_ViewHelpers_PagebrowserViewHelper extends Tx_Fluid_Core_ViewH
 	 *
 	 * @param  int The total item count for calculating the page count
 	 * @param  int The maximum amount of items to show per page
+	 * @param  string The label for the "previous" link, taken from locallang
+	 * @param  string The text in front of the current page count ("Page 3" [see next param])
+	 * @param  string The text between the current page and the total page count ("3 out of 6")
+	 * @param  string The label for the "next" link, taken from locallang
 	 * @return string the rendered string
 	 * @author Susanne Moog <typo3@susanne-moog.de>
 	 */
-public function render($totalCountOfAddresses=NULL,$maxAddressesToDisplay=5) {
+public function render($totalCountOfAddresses=NULL,$maxAddressesToDisplay=5, $previousLabel='previous', $pageLabel='Page', $outOfLabel='out of', $nextLabel='next') {
 
 	$pagesTotal = ceil($totalCountOfAddresses/$maxAddressesToDisplay);
 	if($this->controllerContext->getRequest()->hasArgument('currentPage')) {
@@ -58,17 +62,17 @@ public function render($totalCountOfAddresses=NULL,$maxAddressesToDisplay=5) {
 		$currentPage = 0;
 	}
 	if(($currentPage+1) == $pagesTotal) {
-		$next = 'next';
+		$next = $nextLabel;
 	} else {
-		$next = $this->getLink(($currentPage+1), 'next');
+		$next = $this->getLink(($currentPage+1), $nextLabel);
 	}
 	if($currentPage == 0) {
-		$previous = 'previous';
+		$previous = $previousLabel;
 	} else {
-		$previous = $this->getLink(($currentPage-1), 'previous');
+		$previous = $this->getLink(($currentPage-1), $previousLabel);
 	}
 
-	$content = $previous . ' Page ' . ($currentPage+1)  . ' out of ' . $pagesTotal . ' ' . $next;
+	$content = $previous . ' ' . $pageLabel . ' ' . ($currentPage+1)  . ' ' . $outOfLabel . ' ' . $pagesTotal . ' ' . $next;
 	return $content;
 }
 	

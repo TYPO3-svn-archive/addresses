@@ -15,7 +15,14 @@
 	</ul>
 
 	<div class="pagebrowser">
-			<addr:pagebrowser totalCountOfAddresses="{totalPages}" maxAddressesToDisplay="{maxItems}" />
+			<addr:pagebrowser 
+				totalCountOfAddresses="{totalPages}" 
+				maxAddressesToDisplay="{maxItems}" 
+				previousLabel="<f:translate key='previousLabel'>Previous</f:translate>" 
+				pageLabel="<f:translate key='pageLabel'>Page</f:translate>" 
+				outOfLabel="<f:translate key='outOfLabel'>out of</f:translate>" 
+				nextLabel="<f:translate key='nextLabel'>Next</f:translate>" 			
+			/>
 	</div>
 	<div class="download">
 		<f:link.action action="vcards" additionalParams="{eID : 'vcard'}">

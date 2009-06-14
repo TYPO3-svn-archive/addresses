@@ -5,7 +5,11 @@ plugin.tx_addresses {
 				index {
 					maxItems = 5 
 					groups = 
-					sortBy = first_name				
+					sortBy = first_name
+					stylesheet = EXT:Resources/Public/Stylesheets/index.css				
+				}
+				show {
+					stylesheet = EXT:Resources/Public/Stylesheets/show.css
 				}
 			}
 		}	

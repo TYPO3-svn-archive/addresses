@@ -54,14 +54,20 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	public function indexAction($currentPage = NULL) {
 		$limit = ''; // used to fetch this count of addresses from the database with a given offset (example: 0,5)
 		$data = Array(); // used to store the objects fetched from the repository
-			
-		// Stylesheet
-		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . t3lib_extMgm::siteRelPath('addresses') . 'Resources/Public/Stylesheets/index.css" />');
 		
 		// TS Config transformed to shorter variable
 		$this->indexSettings = $this->settings['controllers']['Address']['actions']['index'];
-			
+		
+		// "EXT:" shortcut replaced with the extension path
+		$this->indexSettings['stylesheet'] = str_replace('EXT:', t3lib_extMgm::siteRelPath('addresses'), $this->indexSettings['stylesheet']);
+		
+		// Stylesheet
+		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . $this->indexSettings['stylesheet'] .  '" />');
+		
+		//SQL limit - like 5,5	
 		$limit = $this->indexSettings['maxItems'] * ($currentPage) . ',' . $this->indexSettings['maxItems'];
+		
+		// Find with or without taking groups into account
 		if(isset($this->indexSettings['groups']) && $this->indexSettings['groups'] != '') {
 			$data = $this->addressRepository->findWithGroups($this->indexSettings['groups'], $limit, $this->indexSettings['sortBy']); 
 			$this->view->assign('totalPages', count($this->addressRepository->findWithGroups($this->indexSettings['groups'])));
@@ -70,7 +76,9 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 			$this->view->assign('totalPages', count($this->addressRepository->findAll()));
 		}
 
+		// Hand the maxItems to the view (for use in the pagebrowser)
 		$this->view->assign('maxItems', $this->indexSettings['maxItems']); 
+		
 		$this->view->assign('addresses', $data);
 		
 	}
@@ -82,7 +90,15 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	 * @return string The rendered view of a single address
 	 */
 	public function showAction(Tx_Addresses_Domain_Model_Address $address) {
-		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . t3lib_extMgm::siteRelPath('addresses') . 'Resources/Public/Stylesheets/show.css" />');
+		// Transform show settings to shorter variable
+		$this->showSettings = $this->settings['controllers']['Address']['actions']['show'];
+		
+		// "EXT:" shortcut replaced with the extension path
+		$this->showSettings['stylesheet'] = str_replace('EXT:', t3lib_extMgm::siteRelPath('addresses'), $this->showSettings['stylesheet']);
+				
+		// Stylesheet
+		$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . $this->showSettings['stylesheet'] .  '" />');
+
 		$this->view->assign('address', $address);
 	}
 	

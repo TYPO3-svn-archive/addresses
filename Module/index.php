@@ -143,7 +143,8 @@ class  tx_addresses_module extends t3lib_SCbase {
 		require($this->absolutePath .'/ext_emconf.php');
 		$this->version = $EM_CONF['addresses']['version'];
 
-	//$GLOBALS['TBE_STYLES']['extJS']['theme'] = $this->doc->backPath . 'contrib/extjs/resources/css/xtheme-gray.css';
+		// Defines a default ExtJS style
+		$GLOBALS['TBE_STYLES']['extJS']['theme'] = $this->doc->backPath . 'contrib/extjs/resources/css/xtheme-gray.css';
 	}
 
 	/**
@@ -170,12 +171,12 @@ class  tx_addresses_module extends t3lib_SCbase {
 	public function flush() {
 		global $LANG;
 		$content = $this->doc->startPage($LANG->getLL('title'));
-		$content.= $this->doc->moduleBody(
+		$content .= $this->doc->moduleBody(
 			$this->pageRecord,
 			$this->getDocHeaderButtons(),
 			$this->getTemplateMarkers()
 		);
-		$content.= $this->doc->endPage();
+		$content .= $this->doc->endPage();
 		//		$content.= $this->doc->insertStylesAndJS($this->content);
 
 		$this->content = null;
@@ -190,7 +191,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	protected function loadExtJSStaff() {
 
 		// Loads extjs
-//		$this->doc->enableExtJsDebug(); // use for debug
+		$this->doc->enableExtJsDebug(); // use for debug
 		$this->doc->loadExtJS(true, xtheme-gray.css);
 
 		// Load special CSS Stylesheets:

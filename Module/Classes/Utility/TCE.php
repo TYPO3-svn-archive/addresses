@@ -150,7 +150,7 @@ EOF;
 
 		$json = json_encode($records);
 		$store = <<<EOF
-$fieldName : new Ext.data.SimpleStore({idIndex: 0, fields: ["$fieldName", "{$fieldName}_text"], data: $json, sortInfo: {field: "{$fieldName}_text", direction: "ASC"}})
+$fieldName : new Ext.data.SimpleStore({idIndex: 0, fields: ["$fieldName", "text"], data: $json, sortInfo: {field: "{$fieldName}_text", direction: "ASC"}})
 EOF;
 		return $store;
 	}

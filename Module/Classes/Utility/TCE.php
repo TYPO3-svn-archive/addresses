@@ -125,7 +125,7 @@ class Tx_Addresses_Utility_TCE {
 	public static function getLastStoreConfiguration($fieldName) {
 		$json = json_encode(self::$elements);
 		$store = <<<EOF
-$fieldName : new Ext.data.SimpleStore({idIndex: 0, fields: ["$fieldName", "{$$fieldName}_text"], data: $json})
+$fieldName : new Ext.data.SimpleStore({idIndex: 0, fields: ["$fieldName", "{$fieldName}_text"], data: $json})
 EOF;
 		return $store;
 	}

@@ -41,6 +41,7 @@ require($BACK_PATH . 'init.php');
 require($BACK_PATH . 'template.php');
 require_once(PATH_t3lib . 'class.t3lib_scbase.php');
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Configuration.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Permission.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCE.php'));
 
@@ -190,7 +191,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 */
 	protected function loadExtJSStaff() {
 
-		// Loads extjs
+	// Loads extjs
 		$this->doc->enableExtJsDebug(); // use for debug
 		$this->doc->loadExtJS(true, xtheme-gray.css);
 
@@ -238,51 +239,21 @@ class  tx_addresses_module extends t3lib_SCbase {
 		$fieldsStore = $this->getStoreConfiguration();
 		$fieldsWindow = $this->getWindowConfiguration();
 
-		$this->store[] = $this->getLocationStore();
-
+		$this->store = Tx_Addresses_Utility_TCE::getStores();
+		$this->store[] = Tx_Addresses_Utility_TCE::getCustomStore('localities', 'postal_code', 'locality', 'tx_addresses_domain_model_address');
+		
 		$this->doc->extJScode .= '
 			' . $this->namespace . '.store = {' . implode(',', $this->store) . '};
 			' . $this->namespace . '.statics = ' . json_encode($this->getStaticConfiguration($fieldsWindow)) . ';
-			' . $this->namespace . '.fieldsGrid = ' . $this->removesQuotesAroundRenderer(json_encode($fieldsGrid)) . ';
+			' . $this->namespace . '.fieldsGrid = ' . Tx_Addresses_Utility_TCE::removesQuotes($this->namespace, json_encode($fieldsGrid)) . ';
 			' . $this->namespace . '.fieldsStore = ' . json_encode($fieldsStore) . ';
-			' . $this->namespace . '.fieldsWindow = ' . $this->removesQuotesAroundObject(json_encode($fieldsWindow)) . ';
+			' . $this->namespace . '.fieldsWindow = ' . Tx_Addresses_Utility_TCE::removesQuotes($this->namespace, json_encode($fieldsWindow)) . ';
 			' . $this->namespace . '.lang = ' . json_encode($this->getLabels()) . ';
-			' . $this->namespace . '.w = new Object();
-			' . $this->namespace . '.formPanel = new Object();
-			' . $this->namespace . '.form = new Object();
+			//' . $this->namespace . '.w = new Object();
+			//' . $this->namespace . '.formPanel = new Object();
+			//' . $this->namespace . '.form = new Object();
 			' . $this->namespace . '.data = new Object();
 			Addresses.initialize();' . chr(10);
-	}
-
-	protected function getLocationStore() {
-		/* @var $TYPO3_DB t3lib_DB */
-		global $TYPO3_DB;
-		$resource = $TYPO3_DB->exec_SELECTquery('distinct(postal_code) , locality', 'tx_addresses_domain_model_address', 'hidden=0 AND deleted=0 AND postal_code != "" AND locality != ""');
-		$records = array();
-		while ($row = $TYPO3_DB->sql_fetch_row($resource)) {
-			$records[] = array($row[0], $row[1]);
-		}
-		return '"localities": new Ext.data.SimpleStore({id:0, "fields": ["locality_id", "locality_text"],"data" : ' . json_encode($records) . '})';
-	}
-
-	/**
-	 * Removes quotes around renderer e.g. "Ext.util.Format.dateRenderer('d.m.Y')"
-	 *
-	 * @param string $json
-	 * @return string
-	 */
-	protected function removesQuotesAroundRenderer($json) {
-		return preg_replace('/\"(Ext.util.Format.dateRenderer\(.+\))\"/isU', '$1', $json);
-	}
-
-	/**
-	 * Removes quotes around object e.g. "Addresses.store.blabla" becomes Addresses.store.blabla
-	 *
-	 * @param string $json
-	 * @return string
-	 */
-	protected function removesQuotesAroundObject($json) {
-		return preg_replace('/\"(' . $this->namespace . '\.store\..+)\"/isU', '$1', $json);
 	}
 
 	/**
@@ -362,37 +333,21 @@ class  tx_addresses_module extends t3lib_SCbase {
 		$tca = $columns[$fieldName]['config'];
 
 		// Makes sure the user has the permission
-		if ($this->checkPermission($columns, $fieldName)) {
-
-
-		// field name + label which are default values
-			if (isset($columns[$fieldName]['label'])) {
-			//				$configuration['fieldLabel'] = $LANG->sL($columns[$fieldName]['label']);
-			}
+		if (Tx_Addresses_Utility_Permission::checkPermission($columns, $fieldName)) {
 
 			switch($tca['type']) {
 				case 'text':
-					$configuration = Tx_Addresses_Utility_TCE::getTextAreaConfiguration($columns, $fieldName);
+					$configuration = Tx_Addresses_Utility_TCE::getTextArea($columns, $fieldName);
 					break;
 				case 'input':
-					$configuration = Tx_Addresses_Utility_TCE::getTextFieldConfiguration($columns, $fieldName);
+					$configuration = Tx_Addresses_Utility_TCE::getTextField($columns, $fieldName);
 					break;
 				case 'select':
-					if ($tca['maxitems'] > 1) {
-						if (isset($tca['foreign_table'])) {
-							$configuration = Tx_Addresses_Utility_TCE::getItemSelectorConfiguration($columns, $fieldName);
-							$this->store[] = Tx_Addresses_Utility_TCE::getStoreConfiguration($fieldName, $tca['foreign_table']);
-						}
-						else {
-							t3lib_div::debug($fieldName, '$field');
-							t3lib_div::debug($tca, '$tca');
-							throw new Exception('<b>Invalid configuration</b>, foreign_table key expected in ' . __FILE__ . ', line: ' . __LINE__);
-						}
-
+					if ($tca['maxitems'] > 1 && isset($tca['foreign_table'])) {
+						$configuration = Tx_Addresses_Utility_TCE::getItemSelector($columns, $fieldName);
 					}
 					else {
-						$configuration = Tx_Addresses_Utility_TCE::getComboBoxConfiguration($columns, $fieldName);
-						$this->store[] = Tx_Addresses_Utility_TCE::getLastStoreConfiguration($fieldName);
+						$configuration = Tx_Addresses_Utility_TCE::getComboBox($columns, $fieldName);
 					}
 					break;
 				default;
@@ -411,8 +366,8 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * @return	array
 	 */
 	protected function getWindowConfiguration() {
-		t3lib_div::loadTCA('tx_addresses_domain_model_address');
 		global $LANG;
+		$columns = Tx_Addresses_Utility_TCA::getColumns();
 		$items = explode(',', Tx_Addresses_Utility_TCA::getShowItems());
 		$items = array_map('trim', $items);
 		$index = -1;
@@ -420,13 +375,22 @@ class  tx_addresses_module extends t3lib_SCbase {
 		$items = array_filter($items);
 		foreach ($items as $item) {
 
-		// Means this is normal field
-			if (strpos($item, '--div--') === FALSE ) {
+			// IMPORTANT:
+			// The section bellow will define the informations for the head of the tabpanel.
+			// In other words, this is a new tab!
+			if (is_int(strpos($item, '--div--'))) {
 
-				if (strpos($item, '|') === FALSE ) {
-					$configuration = $this->getConfiguration($item);
+				$index++;
+				$configurations[$index] = Tx_Addresses_Utility_TCE::getTab($item);
+
+				// Add uid of the record as hidden field
+				if ($index === 0) {
+					$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getUid($item);
 				}
-				else {
+			}
+			// Means this is normal field
+			else {
+				if (is_int(strpos($item, '|'))) {
 					$fields = explode('|', $item);
 					$fields = array_map('trim', $fields);
 
@@ -472,61 +436,21 @@ class  tx_addresses_module extends t3lib_SCbase {
 							$j++;
 						}
 					}
+				} //end if
+				else {
+					$configuration = $this->getConfiguration($item);
 				}
 
 				// Add configuration whenever it is not empty
 				if (!empty($configuration)) {
 					$configurations[$index]['items'][] = $configuration;
-				}
-			}
-			// IMPORTANT:
-			// The "else" bellow will define the informations for the head of the tabpanel.
-			// In other words, this is a new tab!
-			else {
-				$index++;
-				$_temp = explode(';', $item);
-				$configurations[$index]['title'] = $LANG->sL($_temp[1]);
-				$configurations[$index]['layout'] = 'form';
-				// Adds here default configuration
-				$configurations[$index]['defaults'] = array(
-					'anchor' => '95%',
-					'blankText' => $LANG->getLL('fieldMandatory'),
-					'labelSeparator' => '',
-				);
-				$configuration[$index]['maxLengthText'] = $LANG->getLL('maxLengthText');
-
-				// Add uid of the record as hidden field
-				if ($index === 0) {
-					$configuration = array();
-					$configuration['xtype'] = 'textfield';
-					$configuration['id'] = 'uid';
-					$configuration['name'] = 'uid';
-					$configuration['hidden'] = TRUE;
-					$configuration['hideLabel'] = TRUE;
-					$configurations[$index]['items'][] = $configuration;
+					if (isset($columns[$item]['config']['foreign_table'])) {
+						$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getEditForeignTableButton($columns[$item]['config']['foreign_table']);
+					}
 				}
 			}
 		}
 		return $this->sanitizeConfigurations($configurations);
-	}
-
-	/**
-	 * Check whether the fields is going to be displayed or not.
-	 *
-	 * @global Object $BE_USER
-	 * @param array $tca
-	 * @param string $field
-	 * @return boolean
-	 */
-	function checkPermission(&$columns, $field) {
-		global $BE_USER;
-		$hasPermission = FALSE;
-		if ($BE_USER->isAdmin() ||
-			(isset($columns[$field]['exclude']) && !$columns[$field]['exclude']) ||
-			$BE_USER->check('non_exclude_fields','tx_addresses_domain_model_address:' . $field)) {
-			$hasPermission = TRUE;
-		}
-		return $hasPermission;
 	}
 
 	/**

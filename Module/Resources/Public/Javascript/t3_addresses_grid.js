@@ -33,18 +33,21 @@
  * @version $Id$
  */
 
-Addresses.Grid = function(){
+Addresses.initGrid = function() {
+
+	var configuration = new Object();
+	Addresses.utility = new Object();
 
 	/**
 	 * Defines the resource path
 	 */
-	this.iconsPath = '../Module/Resources/Public/Icons/';
-	this.ajaxPath = '../../../../';
+	configuration.iconsPath = '../Module/Resources/Public/Icons/';
+	//	configuration.ajaxPath = '../../../../';
 
 	/**
 	 * Row expander (plugins)
 	 */
-	this.expander = new Ext.grid.RowExpander({
+	configuration.expander = new Ext.grid.RowExpander({
 		tpl : new Ext.Template(
 			'<p style="margin-left:45px;"><b>' + Addresses.lang.name + ' :</b> {first_name} {last_name}</p>' +
 			'<br/>'
@@ -54,88 +57,28 @@ Addresses.Grid = function(){
 	/**
 	 * Row checkbox
 	 */
-	this.checkbox = new Ext.grid.CheckboxSelectionModel({
+	configuration.checkbox = new Ext.grid.CheckboxSelectionModel({
 		singleSelect: false
 	});
 
 	/**
 	 * Controller
 	 */
-	this.controller = new Object({
+	configuration.controller = new Object({
 		width: 50,
 		header : '&nbsp;',
 		renderer: function(val) {
-			output = '<img class="pointer" src="' + Addresses.grid.iconsPath + 'pencil.png" onclick="Addresses.grid.showWindow(\'edit\')"/>&nbsp;&nbsp;';
-			output += '<img class="pointer" src="' + Addresses.grid.iconsPath + 'clip_copy.gif" onclick="Addresses.grid.showWindow(\'copy\')"/>';
+			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" onclick="Addresses.window.display(\'edit\')"/>&nbsp;&nbsp;';
+			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.gif" onclick="Addresses.window.display(\'copy\')"/>';
 			return output;
 		},
 		dataIndex: 'uid'
 	});
 
 	/**
-	 * Mode could be either copy or new
-	 */
-	this.showWindow = function(state) {
-		var sm = this.grid.getSelectionModel();
-		var selections = sm.getSelections();
-		var data = new Array();
-		for (var index = 0; index < selections.length; index ++) {
-			// Get selections
-			var selection = selections[index];
-			data[index] = {
-				uid: selection.data.uid
-			};
-		}
-
-		if (data.length > 0) {
-			Addresses.form.reset(); // clear form
-
-			Ext.Msg.progress(Addresses.lang.loading, '');
-			Addresses.grid.startInterval();
-
-			Addresses.form.load({
-				method: 'GET',
-				url: Addresses.statics.ajaxController,
-				params:{
-					method: 'GET',
-					ajaxID: 'tx_addresses::editAction',
-					data: Ext.util.JSON.encode(data)
-				},
-				text: 'Loading',
-				success: function(form,call) {
-					// Set title
-					if (state == 'multipleEdit') {
-						Addresses.w.setTitle(Addresses.lang.multiple_update_record); // set title
-					}
-					else if (state == 'edit') {
-						Addresses.w.setTitle(Addresses.lang.update_record); // set title
-					}
-					else if (state == 'copy'){
-						// Removes the id so that the server will consider the data as a new record
-						form.findField('uid').setValue('');
-						Addresses.w.setTitle(Addresses.lang.copy_record); // set title
-					}
-
-					window.clearInterval(Addresses.Grid.interval);
-					Ext.Msg.hide();
-					Addresses.data = call.result.data;
-					Addresses.w.show();
-					Addresses.grid.focusOnFirstVisibleField();
-					Addresses.w.findById('informationPanel').setVisible(true);
-				}
-			});
-		}
-	};
-
-	/**
-	 * Visible columns part of the grid
-	 */
-	this.columns = new Array();
-
-	/**
 	 * Datasource
 	 */
-	this.datasource = new Ext.data.Store({
+	configuration.datasource = new Ext.data.Store({
 		storeId: 'addresses_datasource',
 		autoLoad: true,
 		reader: new Ext.data.JsonReader({
@@ -174,16 +117,16 @@ Addresses.Grid = function(){
 	/**
 	 * interval incremented
 	 */
-	this.interval = 0;
+	Addresses.interval = 0;
 
 	/**
 	 * Starts counting. Useful for progress bars
 	 */
-	this.startInterval = function() {
+	Addresses.startInterval = function() {
 
 		// Defines interval
 		var count = 0;
-		Addresses.Grid.interval = window.setInterval(function() {
+		Addresses.interval = window.setInterval(function() {
 			count = count + 0.04;
 
 			Ext.Msg.updateProgress(count);
@@ -196,98 +139,37 @@ Addresses.Grid = function(){
 	};
 
 	/**
-	 * Returns the selected items
-	 *
-	 * @return Array
-	 */
-	this.getSelection = function() {
-		return this.grid.getSelectionModel().getSelections();
-	};
-
-
-	/**
-	 * Return an array containing the selected uid
-	 *
-	 * @return Array
-	 */
-	this.getSelectedUids = function() {
-		var items = this.getSelection();
-		var data = new Array();
-		for (var index = 0; index < items.length; index ++) {
-			// Get selections
-			var item = items[index];
-			data[index] = {
-				uid: item.data.uid
-			};
-		}
-		return data;
-	};
-
-
-	/**
-	 * Returns a formated string: "first_name last_name"
-	 *
-	 * @return String
-	 */
-	this.getSelectedNames = function() {
-		var items = this.grid.getSelectionModel().getSelections();
-		var names = '';
-		for (var index = 0; index < items.length; index ++) {
-			var item = items[index];
-			// Add ',' separtor
-			if (index > 0) {
-				names += ', ';
-			}
-			names += item.data.first_name + ' ' + item.data.last_name;
-		}
-		return names;
-	};
-
-	/**
-	 * Set focus on the first field
-	 */
-	this.focusOnFirstVisibleField = function() {
-		try {
-			var firstVisibleElement = Addresses.fieldsWindow[0].items[1].id;
-			Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait for 100 miliseconds
-		}
-		catch (e) {
-			console.log(e);
-		}
-	};
-
-	/**
 	 * Top bar which is attached to the grid
 	 */
-	this.topbar = [
+	configuration.topbar = [
 	{
 		text: Addresses.lang.add,
-		icon: this.iconsPath + 'accept.png',
+		icon: configuration.iconsPath + 'accept.png',
 		cls: 'x-btn-text-icon',
 		handler: function() {
-			Addresses.w.setTitle(Addresses.lang.new_record); // set title
+			Addresses.window.setTitle(Addresses.lang.new_record); // set title
 			Addresses.form.reset(); // clear form
-			Addresses.w.findById('informationPanel').setVisible(false);
-			Addresses.w.show();
-			Addresses.grid.focusOnFirstVisibleField();
+			Addresses.window.findById('informationPanel').setVisible(false);
+			Addresses.window.show();
+			Addresses.window.focusOnFirstVisibleField();
 		}
 	},
 	'-',
 	{
 		id: 'multipleEditionButton',
 		text: Addresses.lang.edit_selected,
-		icon: this.iconsPath + 'pencil.png',
+		icon: configuration.iconsPath + 'pencil.png',
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			Addresses.grid.showWindow('multipleEdit');
+			Addresses.window.display('multipleEdit');
 		}
 	},
 	'-',
 	{
 		id: 'deleteButton',
 		text: Addresses.lang.delete_selected,
-		icon: this.iconsPath + '/delete.gif',
+		icon: configuration.iconsPath + '/delete.gif',
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
@@ -331,7 +213,7 @@ Addresses.Grid = function(){
 	'->',
 	new Ext.app.SearchField({
 		id: 'searchField',
-		store: this.datasource,
+		store: configuration.datasource,
 		width: 200
 	})
 	];
@@ -339,10 +221,10 @@ Addresses.Grid = function(){
 	/**
 	 * Bottom Bar
 	 */
-	this.bottomBar = [{
+	configuration.bottomBar = [{
 		id: 'recordPaging',
 		xtype: 'paging',
-		store: this.datasource,
+		store: configuration.datasource,
 		pageSize: Addresses.statics.pagingSize,
 		refreshText: '',
 		lastText: '',
@@ -351,79 +233,130 @@ Addresses.Grid = function(){
 		firstText: ''
 	}];
 
-	/**
-	 * Main grid. Contains all records
-	 */
-	this.grid = new Object();
 
+	// adjust columns layout + render the grid
+	Addresses.fieldsGrid.unshift(configuration.checkbox, configuration.expander); // add checkbox + expander to the grid
+	Addresses.fieldsGrid.push(configuration.controller);
+	
 	/**
 	 * Initializes the grid
 	 *
 	 * @return void
 	 **/
-	this.init = function() {
-		
-		this.grid = new Ext.grid.GridPanel({
-			id: 'addresses_grid',
-			renderTo: Addresses.statics.renderTo,
-			store: this.datasource,
-			//			view: new Ext.grid.GroupingView(),
-			width:'99%',
-			height: 200,
-			fitHeight: true,
-			frame:false,
-			title: Addresses.lang.title,
-			iconCls:'icon-grid',
-			buttonAlign: 'left',
-			loadMask: {
-				msg: Addresses.lang.loading
-			},
-			plugins: this.expander,
-			columns: this.columns,
-			listeners: this.listeners,
-			selModel: this.checkbox,
-			tbar: this.topbar,
-			bbar: this.bottomBar
-		});
-
-		this.grid.getSelectionModel().on(
-			'selectionchange',
-			function(selModel) {
-				// Other possible writing
-				//				var toolbar = this.grid.getTopToolbar();
-				//				toolbar.items.get('multipleEditionButton').setDisabled(false);
-				Ext.ComponentMgr.get('multipleEditionButton').setDisabled(selModel.getCount() === 0);
-				Ext.ComponentMgr.get('deleteButton').setDisabled(selModel.getCount() === 0);
-			},
-			this,
-			{
-				buffer:10
+	Addresses.grid = new Ext.grid.GridPanel({
+		id: 'addresses_grid',
+		renderTo: Addresses.statics.renderTo,
+		store: configuration.datasource,
+		//			view: new Ext.grid.GroupingView(),
+		width:'99%',
+		height: 200,
+		fitHeight: true,
+		frame:false,
+		title: Addresses.lang.title,
+		iconCls:'icon-grid',
+		buttonAlign: 'left',
+		loadMask: {
+			msg: Addresses.lang.loading
+		},
+		plugins: configuration.expander,
+		columns: Addresses.fieldsGrid,
+		selModel: configuration.checkbox,
+		tbar: configuration.topbar,
+		bbar: configuration.bottomBar,
+		listeners: {
+				
+			dblclick: function(e) {
+				Addresses.window.display('edit');
 			}
-			);
-		this.grid.on(
-			'dblclick',
-			function(e) {
-				this.showWindow('edit');
-			},
-			this,
-			{
-				buffer:10
-			}
-			);
+		},
 
-		// Resize grid
-		var elements = ['x-grid3-scroller', 'x-panel-body', 'x-grid3'];
-		for (var index = 0; index < elements.length; index ++) {
-			var element = elements[index];
-			Ext.select('.' + element).setStyle({
-				height: window.innerHeight - 200 + 'px'
-			});
+
+		/**
+	 * Returns a formated string: "first_name last_name"
+	 *
+	 * @return String
+	 */
+		getSelectedNames: function() {
+			var items = Addresses.grid.getSelectionModel().getSelections();
+			var names = '';
+			for (var index = 0; index < items.length; index ++) {
+				var item = items[index];
+				// Add ',' separtor
+				if (index > 0) {
+					names += ', ';
+				}
+				names += item.data.first_name + ' ' + item.data.last_name;
+			}
+			return names;
+		},
+
+		/**
+	 * Returns the selected items
+	 *
+	 * @return Array
+	 */
+		getSelection: function() {
+			return Addresses.grid.getSelectionModel().getSelections();
+		},
+
+
+		/**
+	 * Return an array containing the selected uid
+	 *
+	 * @return Array
+	 */
+		getSelectedUids: function() {
+			var items = this.getSelection();
+			var data = new Array();
+			for (var index = 0; index < items.length; index ++) {
+				// Get selections
+				var item = items[index];
+				data[index] = {
+					uid: item.data.uid
+				};
+			}
+			return data;
 		}
-	//		grid.getView().getRowClass = function(record, index){
-	//			var cssStyle = (record.data.change<0.7 ? (record.data.change<0.5 ? (record.data.change<0.2 ? 'red-row' : 'green-row') : 'blue-row') : '');
-	//			return 'red-row';
-	//		};
-	};
+	});
+
+	/**
+	 * Initializes the listener on the selection
+	 *
+	 * @return void
+	 **/
+	Addresses.grid.getSelectionModel().on(
+		'selectionchange',
+		function(selModel) {
+			// Other possible writing
+			//				var toolbar = this.grid.getTopToolbar();
+			//				toolbar.items.get('multipleEditionButton').setDisabled(false);
+			Ext.ComponentMgr.get('multipleEditionButton').setDisabled(selModel.getCount() === 0);
+			Ext.ComponentMgr.get('deleteButton').setDisabled(selModel.getCount() === 0);
+		},
+		this,
+		{
+			buffer:10
+		}
+		);
+
+
+	/**
+	 * Resizes the grid to fit the window
+	 *
+	 * 
+	 **/
+	// Resize grid
+	var elements = ['x-grid3-scroller', 'x-panel-body', 'x-grid3'];
+	for (var index = 0; index < elements.length; index ++) {
+		var element = elements[index];
+		Ext.select('.' + element).setStyle({
+			height: window.innerHeight - 200 + 'px'
+		});
+	}
+//		grid.getView().getRowClass = function(record, index){
+//			var cssStyle = (record.data.change<0.7 ? (record.data.change<0.5 ? (record.data.change<0.2 ? 'red-row' : 'green-row') : 'blue-row') : '');
+//			return 'red-row';
+//		};
 };
 
 Ext.Message = function(){
@@ -479,10 +412,10 @@ Ext.Message = function(){
 }();
 
 
-Addresses.utility = {
-	updatePageTree: function() {
-		if (top && top.content && top.content.nav_frame && top.content.nav_frame.Tree) {
-			top.content.nav_frame.Tree.refresh();
-		}
-	}
-};
+//Addresses.utility = {
+//	updatePageTree: function() {
+//		if (top && top.content && top.content.nav_frame && top.content.nav_frame.Tree) {
+//			top.content.nav_frame.Tree.refresh();
+//		}
+//	}
+//};

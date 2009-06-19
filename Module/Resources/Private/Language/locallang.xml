@@ -53,6 +53,7 @@
 			<label index="createdOn">Created on the</label>
 			<label index="updatedOn">Updated on the</label>
 			<label index="by">by</label>
+			<label index="addNewElement">Add new element</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>
@@ -102,6 +103,7 @@
 			<label index="createdOn">Créé le</label>
 			<label index="updatedOn">Modifié le</label>
 			<label index="by">par</label>
+			<label index="addNewElement">Ajouter un élément</label>
 		</languageKey>
 	</data>
 </T3locallang>

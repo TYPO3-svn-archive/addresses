@@ -37,17 +37,18 @@ Ext.namespace("Addresses");
 
 Addresses.initialize = function() {
 	
-	// fire addresses grid
-	Addresses.grid = new Addresses.Grid();
-	
-	// adjust columns layout + render the grid
-	Addresses.fieldsGrid.unshift(Addresses.grid.checkbox, Addresses.grid.expander); // add checkbox + expander to the grid
-	Addresses.fieldsGrid.push(Addresses.grid.controller);
-	Addresses.grid.columns = Addresses.fieldsGrid;
-	Addresses.grid.init();
+	Addresses.initGrid();
 
-	// Prepare editing window
-	Addresses.window = new Addresses.Window();
+	// Prepare + initialize editing window
+	Addresses.initWindow();
 	Addresses.window.init();
-//	Addresses.window.w.show();
+	Addresses.form = Addresses.window.getComponent('editForm').getForm();
 };
+
+
+Addresses.functions = {
+	tx_addresses_domain_model_addressgroup: function() {
+		Addresses.window.hide();
+	//		AddressesGroup.window.show();
+	}
+}

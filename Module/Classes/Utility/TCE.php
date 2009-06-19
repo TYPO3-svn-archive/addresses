@@ -34,11 +34,65 @@
  */
 class Tx_Addresses_Utility_TCE {
 
-/**
- *
- * @var array $elements
- */
-	protected static $elements = array();
+	/**
+	 * Returns UID field
+	 *
+	 * @return	array
+	 */
+	public static function getUid() {
+		$configuration['xtype'] = 'textfield';
+		$configuration['id'] = 'uid';
+		$configuration['name'] = 'uid';
+		$configuration['hidden'] = TRUE;
+		$configuration['hideLabel'] = TRUE;
+		return $configuration;
+	}
+
+
+	/**
+	 * Returns the locations store
+	 *
+	 * @global t3lib_DB $TYPO3_DB
+	 * @return string
+	 */
+	public static function getCustomStore($storeName, $uidField, $textField, $table) {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TYPO3_DB;
+
+		$clause = 'deleted = 0';
+		$clause .= ' AND ' . $uidField . ' != "" AND ' . $uidField . ' != "0"';
+		$clause .= ' AND ' . $textField . ' != "" AND ' . $textField . ' != "0"';
+		$clause .= t3lib_BEfunc::BEenableFields($table);
+
+		$resource = $TYPO3_DB->exec_SELECTquery('distinct(' . $uidField . ') , ' . $textField, $table, $clause);
+		$records = array();
+		while ($row = $TYPO3_DB->sql_fetch_row($resource)) {
+			$records[] = array($row[0], $row[1]);
+		}
+		return '"' . $storeName . '": new Ext.data.SimpleStore({id:0, "fields": ["' . $uidField . '_id", "' . $textField . '_text"],"data" : ' . json_encode($records) . '})';
+	}
+
+	/**
+	 * Returns the common configuration of element textarea.
+	 *
+	 * @global	Language	$LANG
+	 * @param	array		$items
+	 * @return	array
+	 */
+	public static function getTab(&$item) {
+		global $LANG;
+		$_temp = explode(';', $item);
+		$configuration['title'] = $LANG->sL($_temp[1]);
+		$configuration['layout'] = 'form';
+		// Adds here default configuration
+		$configuration['defaults'] = array(
+			'anchor' => '95%',
+			'blankText' => $LANG->getLL('fieldMandatory'),
+			'labelSeparator' => '',
+		);
+		$configuration['maxLengthText'] = $LANG->getLL('maxLengthText');
+		return $configuration;
+	}
 
 	/**
 	 * Returns the common configuration of element textarea.
@@ -48,7 +102,7 @@ class Tx_Addresses_Utility_TCE {
 	 * @param	array		$fieldName
 	 * @return	array
 	 */
-	public static function getComboBoxConfiguration(&$columns, $fieldName) {
+	public static function getComboBox(&$columns, $fieldName) {
 		global $LANG;
 		$configuration = self::getCommonConfiguration($columns, $fieldName);
 		$tca =  $columns[$fieldName]['config'];
@@ -72,6 +126,42 @@ class Tx_Addresses_Utility_TCE {
 			$configuration['id'] = $fieldName . '_id'; // Must be different to avoid conflict. 2 fiels are created. One is hidden
 		}
 
+		return $configuration;
+	}
+
+	/**
+	 * Returns an array containing stores
+	 * 
+	 * @return array
+	 */
+	public static function getStores() {
+		$columns = Tx_Addresses_Utility_TCA::getColumns();
+		$stores = array();
+
+		foreach ($columns as $fieldName => $column) {
+			$tca = $columns[$fieldName]['config'];
+			if ($tca['type'] == 'select') {
+
+				if (isset($tca['foreign_table'])) {
+					$stores[] = self::getStoreForeignTable($fieldName, $tca['foreign_table']);
+				}
+				else {
+					$stores[] = self::getStore($fieldName, $tca);
+				}
+			}
+		}
+		return $stores;
+	}
+
+	/**
+	 * Returns the store configuration in Json formation
+	 *
+	 * @param	string	$fieldName
+	 * @return	string
+	 */
+	public static function getStore($fieldName, $tca) {
+		global $LANG;
+		
 		// Fetches the value
 		$elements = array();
 		if (isset($tca['items']) && is_array($tca['items'])) {
@@ -88,7 +178,9 @@ class Tx_Addresses_Utility_TCE {
 			$_fieldName = $tca['itemsProcFunc.']['field'];
 			if ($table != '' && $_fieldName != '') {
 				$records = call_user_func_array(explode('->', $tca['itemsProcFunc']), array($table, $_fieldName));
+				array_pop($records);
 			}
+			
 			// Merges array
 			$elements = array_merge($elements, $records);
 			$elements = self::arrayUnique($elements);
@@ -110,22 +202,11 @@ class Tx_Addresses_Utility_TCE {
 			$id = $tca['default'][1];
 			array_unshift($elements, array($id, $value));
 		}
-		// Stores the variable for later user
-		self::$elements = $elements;
 
-		return $configuration;
-	}
 
-	/**
-	 * Returns the store configuration in Json formation
-	 *
-	 * @param	string	$fieldName
-	 * @return	string
-	 */
-	public static function getLastStoreConfiguration($fieldName) {
-		$json = json_encode(self::$elements);
+		$json = json_encode($elements);
 		$store = <<<EOF
-$fieldName : new Ext.data.SimpleStore({idIndex: 0, fields: ["$fieldName", "{$fieldName}_text"], data: $json})
+$fieldName : new Ext.data.ArrayStore({idIndex: 0, fields: ["$fieldName", "{$fieldName}_text"], data: $json})
 EOF;
 		return $store;
 	}
@@ -139,7 +220,7 @@ EOF;
 	 * @param	string		$foreignTable
 	 * @return	string
 	 */
-	public static function getStoreConfiguration($fieldName, $foreignTable) {
+	public static function getStoreForeignTable($fieldName, $foreignTable) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 		global $TCA;
@@ -150,7 +231,7 @@ EOF;
 
 		$json = json_encode($records);
 		$store = <<<EOF
-$fieldName : new Ext.data.SimpleStore({idIndex: 0, fields: ["$fieldName", "{$fieldName}_text"], data: $json, sortInfo: {field: "{$fieldName}_text", direction: "ASC"}})
+$fieldName : new Ext.data.ArrayStore({idIndex: 0, fields: ["$fieldName", "{$fieldName}_text"], data: $json, sortInfo: {field: "{$fieldName}_text", direction: "ASC"}})
 EOF;
 		return $store;
 	}
@@ -162,7 +243,7 @@ EOF;
 	 * @param	array		$fieldName
 	 * @return	array
 	 */
-	public static function getTextAreaConfiguration(&$columns, $fieldName) {
+	public static function getTextArea(&$columns, $fieldName) {
 		$configuration = self::getCommonConfiguration($columns, $fieldName);
 
 		// Set default xtype
@@ -179,7 +260,7 @@ EOF;
 	 * @param	array		$fieldName
 	 * @return	array
 	 */
-	public static function getItemSelectorConfiguration(&$columns, $fieldName) {
+	public static function getItemSelector(&$columns, $fieldName) {
 		$width = 170;
 		$height = 150;
 		$tca =  $columns[$fieldName]['config'];
@@ -212,7 +293,7 @@ EOF;
 	 * @param	array		$fieldName
 	 * @return	array
 	 */
-	public static function getTextFieldConfiguration(&$columns, $fieldName) {
+	public static function getTextField(&$columns, $fieldName) {
 		global $LANG;
 		$configuration = self::getCommonConfiguration($columns, $fieldName);
 		$tca =  $columns[$fieldName]['config'];
@@ -250,6 +331,43 @@ EOF;
 				}
 			}
 		}
+		return $configuration;
+	}
+
+
+	/**
+	 * Removes quotes around renderer e.g. "Ext.util.Format.dateRenderer('d.m.Y')"
+	 * * Removes quotes around object e.g. "Addresses.store.blabla" becomes Addresses.store.blabla
+	 *
+	 * @param string $json
+	 * @return string
+	 */
+	public static function removesQuotes($namespace, $json) {
+		$patterns[] = '/\"(Ext.util.Format.dateRenderer\(.+\))\"/isU';
+		$replaces[] = '$1';
+		$patterns[] = '/\"(' . $namespace . '\.functions\..+)"/isU';
+		$replaces[] = '$1';
+		$patterns[] = '/\"(' . $namespace . '\.store\..+)\"/isU';
+		$replaces[] = '$1';
+		return preg_replace($patterns, $replaces, $json);
+	}
+
+	/**
+	 * Returns configuration for editing a foreign table
+	 *
+	 * @global Language $LANG
+	 * @param string $foreignTable
+	 * @return array
+	 */
+	public static function getEditForeignTableButton($foreignTable) {
+		global $LANG;
+		$configuration['xtype'] = 'button';
+		$configuration['text'] = $LANG->getLL('addNewElement');
+		$configuration['cls'] = 'x-btn-text-icon';
+		$configuration['icon'] = 'Resources/Public/Icons/add.png';
+		$configuration['anchor'] = '30%';
+		$configuration['style'] = array('marginBottom' => '10px', 'marginLeft' => '65%');
+		$configuration['handler'] = 'Addresses.functions.' . $foreignTable;
 		return $configuration;
 	}
 

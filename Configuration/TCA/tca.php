@@ -367,6 +367,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'MM_match_fields' => array(
 					'tablenames' => 'tx_addresses_domain_model_addressgroup'
 				),
+				'editable' => TRUE,
 			)
 		),
 		'marital_status' => array(

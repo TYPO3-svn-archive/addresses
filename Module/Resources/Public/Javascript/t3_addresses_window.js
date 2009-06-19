@@ -33,133 +33,148 @@
  * @version $Id$
  */
 
-Addresses.Window = function()
-{
+Addresses.initWindow = function() {
+
+	var configuration = new Object();
 	/**
 	 * Buttons: save - cancel attached to the form panel
 	 */
-	this.buttons = [{
-		text: 'save',
-		id: 'saveButton',
-		listeners: {
-			click: function(){
-				// DEFINES THE SUBMIT OBJECT
-				var submit = {
-					clientValidation: true,
-					method: 'GET',
-					url: Addresses.statics.ajaxController,
-					params:{
-						ajaxID: 'tx_addresses::saveAction'
-					},
-					success: function(f,a){
-						var w = Ext.ComponentMgr.get('addresses_window');
-						w.hide();
-						Ext.StoreMgr.get('addresses_datasource').load();
-					},
-					failure: function(f,a){
-						if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
-							Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
-						}
-						else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
-							Ext.Msg.alert(Addresses.lang.warning, a.result.errormsg);
-						}
-					}
-				};
+	configuration = {
+		buttons: [
+			{
+				text: 'save',
+				id: 'saveButton',
+				listeners: {
+					click: function(){
+						// DEFINES THE SUBMIT OBJECT
+						var submit = {
+							clientValidation: true,
+							method: 'GET',
+							url: Addresses.statics.ajaxController,
+							params:{
+								ajaxID: 'tx_addresses::saveAction'
+							},
+							success: function(f,a){
+								var w = Ext.ComponentMgr.get('addresses_window');
+								w.hide();
+								Ext.StoreMgr.get('addresses_datasource').load();
+							},
+							failure: function(f,a){
+								if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
+									Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
+								}
+								else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
+									Ext.Msg.alert(Addresses.lang.warning, a.result.errormsg);
+								}
+							}
+						};
 
-				// case multiple edition -> don't validate form
-				var form = Addresses.form
-				var uid = form.findField('uid').getValue();
-				if (uid == '' || uid.search(',') == -1) {
-					if (form.isValid()) {
-						submit.clientValidation = true;
-						form.submit(submit);
-						Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
-					}
-					else {
-						Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
+						// case multiple edition -> don't validate form
+						var form = Addresses.form
+						var uid = form.findField('uid').getValue();
+						if (uid == '' || uid.search(',') == -1) {
+							if (form.isValid()) {
+								submit.clientValidation = true;
+								form.submit(submit);
+								Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+							}
+							else {
+								Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
+							}
+						}
+						else {
+							form.clearInvalid();
+							submit.clientValidation = false;
+							form.submit(submit);
+						}
 					}
 				}
-				else {
-					form.clearInvalid();
-					submit.clientValidation = false;
-					form.submit(submit);
+			},
+			{
+				text: 'Cancel',
+				handler: function(){
+					var w = Ext.ComponentMgr.get('addresses_window');
+					w.hide();
 				}
-			}
-		}
-	},
-	{
-		text: 'Cancel',
-		handler: function(){
-			var w = Ext.ComponentMgr.get('addresses_window');
-			w.hide();
-		}
-	}];
+			}]
+	};
+
 
 	/**
 	 * tabPanel that contains some fields. This panel is attached to the modal window.
 	 */
-	this.tabPanel = {
-		xtype:'tabpanel',
-		height: Addresses.statics.editionHeight,
-		activeTab: 0,
-		deferredRender: false,
-		defaults:{
-			bodyStyle:'padding:5px'
-		//					autoHeight: true,
-		},
-		items: Addresses.fieldsWindow
-	};
-	
-	/*
-	 * Fom panel attached to the Window
-	 */
-	this.formPanel = {
-		xtype: 'form',
-		id: 'editForm',
-		url: 'genres.php',
-		frame: true,
-		bodyStyle:'padding: 0',
-		labelAlign: 'top',
-		buttons: this.buttons,
-		items: {
-			xtype: 'panel',
-			layout:'column',
-			items: [{
-				columnWidth: .60,
-				items: this.tabPanel
-			},{
-				title: Addresses.lang.information,
-				columnWidth: .40,
-				xtype : 'panel',
-				layout:'form',
-				bodyStyle: 'padding: 5px 0 5px 5px',
-				items: [{
-					xtype: "textarea",
-					height: 150,
-					name: "remarks",
-					id: "remarks",
-					fieldLabel: Addresses.lang.remarks,
-					selectOnFocus:true,
-					anchor: "95%",
-					blankText: Addresses.lang.fieldMandatory,
-					labelSeparator: ""
-				},{
-					xtype: 'panel',
-					id: 'informationPanel',
-					tpl: new Ext.Template([
-						'<div style="margin-top:10px;">' + Addresses.lang.visa + '</div>',
-						'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
-						'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
-						])
-				}]
-			}]
+	configuration= {
+		
+		tabPanel: {
+			xtype:'tabpanel',
+			height: Addresses.statics.editionHeight,
+			activeTab: 0,
+			deferredRender: false,
+			defaults:{
+				bodyStyle:'padding:5px'
+				//					autoHeight: true,
+			},
+			items: Addresses.fieldsWindow
 		}
 	};
 
 	/*
+	 * Fom panel attached to the Window
+	 */
+	configuration= {
+		formPanel: {
+			xtype: 'form',
+			id: 'editForm',
+			url: 'genres.php',
+			frame: true,
+			bodyStyle:'padding: 0',
+			labelAlign: 'top',
+			buttons: configuration.buttons,
+			items: {
+				xtype: 'panel',
+				layout:'column',
+				items: [{
+						columnWidth: .60,
+						items: configuration.tabPanel
+					},{
+						title: Addresses.lang.information,
+						columnWidth: .40,
+						xtype: 'panel',
+						layout:'form',
+						bodyStyle: 'padding: 5px 0 5px 5px',
+						items: [{
+								xtype: "textarea",
+								height: 150,
+								name: "remarks",
+								id: "remarks",
+								fieldLabel: Addresses.lang.remarks,
+								selectOnFocus:true,
+								anchor: "95%",
+								blankText: Addresses.lang.fieldMandatory,
+								labelSeparator: ""
+							},{
+								xtype: 'panel',
+								id: 'informationPanel',
+								tpl: new Ext.Template([
+									'<div style="margin-top:10px;">' + Addresses.lang.visa + '</div>',
+									'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
+									'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
+								])
+							}]
+					}]
+			}
+		}
+	};
+
+
+	/*
 	 * Modal window that enables record editing: add - update data
 	 */
-	this.w = new Ext.Window({
+	Addresses.window = new Ext.Window({
+
+		/*
+		 * Modal window that enables record editing: add - update data
+		 */
 		id: 'addresses_window',
 		width: 700,
 		height: Addresses.statics.editionHeight,
@@ -171,46 +186,43 @@ Addresses.Window = function()
 		title: '',
 		closeAction: 'hide',
 		iconCls: 'my-icon',
-
-		// formPanel that contains a tabPanel
-		items: this.formPanel,
+		items: configuration.formPanel,
 		listeners: {
 			show: function() {
-							var informationPanel = Addresses.w.findById('informationPanel');
-							var tpl = informationPanel.tpl;
-							tpl.overwrite(informationPanel.body,Addresses.data);
+				var informationPanel = Addresses.window.findById('informationPanel');
+				var tpl = informationPanel.tpl;
+				tpl.overwrite(informationPanel.body,Addresses.data);
 			}
-		}
-	});
+		},
 
-	/**
-	 * Generic method for adding a listner on a textarea. Enables the key stroke "enter"
-	 */
-	this.addListnerToTextareas = function() {
-		var textareas = this.w.findByType('textarea');
-		for (var index = 0; index < textareas.length; index++) {
-			var textarea = textareas[index];
-			textarea.on({
-				'keydown' :	function(el, e) {
-					var key = Ext.EventObject.getKey();
-					if (key === 13){
-						e.stopPropagation();
+		/**
+		 * Generic method for adding a listner on a textarea. Enables the key stroke "enter"
+		 */
+		addListnerToTextareas: function() {
+			var textareas = this.findByType('textarea');
+			for (var index = 0; index < textareas.length; index++) {
+				var textarea = textareas[index];
+				textarea.on({
+					'keydown' :	function(el, e) {
+						var key = Ext.EventObject.getKey();
+						if (key === 13){
+							e.stopPropagation();
+						}
+
 					}
+				});
+			}
+		},
 
-				}
-			});
-		}
-	};
-
-	/**
-	 * Generic method for adding a listner on a combobox. It will store new data into the SimpleStore componenent
-	 */
-	this.addListnerToComboboxes = function() {
-		var comboboxes = this.w.findByType('combo');
-		for (var index = 0; index < comboboxes.length; index++) {
-			var combobox = comboboxes[index];
-			if (combobox.editable) {
-				combobox.on(
+		/**
+		 * Generic method for adding a listner on a combobox. It will store new data into the SimpleStore componenent
+		 */
+		addListnerToComboboxes: function() {
+			var comboboxes = this.findByType('combo');
+			for (var index = 0; index < comboboxes.length; index++) {
+				var combobox = comboboxes[index];
+				if (combobox.editable) {
+					combobox.on(
 					'blur',
 					function(el) {
 						var value = el.getValue();
@@ -228,23 +240,23 @@ Addresses.Window = function()
 							}
 						}
 					});
+				}
 			}
-		}
 
-	};
+		},
 
 
-	/**
-	 * Add listner on fields postal_code + locality
-	 */
-	this.addListnerTolocality = function() {
+		/**
+		 * Add listner on fields postal_code + locality
+		 */
+		addListnerTolocality: function() {
 
-		// Add a listener to the field postal_code
-		// terms of reference: when a postal code is given tries to find out the locality.
-		var postalCode = this.w.findById('postal_code');
-		var locality = this.w.findById('locality');
-		if (locality != null && postalCode != null) {
-			postalCode.on(
+			// Add a listener to the field postal_code
+			// terms of reference: when a postal code is given tries to find out the locality.
+			var postalCode = this.findById('postal_code');
+			var locality = this.findById('locality');
+			if (locality != null && postalCode != null) {
+				postalCode.on(
 				'blur',
 				function(el) {
 					var value = el.getValue();
@@ -258,16 +270,16 @@ Addresses.Window = function()
 						}
 					}
 				}
-				);
+			);
 
-			locality.on(
+				locality.on(
 				'blur',
 				function(el) {
 					var postalCodeValue = postalCode.getValue();
 					var localityValue = locality.getValue();
 					if (postalCodeValue != '' && localityValue != '') {
 						var record = Addresses.store.localities.getById(postalCodeValue);
-						
+
 						// Add a new value to the store object
 						if (typeof(record) == 'undefined') {
 
@@ -279,35 +291,105 @@ Addresses.Window = function()
 						}
 					}
 				}
-				);
+			);
+			}
+
+		},
+
+		/**
+		 * Set focus on the first field
+		 */
+		focusOnFirstVisibleField : function() {
+			try {
+				var firstVisibleElement = Addresses.fieldsWindow[0].items[1].id;
+				Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait for 100 miliseconds
+			}
+			catch (e) {
+				console.log(e);
+			}
+		},
+
+
+		/**
+		 * Mode could be either copy or new
+		 */
+		display: function(state) {
+			var sm = Addresses.grid.getSelectionModel();
+			var selections = sm.getSelections();
+			var data = new Array();
+			for (var index = 0; index < selections.length; index ++) {
+				// Get selections
+				var selection = selections[index];
+				data[index] = {
+					uid: selection.data.uid
+				};
+			}
+
+			if (data.length > 0) {
+				Addresses.form.reset(); // clear form
+
+				Ext.Msg.progress(Addresses.lang.loading, '');
+				Addresses.startInterval();
+
+				Addresses.form.load({
+					method: 'GET',
+					url: Addresses.statics.ajaxController,
+					params:{
+						method: 'GET',
+						ajaxID: 'tx_addresses::editAction',
+						data: Ext.util.JSON.encode(data)
+					},
+					text: 'Loading',
+					success: function(form,call) {
+						// Set title
+						if (state == 'multipleEdit') {
+							Addresses.window.setTitle(Addresses.lang.multiple_update_record); // set title
+						}
+						else if (state == 'edit') {
+							Addresses.window.setTitle(Addresses.lang.update_record); // set title
+						}
+						else if (state == 'copy'){
+							// Removes the id so that the server will consider the data as a new record
+							form.findField('uid').setValue('');
+							Addresses.window.setTitle(Addresses.lang.copy_record); // set title
+						}
+
+						window.clearInterval(Addresses.interval);
+						Ext.Msg.hide();
+						Addresses.data = call.result.data;
+						Addresses.window.show();
+						Addresses.window.focusOnFirstVisibleField();
+						Addresses.window.findById('informationPanel').setVisible(true);
+					}
+				});
+			}
+		},
+
+		/**
+		 * Initialize function
+		 */
+		init: function() {
+			// Do that for generating the DOM, otherwise it won't have a mapping btw fields and data'
+			// For instance method KeyMap bellow won't work
+			this.show();
+			this.hide();
+
+			//			this.form =
+
+			this.addListnerToTextareas();
+			this.addListnerToComboboxes();
+			this.addListnerTolocality();
+
+			// map one key by key code
+			new Ext.KeyMap("editForm", {
+				key: 13, // or Ext.EventObject.ENTER
+				fn: function() {
+					var component = Ext.ComponentMgr.get('saveButton');
+					component.fireEvent('click');
+				},
+				stopEvent: true
+			});
 		}
+	});
 
-	};
-
-	/**
-	 * Initialize function
-	 */
-	this.init = function() {
-
-		Addresses.w = this.w
-		Addresses.formPanel = this.w.getComponent('editForm');
-		Addresses.form = Addresses.formPanel.getForm();
-		
-		// Do that for generating the DOM, otherwise it won't have a mapping btw fields and data'
-		this.w.show(); this.w.hide();
-
-		this.addListnerToTextareas();
-		this.addListnerToComboboxes();
-		this.addListnerTolocality();
-		
-		// map one key by key code
-		new Ext.KeyMap("editForm", {
-			key: 13, // or Ext.EventObject.ENTER
-			fn: function() {
-				var component = Ext.ComponentMgr.get('saveButton');
-				component.fireEvent('click');
-			},
-			stopEvent: true
-		});
-	};
 };

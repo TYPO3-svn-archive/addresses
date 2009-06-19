@@ -74,7 +74,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * @var $javascriptFiles array
 	 */
-	protected $javascriptFiles = array('MultiSelect', 'ItemSelector', 'ext_expander', 'search_field', 't3_addresses_init', 't3_addresses_grid', 't3_addresses_window');
+	protected $javascriptFiles = array('MultiSelect', 'ItemSelector', 'ext_expander', 'search_field', 'AddressesInit', 'AddressesGrid', 'AddressesWindow');
 
 	/**
 	 * @var $relativePath string
@@ -249,9 +249,6 @@ class  tx_addresses_module extends t3lib_SCbase {
 			' . $this->namespace . '.fieldsStore = ' . json_encode($fieldsStore) . ';
 			' . $this->namespace . '.fieldsWindow = ' . Tx_Addresses_Utility_TCE::removesQuotes($this->namespace, json_encode($fieldsWindow)) . ';
 			' . $this->namespace . '.lang = ' . json_encode($this->getLabels()) . ';
-			//' . $this->namespace . '.w = new Object();
-			//' . $this->namespace . '.formPanel = new Object();
-			//' . $this->namespace . '.form = new Object();
 			' . $this->namespace . '.data = new Object();
 			Addresses.initialize();' . chr(10);
 	}

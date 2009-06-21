@@ -23,32 +23,14 @@
 
 /**
  * ExtJS for the 'addresses' extension.
- * Contains the Addresses functions
  *
  * @author	Fabien Udriot <fabien.udriot@ecodev.ch>
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @package	TYPO3
  * @subpackage	tx_addresses
- * @version $Id$
+ * @version $Id: AddressesInit.js 21616 2009-06-19 14:05:46Z fabien_u $
  */
 
-Ext.namespace("Addresses");
-
-Addresses.initialize = function() {
-	
-	Addresses.initGrid();
-
-	// Prepare + initialize editing window
-	Addresses.initWindow();
-	Addresses.window.init();
-	Addresses.form = Addresses.window.getComponent('editForm').getForm();
-};
-
-
-Addresses.functions = {
-	tx_addresses_domain_model_addressgroup: function() {
-		Addresses.window.hide();
-	//		AddressesGroup.window.show();
-	}
-}
+Ext.namespace("Address");
+Ext.namespace("AddressGroup");

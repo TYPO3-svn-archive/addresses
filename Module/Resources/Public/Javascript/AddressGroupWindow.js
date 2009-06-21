@@ -22,18 +22,18 @@
  ***************************************************************/
 
 /**
- * ExtJS for the 'addresses' extension.
- * Contains the Addresses functions
+ * ExtJS for the 'Address.' extension.
+ * Contains the Address. functions
  *
  * @author	Fabien Udriot <fabien.udriot@ecodev.ch>
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @package	TYPO3
- * @subpackage	tx_addresses
- * @version $Id$
+ * @subpackage	tx_Address.
+ * @version $Id: Address.Window.js 21616 2009-06-19 14:05:46Z fabien_u $
  */
 
-Addresses.initWindow = function() {
+AddressGroup.initWindow = function() {
 
 	var configuration = new Object();
 	/**
@@ -50,36 +50,36 @@ Addresses.initWindow = function() {
 						var submit = {
 							clientValidation: true,
 							method: 'GET',
-							url: Addresses.statics.ajaxController,
+							url: AddressGroup.statics.ajaxController,
 							params:{
-								ajaxID: 'tx_addresses::saveAction'
+								ajaxID: 'tx_Address.::saveAction'
 							},
 							success: function(f,a){
-								var w = Ext.ComponentMgr.get('addresses_window');
+								var w = Ext.ComponentMgr.get('Address._window');
 								w.hide();
-								Ext.StoreMgr.get('addresses_datasource').load();
+								Ext.StoreMgr.get('Address._datasource').load();
 							},
 							failure: function(f,a){
 								if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
-									Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
+									Ext.Msg.alert(AddressGroup.lang.failure, 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
 								}
 								else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
-									Ext.Msg.alert(Addresses.lang.warning, a.result.errormsg);
+									Ext.Msg.alert(AddressGroup.lang.warning, a.result.errormsg);
 								}
 							}
 						};
 
 						// case multiple edition -> don't validate form
-						var form = Addresses.form
+						var form = AddressGroup.form
 						var uid = form.findField('uid').getValue();
 						if (uid == '' || uid.search(',') == -1) {
 							if (form.isValid()) {
 								submit.clientValidation = true;
 								form.submit(submit);
-								Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+								Ext.Message.msg(AddressGroup.lang.saving, AddressGroup.lang.data_sent);
 							}
 							else {
-								Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
+								Ext.Msg.alert(AddressGroup.lang.error, AddressGroup.lang.fields_error);
 							}
 						}
 						else {
@@ -93,12 +93,11 @@ Addresses.initWindow = function() {
 			{
 				text: 'Cancel',
 				handler: function(){
-					var w = Ext.ComponentMgr.get('addresses_window');
+					var w = Ext.ComponentMgr.get('Address._window');
 					w.hide();
 				}
 			}]
 	};
-
 
 	/**
 	 * tabPanel that contains some fields. This panel is attached to the modal window.
@@ -107,14 +106,14 @@ Addresses.initWindow = function() {
 		
 		tabPanel: {
 			xtype:'tabpanel',
-			height: Addresses.statics.editionHeight,
+			height: AddressGroup.statics.editionHeight,
 			activeTab: 0,
 			deferredRender: false,
 			defaults:{
 				bodyStyle:'padding:5px'
 				//					autoHeight: true,
 			},
-			items: Addresses.fieldsWindow
+			items: AddressGroup.fieldsWindow
 		}
 	};
 
@@ -125,7 +124,6 @@ Addresses.initWindow = function() {
 		formPanel: {
 			xtype: 'form',
 			id: 'editForm',
-			url: 'genres.php',
 			frame: true,
 			bodyStyle:'padding: 0',
 			labelAlign: 'top',
@@ -137,7 +135,7 @@ Addresses.initWindow = function() {
 						columnWidth: .60,
 						items: configuration.tabPanel
 					},{
-						title: Addresses.lang.information,
+						title: AddressGroup.lang.information,
 						columnWidth: .40,
 						xtype: 'panel',
 						layout:'form',
@@ -147,18 +145,18 @@ Addresses.initWindow = function() {
 								height: 150,
 								name: "remarks",
 								id: "remarks",
-								fieldLabel: Addresses.lang.remarks,
+								fieldLabel: AddressGroup.lang.remarks,
 								selectOnFocus:true,
 								anchor: "95%",
-								blankText: Addresses.lang.fieldMandatory,
+								blankText: AddressGroup.lang.fieldMandatory,
 								labelSeparator: ""
 							},{
 								xtype: 'panel',
 								id: 'informationPanel',
 								tpl: new Ext.Template([
-									'<div style="margin-top:10px;">' + Addresses.lang.visa + '</div>',
-									'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
-									'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
+									'<div style="margin-top:10px;">' + AddressGroup.lang.visa + '</div>',
+									'<div>' + AddressGroup.lang.createdOn + ' {crdate} ' + AddressGroup.lang.by + ' {cruser_id}</div>',
+									'<div>' + AddressGroup.lang.updatedOn + ' {tstamp} ' + AddressGroup.lang.by + ' {upuser_id}</div>',
 								])
 							}]
 					}]
@@ -166,18 +164,17 @@ Addresses.initWindow = function() {
 		}
 	};
 
-
 	/*
 	 * Modal window that enables record editing: add - update data
 	 */
-	Addresses.window = new Ext.Window({
+	AddressGroup.window = new Ext.Window({
 
 		/*
 		 * Modal window that enables record editing: add - update data
 		 */
-		id: 'addresses_window',
+		id: 'Address._window',
 		width: 700,
-		height: Addresses.statics.editionHeight,
+		height: AddressGroup.statics.editionHeight,
 		modal: true,
 		layout: 'fit',
 		plain:true,
@@ -189,9 +186,9 @@ Addresses.initWindow = function() {
 		items: configuration.formPanel,
 		listeners: {
 			show: function() {
-				var informationPanel = Addresses.window.findById('informationPanel');
+				var informationPanel = AddressGroup.window.findById('informationPanel');
 				var tpl = informationPanel.tpl;
-				tpl.overwrite(informationPanel.body,Addresses.data);
+				tpl.overwrite(informationPanel.body,AddressGroup.data);
 			}
 		},
 
@@ -230,13 +227,13 @@ Addresses.initWindow = function() {
 
 						// Makes sure the value is not null
 						if (value != '') {
-							eval('var record = Addresses.store.' + id + '.getById("' + value + '");');
+							eval('var record = AddressGroup.store.' + id + '.getById("' + value + '");');
 
 							// Add a new value to the store object
 							if (typeof(record) == 'undefined') {
 
 								// Add this record
-								eval('Addresses.store.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
+								eval('AddressGroup.store.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
 							}
 						}
 					});
@@ -261,7 +258,7 @@ Addresses.initWindow = function() {
 				function(el) {
 					var value = el.getValue();
 					if (value != '') {
-						var record = Addresses.store.localities.getById(value);
+						var record = AddressGroup.store.localities.getById(value);
 						if (typeof(record) == 'undefined') {
 							locality.setValue('');
 						}
@@ -278,13 +275,13 @@ Addresses.initWindow = function() {
 					var postalCodeValue = postalCode.getValue();
 					var localityValue = locality.getValue();
 					if (postalCodeValue != '' && localityValue != '') {
-						var record = Addresses.store.localities.getById(postalCodeValue);
+						var record = AddressGroup.store.localities.getById(postalCodeValue);
 
 						// Add a new value to the store object
 						if (typeof(record) == 'undefined') {
 
 							// Add this record
-							Addresses.store.localities.add(new Ext.data.Record({
+							AddressGroup.store.localities.add(new Ext.data.Record({
 								locality_id: postalCodeValue,
 								locality_text: localityValue
 							},postalCodeValue));
@@ -301,7 +298,7 @@ Addresses.initWindow = function() {
 		 */
 		focusOnFirstVisibleField : function() {
 			try {
-				var firstVisibleElement = Addresses.fieldsWindow[0].items[1].id;
+				var firstVisibleElement = AddressGroup.fieldsWindow[0].items[1].id;
 				Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait for 100 miliseconds
 			}
 			catch (e) {
@@ -314,7 +311,7 @@ Addresses.initWindow = function() {
 		 * Mode could be either copy or new
 		 */
 		display: function(state) {
-			var sm = Addresses.grid.getSelectionModel();
+			var sm = AddressGroup.grid.getSelectionModel();
 			var selections = sm.getSelections();
 			var data = new Array();
 			for (var index = 0; index < selections.length; index ++) {
@@ -326,40 +323,40 @@ Addresses.initWindow = function() {
 			}
 
 			if (data.length > 0) {
-				Addresses.form.reset(); // clear form
+				AddressGroup.form.reset(); // clear form
 
-				Ext.Msg.progress(Addresses.lang.loading, '');
-				Addresses.startInterval();
+				Ext.Msg.progress(AddressGroup.lang.loading, '');
+				AddressGroup.startInterval();
 
-				Addresses.form.load({
+				AddressGroup.form.load({
 					method: 'GET',
-					url: Addresses.statics.ajaxController,
+					url: AddressGroup.statics.ajaxController,
 					params:{
 						method: 'GET',
-						ajaxID: 'tx_addresses::editAction',
+						ajaxID: 'tx_Address.::editAction',
 						data: Ext.util.JSON.encode(data)
 					},
 					text: 'Loading',
 					success: function(form,call) {
 						// Set title
 						if (state == 'multipleEdit') {
-							Addresses.window.setTitle(Addresses.lang.multiple_update_record); // set title
+							AddressGroup.window.setTitle(AddressGroup.lang.multiple_update_record); // set title
 						}
 						else if (state == 'edit') {
-							Addresses.window.setTitle(Addresses.lang.update_record); // set title
+							AddressGroup.window.setTitle(AddressGroup.lang.update_record); // set title
 						}
 						else if (state == 'copy'){
 							// Removes the id so that the server will consider the data as a new record
 							form.findField('uid').setValue('');
-							Addresses.window.setTitle(Addresses.lang.copy_record); // set title
+							AddressGroup.window.setTitle(AddressGroup.lang.copy_record); // set title
 						}
 
-						window.clearInterval(Addresses.interval);
+						window.clearInterval(AddressGroup.interval);
 						Ext.Msg.hide();
-						Addresses.data = call.result.data;
-						Addresses.window.show();
-						Addresses.window.focusOnFirstVisibleField();
-						Addresses.window.findById('informationPanel').setVisible(true);
+						AddressGroup.data = call.result.data;
+						AddressGroup.window.show();
+						AddressGroup.window.focusOnFirstVisibleField();
+						AddressGroup.window.findById('informationPanel').setVisible(true);
 					}
 				});
 			}

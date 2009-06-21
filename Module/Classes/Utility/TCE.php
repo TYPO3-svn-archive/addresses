@@ -102,14 +102,14 @@ class Tx_Addresses_Utility_TCE {
 	 * @param	array		$fieldName
 	 * @return	array
 	 */
-	public static function getComboBox(&$columns, $fieldName) {
+	public static function getComboBox(&$columns, $fieldName, $namespace) {
 		global $LANG;
 		$configuration = self::getCommonConfiguration($columns, $fieldName);
 		$tca =  $columns[$fieldName]['config'];
 
 		$configuration['xtype'] = 'combo';
 		$configuration['mode'] = 'local';
-		$configuration['store'] = 'Addresses.store.' . $fieldName;
+		$configuration['store'] = $namespace . '.store.' . $fieldName;
 		$configuration['displayField'] = $fieldName .'_text';
 		$configuration['triggerAction'] = 'all';
 		$configuration['editable'] = isset($tca['editable']) ? $tca['editable'] : TRUE;
@@ -260,7 +260,7 @@ EOF;
 	 * @param	array		$fieldName
 	 * @return	array
 	 */
-	public static function getItemSelector(&$columns, $fieldName) {
+	public static function getItemSelector(&$columns, $fieldName, $namespace) {
 		$width = 170;
 		$height = 150;
 		$tca =  $columns[$fieldName]['config'];
@@ -270,7 +270,7 @@ EOF;
 		$configuration['imagePath'] = 'Resources/Public/Icons';
 		$fromMulitSelect['width'] = $width;
 		$fromMulitSelect['height'] = $height;
-		$fromMulitSelect['store'] = 'Addresses.store.' . $fieldName;
+		$fromMulitSelect['store'] = $namespace . '.store.' . $fieldName;
 		$fromMulitSelect['displayField'] = $fieldName . '_text';
 		$fromMulitSelect['valueField'] = $fieldName;
 
@@ -367,7 +367,7 @@ EOF;
 		$configuration['icon'] = 'Resources/Public/Icons/add.png';
 		$configuration['anchor'] = '30%';
 		$configuration['style'] = array('marginBottom' => '10px', 'marginLeft' => '65%');
-		$configuration['handler'] = 'Addresses.functions.' . $foreignTable;
+		$configuration['handler'] = $namespace . '.functions.' . $foreignTable;
 		return $configuration;
 	}
 

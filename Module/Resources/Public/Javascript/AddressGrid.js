@@ -33,10 +33,10 @@
  * @version $Id$
  */
 
-Addresses.initGrid = function() {
+Address.initGrid = function() {
 
 	var configuration = new Object();
-	Addresses.utility = new Object();
+	Address.utility = new Object();
 
 	/**
 	 * Defines the resource path
@@ -49,7 +49,7 @@ Addresses.initGrid = function() {
 	 */
 	configuration.expander = new Ext.grid.RowExpander({
 		tpl : new Ext.Template(
-			'<p style="margin-left:45px;"><b>' + Addresses.lang.name + ' :</b> {first_name} {last_name}</p>' +
+			'<p style="margin-left:45px;"><b>' + Address.lang.name + ' :</b> {first_name} {last_name}</p>' +
 			'<br/>'
 			)
 	});
@@ -68,13 +68,13 @@ Addresses.initGrid = function() {
 		width: 50,
 		header : '&nbsp;',
 		renderer: function(val) {
-			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" onclick="Addresses.window.display(\'edit\')"/>&nbsp;&nbsp;';
-			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.gif" onclick="Addresses.window.display(\'copy\')"/>';
+			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" onclick="Address.window.display(\'edit\')"/>&nbsp;&nbsp;';
+			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.gif" onclick="Address.window.display(\'copy\')"/>';
 			return output;
 		},
 		dataIndex: 'uid'
 	});
-
+	
 	/**
 	 * Datasource
 	 */
@@ -82,13 +82,13 @@ Addresses.initGrid = function() {
 		storeId: 'addresses_datasource',
 		autoLoad: true,
 		reader: new Ext.data.JsonReader({
-			fields: Addresses.fieldsStore,
+			fields: Address.fieldsStore,
 			root: 'data',
 			totalProperty: 'total'
 		}),
 		baseParams: {
 			ajaxID: 'tx_addresses::indexAction',
-			limit: Addresses.statics.pagingSize
+			limit: Address.statics.pagingSize
 		},
 		remoteSort: true,
 		//		groupField: 'locality',
@@ -98,7 +98,7 @@ Addresses.initGrid = function() {
 		//		},
 		proxy: new Ext.data.HttpProxy({
 			method: 'GET',
-			url: Addresses.statics.ajaxController
+			url: Address.statics.ajaxController
 		}),
 		listeners : {
 			load: function (element, data) {
@@ -117,16 +117,16 @@ Addresses.initGrid = function() {
 	/**
 	 * interval incremented
 	 */
-	Addresses.interval = 0;
+	Address.interval = 0;
 
 	/**
 	 * Starts counting. Useful for progress bars
 	 */
-	Addresses.startInterval = function() {
+	Address.startInterval = function() {
 
 		// Defines interval
 		var count = 0;
-		Addresses.interval = window.setInterval(function() {
+		Address.interval = window.setInterval(function() {
 			count = count + 0.04;
 
 			Ext.Msg.updateProgress(count);
@@ -143,48 +143,48 @@ Addresses.initGrid = function() {
 	 */
 	configuration.topbar = [
 	{
-		text: Addresses.lang.add,
+		text: Address.lang.add,
 		icon: configuration.iconsPath + 'accept.png',
 		cls: 'x-btn-text-icon',
 		handler: function() {
-			Addresses.window.setTitle(Addresses.lang.new_record); // set title
-			Addresses.form.reset(); // clear form
-			Addresses.window.findById('informationPanel').setVisible(false);
-			Addresses.window.show();
-			Addresses.window.focusOnFirstVisibleField();
+			Address.window.setTitle(Address.lang.new_record); // set title
+			Address.form.reset(); // clear form
+			Address.window.findById('informationPanel').setVisible(false);
+			Address.window.show();
+			Address.window.focusOnFirstVisibleField();
 		}
 	},
 	'-',
 	{
 		id: 'multipleEditionButton',
-		text: Addresses.lang.edit_selected,
+		text: Address.lang.edit_selected,
 		icon: configuration.iconsPath + 'pencil.png',
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			Addresses.window.display('multipleEdit');
+			Address.window.display('multipleEdit');
 		}
 	},
 	'-',
 	{
 		id: 'deleteButton',
-		text: Addresses.lang.delete_selected,
+		text: Address.lang.delete_selected,
 		icon: configuration.iconsPath + '/delete.gif',
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			var data = Addresses.grid.getSelectedUids();
+			var data = Address.grid.getSelectedUids();
 
 			Ext.Msg.show({
-				title: Addresses.lang.remove,
+				title: Address.lang.remove,
 				buttons: Ext.MessageBox.YESNO,
-				msg: Addresses.lang.are_you_sure + ' ' + Addresses.grid.getSelectedNames() + '?',
+				msg: Address.lang.are_you_sure + ' ' + Address.grid.getSelectedNames() + '?',
 				fn: function(btn){
 					if (btn == 'yes' && data.length > 0){
 						var conn = new Ext.data.Connection();
 						conn.request({
 							method: 'GET',
-							url: Addresses.statics.ajaxController,
+							url: Address.statics.ajaxController,
 							params:{
 								ajaxID: 'tx_addresses::deleteAction',
 								data: Ext.util.JSON.encode(data)
@@ -225,7 +225,7 @@ Addresses.initGrid = function() {
 		id: 'recordPaging',
 		xtype: 'paging',
 		store: configuration.datasource,
-		pageSize: Addresses.statics.pagingSize,
+		pageSize: Address.statics.pagingSize,
 		refreshText: '',
 		lastText: '',
 		nextText: '',
@@ -235,38 +235,38 @@ Addresses.initGrid = function() {
 
 
 	// adjust columns layout + render the grid
-	Addresses.fieldsGrid.unshift(configuration.checkbox, configuration.expander); // add checkbox + expander to the grid
-	Addresses.fieldsGrid.push(configuration.controller);
+	Address.fieldsGrid.unshift(configuration.checkbox, configuration.expander); // add checkbox + expander to the grid
+	Address.fieldsGrid.push(configuration.controller);
 	
 	/**
 	 * Initializes the grid
 	 *
 	 * @return void
 	 **/
-	Addresses.grid = new Ext.grid.GridPanel({
+	Address.grid = new Ext.grid.GridPanel({
 		id: 'addresses_grid',
-		renderTo: Addresses.statics.renderTo,
+		renderTo: Address.statics.renderTo,
 		store: configuration.datasource,
 		//			view: new Ext.grid.GroupingView(),
 		width:'99%',
 		height: 200,
 		fitHeight: true,
 		frame:false,
-		title: Addresses.lang.title,
+		title: Address.lang.title,
 		iconCls:'icon-grid',
 		buttonAlign: 'left',
 		loadMask: {
-			msg: Addresses.lang.loading
+			msg: Address.lang.loading
 		},
 		plugins: configuration.expander,
-		columns: Addresses.fieldsGrid,
+		columns: Address.fieldsGrid,
 		selModel: configuration.checkbox,
 		tbar: configuration.topbar,
 		bbar: configuration.bottomBar,
 		listeners: {
 				
 			dblclick: function(e) {
-				Addresses.window.display('edit');
+				Address.window.display('edit');
 			}
 		},
 
@@ -277,7 +277,7 @@ Addresses.initGrid = function() {
 	 * @return String
 	 */
 		getSelectedNames: function() {
-			var items = Addresses.grid.getSelectionModel().getSelections();
+			var items = Address.grid.getSelectionModel().getSelections();
 			var names = '';
 			for (var index = 0; index < items.length; index ++) {
 				var item = items[index];
@@ -296,7 +296,7 @@ Addresses.initGrid = function() {
 	 * @return Array
 	 */
 		getSelection: function() {
-			return Addresses.grid.getSelectionModel().getSelections();
+			return Address.grid.getSelectionModel().getSelections();
 		},
 
 
@@ -324,7 +324,7 @@ Addresses.initGrid = function() {
 	 *
 	 * @return void
 	 **/
-	Addresses.grid.getSelectionModel().on(
+	Address.grid.getSelectionModel().on(
 		'selectionchange',
 		function(selModel) {
 			// Other possible writing
@@ -412,7 +412,7 @@ Ext.Message = function(){
 }();
 
 
-//Addresses.utility = {
+//Address.utility = {
 //	updatePageTree: function() {
 //		if (top && top.content && top.content.nav_frame && top.content.nav_frame.Tree) {
 //			top.content.nav_frame.Tree.refresh();

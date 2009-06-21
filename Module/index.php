@@ -69,12 +69,12 @@ class  tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * @var $namespace string
 	 */
-	protected $namespace = 'Addresses';
+	protected $namespace = 'Address';
 
 	/**
 	 * @var $javascriptFiles array
 	 */
-	protected $javascriptFiles = array('MultiSelect', 'ItemSelector', 'ext_expander', 'search_field', 'AddressesInit', 'AddressesGrid', 'AddressesWindow');
+	protected $javascriptFiles = array('MultiSelect', 'ItemSelector', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressGroupWindow');
 
 	/**
 	 * @var $relativePath string
@@ -250,7 +250,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 			' . $this->namespace . '.fieldsWindow = ' . Tx_Addresses_Utility_TCE::removesQuotes($this->namespace, json_encode($fieldsWindow)) . ';
 			' . $this->namespace . '.lang = ' . json_encode($this->getLabels()) . ';
 			' . $this->namespace . '.data = new Object();
-			Addresses.initialize();' . chr(10);
+			' . $this->namespace . '.initialize();' . chr(10);
 	}
 
 	/**
@@ -341,10 +341,10 @@ class  tx_addresses_module extends t3lib_SCbase {
 					break;
 				case 'select':
 					if ($tca['maxitems'] > 1 && isset($tca['foreign_table'])) {
-						$configuration = Tx_Addresses_Utility_TCE::getItemSelector($columns, $fieldName);
+						$configuration = Tx_Addresses_Utility_TCE::getItemSelector($columns, $fieldName, $this->namespace);
 					}
 					else {
-						$configuration = Tx_Addresses_Utility_TCE::getComboBox($columns, $fieldName);
+						$configuration = Tx_Addresses_Utility_TCE::getComboBox($columns, $fieldName, $this->namespace);
 					}
 					break;
 				default;

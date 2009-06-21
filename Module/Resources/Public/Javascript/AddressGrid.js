@@ -172,41 +172,7 @@ Address.initGrid = function() {
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			var data = Address.grid.getSelectedUids();
-
-			Ext.Msg.show({
-				title: Address.lang.remove,
-				buttons: Ext.MessageBox.YESNO,
-				msg: Address.lang.are_you_sure + ' ' + Address.grid.getSelectedNames() + '?',
-				fn: function(btn){
-					if (btn == 'yes' && data.length > 0){
-						var conn = new Ext.data.Connection();
-						conn.request({
-							method: 'GET',
-							url: Address.statics.ajaxController,
-							params:{
-								ajaxID: 'tx_addresses::deleteAction',
-								data: Ext.util.JSON.encode(data)
-							},
-							success: function(f,a){
-								Ext.StoreMgr.get('addresses_datasource').load();
-							},
-							failure: function(f,a){
-								if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
-									Ext.Msg.alert('Failure', 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
-								}
-								else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
-									Ext.Msg.alert('Warning', a.result.errormsg);
-								}
-								else {
-									Ext.Msg.alert('Warning', 'Unknow error');
-								}
-
-							}
-						});
-					}
-				}
-			});
+			Address.grid.deleteSelectedRecord();
 		}
 	},
 	'->',
@@ -265,6 +231,11 @@ Address.initGrid = function() {
 		listeners: {
 			dblclick: function(e) {
 				Address.window.display('edit');
+			},
+			keypress: function(key) {
+				if (key.keyCode == key.DELETE) {
+					this.deleteSelectedRecord();
+				}
 			}
 		},
 
@@ -314,7 +285,51 @@ Address.initGrid = function() {
 				};
 			}
 			return data;
+		},
+
+		/**
+		 * Delete selected records
+		 *
+		 * @return void
+		 */
+		deleteSelectedRecord: function() {
+			var data = Address.grid.getSelectedUids();
+
+			Ext.Msg.show({
+				title: Address.lang.remove,
+				buttons: Ext.MessageBox.YESNO,
+				msg: Address.lang.are_you_sure + ' ' + Address.grid.getSelectedNames() + '?',
+				fn: function(btn){
+					if (btn == 'yes' && data.length > 0){
+						var conn = new Ext.data.Connection();
+						conn.request({
+							method: 'GET',
+							url: Address.statics.ajaxController,
+							params:{
+								ajaxID: 'tx_addresses::deleteAction',
+								data: Ext.util.JSON.encode(data)
+							},
+							success: function(f,a){
+								Ext.StoreMgr.get('addresses_datasource').load();
+							},
+							failure: function(f,a){
+								if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
+									Ext.Msg.alert('Failure', 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
+								}
+								else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
+									Ext.Msg.alert('Warning', a.result.errormsg);
+								}
+								else {
+									Ext.Msg.alert('Warning', 'Unknow error');
+								}
+
+							}
+						});
+					}
+				}
+			});
 		}
+
 	});
 
 	/**

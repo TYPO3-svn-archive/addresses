@@ -42,7 +42,6 @@ Address.initGrid = function() {
 	 * Defines the resource path
 	 */
 	configuration.iconsPath = '../Module/Resources/Public/Icons/';
-	//	configuration.ajaxPath = '../../../../';
 
 	/**
 	 * Row expander (plugins)
@@ -264,7 +263,6 @@ Address.initGrid = function() {
 		tbar: configuration.topbar,
 		bbar: configuration.bottomBar,
 		listeners: {
-				
 			dblclick: function(e) {
 				Address.window.display('edit');
 			}
@@ -272,10 +270,10 @@ Address.initGrid = function() {
 
 
 		/**
-	 * Returns a formated string: "first_name last_name"
-	 *
-	 * @return String
-	 */
+		 * Returns a formated string: "first_name last_name"
+		 *
+		 * @return String
+		 */
 		getSelectedNames: function() {
 			var items = Address.grid.getSelectionModel().getSelections();
 			var names = '';
@@ -291,20 +289,20 @@ Address.initGrid = function() {
 		},
 
 		/**
-	 * Returns the selected items
-	 *
-	 * @return Array
-	 */
+		 * Returns the selected items
+		 *
+		 * @return Array
+		 */
 		getSelection: function() {
 			return Address.grid.getSelectionModel().getSelections();
 		},
 
 
 		/**
-	 * Return an array containing the selected uid
-	 *
-	 * @return Array
-	 */
+		 * Return an array containing the selected uid
+		 *
+		 * @return Array
+		 */
 		getSelectedUids: function() {
 			var items = this.getSelection();
 			var data = new Array();
@@ -358,64 +356,3 @@ Address.initGrid = function() {
 //			return 'red-row';
 //		};
 };
-
-Ext.Message = function(){
-	var msgCt;
-
-	function createBox(t, s){
-		return ['<div class="msg">',
-		'<div class="x-box-tl"><div class="x-box-tr"><div class="x-box-tc"></div></div></div>',
-		'<div class="x-box-ml"><div class="x-box-mr"><div class="x-box-mc"><h3>', t, '</h3>', s, '</div></div></div>',
-		'<div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>',
-		'</div>'].join('');
-	}
-	return {
-		msg : function(title, format){
-			if(!msgCt){
-				msgCt = Ext.DomHelper.insertFirst(document.body, {
-					id:'msg-div'
-				}, true);
-			}
-			msgCt.alignTo(document, 't-t');
-			var s = String.format.apply(String, Array.prototype.slice.call(arguments, 1));
-			var m = Ext.DomHelper.append(msgCt, {
-				html:createBox(title, s)
-			}, true);
-			m.slideIn('t').pause(1).ghost("t", {
-				remove:true
-			});
-		},
-
-		init : function(){
-			var t = Ext.get('exttheme');
-			if(!t){ // run locally?
-				return;
-			}
-			var theme = Cookies.get('exttheme') || 'aero';
-			if(theme){
-				t.dom.value = theme;
-				Ext.getBody().addClass('x-'+theme);
-			}
-			t.on('change', function(){
-				Cookies.set('exttheme', t.getValue());
-				setTimeout(function(){
-					window.location.reload();
-				}, 250);
-			});
-
-			var lb = Ext.get('lib-bar');
-			if(lb){
-				lb.show();
-			}
-		}
-	};
-}();
-
-
-//Address.utility = {
-//	updatePageTree: function() {
-//		if (top && top.content && top.content.nav_frame && top.content.nav_frame.Tree) {
-//			top.content.nav_frame.Tree.refresh();
-//		}
-//	}
-//};

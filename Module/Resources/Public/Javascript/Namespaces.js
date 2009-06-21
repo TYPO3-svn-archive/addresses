@@ -29,7 +29,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @package	TYPO3
  * @subpackage	tx_addresses
- * @version $Id: AddressesInit.js 21616 2009-06-19 14:05:46Z fabien_u $
+ * @version $Id$
  */
 
 Ext.namespace("Address");

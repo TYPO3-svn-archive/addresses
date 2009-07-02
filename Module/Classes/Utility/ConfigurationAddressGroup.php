@@ -32,7 +32,7 @@
  * @subpackage addresses
  * @version $ID:$
  */
-class Tx_Addresses_Utility_AddressGroup extends Tx_Addresses_Utility_ConfigurationAbstract {
+class Tx_Addresses_Utility_ConfigurationAddressGroup extends Tx_Addresses_Utility_ConfigurationAbstract {
 
 	/**
 	 *

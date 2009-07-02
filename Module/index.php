@@ -41,7 +41,7 @@ require($BACK_PATH . 'init.php');
 require($BACK_PATH . 'template.php');
 require_once(PATH_t3lib . 'class.t3lib_scbase.php');
 
-$classes = array('Address', 'AddressGroup', 'Preferences', 'Permission', 'TCA', 'TCE');
+$classes = array('ConfigurationAbstract', 'ConfigurationAddress', 'ConfigurationAddressGroup', 'Preferences', 'Permission', 'TCA', 'TCE');
 foreach ($classes as $class) {
 	require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/' . $class . '.php'));
 }
@@ -235,13 +235,13 @@ class  tx_addresses_module extends t3lib_SCbase {
 	protected function loadHeaderData() {
 		$this->loadExtJSStaff();
 
-		// Gets common code of namespaces
+		// Gets namespaces common code. Important loop!
 		foreach ($this->namespaces as $namespace) {
 
 			// Integrate dynamic JavaScript such as configuration or labels:
-			$stores = call_user_func('Tx_Addresses_Utility_' . $namespace . '::getStores');
-			$fieldsStore = call_user_func('Tx_Addresses_Utility_' . $namespace . '::getStoreConfiguration');
-			$fieldsWindow = call_user_func('Tx_Addresses_Utility_' . $namespace . '::getWindowConfiguration');
+			$stores = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getStores');
+			$fieldsStore = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getFieldsTypeFromGridStore');
+			$fieldsWindow = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getWindowConfiguration');
 			$layout = array('windowHeight' => $this->getWindowHeight($fieldsWindow));
 
 			$this->doc->extJScode .= '
@@ -252,7 +252,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 				' . $namespace . '.layout = ' . json_encode($layout) . ';' . chr(10);
 		}
 
-		$fieldsGrid = Tx_Addresses_Utility_Address::getGridConfiguration();
+		$fieldsGrid = Tx_Addresses_Utility_ConfigurationAddress::getGridConfiguration();
 		$this->doc->extJScode .= '
 			Address.fieldsGrid = ' . Tx_Addresses_Utility_TCE::removesQuotes('Address', json_encode($fieldsGrid)) . ';
 			' . $this->namespace . '.statics = ' . json_encode($this->getStaticConfiguration()) . ';

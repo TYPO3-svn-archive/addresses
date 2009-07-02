@@ -22,15 +22,15 @@
  ***************************************************************/
 
 /**
- * ExtJS for the 'Address.' extension.
- * Contains the Address. functions
+ * ExtJS for the 'addresses' extension.
+ * Contains the Addresses functions
  *
  * @author	Fabien Udriot <fabien.udriot@ecodev.ch>
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @package	TYPO3
- * @subpackage	tx_Address.
- * @version $Id: Address.Window.js 21616 2009-06-19 14:05:46Z fabien_u $
+ * @subpackage	tx_addresses
+ * @version $Id$
  */
 
 AddressGroup.initWindow = function() {
@@ -39,128 +39,119 @@ AddressGroup.initWindow = function() {
 	/**
 	 * Buttons: save - cancel attached to the form panel
 	 */
-	configuration = {
-		buttons: [
-			{
-				text: 'save',
-				id: 'saveButton',
-				listeners: {
-					click: function(){
-						// DEFINES THE SUBMIT OBJECT
-						var submit = {
-							clientValidation: true,
-							method: 'GET',
-							url: AddressGroup.statics.ajaxController,
-							params:{
-								ajaxID: 'tx_Address.::saveAction'
-							},
-							success: function(f,a){
-								var w = Ext.ComponentMgr.get('Address._window');
-								w.hide();
-								Ext.StoreMgr.get('Address._datasource').load();
-							},
-							failure: function(f,a){
-								if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
-									Ext.Msg.alert(AddressGroup.lang.failure, 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
-								}
-								else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
-									Ext.Msg.alert(AddressGroup.lang.warning, a.result.errormsg);
-								}
-							}
-						};
-
-						// case multiple edition -> don't validate form
-						var form = AddressGroup.form
-						var uid = form.findField('uid').getValue();
-						if (uid == '' || uid.search(',') == -1) {
-							if (form.isValid()) {
-								submit.clientValidation = true;
-								form.submit(submit);
-								Ext.Message.msg(AddressGroup.lang.saving, AddressGroup.lang.data_sent);
-							}
-							else {
-								Ext.Msg.alert(AddressGroup.lang.error, AddressGroup.lang.fields_error);
-							}
+	configuration.buttons = [{
+		text: 'save',
+		id: 'saveButton',
+		listeners: {
+			click: function(){
+				// DEFINES THE SUBMIT OBJECT
+				var submit = {
+					clientValidation: true,
+					method: 'GET',
+					url: AddressGroup.statics.ajaxController,
+					params:{
+						ajaxID: 'tx_addresses::saveAction'
+					},
+					success: function(f,a){
+						AddressGroup.window.hide();
+						Ext.StoreMgr.get('addresses_datasource').load();
+					},
+					failure: function(f,a){
+						if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
+							Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
 						}
-						else {
-							form.clearInvalid();
-							submit.clientValidation = false;
-							form.submit(submit);
+						else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
+							Ext.Msg.alert(Addresses.lang.warning, a.result.errormsg);
 						}
 					}
+				};
+
+				// case multiple edition -> don't validate form
+				var form = AddressGroup.form
+				var uid = form.findField('uid').getValue();
+				if (uid == '' || uid.search(',') == -1) {
+					if (form.isValid()) {
+						submit.clientValidation = true;
+						form.submit(submit);
+						Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+					}
+					else {
+						Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
+					}
 				}
-			},
-			{
-				text: 'Cancel',
-				handler: function(){
-					var w = Ext.ComponentMgr.get('Address._window');
-					w.hide();
+				else {
+					form.clearInvalid();
+					submit.clientValidation = false;
+					form.submit(submit);
 				}
-			}]
-	};
+			}
+		}
+	},
+	{
+		text: 'Cancel',
+		handler: function(){
+			AddressGroup.window.hide();
+		}
+	}];
+
 
 	/**
 	 * tabPanel that contains some fields. This panel is attached to the modal window.
 	 */
-	configuration= {
-		
-		tabPanel: {
-			xtype:'tabpanel',
-			height: AddressGroup.statics.editionHeight,
-			activeTab: 0,
-			deferredRender: false,
-			defaults:{
-				bodyStyle:'padding:5px'
-				//					autoHeight: true,
-			},
-			items: AddressGroup.fieldsWindow
-		}
+	configuration.tabPanel = {
+		xtype:'tabpanel',
+		height: AddressGroup.layout.windowHeight,
+		activeTab: 2,
+		deferredRender: false,
+		defaults:{
+			bodyStyle:'padding:5px'
+		//					autoHeight: true,
+		},
+		items: AddressGroup.fieldsWindow
 	};
 
 	/*
 	 * Fom panel attached to the Window
 	 */
-	configuration= {
-		formPanel: {
-			xtype: 'form',
-			id: 'editForm',
-			frame: true,
-			bodyStyle:'padding: 0',
-			labelAlign: 'top',
-			buttons: configuration.buttons,
-			items: {
+	configuration.formPanel = {
+		xtype: 'form',
+		id: 'editForm',
+		frame: true,
+		bodyStyle:'padding: 0',
+		labelAlign: 'top',
+		buttons: configuration.buttons,
+		items: {
+			xtype: 'panel',
+			layout:'column',
+			items: [{
+				columnWidth: .60,
+				items: configuration.tabPanel
+			},{
+				title: Addresses.lang.information,
+				columnWidth: .40,
 				xtype: 'panel',
-				layout:'column',
+				layout:'form',
+				bodyStyle: 'padding: 5px 0 5px 5px',
 				items: [{
-						columnWidth: .60,
-						items: configuration.tabPanel
-					},{
-						title: AddressGroup.lang.information,
-						columnWidth: .40,
-						xtype: 'panel',
-						layout:'form',
-						bodyStyle: 'padding: 5px 0 5px 5px',
-						items: [{
-								xtype: "textarea",
-								height: 150,
-								name: "remarks",
-								id: "remarks",
-								fieldLabel: AddressGroup.lang.remarks,
-								selectOnFocus:true,
-								anchor: "95%",
-								blankText: AddressGroup.lang.fieldMandatory,
-								labelSeparator: ""
-							},{
-								xtype: 'panel',
-								id: 'informationPanel',
-								tpl: new Ext.Template([
-									'<div style="margin-top:10px;">' + AddressGroup.lang.visa + '</div>',
-									'<div>' + AddressGroup.lang.createdOn + ' {crdate} ' + AddressGroup.lang.by + ' {cruser_id}</div>',
-									'<div>' + AddressGroup.lang.updatedOn + ' {tstamp} ' + AddressGroup.lang.by + ' {upuser_id}</div>',
-								])
-							}]
-					}]
-			}
+					xtype: "textarea",
+					height: 150,
+					name: "remarks",
+					id: "remarks",
+					fieldLabel: Addresses.lang.remarks,
+					selectOnFocus:true,
+					anchor: "95%",
+					blankText: Addresses.lang.fieldMandatory,
+					labelSeparator: ""
+				},{
+					xtype: 'panel',
+					id: 'informationPanel',
+					tpl: new Ext.Template([
+						'<div style="margin-top:10px;">' + Addresses.lang.visa + '</div>',
+						'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
+						'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
+						])
+				}]
+			}]
 		}
 	};
 
@@ -172,9 +163,9 @@ AddressGroup.initWindow = function() {
 		/*
 		 * Modal window that enables record editing: add - update data
 		 */
-		id: 'Address._window',
+		id: 'addresses_window',
 		width: 700,
-		height: AddressGroup.statics.editionHeight,
+		height: AddressGroup.layout.windowHeight,
 		modal: true,
 		layout: 'fit',
 		plain:true,
@@ -220,75 +211,24 @@ AddressGroup.initWindow = function() {
 				var combobox = comboboxes[index];
 				if (combobox.editable) {
 					combobox.on(
-					'blur',
-					function(el) {
-						var value = el.getValue();
-						var id = el.getId();
+						'blur',
+						function(el) {
+							var value = el.getValue();
+							var id = el.getId();
 
-						// Makes sure the value is not null
-						if (value != '') {
-							eval('var record = AddressGroup.store.' + id + '.getById("' + value + '");');
+							// Makes sure the value is not null
+							if (value != '') {
+								eval('var record = AddressGroup.stores.' + id + '.getById("' + value + '");');
 
-							// Add a new value to the store object
-							if (typeof(record) == 'undefined') {
+								// Add a new value to the store object
+								if (typeof(record) == 'undefined') {
 
-								// Add this record
-								eval('AddressGroup.store.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
+									// Add this record
+									eval('AddressGroup.stores.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
+								}
 							}
-						}
-					});
+						});
 				}
-			}
-
-		},
-
-
-		/**
-		 * Add listner on fields postal_code + locality
-		 */
-		addListnerTolocality: function() {
-
-			// Add a listener to the field postal_code
-			// terms of reference: when a postal code is given tries to find out the locality.
-			var postalCode = this.findById('postal_code');
-			var locality = this.findById('locality');
-			if (locality != null && postalCode != null) {
-				postalCode.on(
-				'blur',
-				function(el) {
-					var value = el.getValue();
-					if (value != '') {
-						var record = AddressGroup.store.localities.getById(value);
-						if (typeof(record) == 'undefined') {
-							locality.setValue('');
-						}
-						else {
-							locality.setValue(record.get('locality_text'));
-						}
-					}
-				}
-			);
-
-				locality.on(
-				'blur',
-				function(el) {
-					var postalCodeValue = postalCode.getValue();
-					var localityValue = locality.getValue();
-					if (postalCodeValue != '' && localityValue != '') {
-						var record = AddressGroup.store.localities.getById(postalCodeValue);
-
-						// Add a new value to the store object
-						if (typeof(record) == 'undefined') {
-
-							// Add this record
-							AddressGroup.store.localities.add(new Ext.data.Record({
-								locality_id: postalCodeValue,
-								locality_text: localityValue
-							},postalCodeValue));
-						}
-					}
-				}
-			);
 			}
 
 		},
@@ -325,7 +265,7 @@ AddressGroup.initWindow = function() {
 			if (data.length > 0) {
 				AddressGroup.form.reset(); // clear form
 
-				Ext.Msg.progress(AddressGroup.lang.loading, '');
+				Ext.Msg.progress(Addresses.lang.loading, '');
 				AddressGroup.startInterval();
 
 				AddressGroup.form.load({
@@ -333,22 +273,22 @@ AddressGroup.initWindow = function() {
 					url: AddressGroup.statics.ajaxController,
 					params:{
 						method: 'GET',
-						ajaxID: 'tx_Address.::editAction',
+						ajaxID: 'tx_addresses::editAction',
 						data: Ext.util.JSON.encode(data)
 					},
 					text: 'Loading',
 					success: function(form,call) {
 						// Set title
 						if (state == 'multipleEdit') {
-							AddressGroup.window.setTitle(AddressGroup.lang.multiple_update_record); // set title
+							AddressGroup.window.setTitle(Addresses.lang.multiple_update_record); // set title
 						}
 						else if (state == 'edit') {
-							AddressGroup.window.setTitle(AddressGroup.lang.update_record); // set title
+							AddressGroup.window.setTitle(Addresses.lang.update_record); // set title
 						}
 						else if (state == 'copy'){
 							// Removes the id so that the server will consider the data as a new record
 							form.findField('uid').setValue('');
-							AddressGroup.window.setTitle(AddressGroup.lang.copy_record); // set title
+							AddressGroup.window.setTitle(Addresses.lang.copy_record); // set title
 						}
 
 						window.clearInterval(AddressGroup.interval);
@@ -370,7 +310,6 @@ AddressGroup.initWindow = function() {
 			// For instance method KeyMap bellow won't work
 			this.show();
 			this.hide();
-
 			//			this.form =
 
 			this.addListnerToTextareas();

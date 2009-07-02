@@ -40,10 +40,11 @@ require('conf.php');
 require($BACK_PATH . 'init.php');
 require($BACK_PATH . 'template.php');
 require_once(PATH_t3lib . 'class.t3lib_scbase.php');
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Configuration.php'));
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Permission.php'));
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCE.php'));
+
+$classes = array('Address', 'AddressGroup', 'Preferences', 'Permission', 'TCA', 'TCE');
+foreach ($classes as $class) {
+	require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/' . $class . '.php'));
+}
 
 // Check user permissions
 $BE_USER->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
@@ -69,7 +70,12 @@ class  tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * @var $namespace string
 	 */
-	protected $namespace = 'Address';
+	protected $namespace = 'Addresses';
+
+	/**
+	 * @var $namespace string
+	 */
+	protected $namespaces = array('Address', 'AddressGroup');
 
 	/**
 	 * @var $javascriptFiles array
@@ -107,11 +113,6 @@ class  tx_addresses_module extends t3lib_SCbase {
 	protected $version = '1.0.0';
 
 	/**
-	 * @var $store array
-	 */
-	protected $store = array();
-
-	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -145,7 +146,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 		$this->version = $EM_CONF['addresses']['version'];
 
 		// Defines a default ExtJS style
-		$GLOBALS['TBE_STYLES']['extJS']['theme'] = $this->doc->backPath . 'contrib/extjs/resources/css/xtheme-gray.css';
+		$GLOBALS['TBE_STYLES']['extJS']['theme'] = $this->doc->backPath . 'contrib/extjs/resources/css/xtheme-blue.css';
 	}
 
 	/**
@@ -234,22 +235,30 @@ class  tx_addresses_module extends t3lib_SCbase {
 	protected function loadHeaderData() {
 		$this->loadExtJSStaff();
 
-		// Integrate dynamic JavaScript such as configuration or lables:
-		$fieldsGrid = $this->getGridConfiguration();
-		$fieldsStore = $this->getStoreConfiguration();
-		$fieldsWindow = $this->getWindowConfiguration();
+		// Gets common code of namespaces
+		foreach ($this->namespaces as $namespace) {
 
-		$this->store = Tx_Addresses_Utility_TCE::getStores();
-		$this->store[] = Tx_Addresses_Utility_TCE::getCustomStore('localities', 'postal_code', 'locality', 'tx_addresses_domain_model_address');
-		
+			// Integrate dynamic JavaScript such as configuration or labels:
+			$stores = call_user_func('Tx_Addresses_Utility_' . $namespace . '::getStores');
+			$fieldsStore = call_user_func('Tx_Addresses_Utility_' . $namespace . '::getStoreConfiguration');
+			$fieldsWindow = call_user_func('Tx_Addresses_Utility_' . $namespace . '::getWindowConfiguration');
+			$layout = array('windowHeight' => 50 * $this->getNumberOfFields($fieldsWindow) + 150);
+
+			$this->doc->extJScode .= '
+				' . $namespace . '.stores = {' . implode(',', $stores) . '};
+				' . $namespace . '.fieldsStore = ' . json_encode($fieldsStore) . ';
+				' . $namespace . '.fieldsWindow = ' . Tx_Addresses_Utility_TCE::removesQuotes($namespace, json_encode($fieldsWindow)) . ';
+				' . $namespace . '.layout = ' . json_encode($layout) . ';' . chr(10);
+		}
+
+		$fieldsGrid = Tx_Addresses_Utility_Address::getGridConfiguration();
 		$this->doc->extJScode .= '
-			' . $this->namespace . '.store = {' . implode(',', $this->store) . '};
-			' . $this->namespace . '.statics = ' . json_encode($this->getStaticConfiguration($fieldsWindow)) . ';
-			' . $this->namespace . '.fieldsGrid = ' . Tx_Addresses_Utility_TCE::removesQuotes($this->namespace, json_encode($fieldsGrid)) . ';
-			' . $this->namespace . '.fieldsStore = ' . json_encode($fieldsStore) . ';
-			' . $this->namespace . '.fieldsWindow = ' . Tx_Addresses_Utility_TCE::removesQuotes($this->namespace, json_encode($fieldsWindow)) . ';
+			Address.fieldsGrid = ' . Tx_Addresses_Utility_TCE::removesQuotes('Address', json_encode($fieldsGrid)) . ';
+			Address.data = new Object();' . chr(10);
+
+		$this->doc->extJScode .= '
+			' . $this->namespace . '.statics = ' . json_encode($this->getStaticConfiguration()) . ';
 			' . $this->namespace . '.lang = ' . json_encode($this->getLabels()) . ';
-			' . $this->namespace . '.data = new Object();
 			' . $this->namespace . '.initialize();' . chr(10);
 	}
 
@@ -257,13 +266,13 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * Count the number of fields that will be displayed on the editing window.
 	 * Useful for determining the height of the editing window.
 	 *
-	 * @param array $fieldsWindow
+	 * @param array $fields
 	 * @return int
 	 */
-	protected function getNumberOfFields(Array $fieldsWindow) {
+	protected function getNumberOfFields(Array $fields) {
 		$numberOfItems = 0;
-		for ($index = 0; $index < count($fieldsWindow); $index++) {
-			$items = $fieldsWindow[$index];
+		for ($index = 0; $index < count($fields); $index++) {
+			$items = $fields[$index];
 			if (isset($items['items'])) {
 			// decrease the number of items as there is hidden fields
 				$_numberOfItems = count($items['items']);
@@ -306,232 +315,15 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * @param	array
 	 * @return	array		The JavaScript configuration
 	 */
-	protected function getStaticConfiguration($fieldsWindow) {
+	protected function getStaticConfiguration() {
 		$configuration = array(
 			'pagingSize' => $this->pagingSize,
 			'renderTo' => 'addressesContent',
 			'path' => t3lib_extMgm::extRelPath('addresses'),
 			'isSSL' => t3lib_div::getIndpEnv('TYPO3_SSL'),
-			'editionHeight' => 50 * $this->getNumberOfFields($fieldsWindow) + 150,
 			'ajaxController' => $this->doc->backPath . 'ajax.php',
 		);
 		return $configuration;
-	}
-
-	/**
-	 * Return configuration of array
-	 *
-	 * @param string the field name;
-	 * @return array $configuration
-	 */
-	protected function getConfiguration($fieldName) {
-		global $LANG;
-		$columns = Tx_Addresses_Utility_TCA::getColumns();
-		$tca = $columns[$fieldName]['config'];
-
-		// Makes sure the user has the permission
-		if (Tx_Addresses_Utility_Permission::checkPermission($columns, $fieldName)) {
-
-			switch($tca['type']) {
-				case 'text':
-					$configuration = Tx_Addresses_Utility_TCE::getTextArea($columns, $fieldName);
-					break;
-				case 'input':
-					$configuration = Tx_Addresses_Utility_TCE::getTextField($columns, $fieldName);
-					break;
-				case 'select':
-					if ($tca['maxitems'] > 1 && isset($tca['foreign_table'])) {
-						$configuration = Tx_Addresses_Utility_TCE::getItemSelector($columns, $fieldName, $this->namespace);
-					}
-					else {
-						$configuration = Tx_Addresses_Utility_TCE::getComboBox($columns, $fieldName, $this->namespace);
-					}
-					break;
-				default;
-					t3lib_div::debug($fieldName, '$field');
-					t3lib_div::debug($tca, '$tca');
-					throw new Exception('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
-			} //end switch
-		} // end if
-		return $configuration;
-	}
-
-	/**
-	 * Returns an array containing the fields configuration
-	 *
-	 * @global Language $LANG
-	 * @return	array
-	 */
-	protected function getWindowConfiguration() {
-		global $LANG;
-		$columns = Tx_Addresses_Utility_TCA::getColumns();
-		$items = explode(',', Tx_Addresses_Utility_TCA::getShowItems());
-		$items = array_map('trim', $items);
-		$index = -1;
-		$configurations = array();
-		$items = array_filter($items);
-		foreach ($items as $item) {
-
-			// IMPORTANT:
-			// The section bellow will define the informations for the head of the tabpanel.
-			// In other words, this is a new tab!
-			if (is_int(strpos($item, '--div--'))) {
-
-				$index++;
-				$configurations[$index] = Tx_Addresses_Utility_TCE::getTab($item);
-
-				// Add uid of the record as hidden field
-				if ($index === 0) {
-					$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getUid($item);
-				}
-			}
-			// Means this is normal field
-			else {
-				if (is_int(strpos($item, '|'))) {
-					$fields = explode('|', $item);
-					$fields = array_map('trim', $fields);
-
-					$_configurations = $configuration = $columnWidth = array();
-					$i = $j = 0;
-
-					// Loops on the fields
-					foreach ($fields as $field) {
-						$_properties = explode(':', $field);
-						$field = $_properties[0];
-
-						$_array = $this->getConfiguration($field);
-						if (!empty($_array)) {
-
-							$_configurations[$i]['defaults'] = array(
-								'anchor' => '95%',
-								'blankText' => $LANG->getLL('fieldMandatory'),
-								'labelSeparator' => '',
-							);
-
-							$_configurations[$i]['layout'] = 'form';
-							$_configurations[$i]['items'][] = $_array;
-							$i++;
-
-							// Defines the columns Width array. The array will be used later on.
-							if (isset($_properties[1])) {
-								$columnWidth[] = (float) $_properties[1];
-							}
-						}
-					}
-
-					// Makes aure there are fields to add.
-					if (!empty($_configurations)) {
-						$configuration['layout'] = 'column';
-
-						// second loops is necessary since we don't know in advance which fiels are allowed
-						foreach ($_configurations as $_configuration) {
-							if (!isset($columnWidth[$j])) {
-								$columnWidth[$j] = round(1 / count($_configurations), 1);
-							}
-							$configuration['items'][$j]['columnWidth'] = $columnWidth[$j];
-							$configuration['items'][$j]['items'] = $_configuration;
-							$j++;
-						}
-					}
-				} //end if
-				else {
-					$configuration = $this->getConfiguration($item);
-				}
-
-				// Add configuration whenever it is not empty
-				if (!empty($configuration)) {
-					$configurations[$index]['items'][] = $configuration;
-					if (isset($columns[$item]['config']['foreign_table'])) {
-						$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getEditForeignTableButton($columns[$item]['config']['foreign_table']);
-					}
-				}
-			}
-		}
-		return $this->sanitizeConfigurations($configurations);
-	}
-
-	/**
-	 * Removes tabs that contain no fields from the tabpanel
-	 *
-	 * @param array $configurations
-	 * @return array
-	 */
-	protected function sanitizeConfigurations(Array $configurations) {
-		$_configurations = Array();
-		foreach ($configurations as &$configuration) {
-			if (isset($configuration['items'])) {
-				$_configurations[] = $configuration;
-			}
-		}
-		return $_configurations;
-	}
-
-	/**
-	 * Gets the configuration for the Ext JS interface. The return array is going to be converted into JSON.
-	 *
-	 * @global Language $LANG
-	 * @return	array
-	 */
-	protected function getGridConfiguration() {
-		global $LANG;
-		$configurations = Tx_Addresses_Utility_TCA::getFieldsGrid();
-
-		$fields = array();
-		foreach ($configurations as $fieldName => $configuration) {
-			$_array = array();
-
-			// Defines staff
-			$_array['header'] = $LANG->sL($configuration['label']);
-			$_array['dataIndex'] = $fieldName;
-
-			if (isset($configuration['config']['width'])) {
-				$_array['width'] = (int)$configuration['config']['width'];
-			}
-
-			if (isset($configuration['config']['hidden'])) {
-				$_array['hidden'] = (boolean)$configuration['config']['hidden'];
-			}
-
-			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
-				$_array['renderer'] = "Ext.util.Format.dateRenderer('" . Tx_Addresses_Utility_Configuration::getDateFormat() . "')";
-			}
-
-			if (isset($configuration['config']['sortable'])) {
-				$_array['sortable'] = (boolean)$configuration['config']['sortable'];
-			}
-
-			// Check whether it is an id
-			if (isset($configuration['id']) && $configuration['id']) {
-				$_array['id'] = $fieldName;;
-			}
-
-			array_push($fields, $_array);
-		}
-		return $fields;
-	}
-
-	/**
-	 * Extracts the JavaScript configuration fields name.
-	 *
-	 * @return array
-	 */
-	protected function getStoreConfiguration() {
-		$result = array();
-		foreach	(Tx_Addresses_Utility_TCA::getFieldsGrid() as $field => $configuration) {
-			$_array = array();
-			$_array['name'] = $field;
-			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
-				$_array['type'] = 'date';
-				$_array['dateFormat'] = Tx_Addresses_Utility_Configuration::getDateFormat();
-			}
-
-			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'int') {
-				$_array['type'] = 'int';
-			}
-			array_push($result, $_array);
-		}
-
-		return $result;
 	}
 
 	/**

@@ -32,5 +32,6 @@
  * @version $Id$
  */
 
+Ext.namespace("Addresses");
 Ext.namespace("Address");
 Ext.namespace("AddressGroup");

@@ -48,21 +48,20 @@ Address.initWindow = function() {
 				var submit = {
 					clientValidation: true,
 					method: 'GET',
-					url: Address.statics.ajaxController,
+					url: Addresses.statics.ajaxController,
 					params:{
 						ajaxID: 'tx_addresses::saveAction'
 					},
 					success: function(f,a){
-						var w = Ext.ComponentMgr.get('addresses_window');
-						w.hide();
+						Address.window.hide();
 						Ext.StoreMgr.get('addresses_datasource').load();
 					},
 					failure: function(f,a){
 						if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
-							Ext.Msg.alert(Address.lang.failure, 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
+							Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
 						}
 						else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
-							Ext.Msg.alert(Address.lang.warning, a.result.errormsg);
+							Ext.Msg.alert(Addresses.lang.warning, a.result.errormsg);
 						}
 					}
 				};
@@ -74,10 +73,10 @@ Address.initWindow = function() {
 					if (form.isValid()) {
 						submit.clientValidation = true;
 						form.submit(submit);
-						Ext.Message.msg(Address.lang.saving, Address.lang.data_sent);
+						Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
 					}
 					else {
-						Ext.Msg.alert(Address.lang.error, Address.lang.fields_error);
+						Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
 					}
 				}
 				else {
@@ -91,20 +90,17 @@ Address.initWindow = function() {
 	{
 		text: 'Cancel',
 		handler: function(){
-			var w = Ext.ComponentMgr.get('addresses_window');
-			w.hide();
+			Address.window.hide();
 		}
 	}];
-
-
 
 	/**
 	 * tabPanel that contains some fields. This panel is attached to the modal window.
 	 */
 	configuration.tabPanel = {
 		xtype:'tabpanel',
-		height: Address.statics.editionHeight,
-		activeTab: 0,
+		height: Address.layout.windowHeight,
+		activeTab: 2,
 		deferredRender: false,
 		defaults:{
 			bodyStyle:'padding:5px'
@@ -130,7 +126,7 @@ Address.initWindow = function() {
 				columnWidth: .60,
 				items: configuration.tabPanel
 			},{
-				title: Address.lang.information,
+				title: Addresses.lang.information,
 				columnWidth: .40,
 				xtype: 'panel',
 				layout:'form',
@@ -140,24 +136,24 @@ Address.initWindow = function() {
 					height: 150,
 					name: "remarks",
 					id: "remarks",
-					fieldLabel: Address.lang.remarks,
+					fieldLabel: Addresses.lang.remarks,
 					selectOnFocus:true,
 					anchor: "95%",
-					blankText: Address.lang.fieldMandatory,
+					blankText: Addresses.lang.fieldMandatory,
 					labelSeparator: ""
 				},{
 					xtype: 'panel',
 					id: 'informationPanel',
 					tpl: new Ext.Template([
-						'<div style="margin-top:10px;">' + Address.lang.visa + '</div>',
-						'<div>' + Address.lang.createdOn + ' {crdate} ' + Address.lang.by + ' {cruser_id}</div>',
-						'<div>' + Address.lang.updatedOn + ' {tstamp} ' + Address.lang.by + ' {upuser_id}</div>',
+						'<div style="margin-top:10px;">' + Addresses.lang.visa + '</div>',
+						'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
+						'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
 						])
 				}]
 			}]
 		}
 	};
-	
+
 	/*
 	 * Modal window that enables record editing: add - update data
 	 */
@@ -168,7 +164,7 @@ Address.initWindow = function() {
 		 */
 		id: 'addresses_window',
 		width: 700,
-		height: Address.statics.editionHeight,
+		height: Address.layout.windowHeight,
 		modal: true,
 		layout: 'fit',
 		plain:true,
@@ -221,13 +217,13 @@ Address.initWindow = function() {
 
 							// Makes sure the value is not null
 							if (value != '') {
-								eval('var record = Address.store.' + id + '.getById("' + value + '");');
+								eval('var record = Address.stores.' + id + '.getById("' + value + '");');
 
 								// Add a new value to the store object
 								if (typeof(record) == 'undefined') {
 
 									// Add this record
-									eval('Address.store.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
+									eval('Address.stores.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
 								}
 							}
 						});
@@ -252,7 +248,7 @@ Address.initWindow = function() {
 					function(el) {
 						var value = el.getValue();
 						if (value != '') {
-							var record = Address.store.localities.getById(value);
+							var record = Address.stores.localities.getById(value);
 							if (typeof(record) == 'undefined') {
 								locality.setValue('');
 							}
@@ -269,13 +265,13 @@ Address.initWindow = function() {
 						var postalCodeValue = postalCode.getValue();
 						var localityValue = locality.getValue();
 						if (postalCodeValue != '' && localityValue != '') {
-							var record = Address.store.localities.getById(postalCodeValue);
+							var record = Address.stores.localities.getById(postalCodeValue);
 
 							// Add a new value to the store object
 							if (typeof(record) == 'undefined') {
 
 								// Add this record
-								Address.store.localities.add(new Ext.data.Record({
+								Address.stores.localities.add(new Ext.data.Record({
 									locality_id: postalCodeValue,
 									locality_text: localityValue
 								},postalCodeValue));
@@ -319,12 +315,12 @@ Address.initWindow = function() {
 			if (data.length > 0) {
 				Address.form.reset(); // clear form
 
-				Ext.Msg.progress(Address.lang.loading, '');
+				Ext.Msg.progress(Addresses.lang.loading, '');
 				Address.startInterval();
 
 				Address.form.load({
 					method: 'GET',
-					url: Address.statics.ajaxController,
+					url: Addresses.statics.ajaxController,
 					params:{
 						method: 'GET',
 						ajaxID: 'tx_addresses::editAction',
@@ -334,15 +330,15 @@ Address.initWindow = function() {
 					success: function(form,call) {
 						// Set title
 						if (state == 'multipleEdit') {
-							Address.window.setTitle(Address.lang.multiple_update_record); // set title
+							Address.window.setTitle(Addresses.lang.multiple_update_record); // set title
 						}
 						else if (state == 'edit') {
-							Address.window.setTitle(Address.lang.update_record); // set title
+							Address.window.setTitle(Addresses.lang.update_record); // set title
 						}
 						else if (state == 'copy'){
 							// Removes the id so that the server will consider the data as a new record
 							form.findField('uid').setValue('');
-							Address.window.setTitle(Address.lang.copy_record); // set title
+							Address.window.setTitle(Addresses.lang.copy_record); // set title
 						}
 
 						window.clearInterval(Address.interval);

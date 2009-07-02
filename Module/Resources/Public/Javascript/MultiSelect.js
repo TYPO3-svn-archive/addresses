@@ -153,7 +153,7 @@ Ext.ux.Multiselect = Ext.extend(Ext.form.Field,  {
 			title: this.legend,
 			// changed by Fabien
 			// fixed the height to make all elements visible
-			height: this.height - 12,
+			height: this.height - 14,
 			width: this.width,
 			style: "padding:0;",
 			tbar: this.tbar,

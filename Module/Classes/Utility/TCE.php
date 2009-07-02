@@ -109,7 +109,7 @@ class Tx_Addresses_Utility_TCE {
 
 		$configuration['xtype'] = 'combo';
 		$configuration['mode'] = 'local';
-		$configuration['store'] = $namespace . '.store.' . $fieldName;
+		$configuration['store'] = $namespace . '.stores.' . $fieldName;
 		$configuration['displayField'] = $fieldName .'_text';
 		$configuration['triggerAction'] = 'all';
 		$configuration['editable'] = isset($tca['editable']) ? $tca['editable'] : TRUE;
@@ -270,7 +270,7 @@ EOF;
 		$configuration['imagePath'] = 'Resources/Public/Icons';
 		$fromMulitSelect['width'] = $width;
 		$fromMulitSelect['height'] = $height;
-		$fromMulitSelect['store'] = $namespace . '.store.' . $fieldName;
+		$fromMulitSelect['store'] = $namespace . '.stores.' . $fieldName;
 		$fromMulitSelect['displayField'] = $fieldName . '_text';
 		$fromMulitSelect['valueField'] = $fieldName;
 
@@ -337,7 +337,7 @@ EOF;
 
 	/**
 	 * Removes quotes around renderer e.g. "Ext.util.Format.dateRenderer('d.m.Y')"
-	 * * Removes quotes around object e.g. "Addresses.store.blabla" becomes Addresses.store.blabla
+	 * * Removes quotes around object e.g. "Addresses.stores.blabla" becomes Addresses.stores.blabla
 	 *
 	 * @param string $json
 	 * @return string
@@ -347,7 +347,7 @@ EOF;
 		$replaces[] = '$1';
 		$patterns[] = '/\"(' . $namespace . '\.functions\..+)"/isU';
 		$replaces[] = '$1';
-		$patterns[] = '/\"(' . $namespace . '\.store\..+)\"/isU';
+		$patterns[] = '/\"(' . $namespace . '\.stores\..+)\"/isU';
 		$replaces[] = '$1';
 		return preg_replace($patterns, $replaces, $json);
 	}
@@ -359,7 +359,7 @@ EOF;
 	 * @param string $foreignTable
 	 * @return array
 	 */
-	public static function getEditForeignTableButton($foreignTable) {
+	public static function getEditForeignTableButton($namespace, $foreignTable) {
 		global $LANG;
 		$configuration['xtype'] = 'button';
 		$configuration['text'] = $LANG->getLL('addNewElement');

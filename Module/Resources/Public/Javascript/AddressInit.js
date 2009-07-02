@@ -33,7 +33,7 @@
  * @version $Id$
  */
 
-Address.initialize = function() {
+Addresses.initialize = function() {
 	
 	Address.initGrid();
 
@@ -42,6 +42,8 @@ Address.initialize = function() {
 	Address.window.init();
 //	Address.window.show();
 	Address.form = Address.window.getComponent('editForm').getForm();
+
+	AddressGroup.initWindow();
 };
 
 

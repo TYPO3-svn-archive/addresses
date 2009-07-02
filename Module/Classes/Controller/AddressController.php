@@ -41,7 +41,7 @@ $BE_USER->modAccess($MCONF, 1);	// This checks makes sure the user has the permi
 
 // Pre-Include all models and views
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/AddressRepository.php'));
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Configuration.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Preferences.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
 
 /**

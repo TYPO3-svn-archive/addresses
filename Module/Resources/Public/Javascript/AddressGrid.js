@@ -48,7 +48,7 @@ Address.initGrid = function() {
 	 */
 	configuration.expander = new Ext.grid.RowExpander({
 		tpl : new Ext.Template(
-			'<p style="margin-left:45px;"><b>' + Address.lang.name + ' :</b> {first_name} {last_name}</p>' +
+			'<p style="margin-left:45px;"><b>' + Addresses.lang.name + ' :</b> {first_name} {last_name}</p>' +
 			'<br/>'
 			)
 	});
@@ -87,7 +87,7 @@ Address.initGrid = function() {
 		}),
 		baseParams: {
 			ajaxID: 'tx_addresses::indexAction',
-			limit: Address.statics.pagingSize
+			limit: Addresses.statics.pagingSize
 		},
 		remoteSort: true,
 		//		groupField: 'locality',
@@ -97,7 +97,7 @@ Address.initGrid = function() {
 		//		},
 		proxy: new Ext.data.HttpProxy({
 			method: 'GET',
-			url: Address.statics.ajaxController
+			url: Addresses.statics.ajaxController
 		}),
 		listeners : {
 			load: function (element, data) {
@@ -142,11 +142,11 @@ Address.initGrid = function() {
 	 */
 	configuration.topbar = [
 	{
-		text: Address.lang.add,
+		text: Addresses.lang.add,
 		icon: configuration.iconsPath + 'accept.png',
 		cls: 'x-btn-text-icon',
 		handler: function() {
-			Address.window.setTitle(Address.lang.new_record); // set title
+			Address.window.setTitle(Addresses.lang.new_record); // set title
 			Address.form.reset(); // clear form
 			Address.window.findById('informationPanel').setVisible(false);
 			Address.window.show();
@@ -156,7 +156,7 @@ Address.initGrid = function() {
 	'-',
 	{
 		id: 'multipleEditionButton',
-		text: Address.lang.edit_selected,
+		text: Addresses.lang.edit_selected,
 		icon: configuration.iconsPath + 'pencil.png',
 		cls: 'x-btn-text-icon',
 		disabled: true,
@@ -167,7 +167,7 @@ Address.initGrid = function() {
 	'-',
 	{
 		id: 'deleteButton',
-		text: Address.lang.delete_selected,
+		text: Addresses.lang.delete_selected,
 		icon: configuration.iconsPath + '/delete.gif',
 		cls: 'x-btn-text-icon',
 		disabled: true,
@@ -190,7 +190,7 @@ Address.initGrid = function() {
 		id: 'recordPaging',
 		xtype: 'paging',
 		store: configuration.datasource,
-		pageSize: Address.statics.pagingSize,
+		pageSize: Addresses.statics.pagingSize,
 		refreshText: '',
 		lastText: '',
 		nextText: '',
@@ -210,18 +210,18 @@ Address.initGrid = function() {
 	 **/
 	Address.grid = new Ext.grid.GridPanel({
 		id: 'addresses_grid',
-		renderTo: Address.statics.renderTo,
+		renderTo: Addresses.statics.renderTo,
 		store: configuration.datasource,
 		//			view: new Ext.grid.GroupingView(),
 		width:'99%',
 		height: 200,
 		fitHeight: true,
 		frame:false,
-		title: Address.lang.title,
+		title: Addresses.lang.title,
 		iconCls:'icon-grid',
 		buttonAlign: 'left',
 		loadMask: {
-			msg: Address.lang.loading
+			msg: Addresses.lang.loading
 		},
 		plugins: configuration.expander,
 		columns: Address.fieldsGrid,
@@ -296,15 +296,15 @@ Address.initGrid = function() {
 			var data = Address.grid.getSelectedUids();
 
 			Ext.Msg.show({
-				title: Address.lang.remove,
+				title: Addresses.lang.remove,
 				buttons: Ext.MessageBox.YESNO,
-				msg: Address.lang.are_you_sure + ' ' + Address.grid.getSelectedNames() + '?',
+				msg: Addresses.lang.are_you_sure + ' ' + Address.grid.getSelectedNames() + '?',
 				fn: function(btn){
 					if (btn == 'yes' && data.length > 0){
 						var conn = new Ext.data.Connection();
 						conn.request({
 							method: 'GET',
-							url: Address.statics.ajaxController,
+							url: Addresses.statics.ajaxController,
 							params:{
 								ajaxID: 'tx_addresses::deleteAction',
 								data: Ext.util.JSON.encode(data)

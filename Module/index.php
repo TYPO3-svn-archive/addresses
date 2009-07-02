@@ -242,21 +242,19 @@ class  tx_addresses_module extends t3lib_SCbase {
 			$stores = call_user_func('Tx_Addresses_Utility_' . $namespace . '::getStores');
 			$fieldsStore = call_user_func('Tx_Addresses_Utility_' . $namespace . '::getStoreConfiguration');
 			$fieldsWindow = call_user_func('Tx_Addresses_Utility_' . $namespace . '::getWindowConfiguration');
-			$layout = array('windowHeight' => 50 * $this->getNumberOfFields($fieldsWindow) + 150);
+			$layout = array('windowHeight' => $this->getWindowHeight($fieldsWindow));
 
 			$this->doc->extJScode .= '
 				' . $namespace . '.stores = {' . implode(',', $stores) . '};
 				' . $namespace . '.fieldsStore = ' . json_encode($fieldsStore) . ';
 				' . $namespace . '.fieldsWindow = ' . Tx_Addresses_Utility_TCE::removesQuotes($namespace, json_encode($fieldsWindow)) . ';
+				' . $namespace . '.data = new Object();
 				' . $namespace . '.layout = ' . json_encode($layout) . ';' . chr(10);
 		}
 
 		$fieldsGrid = Tx_Addresses_Utility_Address::getGridConfiguration();
 		$this->doc->extJScode .= '
 			Address.fieldsGrid = ' . Tx_Addresses_Utility_TCE::removesQuotes('Address', json_encode($fieldsGrid)) . ';
-			Address.data = new Object();' . chr(10);
-
-		$this->doc->extJScode .= '
 			' . $this->namespace . '.statics = ' . json_encode($this->getStaticConfiguration()) . ';
 			' . $this->namespace . '.lang = ' . json_encode($this->getLabels()) . ';
 			' . $this->namespace . '.initialize();' . chr(10);
@@ -269,7 +267,7 @@ class  tx_addresses_module extends t3lib_SCbase {
 	 * @param array $fields
 	 * @return int
 	 */
-	protected function getNumberOfFields(Array $fields) {
+	protected function getWindowHeight(Array $fields) {
 		$numberOfItems = 0;
 		for ($index = 0; $index < count($fields); $index++) {
 			$items = $fields[$index];
@@ -284,7 +282,12 @@ class  tx_addresses_module extends t3lib_SCbase {
 				}
 			}
 		}
-		return $numberOfItems;
+
+		$windowHeight = 50 * $numberOfItems + 150;
+		if ($windowHeight < 400) {
+			$windowHeight = 400;
+		}
+		return $windowHeight;
 	}
 
 	/**

@@ -90,7 +90,7 @@ class Tx_Addresses_Utility_ConfigurationAddress extends Tx_Addresses_Utility_Con
 	 *
 	 * @return array
 	 */
-	public static function getFieldsTypeFromGridStore() {
+	public static function getFieldsTypeOfGrid() {
 		$result = array();
 		foreach	(Tx_Addresses_Utility_TCA::getFieldsGrid() as $field => $configuration) {
 			$_array = array();

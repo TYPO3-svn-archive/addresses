@@ -48,7 +48,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	 *
 	 * @return array
 	 */
-	abstract public static function getFieldsTypeFromGridStore();
+	abstract public static function getFieldsTypeOfGrid();
 
 
 	/**

@@ -240,13 +240,13 @@ class  tx_addresses_module extends t3lib_SCbase {
 
 			// Integrate dynamic JavaScript such as configuration or labels:
 			$stores = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getStores');
-			$fieldsStore = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getFieldsTypeFromGridStore');
+			$fieldsType = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getFieldsTypeOfGrid');
 			$fieldsWindow = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getWindowConfiguration');
 			$layout = array('windowHeight' => $this->getWindowHeight($fieldsWindow));
 
 			$this->doc->extJScode .= '
 				' . $namespace . '.stores = {' . implode(',', $stores) . '};
-				' . $namespace . '.fieldsStore = ' . json_encode($fieldsStore) . ';
+				' . $namespace . '.fieldsStore = ' . json_encode($fieldsType) . ';
 				' . $namespace . '.fieldsWindow = ' . Tx_Addresses_Utility_TCE::removesQuotes($namespace, json_encode($fieldsWindow)) . ';
 				' . $namespace . '.data = new Object();
 				' . $namespace . '.layout = ' . json_encode($layout) . ';' . chr(10);

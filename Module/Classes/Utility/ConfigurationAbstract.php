@@ -32,48 +32,23 @@
  * @subpackage addresses
  * @version $ID:$
  */
-class Tx_Addresses_Utility_AddressGroup extends Tx_Addresses_Utility_ConfigurationAbstract {
+abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 
-	/**
-	 *
-	 * @var array
-	 */
-	protected static $namespace = 'AddressGroup';
 
-	
 	/**
 	 * Gets the configuration for the Ext JS interface. The return array is going to be converted into JSON.
 	 *
 	 * @global Language $LANG
 	 * @return	array
 	 */
-	public static function getGridConfiguration() {
-		return array();
-	}
-	
+	abstract public static function getGridConfiguration();
+
 	/**
 	 * Extracts the JavaScript configuration fields name.
 	 *
 	 * @return array
 	 */
-	public static function getFieldsTypeFromGridStore() {
-		$result = array();
-		foreach	(Tx_Addresses_Utility_TCA::getFieldsGrid() as $field => $configuration) {
-			$_array = array();
-			$_array['name'] = $field;
-			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
-				$_array['type'] = 'date';
-				$_array['dateFormat'] = Tx_Addresses_Utility_Configuration::getDateFormat();
-			}
-
-			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'int') {
-				$_array['type'] = 'int';
-			}
-			array_push($result, $_array);
-		}
-
-		return $result;
-	}
+	abstract public static function getFieldsTypeFromGridStore();
 
 
 	/**
@@ -82,9 +57,7 @@ class Tx_Addresses_Utility_AddressGroup extends Tx_Addresses_Utility_Configurati
 	 * @global Language $LANG
 	 * @return	array
 	 */
-	public static function getWindowConfiguration() {
-		return array();
-	}
+	abstract public static function getWindowConfiguration();
 
 
 	/**
@@ -92,9 +65,7 @@ class Tx_Addresses_Utility_AddressGroup extends Tx_Addresses_Utility_Configurati
 	 *
 	 * @return	array
 	 */
-	 public static function getStores() {
-		return array();
-	 }
+	abstract public static function getStores();
 
 }
 ?>

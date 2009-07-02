@@ -32,33 +32,13 @@
  * @subpackage addresses
  * @version $ID:$
  */
-class Tx_Addresses_Utility_Address {
+class Tx_Addresses_Utility_Address extends Tx_Addresses_Utility_ConfigurationAbstract {
 
 	/**
 	 *
 	 * @var array
 	 */
 	protected static $namespace = 'Address';
-
-
-	/**
-	 * Gets the JavaScript configuration for the Ext JS interface.
-	 *
-	 * @param	array
-	 * @return	array		The JavaScript configuration
-	 */
-	public static function getStaticConfiguration($fieldsWindow) {
-		$configuration = array(
-			'pagingSize' => $this->pagingSize,
-			'renderTo' => 'addressesContent',
-			'path' => t3lib_extMgm::extRelPath('addresses'),
-			'isSSL' => t3lib_div::getIndpEnv('TYPO3_SSL'),
-			'windowHeight' => 50 * $this->getNumberOfFields($fieldsWindow) + 150,
-			'addressGroupWindowHeight' => '200',
-			'ajaxController' => $this->doc->backPath . 'ajax.php',
-		);
-		return $configuration;
-	}
 
 	/**
 	 * Gets the configuration for the Ext JS interface. The return array is going to be converted into JSON.
@@ -110,7 +90,7 @@ class Tx_Addresses_Utility_Address {
 	 *
 	 * @return array
 	 */
-	public static function getStoreConfiguration() {
+	public static function getFieldsTypeFromGridStore() {
 		$result = array();
 		foreach	(Tx_Addresses_Utility_TCA::getFieldsGrid() as $field => $configuration) {
 			$_array = array();

@@ -35,8 +35,9 @@
 
 Address.initGrid = function() {
 
-	var configuration = new Object();
+	// Defines variables
 	Address.utility = new Object();
+	var configuration = new Object();
 
 	/**
 	 * Defines the resource path
@@ -81,7 +82,7 @@ Address.initGrid = function() {
 		storeId: 'addresses_datasource',
 		autoLoad: true,
 		reader: new Ext.data.JsonReader({
-			fields: Address.fieldsStore,
+			fields: Address.fieldsTypeInGrid,
 			root: 'data',
 			totalProperty: 'total'
 		}),

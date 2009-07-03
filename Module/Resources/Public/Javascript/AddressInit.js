@@ -41,9 +41,11 @@ Addresses.initialize = function() {
 	Address.initWindow();
 	Address.window.init();
 //	Address.window.show();
-	Address.form = Address.window.getComponent('editForm').getForm();
+	Address.form = Address.window.getComponent('addressForm').getForm();
 
 	AddressGroup.initWindow();
+	AddressGroup.window.init();
+//	AddressGroup.window.show();
 };
 
 

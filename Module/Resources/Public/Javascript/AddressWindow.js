@@ -41,7 +41,7 @@ Address.initWindow = function() {
 	 */
 	configuration.buttons = [{
 		text: 'save',
-		id: 'saveButton',
+		id: 'addressSaveButton',
 		listeners: {
 			click: function(){
 				// DEFINES THE SUBMIT OBJECT
@@ -114,7 +114,7 @@ Address.initWindow = function() {
 	 */
 	configuration.formPanel = {
 		xtype: 'form',
-		id: 'editForm',
+		id: 'addressForm',
 		frame: true,
 		bodyStyle:'padding: 0',
 		labelAlign: 'top',
@@ -162,7 +162,6 @@ Address.initWindow = function() {
 		/*
 		 * Modal window that enables record editing: add - update data
 		 */
-		id: 'addresses_window',
 		width: 700,
 		height: Address.layout.windowHeight,
 		modal: true,
@@ -177,8 +176,10 @@ Address.initWindow = function() {
 		listeners: {
 			show: function() {
 				var informationPanel = Address.window.findById('informationPanel');
-				var tpl = informationPanel.tpl;
-				tpl.overwrite(informationPanel.body,Address.data);
+				if (informationPanel) {
+					var tpl = informationPanel.tpl;
+					tpl.overwrite(informationPanel.body,AddressGroup.data);
+				}
 			}
 		},
 
@@ -360,17 +361,16 @@ Address.initWindow = function() {
 			// For instance method KeyMap bellow won't work
 			this.show();
 			this.hide();
-			//			this.form =
 
 			this.addListnerToTextareas();
 			this.addListnerToComboboxes();
 			this.addListnerTolocality();
 
 			// map one key by key code
-			new Ext.KeyMap("editForm", {
+			new Ext.KeyMap("addressForm", {
 				key: 13, // or Ext.EventObject.ENTER
 				fn: function() {
-					var component = Ext.ComponentMgr.get('saveButton');
+					var component = Ext.ComponentMgr.get('addressSaveButton');
 					component.fireEvent('click');
 				},
 				stopEvent: true

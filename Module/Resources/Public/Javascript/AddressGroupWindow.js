@@ -101,7 +101,7 @@ AddressGroup.initWindow = function() {
 	configuration.tabPanel = {
 		xtype:'tabpanel',
 		height: AddressGroup.layout.windowHeight,
-		activeTab: 2,
+		activeTab: 0,
 		deferredRender: false,
 		defaults:{
 			bodyStyle:'padding:5px'

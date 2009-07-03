@@ -247,8 +247,12 @@ class  tx_addresses_module extends t3lib_SCbase {
             // Integrate dynamic JavaScript such as configuration or labels:
             $stores = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getStores');
             $fieldsWindow = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getWindowConfiguration');
-            
             $layout = array('windowHeight' => $this->getWindowHeight($fieldsWindow));
+
+			if($namespace == 'AddressGroup') {
+//				t3lib_div::debug($fieldsWindow, '$fieldsWindow');
+//				exit();
+			}
 
             $this->doc->extJScode .= '
 				' . $namespace . '.stores = {' . implode(',', $stores) . '};

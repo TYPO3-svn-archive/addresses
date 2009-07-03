@@ -186,7 +186,6 @@ class Tx_Addresses_Utility_TCE {
 			$elements = self::arrayUnique($elements);
 		}
 
-
 		// Obtain a list of columns. For sorting purpose
 		$values = array();
 		foreach ($elements as $key => $row) {

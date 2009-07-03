@@ -38,14 +38,14 @@ Addresses.initialize = function() {
 	Address.initGrid();
 
 	// Prepare + initialize editing window
-	Address.initWindow();
-	Address.window.init();
+//	Address.initWindow();
+//	Address.window.init();
 //	Address.window.show();
-	Address.form = Address.window.getComponent('addressForm').getForm();
+//	Address.form = Address.window.getComponent('addressForm').getForm();
 
 	AddressGroup.initWindow();
 	AddressGroup.window.init();
-//	AddressGroup.window.show();
+	AddressGroup.window.show();
 };
 
 

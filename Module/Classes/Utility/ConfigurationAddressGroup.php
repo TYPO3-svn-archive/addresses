@@ -60,7 +60,6 @@ class Tx_Addresses_Utility_ConfigurationAddressGroup extends Tx_Addresses_Utilit
 		return array();
 	}
 
-
 	/**
 	 * Returns an array containing the fields configuration
 	 *
@@ -68,9 +67,8 @@ class Tx_Addresses_Utility_ConfigurationAddressGroup extends Tx_Addresses_Utilit
 	 * @return	array
 	 */
 	public static function getWindowConfiguration() {
-		return array();
+		return parent::getWindowConfiguration(self::$namespace);
 	}
-
 
 	/**
 	 * Returns an array containing stores

@@ -47,43 +47,8 @@ class Tx_Addresses_Utility_ConfigurationAddress extends Tx_Addresses_Utility_Con
 	 * @return	array
 	 */
 	public static function getGridConfiguration() {
-		global $LANG;
-		$configurations = Tx_Addresses_Utility_TCA::getFieldsGrid(self::$namespace);
-
-		$fields = array();
-		foreach ($configurations as $fieldName => $configuration) {
-			$_array = array();
-
-			// Defines staff
-			$_array['header'] = $LANG->sL($configuration['label']);
-			$_array['dataIndex'] = $fieldName;
-
-			if (isset($configuration['config']['width'])) {
-				$_array['width'] = (int)$configuration['config']['width'];
-			}
-
-			if (isset($configuration['config']['hidden'])) {
-				$_array['hidden'] = (boolean)$configuration['config']['hidden'];
-			}
-
-			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
-				$_array['renderer'] = "Ext.util.Format.dateRenderer('" . Tx_Addresses_Utility_Configuration::getDateFormat() . "')";
-			}
-
-			if (isset($configuration['config']['sortable'])) {
-				$_array['sortable'] = (boolean)$configuration['config']['sortable'];
-			}
-
-			// Check whether it is an id
-			if (isset($configuration['id']) && $configuration['id']) {
-				$_array['id'] = $fieldName;;
-			}
-
-			array_push($fields, $_array);
-		}
-		return $fields;
+		return parent::getGridConfiguration(self::$namespace);
 	}
-
 
 	/**
 	 * Extracts the JavaScript configuration fields name.
@@ -91,22 +56,7 @@ class Tx_Addresses_Utility_ConfigurationAddress extends Tx_Addresses_Utility_Con
 	 * @return array
 	 */
 	public static function getFieldsTypeInGrid() {
-		$result = array();
-		foreach	(Tx_Addresses_Utility_TCA::getFieldsGrid(self::$namespace) as $field => $configuration) {
-			$_array = array();
-			$_array['name'] = $field;
-			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
-				$_array['type'] = 'date';
-				$_array['dateFormat'] = Tx_Addresses_Utility_Configuration::getDateFormat();
-			}
-
-			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'int') {
-				$_array['type'] = 'int';
-			}
-			array_push($result, $_array);
-		}
-
-		return $result;
+		return parent::getFieldsTypeInGrid(self::$namespace);
 	}
 
 	/**
@@ -116,93 +66,8 @@ class Tx_Addresses_Utility_ConfigurationAddress extends Tx_Addresses_Utility_Con
 	 * @return	array
 	 */
 	public static function getWindowConfiguration() {
-		global $LANG;
-		$columns = Tx_Addresses_Utility_TCA::getColumns(self::$namespace);
-		$items = explode(',', Tx_Addresses_Utility_TCA::getShowItems(self::$namespace));
-		$items = array_map('trim', $items);
-		$index = -1;
-		$configurations = array();
-		$items = array_filter($items);
-		foreach ($items as $item) {
-
-			// IMPORTANT:
-			// The section bellow will define the informations for the head of the tabpanel.
-			// In other words, this is a new tab!
-			if (is_int(strpos($item, '--div--'))) {
-
-				$index++;
-				$configurations[$index] = Tx_Addresses_Utility_TCE::getTab($item);
-
-				// Add uid of the record as hidden field
-				if ($index === 0) {
-					$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getUid($item);
-				}
-			}
-			// Means this is normal field
-			else {
-				if (is_int(strpos($item, '|'))) {
-					$fields = explode('|', $item);
-					$fields = array_map('trim', $fields);
-
-					$_configurations = $configuration = $columnWidth = array();
-					$i = $j = 0;
-
-					// Loops on the fields
-					foreach ($fields as $field) {
-						$_properties = explode(':', $field);
-						$field = $_properties[0];
-
-						$_array = self::getConfiguration($field);
-						if (!empty($_array)) {
-
-							$_configurations[$i]['defaults'] = array(
-								'anchor' => '95%',
-								'blankText' => $LANG->getLL('fieldMandatory'),
-								'labelSeparator' => '',
-							);
-
-							$_configurations[$i]['layout'] = 'form';
-							$_configurations[$i]['items'][] = $_array;
-							$i++;
-
-							// Defines the columns Width array. The array will be used later on.
-							if (isset($_properties[1])) {
-								$columnWidth[] = (float) $_properties[1];
-							}
-						}
-					}
-
-					// Makes aure there are fields to add.
-					if (!empty($_configurations)) {
-						$configuration['layout'] = 'column';
-
-						// second loops is necessary since we don't know in advance which fiels are allowed
-						foreach ($_configurations as $_configuration) {
-							if (!isset($columnWidth[$j])) {
-								$columnWidth[$j] = round(1 / count($_configurations), 1);
-							}
-							$configuration['items'][$j]['columnWidth'] = $columnWidth[$j];
-							$configuration['items'][$j]['items'] = $_configuration;
-							$j++;
-						}
-					}
-				} //end if
-				else {
-					$configuration = self::getConfiguration($item);
-				}
-
-				// Add configuration whenever it is not empty
-				if (!empty($configuration)) {
-					$configurations[$index]['items'][] = $configuration;
-					if (isset($columns[$item]['config']['foreign_table'])) {
-						$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getEditForeignTableButton(self::$namespace, $columns[$item]['config']['foreign_table']);
-					}
-				}
-			}
-		}
-		return self::sanitizeConfigurations($configurations);
+		return parent::getWindowConfiguration(self::$namespace);
 	}
-
 
 	/**
 	 * Returns an array containing stores
@@ -214,58 +79,5 @@ class Tx_Addresses_Utility_ConfigurationAddress extends Tx_Addresses_Utility_Con
 		return array_merge($stores, Tx_Addresses_Utility_TCE::getStores(self::$namespace));
 	 }
 
-	/**
-	 * Removes tabs that contain no fields from the tabpanel
-	 *
-	 * @param array $configurations
-	 * @return array
-	 */
-	protected static function sanitizeConfigurations(Array $configurations) {
-		$_configurations = Array();
-		foreach ($configurations as &$configuration) {
-			if (isset($configuration['items'])) {
-				$_configurations[] = $configuration;
-			}
-		}
-		return $_configurations;
-	}
-
-	/**
-	 * Return configuration of array
-	 *
-	 * @param string the field name;
-	 * @return array $configuration
-	 */
-	protected static function getConfiguration($fieldName) {
-		global $LANG;
-		$columns = Tx_Addresses_Utility_TCA::getColumns(self::$namespace);
-		$tca = $columns[$fieldName]['config'];
-
-		// Makes sure the user has the permission
-		if (Tx_Addresses_Utility_Permission::checkPermission($columns, $fieldName)) {
-
-			switch($tca['type']) {
-				case 'text':
-					$configuration = Tx_Addresses_Utility_TCE::getTextArea($columns, $fieldName);
-					break;
-				case 'input':
-					$configuration = Tx_Addresses_Utility_TCE::getTextField($columns, $fieldName);
-					break;
-				case 'select':
-					if ($tca['maxitems'] > 1 && isset($tca['foreign_table'])) {
-						$configuration = Tx_Addresses_Utility_TCE::getItemSelector($columns, $fieldName, self::$namespace);
-					}
-					else {
-						$configuration = Tx_Addresses_Utility_TCE::getComboBox($columns, $fieldName, self::$namespace);
-					}
-					break;
-				default;
-					t3lib_div::debug($fieldName, '$field');
-					t3lib_div::debug($tca, '$tca');
-					throw new Exception('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
-			} //end switch
-		} // end if
-		return $configuration;
-	}
 }
 ?>

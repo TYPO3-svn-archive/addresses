@@ -1,9 +1,10 @@
 <?php
 
 // This section describes the columns of the grid.
-t3lib_div::loadTCA('tx_addresses_domain_model_address');
+$domainName = 'tx_addresses_domain_model_address';
+t3lib_div::loadTCA($domainName);
 
-$TCA['tx_addresses_domain_model_address']['types']['module']['showitem'] = <<< EOF
+$TCA[$domainName]['types']['module']['showitem'] = <<< EOF
 --div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person,
 gender, title, first_name, last_name, preferred_language, birth_date, marital_status, nationality, groups
 --div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contact,
@@ -12,10 +13,10 @@ address, postal_code:0.25 | locality:0.75, country, website,
 addressgroups,
 EOF;
 
-$TCA['tx_addresses_domain_model_address']['columns']['gender']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
-$TCA['tx_addresses_domain_model_address']['columns']['marital_status']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
+$TCA[$domainName]['columns']['gender']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
+$TCA[$domainName]['columns']['marital_status']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
 
-$TCA['tx_addresses_domain_model_address']['interface']['showRecordFieldsGrid'] = array(
+$TCA[$domainName]['interface']['showRecordFieldsGrid'] = array(
     'uid' => array(
         'id' => TRUE,
         'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.uid',
@@ -112,7 +113,7 @@ $TCA['tx_addresses_domain_model_address']['interface']['showRecordFieldsGrid'] =
     ),
 );
 
-$TCA['tx_addresses_domain_model_address']['columns']['title'] = array(
+$TCA[$domainName]['columns']['title'] = array(
     'exclude' => 1,
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title',
     'config' => Array (
@@ -124,7 +125,7 @@ $TCA['tx_addresses_domain_model_address']['columns']['title'] = array(
         ),
         'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
         'itemsProcFunc.' => array (
-            'table' => 'tx_addresses_domain_model_address',
+            'table' => $domainName,
             'field' => 'title',
         ),
         'size' => 1,
@@ -133,7 +134,7 @@ $TCA['tx_addresses_domain_model_address']['columns']['title'] = array(
     )
 );
 
-$TCA['tx_addresses_domain_model_address']['columns']['country'] = array(
+$TCA[$domainName]['columns']['country'] = array(
     'exclude' => 1,
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.country',
     'config' => Array (
@@ -143,7 +144,7 @@ $TCA['tx_addresses_domain_model_address']['columns']['country'] = array(
         ),
         'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
         'itemsProcFunc.' => array (
-            'table' => 'tx_addresses_domain_model_address',
+            'table' => $domainName,
             'field' => 'country',
         ),
         'size' => 1,
@@ -152,7 +153,7 @@ $TCA['tx_addresses_domain_model_address']['columns']['country'] = array(
     )
 );
 
-$TCA['tx_addresses_domain_model_address']['columns']['preferred_language'] = array(
+$TCA[$domainName]['columns']['preferred_language'] = array(
     'exclude' => 1,
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.preferred_language',
     'config' => Array (
@@ -164,7 +165,7 @@ $TCA['tx_addresses_domain_model_address']['columns']['preferred_language'] = arr
         ),
         'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
         'itemsProcFunc.' => array (
-            'table' => 'tx_addresses_domain_model_address',
+            'table' => $domainName,
             'field' => 'preferred_language',
         ),
         'size' => 1,
@@ -173,7 +174,7 @@ $TCA['tx_addresses_domain_model_address']['columns']['preferred_language'] = arr
     )
 );
 
-$TCA['tx_addresses_domain_model_address']['columns']['nationality'] = array(
+$TCA[$domainName]['columns']['nationality'] = array(
     'exclude' => 1,
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nationality',
     'config' => Array (
@@ -185,7 +186,7 @@ $TCA['tx_addresses_domain_model_address']['columns']['nationality'] = array(
         ),
         'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
         'itemsProcFunc.' => array (
-            'table' => 'tx_addresses_domain_model_address',
+            'table' => $domainName,
             'field' => 'nationality',
         ),
         'size' => 1,

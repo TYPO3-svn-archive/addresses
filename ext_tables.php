@@ -64,7 +64,8 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array (
 // This lines will changed the TCA for the BE module
 if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !== FALSE
 	|| strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'typo3/ajax.php') !== FALSE) {
-    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaGrid.php');
+    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleAddress.php');
+    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleAddressGroup.php');
 }
 
 $configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);

@@ -48,7 +48,7 @@ class Tx_Addresses_Utility_ConfigurationAddress extends Tx_Addresses_Utility_Con
 	 */
 	public static function getGridConfiguration() {
 		global $LANG;
-		$configurations = Tx_Addresses_Utility_TCA::getFieldsGrid();
+		$configurations = Tx_Addresses_Utility_TCA::getFieldsGrid(self::$namespace);
 
 		$fields = array();
 		foreach ($configurations as $fieldName => $configuration) {
@@ -90,9 +90,9 @@ class Tx_Addresses_Utility_ConfigurationAddress extends Tx_Addresses_Utility_Con
 	 *
 	 * @return array
 	 */
-	public static function getFieldsTypeOfGrid() {
+	public static function getFieldsTypeInGrid() {
 		$result = array();
-		foreach	(Tx_Addresses_Utility_TCA::getFieldsGrid() as $field => $configuration) {
+		foreach	(Tx_Addresses_Utility_TCA::getFieldsGrid(self::$namespace) as $field => $configuration) {
 			$_array = array();
 			$_array['name'] = $field;
 			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
@@ -117,8 +117,8 @@ class Tx_Addresses_Utility_ConfigurationAddress extends Tx_Addresses_Utility_Con
 	 */
 	public static function getWindowConfiguration() {
 		global $LANG;
-		$columns = Tx_Addresses_Utility_TCA::getColumns();
-		$items = explode(',', Tx_Addresses_Utility_TCA::getShowItems());
+		$columns = Tx_Addresses_Utility_TCA::getColumns(self::$namespace);
+		$items = explode(',', Tx_Addresses_Utility_TCA::getShowItems(self::$namespace));
 		$items = array_map('trim', $items);
 		$index = -1;
 		$configurations = array();
@@ -211,7 +211,7 @@ class Tx_Addresses_Utility_ConfigurationAddress extends Tx_Addresses_Utility_Con
 	 */
 	 public static function getStores() {
 		$stores[] = Tx_Addresses_Utility_TCE::getCustomStore('localities', 'postal_code', 'locality', 'tx_addresses_domain_model_address');
-		return array_merge($stores, Tx_Addresses_Utility_TCE::getStores());
+		return array_merge($stores, Tx_Addresses_Utility_TCE::getStores(self::$namespace));
 	 }
 
 	/**
@@ -238,7 +238,7 @@ class Tx_Addresses_Utility_ConfigurationAddress extends Tx_Addresses_Utility_Con
 	 */
 	protected static function getConfiguration($fieldName) {
 		global $LANG;
-		$columns = Tx_Addresses_Utility_TCA::getColumns();
+		$columns = Tx_Addresses_Utility_TCA::getColumns(self::$namespace);
 		$tca = $columns[$fieldName]['config'];
 
 		// Makes sure the user has the permission

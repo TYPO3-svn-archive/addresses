@@ -56,23 +56,8 @@ class Tx_Addresses_Utility_ConfigurationAddressGroup extends Tx_Addresses_Utilit
 	 *
 	 * @return array
 	 */
-	public static function getFieldsTypeOfGrid() {
-		$result = array();
-		foreach	(Tx_Addresses_Utility_TCA::getFieldsGrid() as $field => $configuration) {
-			$_array = array();
-			$_array['name'] = $field;
-			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {
-				$_array['type'] = 'date';
-				$_array['dateFormat'] = Tx_Addresses_Utility_Configuration::getDateFormat();
-			}
-
-			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'int') {
-				$_array['type'] = 'int';
-			}
-			array_push($result, $_array);
-		}
-
-		return $result;
+	public static function getFieldsTypeInGrid() {
+		return array();
 	}
 
 

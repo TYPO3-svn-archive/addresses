@@ -60,6 +60,12 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 	protected $foreignTables = FALSE;
 
 	/**
+	 *
+	 * @var string
+	 */
+	protected $namespace = 'Address';
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -186,7 +192,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 		$output = array();
 		// Traverses all $field in order to format the date fields
 		foreach ($input as $fieldName => $value) {
-			$columns = array_merge(Tx_Addresses_Utility_TCA::getColumns(), Tx_Addresses_Utility_TCA::getFieldsGrid());
+			$columns = array_merge(Tx_Addresses_Utility_TCA::getColumns($this->namespace), Tx_Addresses_Utility_TCA::getFieldsGrid($this->namespace));
 			if (isset($columns[$fieldName])) {
 				$tca = $columns[$fieldName];
 				// eval function
@@ -281,7 +287,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 	protected function getFields() {
 		global $BE_USER;
 		t3lib_div::loadTCA($this->tableName);
-		$columns = Tx_Addresses_Utility_TCA::getColumns();
+		$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
 		$fields = array();
 		foreach (array_keys($columns) as $fieldName) {
 			if ($BE_USER->isAdmin()
@@ -427,7 +433,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 		$fields = $foreignTables = array();
 
 		foreach ($values as $fieldName => $value) {
-			$columns = Tx_Addresses_Utility_TCA::getColumns();
+			$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
 			if (isset($columns[$fieldName])) {
 				$tca = $columns[$fieldName];
 
@@ -578,7 +584,7 @@ class Tx_Addresses_Domain_Model_AddressRepository {
 	protected function saveMMRelation($uids, $foreignTables) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
-		$columns = Tx_Addresses_Utility_TCA::getColumns();
+		$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
 
 		foreach ($foreignTables as $tableName => $values) {
 			$tca = $columns[$tableName];

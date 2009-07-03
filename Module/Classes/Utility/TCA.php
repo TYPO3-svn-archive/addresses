@@ -45,21 +45,21 @@ class Tx_Addresses_Utility_TCA {
 	 * 
 	 * @return	array
 	 */
-	public static function getTCA() {
+	public static function getTCA($namespace) {
 		global $TCA;
-		if (empty(self::$TCA)) {
-			t3lib_div::loadTCA('tx_addresses_domain_model_address');
-			self::$TCA = $TCA['tx_addresses_domain_model_address'];
+		if (empty(self::$TCA['tx_addresses_domain_model_' . strtolower($namespace)])) {
+			t3lib_div::loadTCA('tx_addresses_domain_model_' . strtolower($namespace));
+			self::$TCA['tx_addresses_domain_model_' . strtolower($namespace)] = $TCA['tx_addresses_domain_model_' . strtolower($namespace)];
 		}
-		return self::$TCA;
+		return self::$TCA['tx_addresses_domain_model_' . strtolower($namespace)];
 	}
 
 	/**
 	 * Returns the fields of the grid
 	 * @return array
 	 */
-	public static function getFieldsGrid() {
-		$TCA = self::getTCA();
+	public static function getFieldsGrid($namespace) {
+		$TCA = self::getTCA($namespace);
 		return $TCA['interface']['showRecordFieldsGrid'];
 	}
 
@@ -67,8 +67,8 @@ class Tx_Addresses_Utility_TCA {
 	 * Returns the fields of the grid
 	 * @return array
 	 */
-	public static function getColumns() {
-		$TCA = self::getTCA();
+	public static function getColumns($namespace) {
+		$TCA = self::getTCA($namespace);
 		return $TCA['columns'];
 	}
 
@@ -76,10 +76,9 @@ class Tx_Addresses_Utility_TCA {
 	 * Returns the fields of the grid
 	 * @return array
 	 */
-	public static function getShowItems() {
-		$TCA = self::getTCA();
+	public static function getShowItems($namespace) {
+		$TCA = self::getTCA($namespace);
 		return $TCA['types']['module']['showitem'];
 	}
-
 }
 ?>

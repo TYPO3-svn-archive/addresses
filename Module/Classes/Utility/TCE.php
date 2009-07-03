@@ -134,8 +134,8 @@ class Tx_Addresses_Utility_TCE {
 	 * 
 	 * @return array
 	 */
-	public static function getStores() {
-		$columns = Tx_Addresses_Utility_TCA::getColumns();
+	public static function getStores($namespace) {
+		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
 		$stores = array();
 
 		foreach ($columns as $fieldName => $column) {

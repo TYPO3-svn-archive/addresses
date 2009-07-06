@@ -42,17 +42,11 @@ class Tx_Addresses_Utility_TCE {
 	 */
 	public static function getUid($namespace) {
 		$configuration['xtype'] = 'textfield';
-		$configuration['id'] = self::lcfirst($namespace) . 'Uid';
+		$configuration['id'] = t3lib_div::lcfirst($namespace) . 'Uid';
 		$configuration['name'] = 'uid';
 		$configuration['hidden'] = TRUE;
 		$configuration['hideLabel'] = TRUE;
 		return $configuration;
-	}
-
-	protected static function lcfirst($str) {
-		$first = substr($str, 0, 1);
-		$remaining = substr($str, 1);
-		return strtolower($first) . $remaining;
 	}
 
 	/**

@@ -22,6 +22,7 @@
 			<label index="france">France</label>
 			<label index="germany">Germany</label>
 			<label index="relations">Relations</label>
+			<label index="group">Group</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="address">Addresse</label>
@@ -40,6 +41,7 @@
 			<label index="france">France</label>
 			<label index="germany">Allemagne</label>
 			<label index="relations">Relations</label>
+			<label index="group">Groupe</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 		</languageKey>

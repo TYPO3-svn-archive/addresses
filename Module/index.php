@@ -41,7 +41,7 @@ require($BACK_PATH . 'init.php');
 require($BACK_PATH . 'template.php');
 require_once(PATH_t3lib . 'class.t3lib_scbase.php');
 
-$classes = array('ConfigurationAbstract', 'ConfigurationAddress', 'ConfigurationAddressGroup', 'Preferences', 'Permission', 'TCA', 'TCE');
+$classes = array('ConfigurationAbstract', 'AddressConfiguration', 'AddressGroupConfiguration', 'Preferences', 'Permission', 'TCA', 'TCE');
 foreach ($classes as $class) {
     require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/' . $class . '.php'));
 }
@@ -60,7 +60,7 @@ $LANG->includeLLFile('EXT:addresses/Resources/Private/Language/locallang_tca.xml
  * @subpackage	tx_addresses
  * @version $Id$
  */
-class  tx_addresses_module extends t3lib_SCbase {
+class tx_addresses_module extends t3lib_SCbase {
 
 /**
  * @var template
@@ -240,13 +240,13 @@ class  tx_addresses_module extends t3lib_SCbase {
 
             $fieldsGrid = $fieldsTypeInGrid = array();
             if ($namespace == 'Address') {
-                $fieldsGrid = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getGridConfiguration');
-                $fieldsTypeInGrid = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getFieldsTypeInGrid');
+                $fieldsGrid = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getGridConfiguration');
+                $fieldsTypeInGrid = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getFieldsTypeInGrid');
             }
 
             // Integrate dynamic JavaScript such as configuration or labels:
-            $stores = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getStores');
-            $fieldsWindow = call_user_func('Tx_Addresses_Utility_Configuration' . $namespace . '::getWindowConfiguration');
+            $stores = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getStores');
+            $fieldsWindow = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getWindowConfiguration');
             $layout = array('windowHeight' => $this->getWindowHeight($fieldsWindow));
 
 			if($namespace == 'AddressGroup') {

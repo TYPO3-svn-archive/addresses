@@ -33,18 +33,6 @@
  * @version $Id$
  */
 
-// Check whether the user has access to the module
-global $BE_USER;
-$MCONF['name'] = 'user_txaddresses';
-$MCONF['access'] = 'user,group';
-$BE_USER->modAccess($MCONF, 1);	// This checks makes sure the user has the permissions. Exits if that not the case.
-
-// Pre-Include all models and views
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Controller/ControllerAbstract.php'));
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/AddressRepository.php'));
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Preferences.php'));
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
-
 /**
  * Controller class for the 'addresses' extension. Handles the AJAX Requests
  *
@@ -53,7 +41,7 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'
  * @subpackage	tx_addresses
  * @version 	$Id$
  */
-class Tx_Addresses_Controller_AddressController extends Tx_Addresses_Controller_ControllerAbstract{
+abstract class Tx_Addresses_Controller_ControllerAbstract {
 	/**
 	 * Stores relevant data from extJS
 	 * Example: Json format

@@ -53,7 +53,7 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'
  * @subpackage	tx_addresses
  * @version 	$Id$
  */
-class Tx_Addresses_Controller_AddressController extends Tx_Addresses_Controller_ControllerAbstract{
+class Tx_Addresses_Controller_AddressGroupController extends Tx_Addresses_Controller_ControllerAbstract {
 	/**
 	 * Stores relevant data from extJS
 	 * Example: Json format

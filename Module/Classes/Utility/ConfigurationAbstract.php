@@ -130,7 +130,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 
 				// Add uid of the record as hidden field
 				if ($index === 0) {
-					$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getUid($item);
+					$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getUid($namespace);
 				}
 			}
 			// Means this is normal field
@@ -221,10 +221,10 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 
 			switch($tca['type']) {
 				case 'text':
-					$configuration = Tx_Addresses_Utility_TCE::getTextArea($columns, $fieldName);
+					$configuration = Tx_Addresses_Utility_TCE::getTextArea($columns, $fieldName, $namespace);
 					break;
 				case 'input':
-					$configuration = Tx_Addresses_Utility_TCE::getTextField($columns, $fieldName);
+					$configuration = Tx_Addresses_Utility_TCE::getTextField($columns, $fieldName, $namespace);
 					break;
 				case 'select':
 					if ($tca['maxitems'] > 1 && isset($tca['foreign_table'])) {

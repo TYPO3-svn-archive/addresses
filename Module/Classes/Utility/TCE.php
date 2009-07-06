@@ -37,23 +37,33 @@ class Tx_Addresses_Utility_TCE {
 	/**
 	 * Returns UID field
 	 *
+	 * @param	string		$namespace
 	 * @return	array
 	 */
-	public static function getUid() {
+	public static function getUid($namespace) {
 		$configuration['xtype'] = 'textfield';
-		$configuration['id'] = 'uid';
+		$configuration['id'] = self::lcfirst($namespace) . 'Uid';
 		$configuration['name'] = 'uid';
 		$configuration['hidden'] = TRUE;
 		$configuration['hideLabel'] = TRUE;
 		return $configuration;
 	}
 
+	protected static function lcfirst($str) {
+		$first = substr($str, 0, 1);
+		$remaining = substr($str, 1);
+		return strtolower($first) . $remaining;
+	}
 
 	/**
 	 * Returns the locations store
 	 *
 	 * @global t3lib_DB $TYPO3_DB
-	 * @return string
+	 * @param	string	$storeName
+	 * @param	int		$uidField
+	 * @param	string	$textField
+	 * @param	string	$table
+	 * @return	string
 	 */
 	public static function getCustomStore($storeName, $uidField, $textField, $table) {
 		/* @var $TYPO3_DB t3lib_DB */
@@ -100,11 +110,12 @@ class Tx_Addresses_Utility_TCE {
 	 * @global	Language	$LANG
 	 * @param	array		$columns which corresponds the TCA's columns
 	 * @param	array		$fieldName
+	 * @param	string		$namespace
 	 * @return	array
 	 */
 	public static function getComboBox(&$columns, $fieldName, $namespace) {
 		global $LANG;
-		$configuration = self::getCommonConfiguration($columns, $fieldName);
+		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 		$tca =  $columns[$fieldName]['config'];
 
 		$configuration['xtype'] = 'combo';
@@ -132,6 +143,7 @@ class Tx_Addresses_Utility_TCE {
 	/**
 	 * Returns an array containing stores
 	 * 
+	 * @param	string		$namespace
 	 * @return array
 	 */
 	public static function getStores($namespace) {
@@ -240,10 +252,11 @@ EOF;
 	 *
 	 * @param	array		$columns which corresponds the TCA's columns
 	 * @param	array		$fieldName
+	 * @param	string		$namespace
 	 * @return	array
 	 */
-	public static function getTextArea(&$columns, $fieldName) {
-		$configuration = self::getCommonConfiguration($columns, $fieldName);
+	public static function getTextArea(&$columns, $fieldName, $namespace) {
+		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 
 		// Set default xtype
 		$configuration['xtype'] = 'textarea';
@@ -257,13 +270,14 @@ EOF;
 	 *
 	 * @param	array		$columns which corresponds the TCA's columns
 	 * @param	array		$fieldName
+	 * @param	string		$namespace
 	 * @return	array
 	 */
 	public static function getItemSelector(&$columns, $fieldName, $namespace) {
 		$width = 170;
 		$height = 150;
 		$tca =  $columns[$fieldName]['config'];
-		$configuration = self::getCommonConfiguration($columns, $fieldName);
+		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 
 		$configuration['xtype'] = 'itemselector';
 		$configuration['imagePath'] = 'Resources/Public/Icons';
@@ -290,11 +304,12 @@ EOF;
 	 * @global	Language	$LANG
 	 * @param	array		$columns which corresponds the TCA's columns
 	 * @param	array		$fieldName
+	 * @param	string		$namespace
 	 * @return	array
 	 */
-	public static function getTextField(&$columns, $fieldName) {
+	public static function getTextField(&$columns, $fieldName, $namespace) {
 		global $LANG;
-		$configuration = self::getCommonConfiguration($columns, $fieldName);
+		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 		$tca =  $columns[$fieldName]['config'];
 
 		// Set default xtype
@@ -338,8 +353,9 @@ EOF;
 	 * Removes quotes around renderer e.g. "Ext.util.Format.dateRenderer('d.m.Y')"
 	 * * Removes quotes around object e.g. "Addresses.stores.blabla" becomes Addresses.stores.blabla
 	 *
-	 * @param string $json
-	 * @return string
+	 * @param	string		$namespace
+	 * @param	string	$json
+	 * @return	string
 	 */
 	public static function removesQuotes($namespace, $json) {
 		$patterns[] = '/\"(Ext.util.Format.dateRenderer\(.+\))\"/isU';
@@ -355,8 +371,9 @@ EOF;
 	 * Returns configuration for editing a foreign table
 	 *
 	 * @global Language $LANG
-	 * @param string $foreignTable
-	 * @return array
+	 * @param	string		$namespace
+	 * @param	string	$foreignTable
+	 * @return	array
 	 */
 	public static function getEditForeignTableButton($namespace, $foreignTable) {
 		global $LANG;
@@ -376,13 +393,14 @@ EOF;
 	 * @global	Language	$LANG
 	 * @param	array		$columns which corresponds the TCA's columns
 	 * @param	array		$fieldName
+	 * @param	string		$namespace
 	 * @return	array
 	 */
-	private static function getCommonConfiguration(&$columns, $fieldName) {
+	private static function getCommonConfiguration(&$columns, $fieldName, $namespace = '') {
 		global $LANG;
 		// field name + label which are default values
 		$configuration['name'] = $fieldName;
-		$configuration['id'] = $fieldName;
+		$configuration['id'] = strtolower($namespace) . ucfirst($fieldName);
 		if (isset($columns[$fieldName]['label'])) {
 			$configuration['fieldLabel'] = $LANG->sL($columns[$fieldName]['label']);
 		}

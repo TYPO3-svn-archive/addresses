@@ -50,11 +50,11 @@ Address.initWindow = function() {
 					method: 'GET',
 					url: Addresses.statics.ajaxController,
 					params:{
-						ajaxID: 'tx_addresses::saveAction'
+						ajaxID: 'AddressController::saveAction'
 					},
 					success: function(f,a){
 						Address.window.hide();
-						Ext.StoreMgr.get('addresses_datasource').load();
+						Ext.StoreMgr.get('addressStore').load();
 					},
 					failure: function(f,a){
 						if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -68,7 +68,7 @@ Address.initWindow = function() {
 
 				// case multiple edition -> don't validate form
 				var form = Address.form
-				var uid = form.findField('uid').getValue();
+				var uid = form.findField('addressUid').getValue();
 				if (uid == '' || uid.search(',') == -1) {
 					if (form.isValid()) {
 						submit.clientValidation = true;
@@ -135,7 +135,7 @@ Address.initWindow = function() {
 					xtype: "textarea",
 					height: 150,
 					name: "remarks",
-					id: "remarks",
+					id: "addressRemarks",
 					fieldLabel: Addresses.lang.remarks,
 					selectOnFocus:true,
 					anchor: "95%",
@@ -143,9 +143,8 @@ Address.initWindow = function() {
 					labelSeparator: ""
 				},{
 					xtype: 'panel',
-					id: 'informationPanel',
+					id: 'addressInformationPanel',
 					tpl: new Ext.Template([
-						'<div style="margin-top:10px;">' + Addresses.lang.visa + '</div>',
 						'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
 						'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
 						])
@@ -175,10 +174,10 @@ Address.initWindow = function() {
 		items: configuration.formPanel,
 		listeners: {
 			show: function() {
-				var informationPanel = Address.window.findById('informationPanel');
+				var informationPanel = Address.window.findById('addressInformationPanel');
 				if (informationPanel) {
 					var tpl = informationPanel.tpl;
-					tpl.overwrite(informationPanel.body,AddressGroup.data);
+					tpl.overwrite(informationPanel.body,Address.data);
 				}
 			}
 		},
@@ -214,7 +213,7 @@ Address.initWindow = function() {
 						'blur',
 						function(el) {
 							var value = el.getValue();
-							var id = el.getId();
+							var id = el.getId().replace('address', '').toLowerCase();
 
 							// Makes sure the value is not null
 							if (value != '') {
@@ -232,7 +231,6 @@ Address.initWindow = function() {
 			}
 
 		},
-
 
 		/**
 		 * Add listner on fields postal_code + locality
@@ -324,7 +322,7 @@ Address.initWindow = function() {
 					url: Addresses.statics.ajaxController,
 					params:{
 						method: 'GET',
-						ajaxID: 'tx_addresses::editAction',
+						ajaxID: 'AddressController::editAction',
 						data: Ext.util.JSON.encode(data)
 					},
 					text: 'Loading',
@@ -338,7 +336,7 @@ Address.initWindow = function() {
 						}
 						else if (state == 'copy'){
 							// Removes the id so that the server will consider the data as a new record
-							form.findField('uid').setValue('');
+							form.findField('addressUid').setValue('');
 							Address.window.setTitle(Addresses.lang.copy_record); // set title
 						}
 
@@ -347,7 +345,7 @@ Address.initWindow = function() {
 						Address.data = call.result.data;
 						Address.window.show();
 						Address.window.focusOnFirstVisibleField();
-						Address.window.findById('informationPanel').setVisible(true);
+						Address.window.findById('addressInformationPanel').setVisible(true);
 					}
 				});
 			}

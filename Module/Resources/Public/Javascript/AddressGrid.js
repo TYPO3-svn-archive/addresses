@@ -79,7 +79,7 @@ Address.initGrid = function() {
 	 * Datasource
 	 */
 	configuration.datasource = new Ext.data.Store({
-		storeId: 'addresses_datasource',
+		storeId: 'addressStore',
 		autoLoad: true,
 		reader: new Ext.data.JsonReader({
 			fields: Address.fieldsTypeInGrid,
@@ -87,7 +87,7 @@ Address.initGrid = function() {
 			totalProperty: 'total'
 		}),
 		baseParams: {
-			ajaxID: 'tx_addresses::indexAction',
+			ajaxID: 'AddressController::indexAction',
 			limit: Addresses.statics.pagingSize
 		},
 		remoteSort: true,
@@ -307,11 +307,11 @@ Address.initGrid = function() {
 							method: 'GET',
 							url: Addresses.statics.ajaxController,
 							params:{
-								ajaxID: 'tx_addresses::deleteAction',
+								ajaxID: 'AddressController::deleteAction',
 								data: Ext.util.JSON.encode(data)
 							},
 							success: function(f,a){
-								Ext.StoreMgr.get('addresses_datasource').load();
+								Ext.StoreMgr.get('addressStore').load();
 							},
 							failure: function(f,a){
 								if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {

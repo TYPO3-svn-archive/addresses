@@ -41,6 +41,7 @@ $BE_USER->modAccess($MCONF, 1);	// This checks makes sure the user has the permi
 
 // Pre-Include all models and views
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Controller/ControllerAbstract.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/RepositoryAbstract.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/AddressRepository.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Preferences.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
@@ -53,7 +54,8 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'
  * @subpackage	tx_addresses
  * @version 	$Id$
  */
-class Tx_Addresses_Controller_AddressGroupController extends Tx_Addresses_Controller_ControllerAbstract {
+class Tx_Addresses_Controller_GroupAddressController extends Tx_Addresses_Controller_ControllerAbstract{
+
 	/**
 	 * Stores relevant data from extJS
 	 * Example: Json format
@@ -64,13 +66,18 @@ class Tx_Addresses_Controller_AddressGroupController extends Tx_Addresses_Contro
 	protected $data;
 
 	/**
+	 *
+	 * @var string
+	 */
+	protected $namespace = 'GroupAddress';
+
+	/**
 	 * Initialize method
 	 *
 	 * @return void
 	 */
 	public function __construct() {
-		$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');
-		$this->data = json_decode(t3lib_div::_GP('data'));
+		parent::__construct($this->namespace);
 	}
 
 	/**
@@ -79,14 +86,7 @@ class Tx_Addresses_Controller_AddressGroupController extends Tx_Addresses_Contro
 	 * @return void
 	 **/
 	public function indexAction() {
-		try {
-			$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');
-			$message = $this->model->findAll();
-			echo json_encode($message);
-		}
-		catch (Exception $e) {
-			print $e->getMessage();
-		}
+		parent::indexAction();
 	}
 
 	/**
@@ -95,16 +95,7 @@ class Tx_Addresses_Controller_AddressGroupController extends Tx_Addresses_Contro
 	 * @return void
 	 **/
 	public function editAction() {
-		try {
-			$message['success'] = FALSE;
-			if (!empty($this->data) && (int)$this->data[0]->uid > 0) {
-				$message = $this->model->findById($this->data);
-			}
-			echo json_encode($message);
-		}
-		catch (Exception $e) {
-			print $e->getMessage();
-		}
+		parent::editAction();
 	}
 
 	/**
@@ -113,16 +104,7 @@ class Tx_Addresses_Controller_AddressGroupController extends Tx_Addresses_Contro
 	 * @return void
 	 **/
 	public function deleteAction() {
-		try {
-			$message['success'] = FALSE;
-			if (!empty($this->data)) {
-				$message['success'] = $this->model->delete($this->data);
-			}
-			echo json_encode($message);
-		}
-		catch (Exception $e) {
-			print $e->getMessage();
-		}
+		parent::deleteAction();
 	}
 
 	/**
@@ -131,32 +113,8 @@ class Tx_Addresses_Controller_AddressGroupController extends Tx_Addresses_Contro
 	 * @return void
 	 **/
 	public function saveAction() {
-		try {
-			$message['success'] = FALSE;
-			$requestType = $this->model->save();
-
-			if ($requestType) {
-				$message['success'] = TRUE;
-				$message['request'] = $requestType;
-			}
-			echo json_encode($message);
-		}
-		catch (Exception $e) {
-			print $e->getMessage();
-		}
+		parent::saveAction();
 	}
-
-/**
- * Sets data in the session of the current backend user.
- *
- * @param	string		$identifier: The identifier to be used to set the data
- * @param	string		$data: The data to be stored in the session
- * @return	void
- */
-//	protected function setDataInSession($identifier, $data) {
-//		$GLOBALS['BE_USER']->uc['tx_addresses'][$identifier] = $data;
-//		$GLOBALS['BE_USER']->writeUC();
-//	}
 }
 
 ?>

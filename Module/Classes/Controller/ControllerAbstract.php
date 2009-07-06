@@ -56,8 +56,8 @@ abstract class Tx_Addresses_Controller_ControllerAbstract {
 	 *
 	 * @return void
 	 */
-	public function __construct() {
-		$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');
+	public function __construct($namespace) {
+		$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_' . $namespace . 'Repository');
 		$this->data = json_decode(t3lib_div::_GP('data'));
 	}
 
@@ -121,7 +121,8 @@ abstract class Tx_Addresses_Controller_ControllerAbstract {
 	public function saveAction() {
 		try {
 			$message['success'] = FALSE;
-			$requestType = $this->model->save();
+			$values = t3lib_div::_GET();
+			$requestType = $this->model->save($values);
 
 			if ($requestType) {
 				$message['success'] = TRUE;

@@ -49,9 +49,9 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 	/**
 	 *
-	 * @var boolean
+	 * @var string
 	 */
-	protected $tableName = 'tx_addresses_domain_model_address';
+	protected $tableName;
 
 	/**
 	 *
@@ -63,15 +63,17 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'Address';
+	protected $namespace;
 
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
+	public function __construct($namespace) {
 		$configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);
 		$this->debug = (boolean) $configurations['debug'];
 		$this->pid = (int) $configurations['PID'];
+		$this->tableName = 'tx_addresses_domain_model_' . strtolower($this->namespace);
+		$this->namespace = $namespace;
 	}
 
 	/**
@@ -129,10 +131,10 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @param array $data: the uid of the address
 	 * @return	array
 	 */
-	public function findById($data) {
+	public function findById($dataSet) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
-		$clause = $this->getUidClause($data);
+		$clause = $this->getUidClause($dataSet);
 		$output['success'] = FALSE;
 		if ($clause != '') {
 			$records = $TYPO3_DB->exec_SELECTgetRows(
@@ -141,7 +143,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				'deleted = 0 AND hidden = 0 AND ' . $clause
 			);
 
-			$records = $this->getMMRelations($data[0]->uid, $records);
+			$records = $this->getMMRelations($dataSet[0]->uid, $records);
 
 			// Get the intersection of the array
 			if (!empty($records)) {
@@ -149,7 +151,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				foreach($records as $record) {
 					$_record = array_intersect($_record,$record);
 				}
-				$_record['uid'] = $this->getUidList($data);
+				$_record['uid'] = $this->getUidList($dataSet);
 				$output['success'] = TRUE;
 				$output['data'] = $_record;
 			}
@@ -310,12 +312,12 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 	/**
 	 * Builds up the clause e.g.uid=10 AND uid=8
-	 * @param array $data
+	 * @param array $dataSet
 	 * @return string
 	 */
-	protected function getUidList($data) {
+	protected function getUidList($dataSet) {
 		$list = $separator = '';
-		foreach ($data as $key => $value) {
+		foreach ($dataSet as $key => $value) {
 			if ((int)$value->uid > 0) {
 				$list .= $separator . $value->uid;
 				if ($separator == '') {
@@ -328,12 +330,12 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 	/**
 	 * Builds up the clause e.g.uid=10 AND uid=8
-	 * @param array $data
+	 * @param array $dataSet
 	 * @return string
 	 */
-	protected function getUidClause($data) {
+	protected function getUidClause($dataSet) {
 		$clause = $separator = '';
-		foreach ($data as $key => $value) {
+		foreach ($dataSet as $key => $value) {
 			if ((int)$value->uid > 0) {
 				$clause .= $separator . 'uid=' . $value->uid;
 				if ($separator == '') {
@@ -350,11 +352,11 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @param array $data: the uid of the address(es)
 	 * @return	boolean
 	 */
-	public function delete($data) {
+	public function delete($dataSet) {
 		global $TYPO3_DB;
 
 		// Retireves the clause
-		$clause = $this->getUidClause($data);
+		$clause = $this->getUidClause($dataSet);
 
 		// Executes query
 		$request = $TYPO3_DB->UPDATEquery(
@@ -420,10 +422,11 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	/**
 	 * Save address(es): UPDATE or INSERT depending on the uid
 	 *
-	 * @return array
+	 * @param	array	$values
+	 * @return	array
 	 */
-	public function save() {
-		$values = t3lib_div::_GET();
+	public function save($dataSet) {
+		$dataSet = t3lib_div::_GET();
 		t3lib_div::loadTCA($this->tableName);
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TCA, $LANG, $TYPO3_DB;
@@ -431,7 +434,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		// Init variables
 		$fields = $foreignTables = array();
 
-		foreach ($values as $fieldName => $value) {
+		foreach ($dataSet as $fieldName => $value) {
 			$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
 			if (isset($columns[$fieldName])) {
 				$tca = $columns[$fieldName];
@@ -474,8 +477,8 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 		// Defines here whether it is a "multiple" update or "single" update
 		$uids = array();
-		if ($values['uid'] != '') {
-			$uids = explode(',', $values['uid']);
+		if ($dataSet['uid'] != '') {
+			$uids = explode(',', $dataSet['uid']);
 		}
 
 		// Checks wheter $uid are arrays

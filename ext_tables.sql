@@ -59,6 +59,7 @@ CREATE TABLE tx_addresses_domain_model_addressgroup (
 	tstamp int(11) DEFAULT '0' NOT NULL,
 	crdate int(11) DEFAULT '0' NOT NULL,
 	cruser_id int(11) DEFAULT '0' NOT NULL,
+	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting int(10) DEFAULT '0' NOT NULL,
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
 	hidden tinyint(4) DEFAULT '0' NOT NULL,

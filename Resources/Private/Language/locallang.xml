@@ -31,5 +31,20 @@
 			<label index="download_vcard">vCard-Download</label>
 			<label index="download_vcards">Alle Adressen als vCard herunterladen</label>
 		</languageKey>
+		<languageKey index="fr" type="array">
+			<label index="phone">Téléphone:</label>
+			<label index="fax">Fax:</label>
+			<label index="website">Site internet:</label>
+			<label index="email">Email:</label>
+			<label index="f">Mme.</label>
+			<label index="m">M.</label>
+			<label index="back_to_list">Retour à la liste</label>
+			<label index="nextLabel">suivant</label>
+			<label index="pageLabel">Page</label>
+			<label index="previousLabel">précédent</label>
+			<label index="outOfLabel">en dehors de</label>
+			<label index="download_vcard">Télécharger une vCard</label>
+			<label index="download_vcards">Télécharger la liste complète des vCards</label>
+		</languageKey>
 	</data>
 </T3locallang>

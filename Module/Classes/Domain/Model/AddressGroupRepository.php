@@ -33,7 +33,7 @@
  * @version $Id: AddressRepository.php 22089 2009-07-06 13:06:10Z fabien_u $
  */
 
-class Tx_Addresses_Domain_Model_GroupAddressRepository extends Tx_Addresses_Domain_Model_RepositoryAbstract {
+class Tx_Addresses_Domain_Model_AddressGroupRepository extends Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 	/**
 	 *

@@ -39,7 +39,7 @@ class Tx_Addresses_Domain_Model_AddressGroupRepository extends Tx_Addresses_Doma
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'GroupAddress';
+	protected $namespace = 'AddressGroup';
 
 	/**
 	 * Constructor

@@ -186,11 +186,11 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 					$configuration = self::getConfiguration($item, $namespace);
 				}
 
-				// Add configuration whenever it is not empty
+				// Stores configuration for not empty $configuration
 				if (!empty($configuration)) {
 					$configurations[$index]['items'][] = $configuration;
 					if (isset($columns[$item]['config']['foreign_table'])) {
-						$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getEditForeignTableButton($namespace, $columns[$item]['config']['foreign_table']);
+						$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getEditForeignTableButton($namespace, $columns[$item]['config']['foreign_class']);
 					}
 				}
 			}

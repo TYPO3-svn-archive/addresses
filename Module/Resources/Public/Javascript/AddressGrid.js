@@ -83,7 +83,7 @@ Address.initGrid = function() {
 		autoLoad: true,
 		reader: new Ext.data.JsonReader({
 			fields: Address.fieldsTypeInGrid,
-			root: 'data',
+			root: 'rows',
 			totalProperty: 'total'
 		}),
 		baseParams: {
@@ -149,7 +149,7 @@ Address.initGrid = function() {
 		handler: function() {
 			Address.window.setTitle(Addresses.lang.new_record); // set title
 			Address.form.reset(); // clear form
-			Address.window.findById('informationPanel').setVisible(false);
+			Address.window.findById('addressInformationPanel').setVisible(false);
 			Address.window.show();
 			Address.window.focusOnFirstVisibleField();
 		}
@@ -294,21 +294,21 @@ Address.initGrid = function() {
 		 * @return void
 		 */
 		deleteSelectedRecord: function() {
-			var data = Address.grid.getSelectedUids();
+			var dataSet = Address.grid.getSelectedUids();
 
 			Ext.Msg.show({
 				title: Addresses.lang.remove,
 				buttons: Ext.MessageBox.YESNO,
 				msg: Addresses.lang.are_you_sure + ' ' + Address.grid.getSelectedNames() + '?',
 				fn: function(btn){
-					if (btn == 'yes' && data.length > 0){
+					if (btn == 'yes' && dataSet.length > 0){
 						var conn = new Ext.data.Connection();
 						conn.request({
 							method: 'GET',
 							url: Addresses.statics.ajaxController,
 							params:{
 								ajaxID: 'AddressController::deleteAction',
-								data: Ext.util.JSON.encode(data)
+								dataSet: Ext.util.JSON.encode(dataSet)
 							},
 							success: function(f,a){
 								Ext.StoreMgr.get('addressStore').load();

@@ -50,19 +50,24 @@ AddressGroup.initWindow = function() {
 					method: 'GET',
 					url: Addresses.statics.ajaxController,
 					params:{
-						ajaxID: 'AddressController::saveAction'
+						ajaxID: 'AddressGroupController::saveAction'
 					},
-					success: function(f,a){
+					success: function(form,call){
+						var uid = call.result.rows[0].uid;
+						var title = call.result.rows[0].title
+						//Add this record to the stores
+						Address.stores.addressgroups.add(new Ext.data.Record({
+							addressgroups: uid,
+							addressgroups_text: title
+						},uid));
 						AddressGroup.window.hide();
-//						Ext.StoreMgr.get('addressStore').load();
-						console.log('@todo line 58: update addressGroup itemselector widget form');
 					},
-					failure: function(f,a){
-						if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
-							Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
+					failure: function(form,call){
+						if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
+							Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + call.response.status + ' ' + call.response.statusText);
 						}
-						else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
-							Ext.Msg.alert(Addresses.lang.warning, a.result.errormsg);
+						else if (call.failureType === Ext.form.Action.SERVER_INVALID) {
+							Ext.Msg.alert(Addresses.lang.warning, call.result.errormsg);
 						}
 					}
 				};
@@ -231,7 +236,6 @@ AddressGroup.initWindow = function() {
 						});
 				}
 			}
-
 		},
 
 		/**
@@ -274,7 +278,7 @@ AddressGroup.initWindow = function() {
 					url: Addresses.statics.ajaxController,
 					params:{
 						method: 'GET',
-						ajaxID: 'AddressController::editAction',
+						ajaxID: 'AddressGroupController::editAction',
 						data: Ext.util.JSON.encode(data)
 					},
 					text: 'Loading',
@@ -326,5 +330,4 @@ AddressGroup.initWindow = function() {
 			});
 		}
 	});
-
 };

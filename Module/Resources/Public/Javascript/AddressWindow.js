@@ -52,16 +52,16 @@ Address.initWindow = function() {
 					params:{
 						ajaxID: 'AddressController::saveAction'
 					},
-					success: function(f,a){
+					success: function(form,call){
 						Address.window.hide();
 						Ext.StoreMgr.get('addressStore').load();
 					},
-					failure: function(f,a){
-						if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
-							Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
+					failure: function(form,call){
+						if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
+							Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + call.response.status + ' ' + call.response.statusText);
 						}
-						else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
-							Ext.Msg.alert(Addresses.lang.warning, a.result.errormsg);
+						else if (call.failureType === Ext.form.Action.SERVER_INVALID) {
+							Ext.Msg.alert(Addresses.lang.warning, call.result.errormsg);
 						}
 					}
 				};
@@ -302,20 +302,20 @@ Address.initWindow = function() {
 		display: function(state) {
 			var sm = Address.grid.getSelectionModel();
 			var selections = sm.getSelections();
-			var data = new Array();
+			var dataSet = new Array();
 			for (var index = 0; index < selections.length; index ++) {
 				// Get selections
 				var selection = selections[index];
-				data[index] = {
+				dataSet[index] = {
 					uid: selection.data.uid
 				};
 			}
 
-			if (data.length > 0) {
+			if (dataSet.length > 0) {
 				Address.form.reset(); // clear form
 
-				Ext.Msg.progress(Addresses.lang.loading, '');
-				Address.startInterval();
+//				Ext.Msg.progress(Addresses.lang.loading, '');
+//				Address.startInterval();
 
 				Address.form.load({
 					method: 'GET',
@@ -323,8 +323,9 @@ Address.initWindow = function() {
 					params:{
 						method: 'GET',
 						ajaxID: 'AddressController::editAction',
-						data: Ext.util.JSON.encode(data)
+						dataSet: Ext.util.JSON.encode(dataSet)
 					},
+					waitMsg: Addresses.lang.loading,
 					text: 'Loading',
 					success: function(form,call) {
 						// Set title
@@ -375,5 +376,4 @@ Address.initWindow = function() {
 			});
 		}
 	});
-
 };

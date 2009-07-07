@@ -121,14 +121,14 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 		$output['success'] = TRUE;
 		$output['total'] = $results[0]['total'];
-		$output['data'] = $records;
+		$output['rows'] = $records;
 		return $output;
 	}
 
 	/**
 	 * Get address(es) for the grid
 	 *
-	 * @param array $data: the uid of the address
+	 * @param array $dataSet: the uid of the address
 	 * @return	array
 	 */
 	public function findById($dataSet) {
@@ -490,20 +490,22 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 		// TRUE means update the record
 		if ((int) $uids > 0) {
-		// TRUE means multiple edit
+			// TRUE means multiple edit
 			if (count($uids) > 1) {
-			// Removes empty field
+				// Removes empty field
 				foreach ($fields as $key => &$field) {
 					if ($field == '') {
 						unset($fields[$key]);
 					}
 				}
 			}
-			$result = $this->saveUpdate($uids, $fields, $foreignTables);
-
+			$this->saveUpdate($uids, $fields, $foreignTables);
+			$result['request'] = 'UPDATE';
 		}
 		else {
-			$result = $this->saveInsert($fields, $foreignTables);
+			$uid = $this->saveInsert($fields, $foreignTables);
+			$result['rows'] = $TYPO3_DB->exec_SELECTgetRows('*', $this->tableName, 'uid = ' . $uid);
+			$result['request'] = 'INSERT';
 		}
 		return $result;
 	}
@@ -516,7 +518,6 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @global t3lib_DB $TYPO3_DB
 	 * @param array $uids
 	 * @param array $fields
-	 * @return string
 	 */
 	protected function saveUpdate($uids, $fields, $foreignTables) {
 		/* @var $TYPO3_DB t3lib_DB */
@@ -538,7 +539,6 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				$this->saveMMRelation($uids, $foreignTables);
 			}
 		}
-		return 'UPDATE';
 	}
 
 	/**
@@ -547,7 +547,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @global  $BE_USER
 	 * @global t3lib_DB $TYPO3_DB
 	 * @param array $fields
-	 * @return string
+	 * @return int
 	 */
 	protected function saveInsert($fields, $foreignTables) {
 		/* @var $TYPO3_DB t3lib_DB */
@@ -567,13 +567,12 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		}
 
 		if ($TYPO3_DB->sql_query($request)) {
-
+			$uid = $TYPO3_DB->sql_insert_id();
 			if (!empty($foreignTables)) {
-				$uid = $TYPO3_DB->sql_insert_id();
 				$this->saveMMRelation(array($uid), $foreignTables);
 			}
 		}
-		return 'INSERT';
+		return isset($uid) ? $uid : 0;
 	}
 
 	/**

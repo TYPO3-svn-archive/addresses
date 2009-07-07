@@ -358,6 +358,8 @@ EOF;
 		$replaces[] = '$1';
 		$patterns[] = '/\"(' . $namespace . '\.stores\..+)\"/isU';
 		$replaces[] = '$1';
+		$patterns[] = '/\"(function.+\})\"/isU';
+		$replaces[] = '$1';
 		return preg_replace($patterns, $replaces, $json);
 	}
 
@@ -369,7 +371,7 @@ EOF;
 	 * @param	string	$foreignTable
 	 * @return	array
 	 */
-	public static function getEditForeignTableButton($namespace, $foreignTable) {
+	public static function getEditForeignTableButton($namespace, $foreignClass) {
 		global $LANG;
 		$configuration['xtype'] = 'button';
 		$configuration['text'] = $LANG->getLL('addNewElement');
@@ -377,7 +379,9 @@ EOF;
 		$configuration['icon'] = 'Resources/Public/Icons/add.png';
 		$configuration['anchor'] = '30%';
 		$configuration['style'] = array('marginBottom' => '10px', 'marginLeft' => '65%');
-		$configuration['handler'] = $namespace . '.functions.' . $foreignTable;
+		#$configuration['handler'] = str_replace('Tx_Addresses_Domain_Model_', '', $foreignClass) . '.window.showMe';
+		$configuration['handler'] = 'function() {AddressGroup.window.setTitle(Addresses.lang.new_record); AddressGroup.window.show()}';
+//		$configuration['handler'] = 'Address.functions.tx_addresses_domain_model_addressgroup';
 		return $configuration;
 	}
 
@@ -421,7 +425,6 @@ EOF;
 		foreach ($myArray as &$myvalue) {
 			$myvalue = unserialize($myvalue);
 		}
-
 		return $myArray;
 	}
 }

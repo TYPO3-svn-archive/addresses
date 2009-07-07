@@ -43,16 +43,8 @@ Addresses.initialize = function() {
 	Address.form = Address.window.getComponent('addressForm').getForm();
 //	Address.window.show();
 
-//	AddressGroup.initWindow();
-//	AddressGroup.window.init();
-//	AddressGroup.form = AddressGroup.window.getComponent('addressGroupForm').getForm();
+	AddressGroup.initWindow();
+	AddressGroup.window.init();
+	AddressGroup.form = AddressGroup.window.getComponent('addressGroupForm').getForm();
 //	AddressGroup.window.show();
 };
-
-
-Address.functions = {
-	tx_addresses_domain_model_addressgroup: function() {
-		Address.window.hide();
-	//		AddressGroup.window.show();
-	}
-}

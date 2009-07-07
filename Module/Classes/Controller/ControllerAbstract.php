@@ -49,7 +49,7 @@ abstract class Tx_Addresses_Controller_ControllerAbstract {
 	 *
 	 * @var	string
 	 */
-	protected $data;
+	protected $dataSet;
 
 	/**
 	 * Initialize method
@@ -58,7 +58,7 @@ abstract class Tx_Addresses_Controller_ControllerAbstract {
 	 */
 	public function __construct($namespace) {
 		$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_' . $namespace . 'Repository');
-		$this->data = json_decode(t3lib_div::_GP('data'));
+		$this->dataSet = json_decode(t3lib_div::_GP('dataSet'));
 	}
 
 	/**
@@ -85,8 +85,8 @@ abstract class Tx_Addresses_Controller_ControllerAbstract {
 	public function editAction() {
 		try {
 			$message['success'] = FALSE;
-			if (!empty($this->data) && (int)$this->data[0]->uid > 0) {
-				$message = $this->model->findById($this->data);
+			if (!empty($this->dataSet) && (int)$this->dataSet[0]->uid > 0) {
+				$message = $this->model->findById($this->dataSet);
 			}
 			echo json_encode($message);
 		}
@@ -103,8 +103,8 @@ abstract class Tx_Addresses_Controller_ControllerAbstract {
 	public function deleteAction() {
 		try {
 			$message['success'] = FALSE;
-			if (!empty($this->data)) {
-				$message['success'] = $this->model->delete($this->data);
+			if (!empty($this->dataSet)) {
+				$message['success'] = $this->model->delete($this->dataSet);
 			}
 			echo json_encode($message);
 		}
@@ -120,14 +120,11 @@ abstract class Tx_Addresses_Controller_ControllerAbstract {
 	 **/
 	public function saveAction() {
 		try {
-			$message['success'] = FALSE;
-			$values = t3lib_div::_GET();
-			$requestType = $this->model->save($values);
+			$dataSet = t3lib_div::_GET();
+			$message = $this->model->save($dataSet);
+			$message['success'] = TRUE;
 
-			if ($requestType) {
-				$message['success'] = TRUE;
-				$message['request'] = $requestType;
-			}
+			// Print out the message
 			echo json_encode($message);
 		}
 		catch (Exception $e) {

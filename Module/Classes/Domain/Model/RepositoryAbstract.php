@@ -35,10 +35,10 @@
 
 abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
-	/**
-	 *
-	 * @var string
-	 */
+/**
+ *
+ * @var string
+ */
 	protected $clause = '';
 
 	/**
@@ -216,18 +216,66 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		return $output;
 	}
 
+	protected function getForeignTables() {
+		$result = array();
+		$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
+		foreach ($columns as $fieldName => $column) {
+			if (isset($column['config']['foreign_table'])) {
+				$_result = array();
+				$_result['foreign_table'] = $column['config']['foreign_table'];
+				if (isset($column['config']['MM'])) {
+					$_result['MM'] = $column['config']['MM'];
+				}
+				$result[$fieldName] = $_result;
+			}
+		}
+		return $result;
+	}
 	/**
 	 * Returns the SQL clause WHERE ...
 	 *
 	 * @return string
 	 */
 	protected function getClause() {
-		/* @var $TYPO3_DB t3lib_DB */
-		global $TYPO3_DB;
 		$parameters = t3lib_div::_GET();
 		if (isset($parameters['filterTxt']) && $parameters['filterTxt'] != '' && $this->clause == '') {
 			$search = filter_input(INPUT_GET, 'filterTxt', FILTER_SANITIZE_STRING);
-			$res = $TYPO3_DB->sql_query('SHOW COLUMNS from ' . $this->tableName);
+			$this->clause = $this->getSearchClause($search, $this->tableName);
+			$foreignTables['be_users'] = array(
+				'localField' => 'cruser_id',
+				'includedFields' => array('username', 'realName', 'email'),
+			);
+			// Merge tables from the foreignTables
+			$foreignTables = array_merge($foreignTables, $this->getForeignTables());
+			
+			// fetch other condition
+			foreach ($foreignTables as $foreignTable => $data) {
+				// Builds request for the 2 possible relations:
+				// 1. M-M relation
+				// 2. 1-M relation
+				if (isset($data['MM'])) {
+					$this->clause .= ' OR uid IN (SELECT uid_local FROM ' . $data['MM'] . ' WHERE tablenames = "' . $data['foreign_table'] . '" AND uid_foreign IN (SELECT uid FROM ' . $data['foreign_table'] . ' WHERE ' . $this->getSearchClause($search, $data['foreign_table']) . '))';
+				}
+				else {
+					$includedFields = array();
+					if (isset($data['includedFields'])) {
+						$includedFields = $data['includedFields']; // Maybe it is a better idea to work in an *exclude* way
+					}
+					$this->clause .= ' OR ' . $data['localField'] . ' IN (SELECT uid FROM ' . $foreignTable . ' WHERE ' . $this->getSearchClause($search, $foreignTable, $includedFields) . ')';
+				}
+			}
+			$this->clause = '(' . $this->clause . ')';
+		}
+		$and = $this->clause == '' ? '' : ' AND ';
+		return $and . $this->clause;
+	}
+
+	protected function getSearchClause($search, $tableName, $fields = array()) {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TYPO3_DB;
+
+		if (empty($fields)) {
+			$res = $TYPO3_DB->sql_query('SHOW COLUMNS from ' . $tableName);
 			$fields = array();
 			while ($row = $TYPO3_DB->sql_fetch_row($res)) {
 				$fieldName = $row[0];
@@ -237,12 +285,11 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 					$fields[] = $fieldName;
 				}
 			}
-			$searchClause = ' LIKE "%' . $search . '%"';
-			$this->clause = implode($searchClause . ' OR ', $fields) . $searchClause ;
-			$this->clause = '(' . $this->clause . ')';
 		}
-		$and = $this->clause == '' ? '' : ' AND ';
-		return $and . $this->clause;
+
+		$searchClause = ' LIKE "%' . $search . '%"';
+		return implode($searchClause . ' OR ', $fields) . $searchClause ;
+
 	}
 
 	/**
@@ -490,9 +537,9 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 		// TRUE means update the record
 		if ((int) $uids > 0) {
-			// TRUE means multiple edit
+		// TRUE means multiple edit
 			if (count($uids) > 1) {
-				// Removes empty field
+			// Removes empty field
 				foreach ($fields as $key => &$field) {
 					if ($field == '') {
 						unset($fields[$key]);

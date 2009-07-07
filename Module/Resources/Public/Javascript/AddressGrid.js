@@ -117,26 +117,26 @@ Address.initGrid = function() {
 	/**
 	 * interval incremented
 	 */
-	Address.interval = 0;
+//	Address.interval = 0;
 
 	/**
 	 * Starts counting. Useful for progress bars
 	 */
-	Address.startInterval = function() {
-
-		// Defines interval
-		var count = 0;
-		Address.interval = window.setInterval(function() {
-			count = count + 0.04;
-
-			Ext.Msg.updateProgress(count);
-
-			// reset counter
-			if(count >= 1) {
-				count = 0;
-			}
-		}, 100);
-	};
+//	Address.startInterval = function() {
+//
+//		// Defines interval
+//		var count = 0;
+//		Address.interval = window.setInterval(function() {
+//			count = count + 0.04;
+//
+//			Ext.Msg.updateProgress(count);
+//
+//			// reset counter
+//			if(count >= 1) {
+//				count = 0;
+//			}
+//		}, 100);
+//	};
 
 	/**
 	 * Top bar which is attached to the grid

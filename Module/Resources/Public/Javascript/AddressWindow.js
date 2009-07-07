@@ -325,7 +325,8 @@ Address.initWindow = function() {
 						ajaxID: 'AddressController::editAction',
 						dataSet: Ext.util.JSON.encode(dataSet)
 					},
-					waitMsg: Addresses.lang.loading,
+					waitTitle: Addresses.lang.loading,
+					waitMsg: '&nbsp;',
 					text: 'Loading',
 					success: function(form,call) {
 						// Set title
@@ -341,7 +342,7 @@ Address.initWindow = function() {
 							Address.window.setTitle(Addresses.lang.copy_record); // set title
 						}
 
-						window.clearInterval(Address.interval);
+//						window.clearInterval(Address.interval);
 						Ext.Msg.hide();
 						Address.data = call.result.data;
 						Address.window.show();

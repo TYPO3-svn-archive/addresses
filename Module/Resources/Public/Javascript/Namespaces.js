@@ -34,4 +34,4 @@
 
 Ext.namespace("Addresses");
 Ext.namespace("Address");
-Ext.namespace("AddressGroup");
+Ext.namespace("Addressgroup");

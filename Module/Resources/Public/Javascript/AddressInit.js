@@ -43,8 +43,8 @@ Addresses.initialize = function() {
 	Address.form = Address.window.getComponent('addressForm').getForm();
 //	Address.window.show();
 
-	AddressGroup.initWindow();
-	AddressGroup.window.init();
-	AddressGroup.form = AddressGroup.window.getComponent('addressGroupForm').getForm();
-//	AddressGroup.window.show();
+	Addressgroup.initWindow();
+	Addressgroup.window.init();
+	Addressgroup.form = Addressgroup.window.getComponent('addressgroupForm').getForm();
+//	Addressgroup.window.show();
 };

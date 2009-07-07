@@ -41,7 +41,7 @@ require($BACK_PATH . 'init.php');
 require($BACK_PATH . 'template.php');
 require_once(PATH_t3lib . 'class.t3lib_scbase.php');
 
-$classes = array('ConfigurationAbstract', 'AddressConfiguration', 'AddressGroupConfiguration', 'Preferences', 'Permission', 'TCA', 'TCE');
+$classes = array('ConfigurationAbstract', 'AddressConfiguration', 'AddressgroupConfiguration', 'Preferences', 'Permission', 'TCA', 'TCE');
 foreach ($classes as $class) {
     require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/' . $class . '.php'));
 }
@@ -75,12 +75,12 @@ class tx_addresses_module extends t3lib_SCbase {
     /**
      * @var $namespace string
      */
-    protected $namespaces = array('Address', 'AddressGroup');
+    protected $namespaces = array('Address', 'Addressgroup');
 
     /**
      * @var $javascriptFiles array
      */
-    protected $javascriptFiles = array('Message', 'MultiSelect', 'ItemSelector', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressGroupWindow');
+    protected $javascriptFiles = array('Message', 'MultiSelect', 'ItemSelector', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressgroupWindow');
 
     /**
      * @var $relativePath string
@@ -249,7 +249,7 @@ class tx_addresses_module extends t3lib_SCbase {
             $fieldsWindow = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getWindowConfiguration');
             $layout = array('windowHeight' => $this->getWindowHeight($fieldsWindow));
 
-			if($namespace == 'AddressGroup') {
+			if($namespace == 'Addressgroup') {
 //				t3lib_div::debug($fieldsWindow, '$fieldsWindow');
 //				exit();
 			}

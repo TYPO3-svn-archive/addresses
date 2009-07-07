@@ -216,21 +216,6 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		return $output;
 	}
 
-	protected function getForeignTables() {
-		$result = array();
-		$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
-		foreach ($columns as $fieldName => $column) {
-			if (isset($column['config']['foreign_table'])) {
-				$_result = array();
-				$_result['foreign_table'] = $column['config']['foreign_table'];
-				if (isset($column['config']['MM'])) {
-					$_result['MM'] = $column['config']['MM'];
-				}
-				$result[$fieldName] = $_result;
-			}
-		}
-		return $result;
-	}
 	/**
 	 * Returns the SQL clause WHERE ...
 	 *
@@ -270,6 +255,15 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		return $and . $this->clause;
 	}
 
+	/**
+	 * Returns a clause part
+	 *
+	 * @global t3div_DB $TYPO3_DB
+	 * @param string $search
+	 * @param string $tableName
+	 * @param array $fields
+	 * @return string
+	 */
 	protected function getSearchClause($search, $tableName, $fields = array()) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
@@ -290,6 +284,27 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		$searchClause = ' LIKE "%' . $search . '%"';
 		return implode($searchClause . ' OR ', $fields) . $searchClause ;
 
+	}
+
+	/**
+	 * Returns the foreign tables.
+	 *
+	 * @return array
+	 */
+	protected function getForeignTables() {
+		$result = array();
+		$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
+		foreach ($columns as $fieldName => $column) {
+			if (isset($column['config']['foreign_table'])) {
+				$_result = array();
+				$_result['foreign_table'] = $column['config']['foreign_table'];
+				if (isset($column['config']['MM'])) {
+					$_result['MM'] = $column['config']['MM'];
+				}
+				$result[$fieldName] = $_result;
+			}
+		}
+		return $result;
 	}
 
 	/**

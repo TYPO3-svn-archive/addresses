@@ -380,7 +380,7 @@ EOF;
 		$configuration['anchor'] = '30%';
 		$configuration['style'] = array('marginBottom' => '10px', 'marginLeft' => '65%');
 		#$configuration['handler'] = str_replace('Tx_Addresses_Domain_Model_', '', $foreignClass) . '.window.showMe';
-		$configuration['handler'] = 'function() {AddressGroup.window.setTitle(Addresses.lang.new_record); AddressGroup.window.show()}';
+		$configuration['handler'] = 'function() {Addressgroup.window.setTitle(Addresses.lang.new_record); Addressgroup.window.show()}';
 //		$configuration['handler'] = 'Address.functions.tx_addresses_domain_model_addressgroup';
 		return $configuration;
 	}

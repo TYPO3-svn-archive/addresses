@@ -379,9 +379,8 @@ EOF;
 		$configuration['icon'] = 'Resources/Public/Icons/add.png';
 		$configuration['anchor'] = '30%';
 		$configuration['style'] = array('marginBottom' => '10px', 'marginLeft' => '65%');
-		#$configuration['handler'] = str_replace('Tx_Addresses_Domain_Model_', '', $foreignClass) . '.window.showMe';
-		$configuration['handler'] = 'function() {Addressgroup.window.setTitle(Addresses.lang.new_record); Addressgroup.window.show()}';
-//		$configuration['handler'] = 'Address.functions.tx_addresses_domain_model_addressgroup';
+		$namespace = str_replace('Tx_Addresses_Domain_Model_', '', $foreignClass);
+		$configuration['handler'] = 'function() {' . $namespace . '.window.setTitle(Addresses.lang.new_record); ' . $namespace . '.window.show()}';
 		return $configuration;
 	}
 

@@ -33,7 +33,7 @@
  * @version $Id$
  */
 
-AddressGroup.initWindow = function() {
+Addressgroup.initWindow = function() {
 
 	var configuration = new Object();
 	/**
@@ -41,7 +41,7 @@ AddressGroup.initWindow = function() {
 	 */
 	configuration.buttons = [{
 		text: 'save',
-		id: 'addressGroupSaveButton',
+		id: 'addressgroupSaveButton',
 		listeners: {
 			click: function(){
 				// DEFINES THE SUBMIT OBJECT
@@ -50,7 +50,7 @@ AddressGroup.initWindow = function() {
 					method: 'GET',
 					url: Addresses.statics.ajaxController,
 					params:{
-						ajaxID: 'AddressGroupController::saveAction'
+						ajaxID: 'AddressgroupController::saveAction'
 					},
 					success: function(form,call){
 						var uid = call.result.rows[0].uid;
@@ -60,7 +60,7 @@ AddressGroup.initWindow = function() {
 							addressgroups: uid,
 							addressgroups_text: title
 						},uid));
-						AddressGroup.window.hide();
+						Addressgroup.window.hide();
 					},
 					failure: function(form,call){
 						if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -73,8 +73,8 @@ AddressGroup.initWindow = function() {
 				};
 
 				// case multiple edition -> don't validate form
-				var form = AddressGroup.form
-				var uid = form.findField('addressGroupUid').getValue();
+				var form = Addressgroup.form
+				var uid = form.findField('addressgroupUid').getValue();
 				if (uid == '' || uid.search(',') == -1) {
 					if (form.isValid()) {
 						submit.clientValidation = true;
@@ -96,7 +96,7 @@ AddressGroup.initWindow = function() {
 	{
 		text: 'Cancel',
 		handler: function(){
-			AddressGroup.window.hide();
+			Addressgroup.window.hide();
 		}
 	}];
 
@@ -106,14 +106,14 @@ AddressGroup.initWindow = function() {
 	 */
 	configuration.tabPanel = {
 		xtype:'tabpanel',
-		height: AddressGroup.layout.windowHeight,
+		height: Addressgroup.layout.windowHeight,
 		activeTab: 0,
 		deferredRender: false,
 		defaults:{
 			bodyStyle:'padding:5px'
 		//					autoHeight: true,
 		},
-		items: AddressGroup.fieldsWindow
+		items: Addressgroup.fieldsWindow
 	};
 
 	/*
@@ -121,7 +121,7 @@ AddressGroup.initWindow = function() {
 	 */
 	configuration.formPanel = {
 		xtype: 'form',
-		id: 'addressGroupForm',
+		id: 'addressgroupForm',
 		frame: true,
 		bodyStyle:'padding: 0',
 		labelAlign: 'top',
@@ -142,7 +142,7 @@ AddressGroup.initWindow = function() {
 					xtype: "textarea",
 					height: 150,
 					name: "remarks",
-					id: "addressGroupRemarks",
+					id: "addressgroupRemarks",
 					fieldLabel: Addresses.lang.remarks,
 					selectOnFocus:true,
 					anchor: "95%",
@@ -150,7 +150,7 @@ AddressGroup.initWindow = function() {
 					labelSeparator: ""
 				},{
 					xtype: 'panel',
-					id: 'addressGroupinformationPanel',
+					id: 'addressgroupinformationPanel',
 					tpl: new Ext.Template([
 						'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
 						'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
@@ -163,13 +163,13 @@ AddressGroup.initWindow = function() {
 	/*
 	 * Modal window that enables record editing: add - update data
 	 */
-	AddressGroup.window = new Ext.Window({
+	Addressgroup.window = new Ext.Window({
 
 		/*
 		 * Modal window that enables record editing: add - update data
 		 */
 		width: 700,
-		height: AddressGroup.layout.windowHeight,
+		height: Addressgroup.layout.windowHeight,
 		modal: true,
 		layout: 'fit',
 		plain:true,
@@ -181,10 +181,10 @@ AddressGroup.initWindow = function() {
 		items: configuration.formPanel,
 		listeners: {
 			show: function() {
-				var informationPanel = AddressGroup.window.findById('addressGroupinformationPanel');
+				var informationPanel = Addressgroup.window.findById('addressgroupinformationPanel');
 				if (informationPanel) {
 					var tpl = informationPanel.tpl;
-					tpl.overwrite(informationPanel.body,AddressGroup.data);
+					tpl.overwrite(informationPanel.body,Addressgroup.data);
 				}
 			}
 		},
@@ -224,13 +224,13 @@ AddressGroup.initWindow = function() {
 
 							// Makes sure the value is not null
 							if (value != '') {
-								eval('var record = AddressGroup.stores.' + id + '.getById("' + value + '");');
+								eval('var record = Addressgroup.stores.' + id + '.getById("' + value + '");');
 
 								// Add a new value to the store object
 								if (typeof(record) == 'undefined') {
 
 									// Add this record
-									eval('AddressGroup.stores.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
+									eval('Addressgroup.stores.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
 								}
 							}
 						});
@@ -243,7 +243,7 @@ AddressGroup.initWindow = function() {
 		 */
 		focusOnFirstVisibleField : function() {
 			try {
-				var firstVisibleElement = AddressGroup.fieldsWindow[0].items[1].id;
+				var firstVisibleElement = Addressgroup.fieldsWindow[0].items[1].id;
 				Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait for 100 miliseconds
 			}
 			catch (e) {
@@ -256,7 +256,7 @@ AddressGroup.initWindow = function() {
 		 * Mode could be either copy or new
 		 */
 		display: function(state) {
-			var sm = AddressGroup.grid.getSelectionModel();
+			var sm = Addressgroup.grid.getSelectionModel();
 			var selections = sm.getSelections();
 			var data = new Array();
 			for (var index = 0; index < selections.length; index ++) {
@@ -268,40 +268,40 @@ AddressGroup.initWindow = function() {
 			}
 
 			if (data.length > 0) {
-				AddressGroup.form.reset(); // clear form
+				Addressgroup.form.reset(); // clear form
 
 				Ext.Msg.progress(Addresses.lang.loading, '');
-				AddressGroup.startInterval();
+				Addressgroup.startInterval();
 
-				AddressGroup.form.load({
+				Addressgroup.form.load({
 					method: 'GET',
 					url: Addresses.statics.ajaxController,
 					params:{
 						method: 'GET',
-						ajaxID: 'AddressGroupController::editAction',
+						ajaxID: 'AddressgroupController::editAction',
 						data: Ext.util.JSON.encode(data)
 					},
 					text: 'Loading',
 					success: function(form,call) {
 						// Set title
 						if (state == 'multipleEdit') {
-							AddressGroup.window.setTitle(Addresses.lang.multiple_update_record); // set title
+							Addressgroup.window.setTitle(Addresses.lang.multiple_update_record); // set title
 						}
 						else if (state == 'edit') {
-							AddressGroup.window.setTitle(Addresses.lang.update_record); // set title
+							Addressgroup.window.setTitle(Addresses.lang.update_record); // set title
 						}
 						else if (state == 'copy'){
 							// Removes the id so that the server will consider the data as a new record
-							form.findField('addressGroupUid').setValue('');
-							AddressGroup.window.setTitle(Addresses.lang.copy_record); // set title
+							form.findField('addressgroupUid').setValue('');
+							Addressgroup.window.setTitle(Addresses.lang.copy_record); // set title
 						}
 
-						window.clearInterval(AddressGroup.interval);
+						window.clearInterval(Addressgroup.interval);
 						Ext.Msg.hide();
-						AddressGroup.data = call.result.data;
-						AddressGroup.window.show();
-						AddressGroup.window.focusOnFirstVisibleField();
-						AddressGroup.window.findById('addressGroupinformationPanel').setVisible(true);
+						Addressgroup.data = call.result.data;
+						Addressgroup.window.show();
+						Addressgroup.window.focusOnFirstVisibleField();
+						Addressgroup.window.findById('addressgroupinformationPanel').setVisible(true);
 					}
 				});
 			}
@@ -320,10 +320,10 @@ AddressGroup.initWindow = function() {
 			this.addListnerToComboboxes();
 
 			// map one key by key code
-			new Ext.KeyMap("addressGroupForm", {
+			new Ext.KeyMap("addressgroupForm", {
 				key: 13, // or Ext.EventObject.ENTER
 				fn: function() {
-					var component = Ext.ComponentMgr.get('addressGroupSaveButton');
+					var component = Ext.ComponentMgr.get('addressgroupSaveButton');
 					component.fireEvent('click');
 				},
 				stopEvent: true

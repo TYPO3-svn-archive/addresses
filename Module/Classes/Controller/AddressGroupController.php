@@ -42,7 +42,7 @@ $BE_USER->modAccess($MCONF, 1);	// This checks makes sure the user has the permi
 // Pre-Include all models and views
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Controller/ControllerAbstract.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/RepositoryAbstract.php'));
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/AddressGroupRepository.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/AddressgroupRepository.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Preferences.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
 
@@ -54,7 +54,7 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'
  * @subpackage	tx_addresses
  * @version 	$Id$
  */
-class Tx_Addresses_Controller_AddressGroupController extends Tx_Addresses_Controller_ControllerAbstract{
+class Tx_Addresses_Controller_AddressgroupController extends Tx_Addresses_Controller_ControllerAbstract{
 
 	/**
 	 * Stores relevant data from extJS
@@ -69,7 +69,7 @@ class Tx_Addresses_Controller_AddressGroupController extends Tx_Addresses_Contro
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'AddressGroup';
+	protected $namespace = 'Addressgroup';
 
 	/**
 	 * Initialize method

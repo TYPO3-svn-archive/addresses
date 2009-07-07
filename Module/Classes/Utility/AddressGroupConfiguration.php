@@ -32,13 +32,13 @@
  * @subpackage addresses
  * @version $ID:$
  */
-class Tx_Addresses_Utility_AddressGroupConfiguration extends Tx_Addresses_Utility_ConfigurationAbstract {
+class Tx_Addresses_Utility_AddressgroupConfiguration extends Tx_Addresses_Utility_ConfigurationAbstract {
 
 	/**
 	 *
 	 * @var array
 	 */
-	protected static $namespace = 'AddressGroup';
+	protected static $namespace = 'Addressgroup';
 
 	
 	/**

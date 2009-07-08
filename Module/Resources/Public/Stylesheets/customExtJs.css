@@ -53,16 +53,10 @@ body .x-panel {margin-bottom:0}
 }
 
 .x-panel-header {
-	background-image: url(/typo3/contrib/extjs/resources/images/default/tabs/tab-strip-bg.gif);
+	background-image: url(/typo3/sysext/t3skin/extjs/images/tabs/tab-strip-bg.gif);
 	border-left-width: 0;
+	padding-bottom: 3px;
 }
-
-/*
-Old styles for .x-panel-header
-background-color: #CEDFF5;
-border-color: #8DB2E3;
-padding-bottom: 4px;
-*/
 
 .x-tab-strip, .x-tab-panel-header {
 	border-bottom-width: 0px;

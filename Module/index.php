@@ -144,9 +144,6 @@ class tx_addresses_module extends t3lib_SCbase {
         $_EXTKEY = 'addresses';
         require($this->absolutePath .'/ext_emconf.php');
         $this->version = $EM_CONF['addresses']['version'];
-
-        // Defines a default ExtJS style
-        $GLOBALS['TBE_STYLES']['extJS']['theme'] = $this->doc->backPath . 'contrib/extjs/resources/css/xtheme-blue.css';
     }
 
     /**

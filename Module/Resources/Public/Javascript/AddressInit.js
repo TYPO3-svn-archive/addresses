@@ -34,7 +34,8 @@
  */
 
 Addresses.initialize = function() {
-	
+	Ext.QuickTips.init();
+
 	Address.initGrid();
 
 	// Prepare + initialize editing window

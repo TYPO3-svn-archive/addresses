@@ -380,7 +380,10 @@ EOF;
 		$configuration['anchor'] = '30%';
 		$configuration['style'] = array('marginBottom' => '10px', 'marginLeft' => '65%');
 		$namespace = str_replace('Tx_Addresses_Domain_Model_', '', $foreignClass);
-		$configuration['handler'] = 'function() {' . $namespace . '.window.setTitle(Addresses.lang.new_record); ' . $namespace . '.window.show()}';
+		$function = $namespace . '.window.setTitle(Addresses.lang.new_record); ';
+		$function .= $namespace . '.window.show(); ';
+		$function .= $namespace . '.window.findById(\'' . strtolower($namespace) . 'MonitoringPanel\').setVisible(false); ';
+		$configuration['handler'] = 'function() {' . $function . '}';
 		return $configuration;
 	}
 

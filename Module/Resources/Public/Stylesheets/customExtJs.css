@@ -70,3 +70,7 @@ body .x-panel {margin-bottom:0}
 	background-color: #EFEFEF;
 	background-color: #FFF;
 }
+
+.x-box-mc {
+	font-weight: normal;
+}

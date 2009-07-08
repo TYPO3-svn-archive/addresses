@@ -149,7 +149,7 @@ Address.initGrid = function() {
 		handler: function() {
 			Address.window.setTitle(Addresses.lang.new_record); // set title
 			Address.form.reset(); // clear form
-			Address.window.findById('addressInformationPanel').setVisible(false);
+			Address.window.findById('addressMonitoringPanel').setVisible(false);
 			Address.window.show();
 			Address.window.focusOnFirstVisibleField();
 		}

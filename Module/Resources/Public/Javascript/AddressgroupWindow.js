@@ -40,7 +40,7 @@ Addressgroup.initWindow = function() {
 	 * Buttons: save - cancel attached to the form panel
 	 */
 	configuration.buttons = [{
-		text: 'save',
+		text: Addresses.lang.save,
 		id: 'addressgroupSaveButton',
 		listeners: {
 			click: function(){
@@ -60,7 +60,7 @@ Addressgroup.initWindow = function() {
 							addressgroups: uid,
 							addressgroups_text: title
 						},uid));
-						Addressgroup.window.hide();
+						Addressgroup.window.setStatusSending(false);
 					},
 					failure: function(form,call){
 						if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -79,7 +79,7 @@ Addressgroup.initWindow = function() {
 					if (form.isValid()) {
 						submit.clientValidation = true;
 						form.submit(submit);
-						Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+						Addressgroup.window.setStatusSending(true);
 					}
 					else {
 						Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
@@ -94,7 +94,8 @@ Addressgroup.initWindow = function() {
 		}
 	},
 	{
-		text: 'Cancel',
+		text: Addresses.lang.cancel,
+		id: 'addressgroupCancelButton',
 		handler: function(){
 			Addressgroup.window.hide();
 		}
@@ -150,7 +151,7 @@ Addressgroup.initWindow = function() {
 					labelSeparator: ""
 				},{
 					xtype: 'panel',
-					id: 'addressgroupinformationPanel',
+					id: 'addressgroupMonitoringPanel',
 					tpl: new Ext.Template([
 						'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
 						'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
@@ -181,10 +182,10 @@ Addressgroup.initWindow = function() {
 		items: configuration.formPanel,
 		listeners: {
 			show: function() {
-				var informationPanel = Addressgroup.window.findById('addressgroupinformationPanel');
-				if (informationPanel) {
-					var tpl = informationPanel.tpl;
-					tpl.overwrite(informationPanel.body,Addressgroup.data);
+				var monitoringPanel = Addressgroup.window.findById('addressgroupMonitoringPanel');
+				if (monitoringPanel) {
+					var tpl = monitoringPanel.tpl;
+					tpl.overwrite(monitoringPanel.body,Addressgroup.data);
 				}
 			}
 		},
@@ -301,10 +302,29 @@ Addressgroup.initWindow = function() {
 						Addressgroup.data = call.result.data;
 						Addressgroup.window.show();
 						Addressgroup.window.focusOnFirstVisibleField();
-						Addressgroup.window.findById('addressgroupinformationPanel').setVisible(true);
+						Addressgroup.window.findById('addressgroupMonitoringPanel').setVisible(true);
 					}
 				});
 			}
+		},
+
+		/**
+		 * Changes GUI according to status. Makes the buttons unavailable + display a message
+		 *
+		 * @access private
+		 * @return void
+		 */
+		setStatusSending: function(status) {
+			if (status) {
+				Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+			}
+			else {
+				Addressgroup.window.hide();
+				Addressgroup.form.reset();
+				Ext.Message.clearMsg();
+			}
+			Ext.ComponentMgr.get('addressgroupSaveButton').setDisabled(status);
+			Ext.ComponentMgr.get('addressgroupCancelButton').setDisabled(status);
 		},
 
 		/**

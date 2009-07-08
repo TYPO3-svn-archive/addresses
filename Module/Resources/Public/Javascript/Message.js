@@ -42,6 +42,9 @@ Ext.Message = function(){
 	}
 
 	return {
+		// Defines message box
+		messagBox: '',
+
 		msg : function(title, format){
 			if(!msgCt){
 				msgCt = Ext.DomHelper.insertFirst(document.body, {
@@ -50,12 +53,19 @@ Ext.Message = function(){
 			}
 			msgCt.alignTo(document, 't-t');
 			var s = String.format.apply(String, Array.prototype.slice.call(arguments, 1));
-			var m = Ext.DomHelper.append(msgCt, {
+			this.messageBox = Ext.DomHelper.append(msgCt, {
 				html:createBox(title, s)
 			}, true);
-			m.slideIn('t').pause(1).ghost("t", {
+			this.messageBox.slideIn('t');
+//			.pause(1).ghost("t", {
+//				remove:true
+//			})
+		},
+
+		clearMsg: function() {
+			this.messageBox.ghost("t", {
 				remove:true
-			});
+			})
 		},
 
 		init : function(){

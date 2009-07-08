@@ -41,7 +41,7 @@
 			<label index="warning">Warning</label>
 			<label index="failure">Failure</label>
 			<label index="saving">Saving</label>
-			<label index="data_sent">Data has been sent to the server.</label>
+			<label index="data_sent">Data are being sent.&gt;br/&lt;Please wait...</label>
 			<label index="name">Name</label>
 			<label index="invalidDate">{0} is not a valid date - it must be in the format {1}</label>
 			<label index="maxLengthText">The maximum length for this field is {0} characters</label>
@@ -53,6 +53,8 @@
 			<label index="updatedOn">Updated on the</label>
 			<label index="by">by</label>
 			<label index="addNewElement">Add new element</label>
+			<label index="save">Save</label>
+			<label index="cancel">Cancel</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>
@@ -90,7 +92,7 @@
 			<label index="warning">Alerte</label>
 			<label index="failure">Echec</label>
 			<label index="saving">Sauvegarde</label>
-			<label index="data_sent">Les données sont envoyés au serveur.</label>
+			<label index="data_sent">Les données sont en cours d'envoi.&lt;br/&gt;Veuillez patienter...</label>
 			<label index="name">Nom</label>
 			<label index="invalidDate">{0} n'est pas un date valide. Le format attendu est {1}</label>
 			<label index="maxLengthText">La longueur maximum pour ce champ est de {0} caractères</label>
@@ -102,6 +104,8 @@
 			<label index="updatedOn">Modifié le</label>
 			<label index="by">par</label>
 			<label index="addNewElement">Ajouter un élément</label>
+			<label index="save">Sauver</label>
+			<label index="cancel">Annuler</label>
 		</languageKey>
 	</data>
 </T3locallang>

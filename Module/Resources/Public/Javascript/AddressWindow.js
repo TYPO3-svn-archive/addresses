@@ -40,7 +40,7 @@ Address.initWindow = function() {
 	 * Buttons: save - cancel attached to the form panel
 	 */
 	configuration.buttons = [{
-		text: 'save',
+		text: Addresses.lang.save,
 		id: 'addressSaveButton',
 		listeners: {
 			click: function(){
@@ -53,7 +53,7 @@ Address.initWindow = function() {
 						ajaxID: 'AddressController::saveAction'
 					},
 					success: function(form,call){
-						Address.window.hide();
+						Address.window.setStatusSending(false);
 						Ext.StoreMgr.get('addressStore').load();
 					},
 					failure: function(form,call){
@@ -73,7 +73,7 @@ Address.initWindow = function() {
 					if (form.isValid()) {
 						submit.clientValidation = true;
 						form.submit(submit);
-						Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+						Address.window.setStatusSending(true);
 					}
 					else {
 						Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
@@ -88,7 +88,7 @@ Address.initWindow = function() {
 		}
 	},
 	{
-		text: 'Cancel',
+		text: Addresses.lang.cancel,
 		handler: function(){
 			Address.window.hide();
 		}
@@ -143,7 +143,7 @@ Address.initWindow = function() {
 					labelSeparator: ""
 				},{
 					xtype: 'panel',
-					id: 'addressInformationPanel',
+					id: 'addressMonitoringPanel',
 					tpl: new Ext.Template([
 						'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
 						'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
@@ -174,10 +174,10 @@ Address.initWindow = function() {
 		items: configuration.formPanel,
 		listeners: {
 			show: function() {
-				var informationPanel = Address.window.findById('addressInformationPanel');
-				if (informationPanel) {
-					var tpl = informationPanel.tpl;
-					tpl.overwrite(informationPanel.body,Address.data);
+				var monitoringPanel = Address.window.findById('addressMonitoringPanel');
+				if (monitoringPanel) {
+					var tpl = monitoringPanel.tpl;
+					tpl.overwrite(monitoringPanel.body,Address.data);
 				}
 			}
 		},
@@ -347,10 +347,29 @@ Address.initWindow = function() {
 						Address.data = call.result.data;
 						Address.window.show();
 						Address.window.focusOnFirstVisibleField();
-						Address.window.findById('addressInformationPanel').setVisible(true);
+						Address.window.findById('addressMonitoringPanel').setVisible(true);
 					}
 				});
 			}
+		},
+		
+		/**
+		 * Changes GUI according to status. Makes the buttons unavailable + display a message
+		 *
+		 * @access private
+		 * @return void
+		 */
+		setStatusSending: function(status) {
+			if (status) {
+				Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+			}
+			else {
+				Address.window.hide();
+				Address.form.reset();
+				Ext.Message.clearMsg();
+			}
+			Ext.ComponentMgr.get('addressSaveButton').setDisabled(status);
+			Ext.ComponentMgr.get('addressCancelButton').setDisabled(status);
 		},
 
 		/**

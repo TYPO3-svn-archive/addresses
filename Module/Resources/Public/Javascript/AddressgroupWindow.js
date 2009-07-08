@@ -30,7 +30,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @package	TYPO3
  * @subpackage	tx_addresses
- * @version $Id: AddressGroupWindow.js 22132 2009-07-07 21:01:33Z fabien_u $
+ * @version $Id$
  */
 
 Addressgroup.initWindow = function() {

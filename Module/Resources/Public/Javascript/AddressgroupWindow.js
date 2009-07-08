@@ -252,62 +252,6 @@ Addressgroup.initWindow = function() {
 			}
 		},
 
-
-		/**
-		 * Mode could be either copy or new
-		 */
-		display: function(state) {
-			var sm = Addressgroup.grid.getSelectionModel();
-			var selections = sm.getSelections();
-			var data = new Array();
-			for (var index = 0; index < selections.length; index ++) {
-				// Get selections
-				var selection = selections[index];
-				data[index] = {
-					uid: selection.data.uid
-				};
-			}
-
-			if (data.length > 0) {
-				Addressgroup.form.reset(); // clear form
-
-				Ext.Msg.progress(Addresses.lang.loading, '');
-				Addressgroup.startInterval();
-
-				Addressgroup.form.load({
-					method: 'GET',
-					url: Addresses.statics.ajaxController,
-					params:{
-						method: 'GET',
-						ajaxID: 'AddressgroupController::editAction',
-						data: Ext.util.JSON.encode(data)
-					},
-					text: 'Loading',
-					success: function(form,call) {
-						// Set title
-						if (state == 'multipleEdit') {
-							Addressgroup.window.setTitle(Addresses.lang.multiple_update_record); // set title
-						}
-						else if (state == 'edit') {
-							Addressgroup.window.setTitle(Addresses.lang.update_record); // set title
-						}
-						else if (state == 'copy'){
-							// Removes the id so that the server will consider the data as a new record
-							form.findField('addressgroupUid').setValue('');
-							Addressgroup.window.setTitle(Addresses.lang.copy_record); // set title
-						}
-
-						window.clearInterval(Addressgroup.interval);
-						Ext.Msg.hide();
-						Addressgroup.data = call.result.data;
-						Addressgroup.window.show();
-						Addressgroup.window.focusOnFirstVisibleField();
-						Addressgroup.window.findById('addressgroupMonitoringPanel').setVisible(true);
-					}
-				});
-			}
-		},
-
 		/**
 		 * Changes GUI according to status. Makes the buttons unavailable + display a message
 		 *

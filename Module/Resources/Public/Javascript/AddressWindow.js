@@ -100,7 +100,7 @@ Address.initWindow = function() {
 	configuration.tabPanel = {
 		xtype:'tabpanel',
 		height: Address.layout.windowHeight,
-		activeTab: 2,
+		activeTab: 0,
 		deferredRender: false,
 		defaults:{
 			bodyStyle:'padding:5px'
@@ -313,10 +313,8 @@ Address.initWindow = function() {
 
 			if (dataSet.length > 0) {
 				Address.form.reset(); // clear form
-
-//				Ext.Msg.progress(Addresses.lang.loading, '');
-//				Address.startInterval();
-
+				Address.window.waitMask.show();
+				
 				Address.form.load({
 					method: 'GET',
 					url: Addresses.statics.ajaxController,
@@ -326,8 +324,6 @@ Address.initWindow = function() {
 						dataSet: Ext.util.JSON.encode(dataSet)
 					},
 					waitTitle: Addresses.lang.loading,
-					waitMsg: '&nbsp;',
-					text: 'Loading',
 					success: function(form,call) {
 						// Set title
 						if (state == 'multipleEdit') {
@@ -341,9 +337,7 @@ Address.initWindow = function() {
 							form.findField('addressUid').setValue('');
 							Address.window.setTitle(Addresses.lang.copy_record); // set title
 						}
-
-//						window.clearInterval(Address.interval);
-						Ext.Msg.hide();
+						Address.window.waitMask.hide();
 						Address.data = call.result.data;
 						Address.window.show();
 						Address.window.focusOnFirstVisibleField();
@@ -352,6 +346,11 @@ Address.initWindow = function() {
 				});
 			}
 		},
+
+		/**
+		 * Object used for display a mask when the user is waiting
+		 */
+		waitMask: new Ext.LoadMask(Ext.getBody(), {msg: Addresses.lang.loading}),
 		
 		/**
 		 * Changes GUI according to status. Makes the buttons unavailable + display a message

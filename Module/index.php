@@ -144,6 +144,9 @@ class tx_addresses_module extends t3lib_SCbase {
         $_EXTKEY = 'addresses';
         require($this->absolutePath .'/ext_emconf.php');
         $this->version = $EM_CONF['addresses']['version'];
+
+		// Defines a default ExtJS style
+        $GLOBALS['TBE_STYLES']['extJS']['theme'] = 'sysext/t3skin/extjs/xtheme-t3skin.css';
     }
 
     /**
@@ -191,7 +194,7 @@ class tx_addresses_module extends t3lib_SCbase {
 
     // Loads extjs
         $this->doc->enableExtJsDebug(); // use for debug
-        $this->doc->loadExtJS(true, xtheme-gray.css);
+        $this->doc->loadExtJS(true);
 
         // Load special CSS Stylesheets:
         $this->loadStylesheet($this->resourcesPath . 'Stylesheets/customExtJs.css');
@@ -245,11 +248,6 @@ class tx_addresses_module extends t3lib_SCbase {
             $stores = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getStores');
             $fieldsWindow = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getWindowConfiguration');
             $layout = array('windowHeight' => $this->getWindowHeight($fieldsWindow));
-
-			if($namespace == 'Addressgroup') {
-//				t3lib_div::debug($fieldsWindow, '$fieldsWindow');
-//				exit();
-			}
 
             $this->doc->extJScode .= '
 				' . $namespace . '.stores = {' . implode(',', $stores) . '};

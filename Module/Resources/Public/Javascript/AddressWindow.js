@@ -53,7 +53,7 @@ Address.initWindow = function() {
 						ajaxID: 'AddressController::saveAction'
 					},
 					success: function(form,call){
-						Address.window.setStatusSending(false);
+						Address.window.close();
 						Ext.StoreMgr.get('addressStore').load();
 					},
 					failure: function(form,call){
@@ -73,7 +73,7 @@ Address.initWindow = function() {
 					if (form.isValid()) {
 						submit.clientValidation = true;
 						form.submit(submit);
-						Address.window.setStatusSending(true);
+						Address.window.wait();
 					}
 					else {
 						Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
@@ -89,8 +89,9 @@ Address.initWindow = function() {
 	},
 	{
 		text: Addresses.lang.cancel,
+		id: 'addressCancelButton',
 		handler: function(){
-			Address.window.hide();
+			Address.window.close();
 		}
 	}];
 
@@ -295,7 +296,6 @@ Address.initWindow = function() {
 			}
 		},
 
-
 		/**
 		 * Mode could be either copy or new
 		 */
@@ -341,7 +341,6 @@ Address.initWindow = function() {
 						Address.data = call.result.data;
 						Address.window.show();
 						Address.window.focusOnFirstVisibleField();
-						Address.window.findById('addressMonitoringPanel').setVisible(true);
 					}
 				});
 			}
@@ -351,24 +350,32 @@ Address.initWindow = function() {
 		 * Object used for display a mask when the user is waiting
 		 */
 		waitMask: new Ext.LoadMask(Ext.getBody(), {msg: Addresses.lang.loading}),
-		
+
 		/**
 		 * Changes GUI according to status. Makes the buttons unavailable + display a message
 		 *
 		 * @access private
 		 * @return void
 		 */
-		setStatusSending: function(status) {
-			if (status) {
-				Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
-			}
-			else {
-				Address.window.hide();
-				Address.form.reset();
-				Ext.Message.clearMsg();
-			}
-			Ext.ComponentMgr.get('addressSaveButton').setDisabled(status);
-			Ext.ComponentMgr.get('addressCancelButton').setDisabled(status);
+		wait: function() {
+			Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+			Ext.ComponentMgr.get('addressSaveButton').setDisabled(true);
+			Ext.ComponentMgr.get('addressCancelButton').setDisabled(true);
+		},
+
+		/**
+		 * Closes the window and resets other things
+		 *
+		 * @access private
+		 * @return void
+		 */
+		close: function() {
+			Address.window.hide();
+			Address.form.reset();
+			Ext.Message.clearMsg();
+			Ext.ComponentMgr.get('addressSaveButton').setDisabled(false);
+			Ext.ComponentMgr.get('addressCancelButton').setDisabled(false);
+			Address.window.findById('addressMonitoringPanel').setVisible(true);
 		},
 
 		/**

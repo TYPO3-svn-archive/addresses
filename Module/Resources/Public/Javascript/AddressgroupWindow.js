@@ -40,66 +40,66 @@ Addressgroup.initWindow = function() {
 	 * Buttons: save - cancel attached to the form panel
 	 */
 	configuration.buttons = [{
-		text: Addresses.lang.save,
-		id: 'addressgroupSaveButton',
-		listeners: {
-			click: function(){
-				// DEFINES THE SUBMIT OBJECT
-				var submit = {
-					clientValidation: true,
-					method: 'GET',
-					url: Addresses.statics.ajaxController,
-					params:{
-						ajaxID: 'AddressgroupController::saveAction'
-					},
-					success: function(form,call){
-						var uid = call.result.rows[0].uid;
-						var title = call.result.rows[0].title
-						//Add this record to the stores
-						Address.stores.addressgroups.add(new Ext.data.Record({
-							addressgroups: uid,
-							addressgroups_text: title
-						},uid));
-						Addressgroup.window.setStatusSending(false);
-					},
-					failure: function(form,call){
-						if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
-							Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + call.response.status + ' ' + call.response.statusText);
+			text: Addresses.lang.save,
+			id: 'addressgroupSaveButton',
+			listeners: {
+				click: function(){
+					// DEFINES THE SUBMIT OBJECT
+					var submit = {
+						clientValidation: true,
+						method: 'GET',
+						url: Addresses.statics.ajaxController,
+						params:{
+							ajaxID: 'AddressgroupController::saveAction'
+						},
+						success: function(form, call){
+							var uid = call.result.rows[0].uid;
+							var title = call.result.rows[0].title
+							//Add this record to the stores
+							Address.stores.addressgroups.add(new Ext.data.Record({
+								addressgroups: uid,
+								addressgroups_text: title
+							},uid));
+							Addressgroup.window.close();
+						},
+						failure: function(form,call){
+							if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
+								Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + call.response.status + ' ' + call.response.statusText);
+							}
+							else if (call.failureType === Ext.form.Action.SERVER_INVALID) {
+								Ext.Msg.alert(Addresses.lang.warning, call.result.errormsg);
+							}
 						}
-						else if (call.failureType === Ext.form.Action.SERVER_INVALID) {
-							Ext.Msg.alert(Addresses.lang.warning, call.result.errormsg);
-						}
-					}
-				};
+					};
 
-				// case multiple edition -> don't validate form
-				var form = Addressgroup.form
-				var uid = form.findField('addressgroupUid').getValue();
-				if (uid == '' || uid.search(',') == -1) {
-					if (form.isValid()) {
-						submit.clientValidation = true;
-						form.submit(submit);
-						Addressgroup.window.setStatusSending(true);
+					// case multiple edition -> don't validate form
+					var form = Addressgroup.form
+					var uid = form.findField('addressgroupUid').getValue();
+					if (uid == '' || uid.search(',') == -1) {
+						if (form.isValid()) {
+							submit.clientValidation = true;
+							form.submit(submit);
+							Addressgroup.window.wait();
+						}
+						else {
+							Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
+						}
 					}
 					else {
-						Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
+						form.clearInvalid();
+						submit.clientValidation = false;
+						form.submit(submit);
 					}
 				}
-				else {
-					form.clearInvalid();
-					submit.clientValidation = false;
-					form.submit(submit);
-				}
 			}
-		}
-	},
-	{
-		text: Addresses.lang.cancel,
-		id: 'addressgroupCancelButton',
-		handler: function(){
-			Addressgroup.window.hide();
-		}
-	}];
+		},
+		{
+			text: Addresses.lang.cancel,
+			id: 'addressgroupCancelButton',
+			handler: function(){
+				Addressgroup.window.close();
+			}
+		}];
 
 
 	/**
@@ -112,7 +112,7 @@ Addressgroup.initWindow = function() {
 		deferredRender: false,
 		defaults:{
 			bodyStyle:'padding:5px'
-		//					autoHeight: true,
+			//					autoHeight: true,
 		},
 		items: Addressgroup.fieldsWindow
 	};
@@ -131,33 +131,33 @@ Addressgroup.initWindow = function() {
 			xtype: 'panel',
 			layout:'column',
 			items: [{
-				columnWidth: .60,
-				items: configuration.tabPanel
-			},{
-				title: Addresses.lang.information,
-				columnWidth: .40,
-				xtype: 'panel',
-				layout:'form',
-				bodyStyle: 'padding: 5px 0 5px 5px',
-				items: [{
-					xtype: "textarea",
-					height: 150,
-					name: "remarks",
-					id: "addressgroupRemarks",
-					fieldLabel: Addresses.lang.remarks,
-					selectOnFocus:true,
-					anchor: "95%",
-					blankText: Addresses.lang.fieldMandatory,
-					labelSeparator: ""
+					columnWidth: .60,
+					items: configuration.tabPanel
 				},{
+					title: Addresses.lang.information,
+					columnWidth: .40,
 					xtype: 'panel',
-					id: 'addressgroupMonitoringPanel',
-					tpl: new Ext.Template([
-						'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
-						'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
-						])
+					layout:'form',
+					bodyStyle: 'padding: 5px 0 5px 5px',
+					items: [{
+							xtype: "textarea",
+							height: 150,
+							name: "remarks",
+							id: "addressgroupRemarks",
+							fieldLabel: Addresses.lang.remarks,
+							selectOnFocus:true,
+							anchor: "95%",
+							blankText: Addresses.lang.fieldMandatory,
+							labelSeparator: ""
+						},{
+							xtype: 'panel',
+							id: 'addressgroupMonitoringPanel',
+							tpl: new Ext.Template([
+								'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
+								'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
+							])
+						}]
 				}]
-			}]
 		}
 	};
 
@@ -218,23 +218,23 @@ Addressgroup.initWindow = function() {
 				var combobox = comboboxes[index];
 				if (combobox.editable) {
 					combobox.on(
-						'blur',
-						function(el) {
-							var value = el.getValue();
-							var id = el.getId().replace('groupAddress', '').toLowerCase()
+					'blur',
+					function(el) {
+						var value = el.getValue();
+						var id = el.getId().replace('groupAddress', '').toLowerCase()
 
-							// Makes sure the value is not null
-							if (value != '') {
-								eval('var record = Addressgroup.stores.' + id + '.getById("' + value + '");');
+						// Makes sure the value is not null
+						if (value != '') {
+							eval('var record = Addressgroup.stores.' + id + '.getById("' + value + '");');
 
-								// Add a new value to the store object
-								if (typeof(record) == 'undefined') {
+							// Add a new value to the store object
+							if (typeof(record) == 'undefined') {
 
-									// Add this record
-									eval('Addressgroup.stores.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
-								}
+								// Add this record
+								eval('Addressgroup.stores.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
 							}
-						});
+						}
+					});
 				}
 			}
 		},
@@ -258,17 +258,25 @@ Addressgroup.initWindow = function() {
 		 * @access private
 		 * @return void
 		 */
-		setStatusSending: function(status) {
-			if (status) {
-				Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
-			}
-			else {
-				Addressgroup.window.hide();
-				Addressgroup.form.reset();
-				Ext.Message.clearMsg();
-			}
-			Ext.ComponentMgr.get('addressgroupSaveButton').setDisabled(status);
-			Ext.ComponentMgr.get('addressgroupCancelButton').setDisabled(status);
+		wait: function() {
+			Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+			Ext.ComponentMgr.get('addressgroupSaveButton').setDisabled(true);
+			Ext.ComponentMgr.get('addressgroupCancelButton').setDisabled(true);
+		},
+
+		/**
+		 * Closes the window and resets other things
+		 *
+		 * @access private
+		 * @return void
+		 */
+		close: function() {
+			Addressgroup.window.hide();
+			Addressgroup.form.reset();
+			Ext.Message.clearMsg();
+			Ext.ComponentMgr.get('addressgroupSaveButton').setDisabled(false);
+			Ext.ComponentMgr.get('addressgroupCancelButton').setDisabled(false);
+			Addressgroup.window.findById('addressgroupMonitoringPanel').setVisible(true);
 		},
 
 		/**

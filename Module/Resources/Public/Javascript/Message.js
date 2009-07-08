@@ -43,7 +43,7 @@ Ext.Message = function(){
 
 	return {
 		// Defines message box
-		messagBox: '',
+		messagBox: null,
 
 		msg : function(title, format){
 			if(!msgCt){
@@ -63,9 +63,11 @@ Ext.Message = function(){
 		},
 
 		clearMsg: function() {
-			this.messageBox.ghost("t", {
-				remove:true
-			})
+			if (this.messageBox) {
+				this.messageBox.ghost("t", {
+					remove:true
+				})
+			}
 		},
 
 		init : function(){

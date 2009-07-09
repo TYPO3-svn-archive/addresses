@@ -56,7 +56,7 @@ Ext.Message = function(){
 			this.messageBox = Ext.DomHelper.append(msgCt, {
 				html:createBox(title, s)
 			}, true);
-			this.messageBox.slideIn('t');
+//			this.messageBox.slideIn('t', { duration: 10, easing: 'easeOut' });
 //			.pause(1).ghost("t", {
 //				remove:true
 //			})
@@ -64,9 +64,10 @@ Ext.Message = function(){
 
 		clearMsg: function() {
 			if (this.messageBox) {
-				this.messageBox.ghost("t", {
-					remove:true
-				})
+				this.messageBox.hide();
+//				this.messageBox.ghost("t", {
+//					remove:true
+//				})
 			}
 		},
 

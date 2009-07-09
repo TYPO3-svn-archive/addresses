@@ -117,7 +117,7 @@ Address.initGrid = function() {
 	/**
 	 * Top bar which is attached to the grid
 	 */
-	configuration.topbar = [
+	configuration.topBar = [
 	{
 		text: Addresses.lang.add,
 		icon: configuration.iconsPath + 'accept.png',
@@ -163,18 +163,14 @@ Address.initGrid = function() {
 	/**
 	 * Bottom Bar
 	 */
-	configuration.bottomBar = [{
-		id: 'recordPaging',
+	configuration.bottomBar = {
+		id: 'gridPaging',
 		xtype: 'paging',
 		store: configuration.datasource,
 		pageSize: Addresses.statics.pagingSize,
-		refreshText: '',
-		lastText: '',
-		nextText: '',
-		prevText: '',
-		firstText: ''
-	}];
-
+		plugins: new Ext.ux.ProgressBarPager(),
+		displayInfo: true
+	};
 
 	// adjust columns layout + render the grid
 	Address.fieldsGrid.unshift(configuration.checkbox, configuration.expander); // add checkbox + expander to the grid
@@ -203,7 +199,7 @@ Address.initGrid = function() {
 		plugins: configuration.expander,
 		columns: Address.fieldsGrid,
 		selModel: configuration.checkbox,
-		tbar: configuration.topbar,
+		tbar: configuration.topBar,
 		bbar: configuration.bottomBar,
 		listeners: {
 			dblclick: function(e) {

@@ -120,12 +120,14 @@ class Tx_Addresses_Utility_TCE {
 		$configuration['editable'] = isset($tca['editable']) ? $tca['editable'] : TRUE;
 
 		if (isset($tca['default'])) {
-			$configuration['value'] = $LANG->sL($tca['default']);
+			// Generates a GUI bug on FF
+//			$configuration['value'] = $LANG->sL($tca['default']);
 		}
 
 		// Add configuration for non-editable field
 		if (isset($tca['editable']) && !$tca['editable']) {
-			$configuration['value'] = '0'; // assume value 0 is defined in the combobox
+			// Generates a GUI bug on FF
+//			$configuration['value'] = '0'; // assume value 0 is defined in the combobox
 			$configuration['valueField'] = $fieldName;
 			$configuration['hiddenName'] = $fieldName;
 			$configuration['id'] = $fieldName . '_id'; // Must be different to avoid conflict. 2 fiels are created. One is hidden

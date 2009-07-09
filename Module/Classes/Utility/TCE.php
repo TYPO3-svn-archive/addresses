@@ -262,6 +262,32 @@ EOF;
 	}
 
 	/**
+	 * Returns the height of the itemSelector. This value is within 150 and 300 (px).
+	 *
+	 * @global t3lib_DB $TYPO3_DB
+	 * @param array $tca
+	 * @return int
+	 */
+	protected static function getHeight($tca) {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TYPO3_DB;
+		$height = 150;
+
+		if (isset($tca['foreign_table'])) {
+			$foreignTable = $tca['foreign_table'];
+			$clause = 'deleted = 0 ';
+			$clause .= t3lib_BEfunc::BEenableFields($foreignTable);
+			$record = $TYPO3_DB->exec_SELECTcountRows('*', $foreignTable, $clause);
+			$_height = $record * 22;
+			// Defines the limit
+			if ($_height > 150 && $_height < 300) {
+				$height = $_height;
+			}
+		}
+		return $height;
+	}
+
+	/**
 	 * Returns the common configuration of element textarea.
 	 *
 	 * @param	array		$columns which corresponds the TCA's columns
@@ -270,9 +296,10 @@ EOF;
 	 * @return	array
 	 */
 	public static function getItemSelector(&$columns, $fieldName, $namespace) {
-		$width = 170;
-		$height = 150;
 		$tca =  $columns[$fieldName]['config'];
+		$width = 170;
+		$height = self::getHeight($tca);
+
 		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 
 		$configuration['xtype'] = 'itemselector';

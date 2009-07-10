@@ -80,7 +80,7 @@ class tx_addresses_module extends t3lib_SCbase {
     /**
      * @var $javascriptFiles array
      */
-    protected $javascriptFiles = array('Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressgroupWindow');
+    protected $javascriptFiles = array('Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressgroupWindow');
 
     /**
      * @var $relativePath string
@@ -198,6 +198,7 @@ class tx_addresses_module extends t3lib_SCbase {
 
         // Load special CSS Stylesheets:
         $this->loadStylesheet($this->resourcesPath . 'Stylesheets/customExtJs.css');
+        $this->loadStylesheet($this->resourcesPath . 'Stylesheets/StatusBar.css');
 
         // Load special JS
         if ($this->minifyJavascript) {
@@ -254,7 +255,6 @@ class tx_addresses_module extends t3lib_SCbase {
 				' . $namespace . '.gridFields = ' . Tx_Addresses_Utility_TCE::removesQuotes($namespace, json_encode($gridFields)) . ';
 				' . $namespace . '.gridFieldsType = ' . json_encode($gridFieldsType) . ';
 				' . $namespace . '.windowFields = ' . Tx_Addresses_Utility_TCE::removesQuotes($namespace, json_encode($windowFields)) . ';
-				' . $namespace . '.data = new Object();
 				' . $namespace . '.layout = ' . json_encode($layout) . ';' . chr(10);
         }
 

@@ -411,7 +411,6 @@ EOF;
 		$namespace = str_replace('Tx_Addresses_Domain_Model_', '', $foreignClass);
 		$function = $namespace . '.window.setTitle(Addresses.lang.new_record); ';
 		$function .= $namespace . '.window.show(); ';
-		$function .= $namespace . '.window.findById(\'' . strtolower($namespace) . 'MonitoringPanel\').setVisible(false); ';
 		$configuration['handler'] = 'function() {' . $function . '}';
 		return $configuration;
 	}

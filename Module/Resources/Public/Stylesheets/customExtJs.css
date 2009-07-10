@@ -16,11 +16,22 @@ body .x-panel { margin-bottom:20px; }
 
 .deletedPath { color: #ff0000; font-weight: bold; }
 
+/* a better display for the progress bar */
 div.x-progress-inner div.x-progress-text:first-child {display:none}
 
-.x-window-body { padding: 5px; }
-.x-window-body label { display: block; margin: 5px 0; }
-.x-window-body .x-form-cb-label { margin-left: 5px; }
+/* Makes the close button invisible
+div.x-window-tc div.x-tool-close {visibility: hidden}
+*/
+
+/* Makes the inner window a bit bigger */
+div.x-window-bbar div.x-toolbar {border-top-width: 0px;}
+div.x-panel-mc, div.x-panel-ml, div.x-panel-mr, div.x-panel-bl, div.x-panel-tl  {padding: 0; border: 0;}
+div.x-panel-bl {height: 0}
+div.x-window-body {padding: 0px; border-top-width: 0px;}
+div.x-tab-panel-body {border-left-width: 0px; border-right-width: 0;}
+
+div.x-window-body label { display: block; margin: 5px 0; }
+div.x-window-body .x-form-cb-label { margin-left: 5px; }
 
 
 .blue-row .x-grid3-cell-inner{
@@ -34,6 +45,7 @@ div.x-progress-inner div.x-progress-text:first-child {display:none}
 }
 
 .pointer {cursor: pointer}
+.window-icon { background: url(../icons/filter_refresh.png) 0 6px no-repeat !important;}
 
 #msg-div {
     position:absolute;
@@ -43,28 +55,24 @@ div.x-progress-inner div.x-progress-text:first-child {display:none}
     z-index:20000;
 }
 
-.my-icon { background: url(../icons/filter_refresh.png) 0 6px no-repeat !important;}
-
 body .x-panel {margin-bottom:0}
 
 .x-tbar-page-number {
 	padding-top: 2px
 }
 
-.x-panel-header {
+div.x-panel-header {
 	background-image: url(/typo3/sysext/t3skin/extjs/images/tabs/tab-strip-bg.gif);
 	border-left-width: 0;
+	border-top-width: 0;
 	padding-bottom: 3px;
 }
 
-.x-tab-strip, .x-tab-panel-header {
-	border-bottom-width: 0px;
+div.x-tab-panel-header {
+	border-width: 0;
 	padding-bottom: 0px;
 }
 
-.x-tab-panel-body, .x-tab-panel-header {
-	border-right-width: 0;
-}
 .x-panel {
 	background-color: #EFEFEF;
 	background-color: #FFF;

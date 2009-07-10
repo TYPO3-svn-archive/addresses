@@ -42,8 +42,11 @@ Address.initWindow = function() {
 	configuration.buttons = [{
 		text: Addresses.lang.save,
 		id: 'addressSaveButton',
+		cls: 'x-btn-text-icon',
+		icon: 'Resources/Public/Icons/database_save.png',
 		listeners: {
 			click: function(){
+				
 				// DEFINES THE SUBMIT OBJECT
 				var submit = {
 					clientValidation: true,
@@ -54,7 +57,7 @@ Address.initWindow = function() {
 						ajaxID: 'AddressController::saveAction'
 					},
 					success: function(form,call){
-						Address.window.close();
+						Address.window.hide();
 						Ext.StoreMgr.get('addressStore').load();
 					},
 					failure: function(form,call){
@@ -88,11 +91,14 @@ Address.initWindow = function() {
 			}
 		}
 	},
+	'-',
 	{
 		text: Addresses.lang.cancel,
 		id: 'addressCancelButton',
+		cls: 'x-btn-text-icon',
+		icon: 'Resources/Public/Icons/filter_clear.png',
 		handler: function(){
-			Address.window.close();
+			Address.window.hide();
 		}
 	}];
 
@@ -121,7 +127,6 @@ Address.initWindow = function() {
 		frame: true,
 		bodyStyle:'padding: 0',
 		labelAlign: 'top',
-		buttons: configuration.buttons,
 		items: {
 			xtype: 'panel',
 			layout:'column',
@@ -134,7 +139,7 @@ Address.initWindow = function() {
 				xtype: 'panel',
 				layout:'form',
 				bodyStyle: 'padding: 5px 0 5px 5px',
-				items: [{
+				items: {
 					xtype: "textarea",
 					height: 150,
 					name: "remarks",
@@ -144,14 +149,7 @@ Address.initWindow = function() {
 					anchor: "95%",
 					blankText: Addresses.lang.fieldMandatory,
 					labelSeparator: ""
-				},{
-					xtype: 'panel',
-					id: 'addressMonitoringPanel',
-					tpl: new Ext.Template([
-						'<div>' + Addresses.lang.createdOn + ' {crdate} ' + Addresses.lang.by + ' {cruser_id}</div>',
-						'<div>' + Addresses.lang.updatedOn + ' {tstamp} ' + Addresses.lang.by + ' {upuser_id}</div>',
-						])
-				}]
+				}
 			}]
 		}
 	};
@@ -160,27 +158,35 @@ Address.initWindow = function() {
 	 * Modal window that enables record editing: add - update data
 	 */
 	Address.window = new Ext.Window({
-
-		/*
-		 * Modal window that enables record editing: add - update data
-		 */
 		width: 700,
 		height: Address.layout.windowHeight,
 		modal: true,
 		layout: 'fit',
-		plain:true,
-		bodyStyle:'padding:5px;',
+		plain: true,
 		buttonAlign:'center',
 		title: '',
 		closeAction: 'hide',
-		iconCls: 'my-icon',
+		iconCls: 'window-icon',
 		items: configuration.formPanel,
+		tbar: configuration.buttons,
+		bbar: new Ext.ux.StatusBar({
+			defaultText: '&nbsp;',
+			text: '&nbsp;',
+			items: {}
+		}),
+		/**
+		 * Closes the window and resets other things
+		 *
+		 * @access private
+		 * @return void
+		 */
 		listeners: {
-			show: function() {
-				var monitoringPanel = Address.window.findById('addressMonitoringPanel');
-				if (monitoringPanel) {
-					var tpl = monitoringPanel.tpl;
-					tpl.overwrite(monitoringPanel.body,Address.data);
+			beforehide: function() {
+				if (typeof(Address.form) == 'object') {
+					Address.form.reset();
+					Ext.ComponentMgr.get('addressSaveButton').setDisabled(false);
+					Ext.ComponentMgr.get('addressCancelButton').setDisabled(false);
+					Address.window.getBottomToolbar().setStatus('&nbsp;');
 				}
 			}
 		},
@@ -340,7 +346,12 @@ Address.initWindow = function() {
 							Address.window.setTitle(Addresses.lang.copy_record); // set title
 						}
 						Address.window.waitMask.hide();
-						Address.data = call.result.data;
+						var data = call.result.data;
+						var message =  Addresses.lang.createdOn + ' ' + data.crdateTime + ' ' + Addresses.lang.by + ' ' + data.cruser_id;
+						message +=  '&nbsp;&nbsp; &bull; &nbsp;&nbsp;'
+						message += Addresses.lang.updatedOn + ' ' + data.tstampTime + ' ' + Addresses.lang.by + ' ' + data.upuser_id;
+						Address.window.getBottomToolbar().setStatus(message);
+
 						Address.window.show();
 						Address.window.focusOnFirstVisibleField();
 					}
@@ -351,7 +362,9 @@ Address.initWindow = function() {
 		/**
 		 * Object used for display a mask when the user is waiting
 		 */
-		waitMask: new Ext.LoadMask(Ext.getBody(), {msg: Addresses.lang.loading}),
+		waitMask: new Ext.LoadMask(Ext.getBody(), {
+			msg: Addresses.lang.loading
+		}),
 
 		/**
 		 * Changes GUI according to status. Makes the buttons unavailable + display a message
@@ -360,24 +373,9 @@ Address.initWindow = function() {
 		 * @return void
 		 */
 		wait: function() {
-//			Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+			//			Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
 			Ext.ComponentMgr.get('addressSaveButton').setDisabled(true);
 			Ext.ComponentMgr.get('addressCancelButton').setDisabled(true);
-		},
-
-		/**
-		 * Closes the window and resets other things
-		 *
-		 * @access private
-		 * @return void
-		 */
-		close: function() {
-//			Ext.Message.clearMsg();
-			Address.window.hide();
-			Address.form.reset();
-			Ext.ComponentMgr.get('addressSaveButton').setDisabled(false);
-			Ext.ComponentMgr.get('addressCancelButton').setDisabled(false);
-			Address.window.findById('addressMonitoringPanel').setVisible(true);
 		},
 
 		/**

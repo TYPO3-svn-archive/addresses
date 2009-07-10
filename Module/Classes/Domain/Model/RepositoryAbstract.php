@@ -201,6 +201,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 					&& strpos($tca['config']['eval'], 'date') !== FALSE
 					&& $value) {
 					$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
+					$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
 				}
 				// userFunc
 				else if (isset($tca['config']['type']) && $tca['config']['type'] == 'user') {

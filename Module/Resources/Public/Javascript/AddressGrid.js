@@ -131,8 +131,6 @@ Address.initGrid = function() {
 		cls: 'x-btn-text-icon',
 		handler: function() {
 			Address.window.setTitle(Addresses.lang.new_record); // set title
-			Address.form.reset(); // clear form
-			Address.window.findById('addressMonitoringPanel').setVisible(false);
 			Address.window.show();
 			Address.window.focusOnFirstVisibleField();
 		}

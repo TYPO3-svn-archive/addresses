@@ -55,7 +55,7 @@
 			<label index="addNewElement">Add new element</label>
 			<label index="save">Save</label>
 			<label index="cancel">Cancel</label>
-			<label index="paging_label"><![CDATA[Record {0} to {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]>
+			<label index="paging_label"><![CDATA[Record {0} to {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]></label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>

@@ -64,10 +64,10 @@ Ext.Message = function(){
 
 		clearMsg: function() {
 			if (this.messageBox) {
-				this.messageBox.hide();
-//				this.messageBox.ghost("t", {
-//					remove:true
-//				})
+				this.messageBox.ghost("t", {
+					remove:true,
+					duration: 0
+				})
 			}
 		},
 

@@ -34,7 +34,7 @@
  */
 
 Addresses.initialize = function() {
-	Ext.QuickTips.init();
+//	Ext.QuickTips.init();
 
 	Address.initGrid();
 
@@ -44,8 +44,8 @@ Addresses.initialize = function() {
 	Address.form = Address.window.getComponent('addressForm').getForm();
 //	Address.window.show();
 
-	Addressgroup.initWindow();
-	Addressgroup.window.init();
-	Addressgroup.form = Addressgroup.window.getComponent('addressgroupForm').getForm();
+//	Addressgroup.initWindow();
+//	Addressgroup.window.init();
+//	Addressgroup.form = Addressgroup.window.getComponent('addressgroupForm').getForm();
 //	Addressgroup.window.show();
 };

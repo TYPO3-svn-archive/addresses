@@ -49,6 +49,7 @@ Addressgroup.initWindow = function() {
 						clientValidation: true,
 						method: 'GET',
 						url: Addresses.statics.ajaxController,
+						waitMsg: Addresses.lang.saving,
 						params:{
 							ajaxID: 'AddressgroupController::saveAction'
 						},
@@ -114,7 +115,7 @@ Addressgroup.initWindow = function() {
 			bodyStyle:'padding:5px'
 			//					autoHeight: true,
 		},
-		items: Addressgroup.fieldsWindow
+		items: Addressgroup.windowFields
 	};
 
 	/*
@@ -123,6 +124,7 @@ Addressgroup.initWindow = function() {
 	configuration.formPanel = {
 		xtype: 'form',
 		id: 'addressgroupForm',
+		waitMsgTarget: true,
 		frame: true,
 		bodyStyle:'padding: 0',
 		labelAlign: 'top',
@@ -244,7 +246,7 @@ Addressgroup.initWindow = function() {
 		 */
 		focusOnFirstVisibleField : function() {
 			try {
-				var firstVisibleElement = Addressgroup.fieldsWindow[0].items[1].id;
+				var firstVisibleElement = Addressgroup.windowFields[0].items[1].id;
 				Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait for 100 miliseconds
 			}
 			catch (e) {
@@ -259,7 +261,7 @@ Addressgroup.initWindow = function() {
 		 * @return void
 		 */
 		wait: function() {
-			Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+//			Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
 			Ext.ComponentMgr.get('addressgroupSaveButton').setDisabled(true);
 			Ext.ComponentMgr.get('addressgroupCancelButton').setDisabled(true);
 		},
@@ -271,9 +273,9 @@ Addressgroup.initWindow = function() {
 		 * @return void
 		 */
 		close: function() {
+//			Ext.Message.clearMsg();
 			Addressgroup.window.hide();
 			Addressgroup.form.reset();
-			Ext.Message.clearMsg();
 			Ext.ComponentMgr.get('addressgroupSaveButton').setDisabled(false);
 			Ext.ComponentMgr.get('addressgroupCancelButton').setDisabled(false);
 			Addressgroup.window.findById('addressgroupMonitoringPanel').setVisible(true);

@@ -40,7 +40,7 @@
 			<label index="fields_error">Values are missing in some fields.</label>
 			<label index="warning">Warning</label>
 			<label index="failure">Failure</label>
-			<label index="saving">Saving</label>
+			<label index="saving">Saving...</label>
 			<label index="data_sent">Data are being sent.&gt;br/&lt;Please wait...</label>
 			<label index="name">Name</label>
 			<label index="invalidDate">{0} is not a valid date - it must be in the format {1}</label>
@@ -55,6 +55,7 @@
 			<label index="addNewElement">Add new element</label>
 			<label index="save">Save</label>
 			<label index="cancel">Cancel</label>
+			<label index="paging_label"><![CDATA[Record {0} to {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>
@@ -91,7 +92,7 @@
 			<label index="fields_error">Certains champs du formulaire ne sont pas remplis correctement.</label>
 			<label index="warning">Alerte</label>
 			<label index="failure">Echec</label>
-			<label index="saving">Sauvegarde</label>
+			<label index="saving">Sauvegarde en cours...</label>
 			<label index="data_sent">Les données sont en cours d'envoi.&lt;br/&gt;Veuillez patienter...</label>
 			<label index="name">Nom</label>
 			<label index="invalidDate">{0} n'est pas un date valide. Le format attendu est {1}</label>
@@ -106,6 +107,8 @@
 			<label index="addNewElement">Ajouter un élément</label>
 			<label index="save">Sauver</label>
 			<label index="cancel">Annuler</label>
+			<label index="paging_label"><![CDATA[Enregistrements {0} à {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]>
+			</label>
 		</languageKey>
 	</data>
 </T3locallang>

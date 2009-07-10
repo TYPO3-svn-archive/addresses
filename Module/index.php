@@ -80,7 +80,7 @@ class tx_addresses_module extends t3lib_SCbase {
     /**
      * @var $javascriptFiles array
      */
-    protected $javascriptFiles = array('Message', 'MultiSelect', 'ItemSelector', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressgroupWindow');
+    protected $javascriptFiles = array('Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressgroupWindow');
 
     /**
      * @var $relativePath string
@@ -100,7 +100,7 @@ class tx_addresses_module extends t3lib_SCbase {
     /**
      * @var $pagingSize string
      */
-    protected $pagingSize = 200;
+    protected $pagingSize = 2;
 
     /**
      * @var $minifyJavascript string
@@ -238,22 +238,22 @@ class tx_addresses_module extends t3lib_SCbase {
         // Gets namespaces common code. Important loop!
         foreach ($this->namespaces as $namespace) {
 
-            $fieldsGrid = $fieldsTypeInGrid = array();
+            $gridFields = $gridFieldsType = array();
             if ($namespace == 'Address') {
-                $fieldsGrid = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getGridConfiguration');
-                $fieldsTypeInGrid = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getFieldsTypeInGrid');
+                $gridFields = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getGridConfiguration');
+                $gridFieldsType = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getFieldsTypeInGrid');
             }
 
             // Integrate dynamic JavaScript such as configuration or labels:
             $stores = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getStores');
-            $fieldsWindow = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getWindowConfiguration');
-            $layout = array('windowHeight' => $this->getWindowHeight($fieldsWindow));
+            $windowFields = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getWindowConfiguration');
+            $layout = array('windowHeight' => $this->getWindowHeight($windowFields));
 
             $this->doc->extJScode .= '
 				' . $namespace . '.stores = {' . implode(',', $stores) . '};
-				' . $namespace . '.fieldsGrid = ' . Tx_Addresses_Utility_TCE::removesQuotes($namespace, json_encode($fieldsGrid)) . ';
-				' . $namespace . '.fieldsTypeInGrid = ' . json_encode($fieldsTypeInGrid) . ';
-				' . $namespace . '.fieldsWindow = ' . Tx_Addresses_Utility_TCE::removesQuotes($namespace, json_encode($fieldsWindow)) . ';
+				' . $namespace . '.gridFields = ' . Tx_Addresses_Utility_TCE::removesQuotes($namespace, json_encode($gridFields)) . ';
+				' . $namespace . '.gridFieldsType = ' . json_encode($gridFieldsType) . ';
+				' . $namespace . '.windowFields = ' . Tx_Addresses_Utility_TCE::removesQuotes($namespace, json_encode($windowFields)) . ';
 				' . $namespace . '.data = new Object();
 				' . $namespace . '.layout = ' . json_encode($layout) . ';' . chr(10);
         }

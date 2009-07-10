@@ -35,6 +35,13 @@
 
 Address.initGrid = function() {
 
+	// Overrides weird translation (At least for French)
+	if(Ext.PagingToolbar) {
+		Ext.apply(Ext.PagingToolbar.prototype,{
+			displayMsg: Addresses.lang.paging_label
+		});
+	}
+
 	// Defines variables
 	Address.utility = new Object();
 	var configuration = new Object();
@@ -82,7 +89,7 @@ Address.initGrid = function() {
 		storeId: 'addressStore',
 		autoLoad: true,
 		reader: new Ext.data.JsonReader({
-			fields: Address.fieldsTypeInGrid,
+			fields: Address.gridFieldsType,
 			root: 'rows',
 			totalProperty: 'total'
 		}),
@@ -173,8 +180,8 @@ Address.initGrid = function() {
 	};
 
 	// adjust columns layout + render the grid
-	Address.fieldsGrid.unshift(configuration.checkbox, configuration.expander); // add checkbox + expander to the grid
-	Address.fieldsGrid.push(configuration.controller);
+	Address.gridFields.unshift(configuration.checkbox, configuration.expander); // add checkbox + expander to the grid
+	Address.gridFields.push(configuration.controller);
 	
 	/**
 	 * Initializes the grid
@@ -197,7 +204,7 @@ Address.initGrid = function() {
 			msg: Addresses.lang.loading
 		},
 		plugins: configuration.expander,
-		columns: Address.fieldsGrid,
+		columns: Address.gridFields,
 		selModel: configuration.checkbox,
 		tbar: configuration.topBar,
 		bbar: configuration.bottomBar,

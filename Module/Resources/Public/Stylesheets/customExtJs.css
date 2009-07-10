@@ -16,8 +16,7 @@ body .x-panel { margin-bottom:20px; }
 
 .deletedPath { color: #ff0000; font-weight: bold; }
 
-#recordPaging table { width: auto; }
-#recordPaging .x-tbar-page-number { text-align: center; }
+div.x-progress-inner div.x-progress-text:first-child {display:none}
 
 .x-window-body { padding: 5px; }
 .x-window-body label { display: block; margin: 5px 0; }

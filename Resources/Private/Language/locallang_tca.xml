@@ -18,6 +18,8 @@
 			<label index="french">French</label>
 			<label index="person">Person</label>
 			<label index="contact">Contact</label>
+			<label index="contacts">Contacts</label>
+			<label index="addresses">Addresses</label>
 			<label index="switzerland">Switzerland</label>
 			<label index="france">France</label>
 			<label index="germany">Germany</label>
@@ -36,7 +38,9 @@
 			<label index="german">Allemand</label>
 			<label index="french">Français</label>
 			<label index="person">Personne</label>
-			<label index="contact">Coordonnées</label>
+			<label index="contact">Coordonnée</label>
+			<label index="contacts">Coordonnées</label>
+			<label index="address">Adresses</label>
 			<label index="switzerland">Suisse</label>
 			<label index="france">France</label>
 			<label index="germany">Allemagne</label>

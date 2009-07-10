@@ -49,6 +49,7 @@ Address.initWindow = function() {
 					clientValidation: true,
 					method: 'GET',
 					url: Addresses.statics.ajaxController,
+					waitMsg: Addresses.lang.saving,
 					params:{
 						ajaxID: 'AddressController::saveAction'
 					},
@@ -101,13 +102,13 @@ Address.initWindow = function() {
 	configuration.tabPanel = {
 		xtype:'tabpanel',
 		height: Address.layout.windowHeight,
-		activeTab: 0,
+		activeTab: 2,
 		deferredRender: false,
 		defaults:{
 			bodyStyle:'padding:5px'
 		//					autoHeight: true,
 		},
-		items: Address.fieldsWindow
+		items: Address.windowFields
 	};
 
 	/*
@@ -116,6 +117,7 @@ Address.initWindow = function() {
 	configuration.formPanel = {
 		xtype: 'form',
 		id: 'addressForm',
+		waitMsgTarget: true,
 		frame: true,
 		bodyStyle:'padding: 0',
 		labelAlign: 'top',
@@ -288,7 +290,7 @@ Address.initWindow = function() {
 		 */
 		focusOnFirstVisibleField : function() {
 			try {
-				var firstVisibleElement = Address.fieldsWindow[0].items[1].id;
+				var firstVisibleElement = Address.windowFields[0].items[1].id;
 				Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait for 100 miliseconds
 			}
 			catch (e) {
@@ -358,7 +360,7 @@ Address.initWindow = function() {
 		 * @return void
 		 */
 		wait: function() {
-			Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+//			Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
 			Ext.ComponentMgr.get('addressSaveButton').setDisabled(true);
 			Ext.ComponentMgr.get('addressCancelButton').setDisabled(true);
 		},
@@ -370,9 +372,9 @@ Address.initWindow = function() {
 		 * @return void
 		 */
 		close: function() {
+//			Ext.Message.clearMsg();
 			Address.window.hide();
 			Address.form.reset();
-			Ext.Message.clearMsg();
 			Ext.ComponentMgr.get('addressSaveButton').setDisabled(false);
 			Ext.ComponentMgr.get('addressCancelButton').setDisabled(false);
 			Address.window.findById('addressMonitoringPanel').setVisible(true);

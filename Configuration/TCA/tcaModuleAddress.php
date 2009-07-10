@@ -7,8 +7,10 @@ t3lib_div::loadTCA($domainName);
 $TCA[$domainName]['types']['module']['showitem'] = <<< EOF
 --div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person,
 gender, title, first_name, last_name, preferred_language, birth_date, marital_status, nationality, groups
---div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contact,
-address, postal_code:0.25 | locality:0.75, country, website,
+--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses,
+address, postal_code:0.25 | locality:0.75, country,
+--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts,
+website,
 --div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:relations,
 addressgroups,
 EOF;

@@ -81,3 +81,32 @@ CREATE TABLE tx_addresses_address_addressgroup_mm (
   KEY uid_local (uid_local),
   KEY uid_foreign (uid_foreign)
 );
+
+#
+# Table structure for table 'tx_addresses_address_contactinfo'
+#
+CREATE TABLE tx_addresses_domain_model_contactinfo (
+	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
+	pid int(11) unsigned DEFAULT '0' NOT NULL,
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign tinytext NOT NULL,
+	type int(11) unsigned DEFAULT '0' NOT NULL,
+	nature int(11) unsigned DEFAULT '0' NOT NULL,
+	standard tinyint(3) unsigned DEFAULT '0' NOT NULL,
+	label tinytext NOT NULL,
+	country int(11) unsigned DEFAULT '0' NOT NULL,
+	area_code tinytext NOT NULL,
+	number tinytext NOT NULL,
+	extension tinytext NOT NULL,
+	email tinytext NOT NULL,
+	url tinytext NOT NULL,
+	remarks text NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid)
+);

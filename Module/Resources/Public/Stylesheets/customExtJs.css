@@ -28,11 +28,10 @@ div.x-window-bbar div.x-toolbar {border-top-width: 0px;}
 div.x-panel-mc, div.x-panel-ml, div.x-panel-mr, div.x-panel-bl, div.x-panel-tl  {padding: 0; border: 0;}
 div.x-panel-bl {height: 0}
 div.x-window-body {padding: 0px; border-top-width: 0px;}
-div.x-tab-panel-body {border-left-width: 0px; border-right-width: 0;}
+div.x-tab-panel-body {border: 0px; }
 
 div.x-window-body label { display: block; margin: 5px 0; }
 div.x-window-body .x-form-cb-label { margin-left: 5px; }
-
 
 .blue-row .x-grid3-cell-inner{
 	color:blue;

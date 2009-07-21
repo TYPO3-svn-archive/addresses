@@ -41,7 +41,7 @@ Addresses.initialize = function() {
 	// Prepare + initialize editing window
 	Address.initWindow();
 	Address.window.init();
-	Address.form = Address.window.getComponent('addressForm').getForm();
+	Address.form = Ext.ComponentMgr.get('addressForm').getForm();
 	Address.window.show();
 
 //	Addressgroup.initWindow();

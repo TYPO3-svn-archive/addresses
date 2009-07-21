@@ -83,9 +83,9 @@ CREATE TABLE tx_addresses_address_addressgroup_mm (
 );
 
 #
-# Table structure for table 'tx_addresses_address_contactinfo'
+# Table structure for table 'tx_addresses_address_contactnumber'
 #
-CREATE TABLE tx_addresses_domain_model_contactinfo (
+CREATE TABLE tx_addresses_domain_model_contactnumber (
 	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
 	pid int(11) unsigned DEFAULT '0' NOT NULL,
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,

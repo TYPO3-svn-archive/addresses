@@ -26,7 +26,7 @@ Ext.ux.ProgressBarPager  = Ext.extend(Object, {
 	* <p>The text to display while the store is loading.  Default is 'Loading...'</p>
  	*/
 	defaultText    : 'Loading...',
-    	/**
+	/**
  	* @cfg {Object} defaultAnimCfg
  	* <p>A {@link Ext.Fx Ext.Fx} configuration object.  Default is  { duration : 1, easing : 'bounceOut' }.</p>
  	*/
@@ -103,10 +103,10 @@ Ext.ux.ProgressBarPager  = Ext.extend(Object, {
 				var pageNum = this.readPage(pgData);
 
 				var msg    = count == 0 ?
-					this.emptyMsg :
-					String.format(
-						this.displayMsg,
-						this.cursor+1, this.cursor+count, this.store.getTotalCount()
+				this.emptyMsg :
+				String.format(
+					this.displayMsg,
+					this.cursor+1, this.cursor+count, this.store.getTotalCount()
 					);
 
 				pageNum = pgData.activePage;

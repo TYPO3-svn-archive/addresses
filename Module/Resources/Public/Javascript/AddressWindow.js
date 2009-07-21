@@ -46,7 +46,7 @@ Address.initWindow = function() {
 		icon: 'Resources/Public/Icons/database_save.png',
 		listeners: {
 			click: function(){
-				
+
 				// DEFINES THE SUBMIT OBJECT
 				var submit = {
 					clientValidation: true,
@@ -107,7 +107,6 @@ Address.initWindow = function() {
 	 */
 	configuration.tabPanel = {
 		xtype:'tabpanel',
-		height: Address.layout.windowHeight,
 		activeTab: 2,
 		deferredRender: false,
 		defaults:{
@@ -120,7 +119,7 @@ Address.initWindow = function() {
 	/*
 	 * Fom panel attached to the Window
 	 */
-	configuration.formPanel = {
+	configuration.addressForm = {
 		xtype: 'form',
 		id: 'addressForm',
 		waitMsgTarget: true,
@@ -134,7 +133,7 @@ Address.initWindow = function() {
 				columnWidth: .60,
 				items: configuration.tabPanel
 			},{
-				title: Addresses.lang.information,
+				title: '&nbsp;',
 				columnWidth: .40,
 				xtype: 'panel',
 				layout:'form',
@@ -154,6 +153,110 @@ Address.initWindow = function() {
 		}
 	};
 
+
+	/*
+	 * Fom panel attached to the Window
+	 */
+	configuration.contactNumberForm = {
+		xtype: 'form',
+		id: 'contactNumberForm',
+		frame: true,
+		//		bodyStyle: 'padding-left: 30%',
+		header: false,
+		title: 'Contact Number',
+		labelAlign: 'top',
+		hideMode: 'display',
+		defaults:{
+		//			"anchor":"40%",
+		//			"blankText":"Champ obligatoire",
+		//			"labelSeparator":"",
+		//			"selectOnFocus":true
+		},
+		items: {
+			xtype: 'panel',
+			layout:'column',
+			items: [{
+				columnWidth: .60,
+				items:
+				{
+					xtype:'tabpanel',
+					activeTab: 0,
+					deferredRender: false,
+					defaults:{
+						bodyStyle:'padding:5px'
+					//					autoHeight: true,
+					},
+					items: [{
+
+						"title":"Personne",
+						"layout":"form",
+						"defaults":{
+							"anchor":"95%",
+							"blankText":"Champ obligatoire",
+							"labelSeparator":""
+						},
+						"maxLengthText":"La longueur maximum pour ce champ est de {0} caract\u00e8res",
+						items: [
+						{
+							xtype: 'combo',
+							name:"storeType",
+							id:"contactNumberType",
+							fieldLabel: 'Type',
+							selectOnFocus: true,
+							mode:"local",
+							store: storeType,
+							displayField: "type_text",
+							triggerAction: "all",
+							editable: false,
+							valueField: "type",
+							hiddenName: "type"
+						},
+						{
+							"name":"number",
+							"id":"number",
+							"fieldLabel":"Number",
+							"xtype":"textfield",
+							"maxLength":256
+						},
+						{
+							xtype: 'combo',
+							name:"nature",
+							//			id:"contactNumberCombobox",
+							fieldLabel: 'Nature',
+							selectOnFocus:true,
+							mode:"local",
+							store:storeNature,
+							displayField:"nature",
+							triggerAction:"all",
+							valueField:"nature",
+							hiddenName:"nature"
+						}
+						]
+					}
+					]
+				}
+			},{
+				title: '&nbsp;',
+				columnWidth: .40,
+				xtype: 'panel',
+				layout:'form',
+				bodyStyle: 'padding: 5px 0 5px 5px',
+				items: {
+					xtype: "textarea",
+					height: 150,
+					name: "remarks",
+					id: "asdfaddressRemarks",
+					fieldLabel: Addresses.lang.remarks,
+					selectOnFocus:true,
+					anchor: "95%",
+					blankText: Addresses.lang.fieldMandatory,
+					labelSeparator: ""
+				}
+			}]
+		}
+		
+	};
+
 	/*
 	 * Modal window that enables record editing: add - update data
 	 */
@@ -167,7 +270,13 @@ Address.initWindow = function() {
 		title: '',
 		closeAction: 'hide',
 		iconCls: 'window-icon',
-		items: configuration.formPanel,
+		items: {
+			xtype: 'panel',
+			frame: false,
+			//			bodyStyle:'padding: 0',
+			labelAlign: 'top',
+			items: [configuration.contactNumberForm, configuration.addressForm]
+		},
 		tbar: configuration.buttons,
 		bbar: new Ext.ux.StatusBar({
 			defaultText: '&nbsp;',
@@ -322,7 +431,7 @@ Address.initWindow = function() {
 			if (dataSet.length > 0) {
 				Address.form.reset(); // clear form
 				Address.window.waitMask.show();
-				
+
 				Address.form.load({
 					method: 'GET',
 					url: Addresses.statics.ajaxController,
@@ -386,12 +495,14 @@ Address.initWindow = function() {
 			// For instance method KeyMap bellow won't work
 			this.show();
 			this.hide();
+						Ext.get('contactNumberForm').fadeOut({useDisplay: true, duration: 0.1});
+			//			Ext.get('contactNumberForm').hide();
 
 			this.addListnerToTextareas();
 			this.addListnerToComboboxes();
 			this.addListnerTolocality();
 
-			// map one key by key code
+			//map one key by key code
 			new Ext.KeyMap("addressForm", {
 				key: 13, // or Ext.EventObject.ENTER
 				fn: function() {

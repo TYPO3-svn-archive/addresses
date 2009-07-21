@@ -80,7 +80,7 @@ class tx_addresses_module extends t3lib_SCbase {
     /**
      * @var $javascriptFiles array
      */
-    protected $javascriptFiles = array('Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressgroupWindow');
+    protected $javascriptFiles = array('Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'ContactNumber', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressgroupWindow');
 
     /**
      * @var $relativePath string
@@ -339,12 +339,14 @@ class tx_addresses_module extends t3lib_SCbase {
      * @return	array		The labels to be used in JavaScript
      */
     protected function getLabels() {
+		global $LANG;
         $coreLabels = array(
-            'title'	=> $GLOBALS['LANG']->getLL('title'),
-            'newRecord'	=> $GLOBALS['LANG']->getLL('newRecord'),
-            'updateRecord'	=> $GLOBALS['LANG']->getLL('updateRecord'),
-            'multipleUpdateRecord'	=> $GLOBALS['LANG']->getLL('multipleUpdateRecord'),
-            'table'	=> $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.xml:labels.table'),
+            'title'	=> $LANG->getLL('title'),
+            'newRecord'	=> $LANG->getLL('newRecord'),
+            'updateRecord'	=> $LANG->getLL('updateRecord'),
+            'multipleUpdateRecord'	=> $LANG->getLL('multipleUpdateRecord'),
+            'table'	=> $LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.table'),
+            'addNewElement'	=> $LANG->getLL('addNewElement'),
         );
         $extensionLabels = $this->getLabelsFromLocallang('js.', 'label_');
         return array_merge($coreLabels, $extensionLabels);

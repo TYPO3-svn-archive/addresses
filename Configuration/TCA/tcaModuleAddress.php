@@ -8,10 +8,10 @@ $TCA[$domainName]['types']['module']['showitem'] = <<< EOF
 --div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person,
 gender, title, first_name, last_name, preferred_language, birth_date, marital_status, nationality, groups
 --div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses,
-address, postal_code:0.25 | locality:0.75, country,
+street, postal_code:0.25 | locality:0.75, country,
 --div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts,
 website,
---div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:relations,
+--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups,
 addressgroups,
 EOF;
 
@@ -53,7 +53,7 @@ $TCA[$domainName]['interface']['showRecordFieldsGrid'] = array(
             'sortable' => TRUE,
         )
     ),
-    'address' => array(
+    'street' => array(
         'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
         'config' => Array (
             'type' => 'input',

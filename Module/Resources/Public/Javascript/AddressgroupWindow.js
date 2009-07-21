@@ -140,7 +140,6 @@ Addressgroup.initWindow = function() {
 				columnWidth: .60,
 				items: configuration.tabPanel
 			},{
-				title: Addresses.lang.information,
 				columnWidth: .40,
 				xtype: 'panel',
 				layout:'form',

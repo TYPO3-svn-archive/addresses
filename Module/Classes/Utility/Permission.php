@@ -39,16 +39,17 @@ class Tx_Addresses_Utility_Permission {
 	 * Check whether the fields is going to be displayed or not.
 	 *
 	 * @global Object $BE_USER
-	 * @param array $tca
-	 * @param string $field
+	 * @param string $namespace
+	 * @param string $fieldName
 	 * @return boolean
 	 */
-	function checkPermission(&$columns, $field) {
+	function checkPermission($namespace, $fieldName) {
 		global $BE_USER;
+		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
 		$hasPermission = FALSE;
 		if ($BE_USER->isAdmin() ||
-			(isset($columns[$field]['exclude']) && !$columns[$field]['exclude']) ||
-			$BE_USER->check('non_exclude_fields','tx_addresses_domain_model_address:' . $field)) {
+			(isset($columns[$fieldName]['exclude']) && !$columns[$fieldName]['exclude']) ||
+			$BE_USER->check('non_exclude_fields','tx_addresses_domain_model_address:' . $fieldName)) {
 			$hasPermission = TRUE;
 		}
 		return $hasPermission;

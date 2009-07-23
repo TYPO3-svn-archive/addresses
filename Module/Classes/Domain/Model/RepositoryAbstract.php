@@ -503,7 +503,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				$tca = $columns[$fieldName];
 
 				// Makes sure the field can be saved
-				if ($this->checkPermission($tca, $fieldName)) {
+				if ($this->hasPermission($tca, $fieldName)) {
 
 				// Sanitize the value
 					$value = $this->sanitizeField($tca['config'], $fieldName, $value);
@@ -712,7 +712,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @param string $field
 	 * @return boolean
 	 */
-	protected function checkPermission(&$tca, $field) {
+	protected function hasPermission(&$tca, $field) {
 		global $BE_USER;
 		$hasPermission = FALSE;
 		if ($BE_USER->isAdmin() ||

@@ -83,10 +83,9 @@ class Tx_Addresses_Utility_TCE {
 	 * @param	array		$items
 	 * @return	array
 	 */
-	public static function getTab(&$item) {
+	public static function getTab(&$title) {
 		global $LANG;
-		$_temp = explode(';', $item);
-		$configuration['title'] = $LANG->sL($_temp[1]);
+		$configuration['title'] = $LANG->sL($title);
 		$configuration['layout'] = 'form';
 		// Adds here default configuration
 		$configuration['defaults'] = array(

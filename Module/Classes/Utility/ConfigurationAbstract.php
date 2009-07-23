@@ -182,15 +182,44 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	 */
 	protected static function getWindowConfiguration($namespace) {
 		global $LANG;
+		$configurations = array();
 		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
 		$showItems = Tx_Addresses_Utility_TCA::getShowItems($namespace);
 		$showItems = self::getShowItems($namespace, $showItems);
-		if ($namespace == 'Addressgroup') {
-			return array();
+
+		// Adds the uid in the first panel
+		if (isset($showItems[0]['panels'][0]['fields'])) {
+			// Add manually the uid
+			array_unshift($showItems[0]['panels'][0]['fields'], 'uid');
+
+
+			// init configuration array
+			$configurations['xtype'] = 'panel';
+			$configurations['layout'] = 'column';
+
+			// Loos around
+			foreach ($showItems as $showItem) {
+				$_configuration = array();
+				$_configuration['columnWidth'] = $showItem['columnWidth'];
+				$numberOfItems = count($showItem['panels']);
+			debug($showItem,'$showItem');
+				if ($numberOfItems > 1) {
+					foreach ($showItem['panels'] as $panel) {
+						$_panel = array();
+						$_panel = Tx_Addresses_Utility_TCE::getTab($panel['title']);
+						debug($_panel,'$panel');
+					}
+					exit();
+				}
+				else if ($numberOfItems == 0) {
+
+				}
+				debug($numberOfItems,'$numberOfItems');
+				$configurations['items'][] = $_configuration;
+			}
+			debug($configurations,'$configurations');
 		}
 
-		debug($showItems,'$configuration');
-		debug('Work in progress...','$configuration');
 		exit();
 		$items = explode(',', $configuration[0]['configuration']);
 		$items = array_map('trim', $items);
@@ -274,7 +303,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 				}
 			}
 		}
-		return self::sanitizeConfigurations($configurations);
+//		return self::sanitizeConfigurations($configurations);
 	}
 
 	/**
@@ -324,14 +353,14 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	 * @param array $configurations
 	 * @return array
 	 */
-	protected static function sanitizeConfigurations(Array $configurations) {
-		$_configurations = Array();
-		foreach ($configurations as &$configuration) {
-			if (isset($configuration['items'])) {
-				$_configurations[] = $configuration;
-			}
-		}
-		return $_configurations;
-	}
+//	protected static function sanitizeConfigurations(Array $configurations) {
+//		$_configurations = Array();
+//		foreach ($configurations as &$configuration) {
+//			if (isset($configuration['items'])) {
+//				$_configurations[] = $configuration;
+//			}
+//		}
+//		return $_configurations;
+//	}
 }
 ?>

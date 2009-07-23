@@ -60,7 +60,7 @@ class Tx_Addresses_Utility_TCA {
 	 */
 	public static function getFieldsGrid($namespace) {
 		$TCA = self::getTCA($namespace);
-		return $TCA['interface']['showRecordFieldsGrid'];
+		return $TCA['interface']['showGridFieldList'];
 	}
 
 	/**

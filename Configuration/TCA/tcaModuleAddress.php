@@ -4,21 +4,53 @@
 $domainName = 'tx_addresses_domain_model_address';
 t3lib_div::loadTCA($domainName);
 
-$TCA[$domainName]['types']['module']['showitem'] = <<< EOF
---div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person,
-gender, title, first_name, last_name, preferred_language, birth_date, marital_status, nationality, groups
---div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses,
-street, postal_code:0.25 | locality:0.75, country,
---div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts,
-website,
---div--;LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups,
-addressgroups,
-EOF;
+$TCA[$domainName]['types']['module']['showitem'] = array(
+	// Describes the left panel.
+	array(
+		'width' => 0.6,
+		// Describes the tab of the left panel
+		'panels' => array (
+			array(
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person',
+				'fields' => array('gender', 'title', 'first_name', 'last_name', 'preferred_language', 'birth_date', 'marital_status', 'nationality', 'groups'),
+			),
+			array(
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses,',
+				// 2 fields on the same line
+				'fields' => array(
+					'street',
+					array(
+						array('fieldName' => 'postal_code', 'width' => 0.25),
+						array('fieldName' => 'locality', 'width' => 0.75),
+					),
+					'country'),
+			),
+			array(
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts,',
+				'fields' => array('website'),
+			),
+			array(
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups,',
+				'fields' => array('addressgroups'),
+			),
+		),
+	),
+	// Describes the right panel.
+	array(
+		'width' => 0.4,
+		'panels' => array(
+			array(
+				'title' => '',
+				'fields' => array('remarks'),
+			),
+		),
+	),
+);
 
 $TCA[$domainName]['columns']['gender']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
 $TCA[$domainName]['columns']['marital_status']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
 
-$TCA[$domainName]['interface']['showRecordFieldsGrid'] = array(
+$TCA[$domainName]['interface']['showGridFieldList'] = array(
     'uid' => array(
         'id' => TRUE,
         'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.uid',

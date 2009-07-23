@@ -103,6 +103,76 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 		return $result;
 	}
 
+	/**
+	 * Says whether the array is associative or not
+	 *
+	 * @param array $array
+	 * @return array
+	 */
+	protected static function is_assoc($array) {
+		return (is_array($array) && 0 !== count(array_diff_key($array, array_keys(array_keys($array)))));
+	}
+
+	/**
+	 * Checks the permissions. Removes the fields for them the user has no permission.
+	 *
+	 * @param string $namespace
+	 * @param field $fields
+	 * @return array
+	 */
+	protected static function checkPermission($namespace, $fields) {
+		$fieldsOK = array();
+		foreach ($fields as $field) {
+			if (is_array($field) && !self::is_assoc($field)) {
+				$fieldsOK = self::checkPermission($namespace, $field);
+			}
+			else if (is_array($field)) {
+				if (isset($field['fieldName'])) {
+					if (Tx_Addresses_Utility_Permission::hasPermission($namespace, $field['fieldName'])) {
+						$fieldsOK[] = $field;
+					}
+				}
+			}
+			else {
+				if (Tx_Addresses_Utility_Permission::hasPermission($namespace, $field)) {
+					$fieldsOK[] = $field;
+				}
+			}
+		}
+		return $fieldsOK;
+	}
+
+	/**
+	 * Loops around the showed items and makes sure the user has access to the field.
+	 *
+	 * @param string $namespace
+	 * @param array $showItems
+	 * @return array
+	 */
+	protected static function getShowItems($namespace, $showItems) {
+		$_showItems = array();
+		foreach ($showItems as $showItem) {
+			$_panels = array();
+			if (isset($showItem['panels']) && is_array($showItem['panels'])) {
+				foreach	($showItem['panels'] as $panel) {
+					if (isset($panel['fields']) && is_array($panel['fields'])) {
+						$fieldsOK = self::checkPermission($namespace, $panel['fields']);
+						if (!empty($fieldsOK)) {
+							$_panel = $panel;
+							$_panel['fields'] = $fieldsOK;
+							$_panels[] = $_panel;
+						}
+					} // end if
+				} // end foreach
+			}
+			if (!empty($_panels)) {
+				$_showItem = $showItem;
+				$_showItem['panels'] = $_panels;
+				$_showItems[] = $_showItem;
+			}
+		}
+		return $_showItems;
+	}
 
 	/**
 	 * Returns an array containing the fields configuration
@@ -113,7 +183,16 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	protected static function getWindowConfiguration($namespace) {
 		global $LANG;
 		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
-		$items = explode(',', Tx_Addresses_Utility_TCA::getShowItems($namespace));
+		$showItems = Tx_Addresses_Utility_TCA::getShowItems($namespace);
+		$showItems = self::getShowItems($namespace, $showItems);
+		if ($namespace == 'Addressgroup') {
+			return array();
+		}
+
+		debug($showItems,'$configuration');
+		debug('Work in progress...','$configuration');
+		exit();
+		$items = explode(',', $configuration[0]['configuration']);
 		$items = array_map('trim', $items);
 		$index = -1;
 		$configurations = array();
@@ -216,30 +295,26 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
 		$tca = $columns[$fieldName]['config'];
 
-		// Makes sure the user has the permission
-		if (Tx_Addresses_Utility_Permission::checkPermission($columns, $fieldName)) {
-
-			switch($tca['type']) {
-				case 'text':
-					$configuration = Tx_Addresses_Utility_TCE::getTextArea($columns, $fieldName, $namespace);
-					break;
-				case 'input':
-					$configuration = Tx_Addresses_Utility_TCE::getTextField($columns, $fieldName, $namespace);
-					break;
-				case 'select':
-					if ($tca['maxitems'] > 1 && isset($tca['foreign_table'])) {
-						$configuration = Tx_Addresses_Utility_TCE::getItemSelector($columns, $fieldName, $namespace);
-					}
-					else {
-						$configuration = Tx_Addresses_Utility_TCE::getComboBox($columns, $fieldName, $namespace);
-					}
-					break;
-				default;
-					t3lib_div::debug($fieldName, '$field');
-					t3lib_div::debug($tca, '$tca');
-					throw new Exception('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
-			} //end switch
-		} // end if
+		switch($tca['type']) {
+			case 'text':
+				$configuration = Tx_Addresses_Utility_TCE::getTextArea($columns, $fieldName, $namespace);
+				break;
+			case 'input':
+				$configuration = Tx_Addresses_Utility_TCE::getTextField($columns, $fieldName, $namespace);
+				break;
+			case 'select':
+				if ($tca['maxitems'] > 1 && isset($tca['foreign_table'])) {
+					$configuration = Tx_Addresses_Utility_TCE::getItemSelector($columns, $fieldName, $namespace);
+				}
+				else {
+					$configuration = Tx_Addresses_Utility_TCE::getComboBox($columns, $fieldName, $namespace);
+				}
+				break;
+			default;
+				t3lib_div::debug($fieldName, '$field');
+				t3lib_div::debug($tca, '$tca');
+				throw new Exception('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
+		} //end switch
 		return $configuration;
 	}
 

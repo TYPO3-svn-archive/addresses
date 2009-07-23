@@ -43,7 +43,7 @@ class Tx_Addresses_Utility_Permission {
 	 * @param string $fieldName
 	 * @return boolean
 	 */
-	function checkPermission($namespace, $fieldName) {
+	function hasPermission($namespace, $fieldName) {
 		global $BE_USER;
 		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
 		$hasPermission = FALSE;

@@ -7,37 +7,37 @@ t3lib_div::loadTCA($domainName);
 $TCA[$domainName]['types']['module']['showitem'] = array(
 	// Describes the left panel.
 	array(
-		'width' => 0.6,
+		'columnWidth' => 0.6,
 		// Describes the tab of the left panel
 		'panels' => array (
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person',
-				'fields' => array('gender', 'title', 'first_name', 'last_name', 'preferred_language', 'birth_date', 'marital_status', 'nationality', 'groups'),
+				'fields' => array('gender', 'title', 'first_name', 'last_name', 'preferred_language', 'birth_date', 'marital_status', 'nationality'),
 			),
 			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses,',
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses',
 				// 2 fields on the same line
 				'fields' => array(
 					'street',
 					array(
-						array('fieldName' => 'postal_code', 'width' => 0.25),
-						array('fieldName' => 'locality', 'width' => 0.75),
+						array('fieldName' => 'postal_code', 'columnWidth' => 0.25),
+						array('fieldName' => 'locality', 'columnWidth' => 0.75),
 					),
 					'country'),
 			),
 			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts,',
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts',
 				'fields' => array('website'),
 			),
 			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups,',
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups',
 				'fields' => array('addressgroups'),
 			),
 		),
 	),
 	// Describes the right panel.
 	array(
-		'width' => 0.4,
+		'columnWidth' => 0.4,
 		'panels' => array(
 			array(
 				'title' => '',

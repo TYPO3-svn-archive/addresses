@@ -72,7 +72,7 @@ Address.initWindow = function() {
 
 				// case multiple edition -> don't validate form
 				var form = Address.form
-				var uid = form.findField('addressUid').getValue();
+				var uid = form.findField('address_uid').getValue();
 				if (uid == '' || uid.search(',') == -1) {
 					if (form.isValid()) {
 						submit.clientValidation = true;
@@ -102,20 +102,6 @@ Address.initWindow = function() {
 		}
 	}];
 
-	/**
-	 * tabPanel that contains some fields. This panel is attached to the modal window.
-	 */
-	configuration.tabPanel = {
-		xtype:'tabpanel',
-		activeTab: 2,
-		deferredRender: false,
-		defaults:{
-			bodyStyle:'padding:5px'
-		//					autoHeight: true,
-		},
-		items: Address.windowFields
-	};
-
 	/*
 	 * Fom panel attached to the Window
 	 */
@@ -126,31 +112,7 @@ Address.initWindow = function() {
 		frame: true,
 		bodyStyle:'padding: 0',
 		labelAlign: 'top',
-		items: {
-			xtype: 'panel',
-			layout:'column',
-			items: [{
-				columnWidth: .60,
-				items: configuration.tabPanel
-			},{
-				title: '&nbsp;',
-				columnWidth: .40,
-				xtype: 'panel',
-				layout:'form',
-				bodyStyle: 'padding: 5px 0 5px 5px',
-				items: {
-					xtype: "textarea",
-					height: 150,
-					name: "remarks",
-					id: "addressRemarks",
-					fieldLabel: Addresses.lang.remarks,
-					selectOnFocus:true,
-					anchor: "95%",
-					blankText: Addresses.lang.fieldMandatory,
-					labelSeparator: ""
-				}
-			}]
-		}
+		items: Address.windowFields
 	};
 
 
@@ -331,7 +293,7 @@ Address.initWindow = function() {
 						'blur',
 						function(el) {
 							var value = el.getValue();
-							var id = el.getId().replace('address', '').toLowerCase();
+							var id = el.getId().replace('address_', '').toLowerCase();
 
 							// Makes sure the value is not null
 							if (value != '') {
@@ -451,7 +413,7 @@ Address.initWindow = function() {
 						}
 						else if (state == 'copy'){
 							// Removes the id so that the server will consider the data as a new record
-							form.findField('addressUid').setValue('');
+							form.findField('address_uid').setValue('');
 							Address.window.setTitle(Addresses.lang.copy_record); // set title
 						}
 						Address.window.waitMask.hide();

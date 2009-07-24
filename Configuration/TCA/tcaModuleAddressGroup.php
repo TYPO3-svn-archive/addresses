@@ -7,7 +7,7 @@ t3lib_div::loadTCA($domainName);
 $TCA[$domainName]['types']['module']['showitem'] = array(
 	// Describes the left panel.
 	array(
-		'width' => 0.6,
+		'columnWidth' => 0.6,
 		// Describes the tab of the left panel
 		'panels' => array (
 			array(
@@ -18,7 +18,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 	),
 	// Describes the right panel.
 	array(
-		'width' => 0.4,
+		'columnWidth' => 0.4,
 		'panels' => array(
 			array(
 				'title' => '',

@@ -120,11 +120,11 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	 * @param field $fields
 	 * @return array
 	 */
-	protected static function checkPermission($namespace, $fields) {
+	protected static function checkFieldsPermission($namespace, $fields) {
 		$fieldsOK = array();
 		foreach ($fields as $field) {
 			if (is_array($field) && !self::is_assoc($field)) {
-				$fieldsOK = self::checkPermission($namespace, $field);
+				$fieldsOK[] = self::checkFieldsPermission($namespace, $field);
 			}
 			else if (is_array($field)) {
 				if (isset($field['fieldName'])) {
@@ -156,7 +156,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 			if (isset($showItem['panels']) && is_array($showItem['panels'])) {
 				foreach	($showItem['panels'] as $panel) {
 					if (isset($panel['fields']) && is_array($panel['fields'])) {
-						$fieldsOK = self::checkPermission($namespace, $panel['fields']);
+						$fieldsOK = self::checkFieldsPermission($namespace, $panel['fields']);
 						if (!empty($fieldsOK)) {
 							$_panel = $panel;
 							$_panel['fields'] = $fieldsOK;
@@ -175,7 +175,45 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	}
 
 	/**
-	 * Returns an array containing the fields configuration
+	 * Return the configuration for $field<b>s</b> given in input.
+	 * 
+	 * @param string $namespace
+	 * @param array $fields
+	 * @return array
+	 */
+	protected static function getFieldsConfiguration($namespace, $fields) {
+		$configurations = array();
+		foreach ($fields as $fieldName) {
+			if (is_array($fieldName)) {
+
+				// Loops on the fields
+				$_configurations = array();
+				$_configurations['layout'] = 'column';
+				$_configurations['xtype'] = 'panel';
+				foreach ($fieldName as $_fieldName) {
+					// This is the default panel
+					$__configuration = array();
+					$__configuration['columnWidth'] = $_fieldName['columnWidth'];
+					$__configuration['items'] = array();
+					$__configuration['items']['xtype'] = 'panel';
+					$__configuration['items']['layout'] = 'form';
+					$__configuration['items']['defaults'] = Tx_Addresses_Utility_TCE::getDefaults();
+					$__configuration['items']['items'] = self::getFieldConfiguration($namespace, $_fieldName['fieldName']);
+					$_configurations['items'][] = $__configuration;
+				}
+				$configurations[] = $_configurations;
+			}
+			else {
+				$configurations[] = self::getFieldConfiguration($namespace, $fieldName);
+			}
+		}
+		return $configurations;
+	}
+
+	/**
+	 * Returns an associative array containing the fields configuration.
+	 * The array will be transformed to JSON and be intepreted by ExtJS.
+	 * Notice, this array can be quite big according to the number of fields.
 	 *
 	 * @global Language $LANG
 	 * @return	array
@@ -192,118 +230,57 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 			// Add manually the uid
 			array_unshift($showItems[0]['panels'][0]['fields'], 'uid');
 
-
 			// init configuration array
 			$configurations['xtype'] = 'panel';
 			$configurations['layout'] = 'column';
 
-			// Loos around
+			// Loos around the showed items
 			foreach ($showItems as $showItem) {
-				$_configuration = array();
+				$_configuration = $tabpanels = array();
+
+				// Defines default value for 
 				$_configuration['columnWidth'] = $showItem['columnWidth'];
+
+				// Makes the difference whether the panel contains 1 element or multi elements
 				$numberOfItems = count($showItem['panels']);
-			debug($showItem,'$showItem');
 				if ($numberOfItems > 1) {
+					$tabpanels['xtype'] = 'tabpanel';
+					$tabpanels['activeTab'] = 1;
+					$tabpanels['deferredRender'] = FALSE;
+					$tabpanels['defaults'] = array('bodyStyle' => 'padding:5px');
 					foreach ($showItem['panels'] as $panel) {
 						$_panel = array();
 						$_panel = Tx_Addresses_Utility_TCE::getTab($panel['title']);
-						debug($_panel,'$panel');
+						$_panel['items'] = self::getFieldsConfiguration($namespace, $panel['fields']);
+						$tabpanels['items'][] = $_panel;
 					}
-					exit();
 				}
-				else if ($numberOfItems == 0) {
+				else if ($numberOfItems == 1) {
+					// Extract the unique field name
+					$_configuration['xtype'] = 'panel';
+					$_configuration['title'] = '&nbsp;';
+					$_configuration['layout'] = 'form';
+					$_configuration['bodyStyle'] = 'padding: 5px 0 5px 5px';
+					$_configuration['defaults'] = Tx_Addresses_Utility_TCE::getDefaults();
+					$fieldName = $showItem['panels'][0]['fields'][0];
+					$tabpanels = self::getFieldConfiguration($namespace, $fieldName);
+				}
 
-				}
-				debug($numberOfItems,'$numberOfItems');
+				// Adds the panel's description to the main configuration array
+				$_configuration['items'] = $tabpanels;
 				$configurations['items'][] = $_configuration;
 			}
-			debug($configurations,'$configurations');
 		}
+//		t3lib_div::debug($configurations, '$configurations');exit();
+		return $configurations;
 
-		exit();
-		$items = explode(',', $configuration[0]['configuration']);
-		$items = array_map('trim', $items);
-		$index = -1;
-		$configurations = array();
-		$items = array_filter($items);
-		foreach ($items as $item) {
-
-			// IMPORTANT:
-			// The section bellow will define the informations for the head of the tabpanel.
-			// In other words, this is a new tab!
-			if (is_int(strpos($item, '--div--'))) {
-
-				$index++;
-				$configurations[$index] = Tx_Addresses_Utility_TCE::getTab($item);
-
-				// Add uid of the record as hidden field
-				if ($index === 0) {
-					$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getUid($namespace);
-				}
-			}
-			// Means this is normal field
-			else {
-				if (is_int(strpos($item, '|'))) {
-					$fields = explode('|', $item);
-					$fields = array_map('trim', $fields);
-
-					$_configurations = $configuration = $columnWidth = array();
-					$i = $j = 0;
-
-					// Loops on the fields
-					foreach ($fields as $field) {
-						$_properties = explode(':', $field);
-						$field = $_properties[0];
-
-						$_array = self::getConfiguration($field, $namespace);
-						if (!empty($_array)) {
-
-							$_configurations[$i]['defaults'] = array(
-								'anchor' => '95%',
-								'blankText' => $LANG->getLL('fieldMandatory'),
-								'labelSeparator' => '',
-							);
-
-							$_configurations[$i]['layout'] = 'form';
-							$_configurations[$i]['items'][] = $_array;
-							$i++;
-
-							// Defines the columns Width array. The array will be used later on.
-							if (isset($_properties[1])) {
-								$columnWidth[] = (float) $_properties[1];
-							}
-						}
-					}
-
-					// Makes aure there are fields to add.
-					if (!empty($_configurations)) {
-						$configuration['layout'] = 'column';
-
-						// second loops is necessary since we don't know in advance which fiels are allowed
-						foreach ($_configurations as $_configuration) {
-							if (!isset($columnWidth[$j])) {
-								$columnWidth[$j] = round(1 / count($_configurations), 1);
-							}
-							$configuration['items'][$j]['columnWidth'] = $columnWidth[$j];
-							$configuration['items'][$j]['items'] = $_configuration;
-							$j++;
-						}
-					}
-				} //end if
-				else {
-					$configuration = self::getConfiguration($item, $namespace);
-				}
-
-				// Stores configuration for not empty $configuration
-				if (!empty($configuration)) {
-					$configurations[$index]['items'][] = $configuration;
-					if (isset($columns[$item]['config']['foreign_table'])) {
-						$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getEditForeignTableButton($namespace, $columns[$item]['config']['foreign_class']);
-					}
-				}
-			}
-		}
-//		return self::sanitizeConfigurations($configurations);
+		// Stores configuration for not empty $configuration
+//		if (!empty($configuration)) {
+//			$configurations[$index]['items'][] = $configuration;
+//			if (isset($columns[$item]['config']['foreign_table'])) {
+//				$configurations[$index]['items'][] = Tx_Addresses_Utility_TCE::getEditForeignTableButton($namespace, $columns[$item]['config']['foreign_class']);
+//			}
+//		}
 	}
 
 	/**
@@ -316,15 +293,19 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	/**
 	 * Return configuration of array
 	 *
+	 * @param string the name space;
 	 * @param string the field name;
 	 * @return array $configuration
 	 */
-	protected static function getConfiguration($fieldName, $namespace) {
+	protected static function getFieldConfiguration($namespace, $fieldName) {
 		global $LANG;
 		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
 		$tca = $columns[$fieldName]['config'];
 
 		switch($tca['type']) {
+			case 'passthrough':
+				$configuration = Tx_Addresses_Utility_TCE::getHiddenField($columns, $fieldName, $namespace);
+				break;
 			case 'text':
 				$configuration = Tx_Addresses_Utility_TCE::getTextArea($columns, $fieldName, $namespace);
 				break;
@@ -340,27 +321,13 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 				}
 				break;
 			default;
+				t3lib_div::debug('Invalid configuration for "' . $fieldName . '" in ' . __FILE__ . ', line: ' . __LINE__, 'MESSAGE');
+				t3lib_div::debug($namespace, '$namespace');
 				t3lib_div::debug($fieldName, '$field');
-				t3lib_div::debug($tca, '$tca');
-				throw new Exception('<b>Invalid configuration</b> in ' . __FILE__ . ', line: ' . __LINE__);
+				t3lib_div::debug($columns, '$columns');
+				throw new Exception('An error has been thrown!');
 		} //end switch
 		return $configuration;
 	}
-
-	/**
-	 * Removes tabs that contain no fields from the tabpanel
-	 *
-	 * @param array $configurations
-	 * @return array
-	 */
-//	protected static function sanitizeConfigurations(Array $configurations) {
-//		$_configurations = Array();
-//		foreach ($configurations as &$configuration) {
-//			if (isset($configuration['items'])) {
-//				$_configurations[] = $configuration;
-//			}
-//		}
-//		return $_configurations;
-//	}
 }
 ?>

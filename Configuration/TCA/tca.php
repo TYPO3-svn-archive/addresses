@@ -89,6 +89,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
 			'config' => Array (
+				'eval' => 'required',
 				'type' => 'input',
 				'size' => '40',
 				'max' => '256'
@@ -362,7 +363,8 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			'config' => Array (
 				'type' => 'text',
 				'rows' => 5,
-				'cols' => 48
+				'cols' => 48,
+				'height' => 150
 			)
 		),
 		'addressgroups' => array(
@@ -431,6 +433,12 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array(
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_addressgroup']['feInterface'],
 	'columns' => array(
+		'uid' => Array (
+			'exclude' => 1,
+			'config' => Array (
+				'type' => 'passthrough'
+			)
+		),
 		'hidden' => array(
 			'exclude'   => 1,
 			'label'     => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
@@ -455,6 +463,7 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array(
 				'type' => 'text',
 				'cols' => '30',
 				'rows' => '5',
+				'height' => 150
 			)
 		),
 	),

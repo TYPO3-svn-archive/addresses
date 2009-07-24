@@ -35,21 +35,6 @@
 class Tx_Addresses_Utility_TCE {
 
 	/**
-	 * Returns UID field
-	 *
-	 * @param	string		$namespace
-	 * @return	array
-	 */
-	public static function getUid($namespace) {
-		$configuration['xtype'] = 'textfield';
-		$configuration['id'] = t3lib_div::lcfirst($namespace) . 'Uid';
-		$configuration['name'] = 'uid';
-		$configuration['hidden'] = TRUE;
-		$configuration['hideLabel'] = TRUE;
-		return $configuration;
-	}
-
-	/**
 	 * Returns the locations store
 	 *
 	 * @global t3lib_DB $TYPO3_DB
@@ -77,7 +62,7 @@ class Tx_Addresses_Utility_TCE {
 	}
 
 	/**
-	 * Returns the common configuration of element textarea.
+	 * Returns the common configuration for tab.
 	 *
 	 * @global	Language	$LANG
 	 * @param	array		$items
@@ -88,17 +73,29 @@ class Tx_Addresses_Utility_TCE {
 		$configuration['title'] = $LANG->sL($title);
 		$configuration['layout'] = 'form';
 		// Adds here default configuration
-		$configuration['defaults'] = array(
-			'anchor' => '95%',
-			'blankText' => $LANG->getLL('fieldMandatory'),
-			'labelSeparator' => '',
-		);
-		$configuration['maxLengthText'] = $LANG->getLL('maxLengthText');
+		$configuration['defaults'] = self::getDefaults();
 		return $configuration;
 	}
 
 	/**
-	 * Returns the common configuration of element textarea.
+	 * ExtJS has a configuration key 'defaults' which is for setting default
+	 * values to the fields. This configuration's key enables to spare many lines of code
+	 * since it is not necessary to repeat information for each fields.
+	 *
+	 * @return array
+	 */
+	public static function getDefaults () {
+		$configuration = array(
+			'anchor' => '95%',
+			'blankText' =>'fieldMandatory',
+			'labelSeparator' => '',
+			'xtype' => 'textfield',
+		);
+		return $configuration;
+	}
+
+	/**
+	 * Returns the common configuration for the combo box.
 	 *
 	 * @global	Language	$LANG
 	 * @param	array		$columns which corresponds the TCA's columns
@@ -252,9 +249,13 @@ EOF;
 	 */
 	public static function getTextArea(&$columns, $fieldName, $namespace) {
 		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
+		$tca =  $columns[$fieldName]['config'];
 
 		// Set default xtype
 		$configuration['xtype'] = 'textarea';
+		if (isset($tca['height'])) {
+			$configuration['height'] = (int) $tca['height'];
+		}
 		$configuration['enableKeyEvents'] = TRUE;
 
 		return $configuration;
@@ -320,6 +321,22 @@ EOF;
 		return $configuration;
 	}
 
+
+	/**
+	 * Returns UID field
+	 *
+	 * @param	string		$namespace
+	 * @return	array
+	 */
+	public static function getHiddenField(&$columns, $fieldName, $namespace) {
+		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
+		$tca =  $columns[$fieldName]['config'];
+
+		$configuration['hidden'] = TRUE;
+		$configuration['hideLabel'] = TRUE;
+		return $configuration;
+	}
+
 	/**
 	 * Returns the configuration of element textfield.
 	 *
@@ -333,9 +350,6 @@ EOF;
 		global $LANG;
 		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 		$tca =  $columns[$fieldName]['config'];
-
-		// Set default xtype
-		$configuration['xtype'] = 'textfield';
 
 		// Defines max length
 		if (isset($tca['max'])) {
@@ -427,7 +441,7 @@ EOF;
 		global $LANG;
 		// field name + label which are default values
 		$configuration['name'] = $fieldName;
-		$configuration['id'] = strtolower($namespace) . ucfirst($fieldName);
+		$configuration['id'] = strtolower($namespace) . '_' . $fieldName;
 		if (isset($columns[$fieldName]['label'])) {
 			$configuration['fieldLabel'] = $LANG->sL($columns[$fieldName]['label']);
 		}

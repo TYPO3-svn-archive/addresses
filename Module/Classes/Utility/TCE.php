@@ -261,6 +261,44 @@ EOF;
 		return $configuration;
 	}
 
+    /**
+     * Count the number of fields that will be displayed on the editing window.
+     * Useful for determining the height of the editing window.
+     *
+     * @param array $configuration
+     * @return int
+     */
+    public static function getWindowHeight(Array $configuration) {
+        $maximumNumberOfItems = 0;
+		if (isset($configuration['items']) && is_array($configuration['items'])) {
+			foreach ($configuration['items'] as $items) {
+
+				// First case: the items contains a tabpanels
+				if (isset($items['items']['xtype']) && $items['items']['xtype'] == 'tabpanel') {
+					foreach($items['items']['items'] as $panel) {
+						$numberOfItems = count($panel['items']);
+						if ($numberOfItems > $maximumNumberOfItems) {
+							$maximumNumberOfItems = $numberOfItems;
+						}
+					}
+				}
+				// Second case: the items contains *no* tabpanels
+				else if (isset($items['items'])) {
+					$numberOfItems = count($items['items']);
+					if ($numberOfItems > $maximumNumberOfItems) {
+						$maximumNumberOfItems = $numberOfItems;
+					}
+				}
+			}
+		}
+
+        $windowHeight = 45 * $maximumNumberOfItems + 150;
+        if ($windowHeight < 400) {
+            $windowHeight = 400;
+        }
+        return $windowHeight;
+    }
+
 	/**
 	 * Returns the height of the itemSelector. This value is within 150 and 300 (px).
 	 *
@@ -268,7 +306,7 @@ EOF;
 	 * @param array $tca
 	 * @return int
 	 */
-	protected static function getHeight($tca) {
+	protected static function getItemSelectorHeight($tca) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 		$height = 150;
@@ -298,7 +336,7 @@ EOF;
 	public static function getItemSelector(&$columns, $fieldName, $namespace) {
 		$tca =  $columns[$fieldName]['config'];
 		$width = 170;
-		$height = self::getHeight($tca);
+		$height = self::getItemSelectorHeight($tca);
 
 		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 

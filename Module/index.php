@@ -248,7 +248,7 @@ class tx_addresses_module extends t3lib_SCbase {
             // Integrate dynamic JavaScript such as configuration or labels:
             $stores = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getStores');
             $windowFields = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getWindowConfiguration');
-            $layout = array('windowHeight' => $this->getWindowHeight($windowFields));
+            $layout = array('windowHeight' => Tx_Addresses_Utility_TCE::getWindowHeight($windowFields));
 
             $this->doc->extJScode .= '
 				' . $namespace . '.stores = {' . implode(',', $stores) . '};
@@ -262,36 +262,6 @@ class tx_addresses_module extends t3lib_SCbase {
 			' . $this->namespace . '.statics = ' . json_encode($this->getStaticConfiguration()) . ';
 			' . $this->namespace . '.lang = ' . json_encode($this->getLabels()) . ';
 			' . $this->namespace . '.initialize();' . chr(10);
-    }
-
-    /**
-     * Count the number of fields that will be displayed on the editing window.
-     * Useful for determining the height of the editing window.
-     *
-     * @param array $fields
-     * @return int
-     */
-    protected function getWindowHeight(Array $fields) {
-        $numberOfItems = 0;
-        for ($index = 0; $index < count($fields); $index++) {
-            $items = $fields[$index];
-            if (isset($items['items'])) {
-            // decrease the number of items as there is hidden fields
-                $_numberOfItems = count($items['items']);
-                if ($index === 0) {
-                    $_numberOfItems --;
-                }
-                if ($_numberOfItems > $numberOfItems) {
-                    $numberOfItems = $_numberOfItems;
-                }
-            }
-        }
-
-        $windowHeight = 50 * $numberOfItems + 150;
-        if ($windowHeight < 400) {
-            $windowHeight = 400;
-        }
-        return $windowHeight;
     }
 
     /**

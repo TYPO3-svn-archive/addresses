@@ -263,7 +263,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 					$_configuration['bodyStyle'] = 'padding: 5px 0 5px 5px';
 					$_configuration['defaults'] = Tx_Addresses_Utility_TCE::getDefaults();
 					$fieldName = $showItem['panels'][0]['fields'][0];
-					$tabpanels = self::getFieldConfiguration($namespace, $fieldName);
+					$tabpanels[] = self::getFieldConfiguration($namespace, $fieldName);
 				}
 
 				// Adds the panel's description to the main configuration array

@@ -36,13 +36,13 @@
 Addresses.initialize = function() {
 //	Ext.QuickTips.init();
 
-//	Address.initGrid();
+	Address.initGrid();
 
 	// Prepare + initialize editing window
 	Address.initWindow();
 	Address.window.init();
 	Address.form = Ext.ComponentMgr.get('addressForm').getForm();
-	Address.window.show();
+//	Address.window.show();
 
 //	Addressgroup.initWindow();
 //	Addressgroup.window.init();

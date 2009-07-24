@@ -89,7 +89,6 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
 			'config' => Array (
-				'eval' => 'required',
 				'type' => 'input',
 				'size' => '40',
 				'max' => '256'

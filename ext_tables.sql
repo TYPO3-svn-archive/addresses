@@ -44,6 +44,7 @@ CREATE TABLE tx_addresses_domain_model_address (
   image tinyblob NOT NULL,
   remarks text NOT NULL,
   addressgroups int(11) DEFAULT '0' NOT NULL,
+  contactnumbers int(11) DEFAULT '0' NOT NULL,
   PRIMARY KEY (uid),
   KEY parent (pid),
   KEY pid (pid,email)

@@ -27,7 +27,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 			),
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts',
-				'fields' => array('website'),
+				'fields' => array('website', 'contactnumbers'),
 			),
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups',

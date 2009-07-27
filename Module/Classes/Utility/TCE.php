@@ -46,28 +46,31 @@ class Tx_Addresses_Utility_TCE {
 	 */
 	public static function getFieldConfiguration($namespace, $fieldName) {
 		global $LANG;
+		$configuration = array(); // Defines default value
 		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
 		$tca = $columns[$fieldName]['config'];
 
 		switch($tca['type']) {
 			case 'passthrough':
-				$configuration = self::getHiddenField($columns, $fieldName, $namespace);
+				$configuration = self::getHiddenField($namespace, $columns, $fieldName);
 				break;
 			case 'text':
-				$configuration = self::getTextArea($columns, $fieldName, $namespace);
+				$configuration = self::getTextArea($namespace, $columns, $fieldName);
 				break;
 			case 'input':
-				$configuration = self::getTextField($columns, $fieldName, $namespace);
+				$configuration = self::getTextField($namespace, $columns, $fieldName);
 				break;
 			case 'user':
-				throw new Exception('An error has been thrown!');
+				if (isset($tca['userFunc'])) {
+					$configuration = call_user_func_array($tca['userFunc'], array($namespace, $columns, $fieldName));
+				}
 				break;
 			case 'select':
 				if ($tca['maxitems'] > 1 && isset($tca['foreign_table'])) {
-					$configuration = self::getItemSelector($columns, $fieldName, $namespace);
+					$configuration = self::getItemSelector($namespace, $columns, $fieldName);
 				}
 				else {
-					$configuration = self::getComboBox($columns, $fieldName, $namespace);
+					$configuration = self::getComboBox($namespace, $columns, $fieldName);
 				}
 				break;
 			default;
@@ -143,13 +146,13 @@ class Tx_Addresses_Utility_TCE {
 	/**
 	 * Returns the common configuration for the combo box.
 	 *
+	 * @param	string		$namespace
 	 * @global	Language	$LANG
 	 * @param	array		$columns which corresponds the TCA's columns
 	 * @param	array		$fieldName
-	 * @param	string		$namespace
 	 * @return	array
 	 */
-	public static function getComboBox(&$columns, $fieldName, $namespace) {
+	public static function getComboBox($namespace, &$columns, $fieldName) {
 		global $LANG;
 		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 		$tca =  $columns[$fieldName]['config'];
@@ -288,12 +291,12 @@ EOF;
 	/**
 	 * Returns the common configuration of element textarea.
 	 *
+	 * @param	string		$namespace
 	 * @param	array		$columns which corresponds the TCA's columns
 	 * @param	array		$fieldName
-	 * @param	string		$namespace
 	 * @return	array
 	 */
-	public static function getTextArea(&$columns, $fieldName, $namespace) {
+	public static function getTextArea($namespace, &$columns, $fieldName) {
 		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 		$tca =  $columns[$fieldName]['config'];
 
@@ -374,12 +377,12 @@ EOF;
 	/**
 	 * Returns the common configuration of element textarea.
 	 *
+	 * @param	string		$namespace
 	 * @param	array		$columns which corresponds the TCA's columns
 	 * @param	array		$fieldName
-	 * @param	string		$namespace
 	 * @return	array
 	 */
-	public static function getItemSelector(&$columns, $fieldName, $namespace) {
+	public static function getItemSelector($namespace, &$columns, $fieldName) {
 		$tca =  $columns[$fieldName]['config'];
 		$width = 170;
 		$height = self::getItemSelectorHeight($tca);
@@ -410,9 +413,11 @@ EOF;
 	 * Returns UID field
 	 *
 	 * @param	string		$namespace
+	 * @param	array		$columns which corresponds the TCA's columns
+	 * @param	array		$fieldName
 	 * @return	array
 	 */
-	public static function getHiddenField(&$columns, $fieldName, $namespace) {
+	public static function getHiddenField($namespace, &$columns, $fieldName) {
 		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 		$tca =  $columns[$fieldName]['config'];
 
@@ -425,12 +430,12 @@ EOF;
 	 * Returns the configuration of element textfield.
 	 *
 	 * @global	Language	$LANG
+	 * @param	string		$namespace
 	 * @param	array		$columns which corresponds the TCA's columns
 	 * @param	array		$fieldName
-	 * @param	string		$namespace
 	 * @return	array
 	 */
-	public static function getTextField(&$columns, $fieldName, $namespace) {
+	public static function getTextField($namespace, &$columns, $fieldName) {
 		global $LANG;
 		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 		$tca =  $columns[$fieldName]['config'];

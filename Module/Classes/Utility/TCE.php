@@ -34,6 +34,52 @@
  */
 class Tx_Addresses_Utility_TCE {
 
+
+	/**
+	 * Returns configuration according to the given field's name.
+	 * This method works like a dispatcher. Firstly the TCA of the field is loaded.
+	 * Then, the right method is called according to the field's type.
+	 *
+	 * @param string the name space;
+	 * @param string the field name;
+	 * @return array $configuration
+	 */
+	public static function getFieldConfiguration($namespace, $fieldName) {
+		global $LANG;
+		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
+		$tca = $columns[$fieldName]['config'];
+
+		switch($tca['type']) {
+			case 'passthrough':
+				$configuration = self::getHiddenField($columns, $fieldName, $namespace);
+				break;
+			case 'text':
+				$configuration = self::getTextArea($columns, $fieldName, $namespace);
+				break;
+			case 'input':
+				$configuration = self::getTextField($columns, $fieldName, $namespace);
+				break;
+			case 'user':
+				throw new Exception('An error has been thrown!');
+				break;
+			case 'select':
+				if ($tca['maxitems'] > 1 && isset($tca['foreign_table'])) {
+					$configuration = self::getItemSelector($columns, $fieldName, $namespace);
+				}
+				else {
+					$configuration = self::getComboBox($columns, $fieldName, $namespace);
+				}
+				break;
+			default;
+				t3lib_div::debug('Invalid configuration for "' . $fieldName . '" in ' . __FILE__ . ', line: ' . __LINE__, 'MESSAGE');
+				t3lib_div::debug($namespace, '$namespace');
+				t3lib_div::debug($fieldName, '$field');
+				t3lib_div::debug($columns, '$columns');
+				throw new Exception('An error has been thrown!');
+		} //end switch
+		return $configuration;
+	}
+	
 	/**
 	 * Returns the locations store
 	 *

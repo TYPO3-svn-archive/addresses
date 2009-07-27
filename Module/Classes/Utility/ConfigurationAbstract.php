@@ -198,13 +198,13 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 					$__configuration['items']['xtype'] = 'panel';
 					$__configuration['items']['layout'] = 'form';
 					$__configuration['items']['defaults'] = Tx_Addresses_Utility_TCE::getDefaults();
-					$__configuration['items']['items'] = self::getFieldConfiguration($namespace, $_fieldName['fieldName']);
+					$__configuration['items']['items'] = Tx_Addresses_Utility_TCE::getFieldConfiguration($namespace, $_fieldName['fieldName']);
 					$_configurations['items'][] = $__configuration;
 				}
 				$configurations[] = $_configurations;
 			}
 			else {
-				$configurations[] = self::getFieldConfiguration($namespace, $fieldName);
+				$configurations[] = Tx_Addresses_Utility_TCE::getFieldConfiguration($namespace, $fieldName);
 			}
 		}
 		return $configurations;
@@ -245,7 +245,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 				$numberOfItems = count($showItem['panels']);
 				if ($numberOfItems > 1) {
 					$tabpanels['xtype'] = 'tabpanel';
-					$tabpanels['activeTab'] = 1;
+					$tabpanels['activeTab'] = 2;
 					$tabpanels['deferredRender'] = FALSE;
 					$tabpanels['defaults'] = array('bodyStyle' => 'padding:5px');
 					foreach ($showItem['panels'] as $panel) {
@@ -289,45 +289,5 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	 * @return	array
 	 */
 	abstract public static function getStores();
-
-	/**
-	 * Return configuration of array
-	 *
-	 * @param string the name space;
-	 * @param string the field name;
-	 * @return array $configuration
-	 */
-	protected static function getFieldConfiguration($namespace, $fieldName) {
-		global $LANG;
-		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
-		$tca = $columns[$fieldName]['config'];
-
-		switch($tca['type']) {
-			case 'passthrough':
-				$configuration = Tx_Addresses_Utility_TCE::getHiddenField($columns, $fieldName, $namespace);
-				break;
-			case 'text':
-				$configuration = Tx_Addresses_Utility_TCE::getTextArea($columns, $fieldName, $namespace);
-				break;
-			case 'input':
-				$configuration = Tx_Addresses_Utility_TCE::getTextField($columns, $fieldName, $namespace);
-				break;
-			case 'select':
-				if ($tca['maxitems'] > 1 && isset($tca['foreign_table'])) {
-					$configuration = Tx_Addresses_Utility_TCE::getItemSelector($columns, $fieldName, $namespace);
-				}
-				else {
-					$configuration = Tx_Addresses_Utility_TCE::getComboBox($columns, $fieldName, $namespace);
-				}
-				break;
-			default;
-				t3lib_div::debug('Invalid configuration for "' . $fieldName . '" in ' . __FILE__ . ', line: ' . __LINE__, 'MESSAGE');
-				t3lib_div::debug($namespace, '$namespace');
-				t3lib_div::debug($fieldName, '$field');
-				t3lib_div::debug($columns, '$columns');
-				throw new Exception('An error has been thrown!');
-		} //end switch
-		return $configuration;
-	}
 }
 ?>

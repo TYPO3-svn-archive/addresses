@@ -26,6 +26,10 @@
 			<label index="relations">Relations</label>
 			<label index="group">Group</label>
 			<label index="groups">Groups</label>
+			<label index="fixed">Fixed</label>
+			<label index="mobile">Mobile</label>
+			<label index="fax">Fax</label>
+			<label index="contact_number">Contact number</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="address">Addresse</label>
@@ -47,6 +51,10 @@
 			<label index="germany">Allemagne</label>
 			<label index="relations">Relations</label>
 			<label index="groups">Groupes</label>
+			<label index="fixed">Fixe</label>
+			<label index="mobile">Mobile</label>
+			<label index="fax">Fax</label>
+			<label index="contact_number">Numéro de contact</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 		</languageKey>

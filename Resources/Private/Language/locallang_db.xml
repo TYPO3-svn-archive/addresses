@@ -53,6 +53,9 @@
 			<label index="tx_addresses_domain_model_address.country">Country</label>
 			<label index="tx_addresses_domain_model_address.hidden">Hidden</label>
 			<label index="tx_addresses_domain_model_address.image">Image</label>
+			<label index="tx_addresses_domain_model_address.type">Type</label>
+			<label index="tx_addresses_domain_model_address.number">Number</label>
+			<label index="tx_addresses_domain_model_address.nature">Nature</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tx_addresses_domain_model_address.mobile">Mobile</label>
@@ -101,7 +104,9 @@
 			<label index="tx_addresses_domain_model_address.company">Companie</label>
 			<label index="tx_addresses_domain_model_address.country">Pays</label>
 			<label index="tx_addresses_domain_model_address.hidden">Caché</label>
-			<label index="tx_addresses_domain_model_address.image">Image</label>
+			<label index="tx_addresses_domain_model_address.type">Type</label>
+			<label index="tx_addresses_domain_model_address.number">Numéro</label>
+			<label index="tx_addresses_domain_model_address.nature">Nature</label>
 		</languageKey>
 	</data>
 </T3locallang>

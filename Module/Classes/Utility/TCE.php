@@ -135,10 +135,11 @@ class Tx_Addresses_Utility_TCE {
 	 */
 	public static function getDefaults () {
 		$configuration = array(
+			'xtype' => 'textfield',
 			'anchor' => '95%',
 			'blankText' =>'fieldMandatory',
 			'labelSeparator' => '',
-			'xtype' => 'textfield',
+			'selectOnFocus' => TRUE,
 		);
 		return $configuration;
 	}
@@ -534,7 +535,6 @@ EOF;
 		if (isset($columns[$fieldName]['label'])) {
 			$configuration['fieldLabel'] = $LANG->sL($columns[$fieldName]['label']);
 		}
-		$configuration['selectOnFocus'] = true;
 
 		return $configuration;
 

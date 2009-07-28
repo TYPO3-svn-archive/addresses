@@ -46,6 +46,7 @@ class Tx_Addresses_Utility_UserTCE {
 	public static function getContactnumbersField($namespace, &$columns, $fieldName) {
 		global $LANG;
 		$configuration['xtype'] = 'contactnumber';
+		$configuration['id'] = 'address_contactnumbers';
 		$configuration['text'] = $LANG->getLL('addNewElement');
 		return $configuration;
 //		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);

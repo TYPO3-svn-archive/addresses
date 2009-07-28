@@ -34,7 +34,6 @@
  */
 abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 
-
 	/**
 	 * Gets the configuration for the Ext JS interface. The return array is going to be converted into JSON.
 	 *
@@ -44,7 +43,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	public static function getGridConfiguration($namespace) {
 		global $LANG;
 		$configurations = Tx_Addresses_Utility_TCA::getFieldsGrid($namespace);
-
+		
 		$fields = array();
 		foreach ($configurations as $fieldName => $configuration) {
 			$_array = array();
@@ -242,28 +241,33 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 				$_configuration['columnWidth'] = $showItem['columnWidth'];
 
 				// Makes the difference whether the panel contains 1 element or multi elements
-				$numberOfItems = count($showItem['panels']);
-				if ($numberOfItems > 1) {
-					$tabpanels['xtype'] = 'tabpanel';
-					$tabpanels['activeTab'] = 2;
-					$tabpanels['deferredRender'] = FALSE;
-					$tabpanels['defaults'] = array('bodyStyle' => 'padding:5px');
-					foreach ($showItem['panels'] as $panel) {
-						$_panel = array();
-						$_panel = Tx_Addresses_Utility_TCE::getTab($panel['title']);
-						$_panel['items'] = self::getFieldsConfiguration($namespace, $panel['fields']);
-						$tabpanels['items'][] = $_panel;
-					}
-				}
-				else if ($numberOfItems == 1) {
-					// Extract the unique field name
-					$_configuration['xtype'] = 'panel';
-					$_configuration['title'] = '&nbsp;';
-					$_configuration['layout'] = 'form';
-					$_configuration['bodyStyle'] = 'padding: 5px 0 5px 5px';
-					$_configuration['defaults'] = Tx_Addresses_Utility_TCE::getDefaults();
-					$fieldName = $showItem['panels'][0]['fields'][0];
-					$tabpanels[] = Tx_Addresses_Utility_TCE::getFieldConfiguration($namespace, $fieldName);
+				switch ($showItem['xtype']) {
+					case 'tabpanel':
+						$tabpanels['xtype'] = 'tabpanel';
+						$tabpanels['activeTab'] = isset($showItem['activeTab']) ? $showItem['activeTab'] : 0;
+						$tabpanels['deferredRender'] = FALSE;
+						$tabpanels['defaults'] = array('bodyStyle' => 'padding:5px');
+						foreach ($showItem['panels'] as $panel) {
+							$_panel = array();
+							$_panel = Tx_Addresses_Utility_TCE::getTab($panel['title']);
+							$_panel['items'] = self::getFieldsConfiguration($namespace, $panel['fields']);
+							$tabpanels['items'][] = $_panel;
+						}
+						break;
+					case 'panel':
+						// Extract the unique field name
+						$_configuration['xtype'] = 'panel';
+						$_configuration['title'] = '&nbsp;';
+						$_configuration['layout'] = 'form';
+						$_configuration['bodyStyle'] = 'padding: 5px 0 5px 5px';
+						$_configuration['defaults'] = Tx_Addresses_Utility_TCE::getDefaults();
+						$fieldName = $showItem['panels'][0]['fields'][0];
+						$tabpanels[] = Tx_Addresses_Utility_TCE::getFieldConfiguration($namespace, $fieldName);
+						break;
+					default:
+						t3lib_div::debug('Script has stopped because of a missing configuration. Please define xtype value', 'debug');
+						t3lib_div::debug($showItem, '$showItem');
+						throw new Exception('Error has been sent');
 				}
 
 				// Adds the panel's description to the main configuration array
@@ -288,6 +292,8 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	 *
 	 * @return	array
 	 */
-	abstract public static function getStores();
+	public static function getStores($namespace) {
+		return  Tx_Addresses_Utility_TCE::getStores($namespace);
+	}
 }
 ?>

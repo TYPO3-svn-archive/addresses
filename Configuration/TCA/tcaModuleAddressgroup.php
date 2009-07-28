@@ -8,10 +8,11 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 	// Describes the left panel.
 	array(
 		'columnWidth' => 0.6,
+		'xtype' => 'tabpanel',
 		// Describes the tab of the left panel
 		'panels' => array (
 			array(
-				'title' => ';LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:group',
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:group',
 				'fields' => array('title'),
 			),
 		),
@@ -19,6 +20,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 	// Describes the right panel.
 	array(
 		'columnWidth' => 0.4,
+		'xtype' => 'panel',
 		'panels' => array(
 			array(
 				'title' => '',

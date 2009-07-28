@@ -66,6 +66,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
 	|| strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'typo3/ajax.php') !== FALSE) {
     require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleAddress.php');
     require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleAddressgroup.php');
+    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleContactnumber.php');
 }
 
 $configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);

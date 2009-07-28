@@ -104,8 +104,6 @@ CREATE TABLE tx_addresses_domain_model_contactnumber (
 	area_code tinytext NOT NULL,
 	number tinytext NOT NULL,
 	extension tinytext NOT NULL,
-	email tinytext NOT NULL,
-	url tinytext NOT NULL,
 	remarks text NOT NULL,
 
 	PRIMARY KEY (uid),

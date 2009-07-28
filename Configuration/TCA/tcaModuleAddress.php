@@ -1,55 +1,10 @@
 <?php
+// Beware: this file is loaded only for the BE module.
 
-// This section describes the columns of the grid.
 $domainName = 'tx_addresses_domain_model_address';
 t3lib_div::loadTCA($domainName);
 
-$TCA[$domainName]['types']['module']['showitem'] = array(
-	// Describes the left panel.
-	array(
-		'columnWidth' => 0.6,
-		// Describes the tab of the left panel
-		'panels' => array (
-			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person',
-				'fields' => array('gender', 'title', 'first_name', 'last_name', 'preferred_language', 'birth_date', 'marital_status', 'nationality'),
-			),
-			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses',
-				// 2 fields on the same line
-				'fields' => array(
-					'street',
-					array(
-						array('fieldName' => 'postal_code', 'columnWidth' => 0.25),
-						array('fieldName' => 'locality', 'columnWidth' => 0.75),
-					),
-					'country'),
-			),
-			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts',
-				'fields' => array('website', 'contactnumbers'),
-			),
-			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups',
-				'fields' => array('addressgroups'),
-			),
-		),
-	),
-	// Describes the right panel.
-	array(
-		'columnWidth' => 0.4,
-		'panels' => array(
-			array(
-				'title' => '',
-				'fields' => array('remarks'),
-			),
-		),
-	),
-);
-
-$TCA[$domainName]['columns']['gender']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
-$TCA[$domainName]['columns']['marital_status']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
-
+// Describes the column of the grid
 $TCA[$domainName]['interface']['showGridFieldList'] = array(
     'uid' => array(
         'id' => TRUE,
@@ -147,6 +102,58 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
     ),
 );
 
+// Describes the fields of the editing window
+$TCA[$domainName]['types']['module']['showitem'] = array(
+	// Describes the left panel.
+	array(
+		'columnWidth' => 0.6,
+		'xtype' => 'tabpanel',
+		'activeTab' => 2,
+		// Describes the tab of the left panel
+		'panels' => array (
+			array(
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person',
+				'fields' => array('gender', 'title', 'first_name', 'last_name', 'preferred_language', 'birth_date', 'marital_status', 'nationality'),
+			),
+			array(
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses',
+				// 2 fields on the same line
+				'fields' => array(
+					'street',
+					array(
+						array('fieldName' => 'postal_code', 'columnWidth' => 0.25),
+						array('fieldName' => 'locality', 'columnWidth' => 0.75),
+					),
+					'country'),
+			),
+			array(
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts',
+				'fields' => array('website', 'contactnumbers'),
+			),
+			array(
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups',
+				'fields' => array('addressgroups'),
+			),
+		),
+	),
+	// Describes the right panel.
+	array(
+		'columnWidth' => 0.4,
+		'xtype' => 'panel',
+		'panels' => array(
+			array(
+				'title' => '',
+				'fields' => array('remarks'),
+			),
+		),
+	),
+);
+
+// Overrides default TCA configuration according to ExtJS needs
+$TCA[$domainName]['columns']['gender']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
+$TCA[$domainName]['columns']['marital_status']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
+
+// editable combobox widget
 $TCA[$domainName]['columns']['title'] = array(
     'exclude' => 1,
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title',
@@ -168,6 +175,7 @@ $TCA[$domainName]['columns']['title'] = array(
     )
 );
 
+// editable combobox widget
 $TCA[$domainName]['columns']['country'] = array(
     'exclude' => 1,
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.country',
@@ -184,9 +192,11 @@ $TCA[$domainName]['columns']['country'] = array(
         'size' => 1,
         'minitems' => 0,
         'maxitems' => 1,
+		'editable' => TRUE,
     )
 );
 
+// editable combobox widget
 $TCA[$domainName]['columns']['preferred_language'] = array(
     'exclude' => 1,
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.preferred_language',
@@ -205,9 +215,11 @@ $TCA[$domainName]['columns']['preferred_language'] = array(
         'size' => 1,
         'minitems' => 0,
         'maxitems' => 1,
+		'editable' => TRUE,
     )
 );
 
+// editable combobox widget
 $TCA[$domainName]['columns']['nationality'] = array(
     'exclude' => 1,
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nationality',
@@ -226,7 +238,7 @@ $TCA[$domainName]['columns']['nationality'] = array(
         'size' => 1,
         'minitems' => 0,
         'maxitems' => 1,
+		'editable' => TRUE,
     )
 );
-
 ?>

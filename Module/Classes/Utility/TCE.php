@@ -267,7 +267,6 @@ EOF;
 	/**
 	 * Returns the store configuration in Json formation
 	 *
-	 * @global	array		$TCA
 	 * @global	t3lib_DB	$TYPO3_DB
 	 * @param	string		$fieldName
 	 * @param	string		$foreignTable
@@ -278,9 +277,10 @@ EOF;
 		global $TYPO3_DB;
 		global $TCA;
 
+		$label = Tx_Addresses_Utility_TCA::getLabel($foreignTable);
 		$clause = 'deleted = 0 ';
 		$clause .= t3lib_BEfunc::BEenableFields($foreignTable);
-		$records = $TYPO3_DB->exec_SELECTgetRows('uid as "0", ' . $TCA[$foreignTable]['ctrl']['label'] . ' as "1"', $foreignTable, $clause);
+		$records = $TYPO3_DB->exec_SELECTgetRows('uid as "0", ' . $label . ' as "1"', $foreignTable, $clause);
 
 		$json = json_encode($records);
 		$store = <<<EOF

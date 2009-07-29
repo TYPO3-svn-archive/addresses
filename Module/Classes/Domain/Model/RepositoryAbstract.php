@@ -184,30 +184,10 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 
-		// Fetch the namespace
-		$namespace = $this->getNamespaceFromTableName($tca['config']['foreign_table']);
-		
 		// Namespace is necessary for fetching the fields
-		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
+		$columns = Tx_Addresses_Utility_TCA::getColumns($tca['config']['foreign_table']);
 		$fields = $this->getFields($columns, $tca['config']['foreign_table']);
 		return $TYPO3_DB->exec_SELECTgetRows($fields, $tca['config']['foreign_table'], 'uid IN (SELECT uid_foreign FROM ' . $tca['config']['MM'] . ' WHERE uid_local=' . $uid . ')', '', 'uid ASC');
-
-	}
-
-	/**
-	 * Extracts and returns the namespace for a passed table name.
-	 *
-	 * @param string $tableName
-	 * @return string
-	 */
-	protected function getNamespaceFromTableName($tableName) {
-		// Fetch the namespace
-		$namespace = '';
-		preg_match('/_([a-zA-Z0-9]+)$/is', $tableName, $matches);
-		if (isset($matches[1])) {
-			$namespace = $matches[1];
-		}
-		return $namespace;
 	}
 
 	/**
@@ -230,8 +210,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				// TRUE when value contains a sub array. Means it should call recursively formatRecordForHumans
 				if (is_array($value) && isset($config['foreign_table'])) {
 					// Gets the namespace + the columns
-					$namespace = $this->getNamespaceFromTableName($config['foreign_table']);
-					$_columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
+					$_columns = Tx_Addresses_Utility_TCA::getColumns($config['foreign_table']);
 					$_records = array();
 					foreach ($value as $_value) {
 						$_records[] = $this->formatRecordForHumans($_value, $_columns);

@@ -42,16 +42,28 @@ class Tx_Addresses_Utility_TCA {
 
 	/**
 	 * Returns the TCA of Addresses.
-	 * 
+	 *
+	 * @param string $namespace: can be the namespace or the table name.
 	 * @return	array
 	 */
 	public static function getTCA($namespace) {
 		global $TCA;
-		if (empty(self::$TCA['tx_addresses_domain_model_' . strtolower($namespace)])) {
-			t3lib_div::loadTCA('tx_addresses_domain_model_' . strtolower($namespace));
-			self::$TCA['tx_addresses_domain_model_' . strtolower($namespace)] = $TCA['tx_addresses_domain_model_' . strtolower($namespace)];
+
+		// Detects whether it is the table name or the namespace
+		if (strpos($namespace, '_') > 0) {
+			$tableName = $namespace;
 		}
-		return self::$TCA['tx_addresses_domain_model_' . strtolower($namespace)];
+		else {
+			$domain = 'tx_addresses_domain_model_';
+			$tableName = $domain . strtolower($namespace);
+		}
+
+		// Gets the TCA
+		if (empty(self::$TCA[$tableName])) {
+			t3lib_div::loadTCA($tableName);
+			self::$TCA[$tableName] = $TCA[$tableName];
+		}
+		return self::$TCA[$tableName];
 	}
 
 	/**
@@ -61,6 +73,15 @@ class Tx_Addresses_Utility_TCA {
 	public static function getFieldsFromGrid($namespace) {
 		$TCA = self::getTCA($namespace);
 		return $TCA['interface']['showGridFieldList'];
+	}
+
+	/**
+	 * Returns the fields of the grid
+	 * @return array
+	 */
+	public static function getLabel($namespace) {
+		$TCA = self::getTCA($namespace);
+		return $TCA['ctrl']['label'];
 	}
 
 	/**

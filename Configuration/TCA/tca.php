@@ -388,10 +388,12 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'contactnumbers' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.addressgroup',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.contactnumber',
 			'config' => array(
-				'type' => 'user',
-				'userFunc' => 'Tx_Addresses_Utility_UserTCE::getContactnumbersField',
+				'type' => 'input',
+				'size' => '20',
+				'eval' => 'trim',
+				'max' => '30',
 			)
 		),
 		// *not* editable combobox widget
@@ -443,7 +445,6 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array(
 	'feInterface' => $TCA['tx_addresses_domain_model_addressgroup']['feInterface'],
 	'columns' => array(
 		'uid' => Array (
-			'exclude' => 1,
 			'config' => Array (
 				'type' => 'passthrough'
 			)
@@ -510,7 +511,6 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array(
 	)
 );
 
-
 $TCA['tx_addresses_domain_model_contactnumber'] = array(
 	'ctrl' => $TCA['tx_addresses_domain_model_contactnumber']['ctrl'],
 	'interface' => array(
@@ -519,7 +519,6 @@ $TCA['tx_addresses_domain_model_contactnumber'] = array(
 	'feInterface' => $TCA['tx_addresses_domain_model_contactnumber']['feInterface'],
 	'columns' => array(
 		'uid' => Array (
-			'exclude' => 1,
 			'config' => Array (
 				'type' => 'passthrough'
 			)
@@ -577,7 +576,7 @@ $TCA['tx_addresses_domain_model_contactnumber'] = array(
 		),
 		'number' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nature',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.number',
 			'config'  => array(
 				'type' => 'input',
 				'size' => '30',
@@ -612,6 +611,4 @@ $TCA['tx_addresses_domain_model_contactnumber'] = array(
 
 	)
 );
-
-
 ?>

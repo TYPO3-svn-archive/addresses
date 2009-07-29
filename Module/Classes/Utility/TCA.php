@@ -58,7 +58,7 @@ class Tx_Addresses_Utility_TCA {
 	 * Returns the fields of the grid
 	 * @return array
 	 */
-	public static function getFieldsGrid($namespace) {
+	public static function getFieldsFromGrid($namespace) {
 		$TCA = self::getTCA($namespace);
 		return $TCA['interface']['showGridFieldList'];
 	}

@@ -84,9 +84,9 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	public function findAll() {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
-
+		$columns = Tx_Addresses_Utility_TCA::getFieldsFromGrid($this->namespace);
 		$request = $TYPO3_DB->SELECTquery(
-			$this->getFields(),
+			$this->getFields($columns, $this->tableName),
 			$this->tableName,
 			'deleted = 0 AND hidden = 0' . $this->getClause(),
 			'', // groupBy
@@ -105,10 +105,14 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 		$res = $TYPO3_DB->sql_query($request);
 
+		// Fields from Grid TCA are merged into the Columns's TCA
+		$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
+
+		// Formats array
 		$records = array();
 		if (!$TYPO3_DB->sql_error()) {
 			while($record = $TYPO3_DB->sql_fetch_assoc($res)) {
-				array_push($records, $this->formatRecordForHumans($record));
+				array_push($records, $this->formatRecordForHumans($record, $columns));
 			}
 			$TYPO3_DB->sql_free_result($res);
 		}
@@ -137,15 +141,20 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		$clause = $this->getUidClause($dataSet);
 		$output['success'] = FALSE;
 		if ($clause != '') {
+			$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
 			$records = $TYPO3_DB->exec_SELECTgetRows(
-				$this->getFields(),
+				$this->getFields($columns, $this->tableName),
 				$this->tableName,
 				'deleted = 0 AND hidden = 0 AND ' . $clause
 			);
 
-			$records = $this->getMMRelations($dataSet[0]->uid, $records);
+			foreach($records as &$record) {
+				foreach($this->foreignTables as $fieldName => $tca) {
+					$record[$fieldName] = $this->getMMRelations($dataSet[0]->uid, $tca);
+				}
+			}
 
-			// Get the intersection of the array
+			// Whenever editing multiple records get the intersection of the array.
 			if (!empty($records)) {
 				$_record = $records[0];
 				foreach($records as $record) {
@@ -155,7 +164,10 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				$output['success'] = TRUE;
 				$output['data'] = $_record;
 			}
-			$output['data'] = $this->formatRecordForHumans($output['data']);
+
+			// Fields from Grid TCA are merged into the Columns's TCA
+			$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
+			$output['data'] = $this->formatRecordForHumans($output['data'], $columns);
 		}
 		return $output;
 	}
@@ -165,53 +177,78 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 *
 	 * @global t3lib_DB $TYPO3_DB
 	 * @param int $uid
-	 * @param array $records
+	 * @param array $tca
 	 * @return array
 	 */
-	protected function getMMRelations($uid, &$records) {
+	protected function getMMRelations($uid, &$tca) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
-		foreach($this->foreignTables as $fieldName => $tca) {
-			$rows = array();
-			$res = $TYPO3_DB->exec_SELECTquery('uid_foreign', $tca['config']['MM'], 'uid_local=' . $uid, '', 'sorting ASC');
-			while ($row = $TYPO3_DB->sql_fetch_row($res)) {
-				$rows[] = $row[0];
-			}
-			$records[0][$fieldName] = implode(',', $rows);
-		}
-		return $records;
+
+		// Fetch the namespace
+		$namespace = $this->getNamespaceFromTableName($tca['config']['foreign_table']);
+		
+		// Namespace is necessary for fetching the fields
+		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
+		$fields = $this->getFields($columns, $tca['config']['foreign_table']);
+		return $TYPO3_DB->exec_SELECTgetRows($fields, $tca['config']['foreign_table'], 'uid IN (SELECT uid_foreign FROM ' . $tca['config']['MM'] . ' WHERE uid_local=' . $uid . ')', '', 'uid ASC');
 
 	}
 
 	/**
-	 * Traverses the record and transforms tstamp to human date
+	 * Extracts and returns the namespace for a passed table name.
 	 *
-	 * @param array $input
+	 * @param string $tableName
+	 * @return string
+	 */
+	protected function getNamespaceFromTableName($tableName) {
+		// Fetch the namespace
+		$namespace = '';
+		preg_match('/_([a-zA-Z0-9]+)$/is', $tableName, $matches);
+		if (isset($matches[1])) {
+			$namespace = $matches[1];
+		}
+		return $namespace;
+	}
+
+	/**
+	 * Traverses the record and transforms <b>recursively</b>the dataset:
+	 * <ul>
+	 *	<li>tstamp to human date</li>
+	 *	<li>eval</li>
+	 * </ul>
+	 *
+	 * @param array $dataset
 	 * @return array
 	 */
-	protected function formatRecordForHumans($input) {
+	protected function formatRecordForHumans($dataset, $columns) {
 		$output = array();
-		// Traverses all $field in order to format the date fields
-		foreach ($input as $fieldName => $value) {
-			$columns = array_merge(Tx_Addresses_Utility_TCA::getColumns($this->namespace), Tx_Addresses_Utility_TCA::getFieldsGrid($this->namespace));
+
+		// Traverses all $field and formats the date
+		foreach ($dataset as $fieldName => $value) {
 			if (isset($columns[$fieldName])) {
-				$tca = $columns[$fieldName];
+				$config = $columns[$fieldName]['config'];
+				// TRUE when value contains a sub array. Means it should call recursively formatRecordForHumans
+				if (is_array($value) && isset($config['foreign_table'])) {
+					// Gets the namespace + the columns
+					$namespace = $this->getNamespaceFromTableName($config['foreign_table']);
+					$_columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
+					$_records = array();
+					foreach ($value as $_value) {
+						$_records[] = $this->formatRecordForHumans($_value, $_columns);
+					}
+					$output[$fieldName] = $_records;
+				}
 				// eval function
-				if (isset($tca['config']['eval'])
-					&& strpos($tca['config']['eval'], 'date') !== FALSE
+				else if (isset($config['eval'])
+					&& strpos($config['eval'], 'date') !== FALSE
 					&& $value) {
+
 					$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
 					$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
 				}
-				// userFunc
-				else if (isset($tca['config']['type']) && $tca['config']['type'] == 'user') {
-						$table = $tca['config']['userFunc.']['table'];
-						$field = $tca['config']['userFunc.']['field'];
-						$output[$fieldName] = call_user_func_array(explode('->', $tca['config']['userFunc']), array($table, $field, $value));
-					}
-					else {
-						$output[$fieldName] = $value;
-					}
+				else {
+					$output[$fieldName] = $value;
+				}
 			}
 		}
 		return $output;
@@ -233,12 +270,12 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 			);
 			// Merge tables from the foreignTables
 			$foreignTables = array_merge($foreignTables, $this->getForeignTables());
-			
+
 			// fetch other condition
 			foreach ($foreignTables as $foreignTable => $data) {
-				// Builds request for the 2 possible relations:
-				// 1. M-M relation
-				// 2. 1-M relation
+			// Builds request for the 2 possible relations:
+			// 1. M-M relation
+			// 2. 1-M relation
 				if (isset($data['MM'])) {
 					$this->clause .= ' OR uid IN (SELECT uid_local FROM ' . $data['MM'] . ' WHERE tablenames = "' . $data['foreign_table'] . '" AND uid_foreign IN (SELECT uid FROM ' . $data['foreign_table'] . ' WHERE ' . $this->getSearchClause($search, $data['foreign_table']) . '))';
 				}
@@ -348,16 +385,14 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @param array $data
 	 * @return string
 	 */
-	protected function getFields() {
+	protected function getFields($columns, $tableName) {
 		global $BE_USER;
-		t3lib_div::loadTCA($this->tableName);
-		$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
 		$fields = array();
 		foreach (array_keys($columns) as $fieldName) {
 			if ($BE_USER->isAdmin()
 				|| !isset($columns[$fieldName]['exclude'])
 				|| (isset($columns[$fieldName]['exclude']) && !$columns[$fieldName]['exclude'])
-				|| $BE_USER->check('non_exclude_fields', $this->tableName . ':' . $fieldName)) {
+				|| $BE_USER->check('non_exclude_fields', $tableName . ':' . $fieldName)) {
 
 				$fields[] = $fieldName;
 

@@ -77,7 +77,7 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
         'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
         'config' => Array (
             'type' => 'user',
-            'userFunc' => 'tx_addresses_tce->getValueById',
+            'userFunc' => 'Tx_Addresses_Utility_TCE::getValueById',
             'userFunc.' => array (
                 'table' => 'be_users',
                 'field' => 'username',
@@ -91,7 +91,7 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
         'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
         'config' => Array (
             'type' => 'user',
-            'userFunc' => 'tx_addresses_tce->getValueById',
+            'userFunc' => 'Tx_Addresses_Utility_TCE::getValueById',
             'userFunc.' => array (
                 'table' => 'be_users',
                 'field' => 'username',
@@ -152,6 +152,12 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 // Overrides default TCA configuration according to ExtJS needs
 $TCA[$domainName]['columns']['gender']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
 $TCA[$domainName]['columns']['marital_status']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
+$TCA[$domainName]['columns']['contactnumbers']['config'] = Array(
+	'type' => 'user',
+	'userFunc' => 'Tx_Addresses_Utility_UserTCE::getContactnumbersField',
+	'foreign_table' => 'tx_addresses_domain_model_contactnumber',
+	'MM' => 'tx_addresses_address_contactnumber_mm',
+);
 
 // editable combobox widget
 $TCA[$domainName]['columns']['title'] = array(
@@ -164,7 +170,7 @@ $TCA[$domainName]['columns']['title'] = array(
             Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.2', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.2'),
             Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.3', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.3'),
         ),
-        'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
+        'itemsProcFunc' => 'Tx_Addresses_Utility_TCE::getArrayForSelect',
         'itemsProcFunc.' => array (
             'table' => $domainName,
             'field' => 'title',
@@ -184,7 +190,7 @@ $TCA[$domainName]['columns']['country'] = array(
         'items' => Array (
             Array('Suisse','Suisse'),
         ),
-        'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
+        'itemsProcFunc' => 'Tx_Addresses_Utility_TCE::getArrayForSelect',
         'itemsProcFunc.' => array (
             'table' => $domainName,
             'field' => 'country',
@@ -207,7 +213,7 @@ $TCA[$domainName]['columns']['preferred_language'] = array(
             Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:french','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:french'),
             Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:german','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:german'),
         ),
-        'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
+        'itemsProcFunc' => 'Tx_Addresses_Utility_TCE::getArrayForSelect',
         'itemsProcFunc.' => array (
             'table' => $domainName,
             'field' => 'preferred_language',
@@ -230,7 +236,7 @@ $TCA[$domainName]['columns']['nationality'] = array(
             Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:germany','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:germany'),
             Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:france','LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:france'),
         ),
-        'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
+        'itemsProcFunc' => 'Tx_Addresses_Utility_TCE::getArrayForSelect',
         'itemsProcFunc.' => array (
             'table' => $domainName,
             'field' => 'nationality',

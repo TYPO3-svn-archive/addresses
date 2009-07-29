@@ -231,7 +231,7 @@ class Tx_Addresses_Utility_TCE {
 			$table = $tca['itemsProcFunc.']['table'];
 			$_fieldName = $tca['itemsProcFunc.']['field'];
 			if ($table != '' && $_fieldName != '') {
-				$records = call_user_func_array(explode('->', $tca['itemsProcFunc']), array($table, $_fieldName));
+				$records = call_user_func_array($tca['itemsProcFunc'], array($table, $_fieldName));
 				array_pop($records);
 			}
 			
@@ -558,6 +558,58 @@ EOF;
 			$myvalue = unserialize($myvalue);
 		}
 		return $myArray;
+	}
+
+
+	/**
+	 * This function is called by the ['config']['itemsProcFunc']
+	 *
+	 * @param	string		$table
+	 * @param	string		$field
+	 * @return	array
+	 */
+	public static function getArrayForSelect($table, $field) {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TYPO3_DB;
+		$_records = array();
+		if (is_string($table) && is_string($field)) {
+			$clause = 'deleted = 0 ';
+			$clause .= t3lib_BEfunc::BEenableFields($table);
+			$records = $TYPO3_DB->exec_SELECTgetRows('distinct(' . $field . ')', $table, $clause);
+
+			// TRUE Means the uid of the option will be the same as the value
+			if (!strpos($field, ',')) {
+				foreach($records as $record) {
+					$_records[] = array(
+						$record[$field],
+						$record[$field],
+					);
+				}
+			}
+		}
+		return $_records;
+	}
+
+	/**
+	 * This function is called by the ['config']['userFunc']
+	 *
+	 * @param	string		$table
+	 * @param	string		$field
+	 * @return	string
+	 */
+	public static function getValueById($table, $field, $uid) {
+		/* @var $TYPO3_DB t3lib_DB */
+		global $TYPO3_DB;
+		$result = '';
+		if (is_string($table) && is_string($field) && (int)$uid > 0) {
+			$clause = "deleted = 0 AND uid = $uid ";
+			$clause .= t3lib_BEfunc::BEenableFields($table);
+			$records = $TYPO3_DB->exec_SELECTgetRows('distinct(' . $field . ')', $table, $clause);
+			if (isset($records[0])) {
+				$result = $records[0][$field];
+			}
+			return $result;
+		}
 	}
 }
 ?>

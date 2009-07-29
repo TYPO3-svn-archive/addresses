@@ -12,7 +12,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 		// Describes the tab of the left panel
 		'panels' => array (
 			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contact_number',
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contactnumber',
 				'fields' => array('type', 'number', 'nature'),
 			),
 		),
@@ -36,7 +36,7 @@ $TCA[$domainName]['columns']['nature'] = array(
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nature',
     'config' => Array (
         'type' => 'select',
-        'itemsProcFunc' => 'tx_addresses_tce->getArrayForSelect',
+        'itemsProcFunc' => 'Tx_Addresses_Utility_TCE::getArrayForSelect',
         'itemsProcFunc.' => array (
             'table' => $domainName,
             'field' => 'nature',

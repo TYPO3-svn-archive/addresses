@@ -42,7 +42,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	 */
 	public static function getGridConfiguration($namespace) {
 		global $LANG;
-		$configurations = Tx_Addresses_Utility_TCA::getFieldsGrid($namespace);
+		$configurations = Tx_Addresses_Utility_TCA::getFieldsFromGrid($namespace);
 		
 		$fields = array();
 		foreach ($configurations as $fieldName => $configuration) {
@@ -86,7 +86,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 	protected static function getFieldsTypeInGrid($namespace) {
 
 		$result = array();
-		foreach	(Tx_Addresses_Utility_TCA::getFieldsGrid($namespace) as $field => $configuration) {
+		foreach	(Tx_Addresses_Utility_TCA::getFieldsFromGrid($namespace) as $field => $configuration) {
 			$_array = array();
 			$_array['name'] = $field;
 			if (isset($configuration['config']['eval']) && $configuration['config']['eval'] == 'date') {

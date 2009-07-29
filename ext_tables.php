@@ -1,11 +1,6 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-if (TYPO3_MODE=='BE')	{
-	// Load class for userFunc fields in TCE Forms
-	require_once(t3lib_extMgm::extPath($_EXTKEY).'class.tx_addresses_tce.php');
-}
-
 Tx_Extbase_Utility_Plugin::registerPlugin(
 	'Addresses',																	// The name of the extension in UpperCamelCase
 	'Pi1',																			// A unique name of the plugin in UpperCamelCase
@@ -49,6 +44,22 @@ t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_addressgroup'
 $TCA['tx_addresses_domain_model_addressgroup'] = array (
 	'ctrl' => array (
 	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addressgroup',
+	'label'				=> 'title',
+	'tstamp'            => 'tstamp',
+	'crdate'            => 'crdate',
+	'delete'            => 'deleted',
+	'enablecolumns'     => array (
+		'disabled' => 'hidden'
+	),
+	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_address.gif'
+	)
+);
+
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_contactnumber');
+$TCA['tx_addresses_domain_model_contactnumber'] = array (
+	'ctrl' => array (
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contactnumber',
 	'label'				=> 'title',
 	'tstamp'            => 'tstamp',
 	'crdate'            => 'crdate',

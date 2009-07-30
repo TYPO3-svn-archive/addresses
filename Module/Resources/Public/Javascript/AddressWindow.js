@@ -408,7 +408,8 @@ Address.initWindow = function() {
 //			Ext.get('contactnumberForm').hide();
 			
 			// temporary method
-			this.changeSaveMethod('contactnumbers');
+			this.changeSaveMethod(this.save);
+//			this.changeSaveMethod('contactnumbers');
 
 			this.addListnerToTextareas();
 			this.addListnerToComboboxes();

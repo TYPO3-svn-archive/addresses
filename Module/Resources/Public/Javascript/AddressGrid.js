@@ -75,8 +75,8 @@ Address.initGrid = function() {
 		width: 50,
 		header : '&nbsp;',
 		renderer: function(val) {
-			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" onclick="Address.window.display(\'edit\')"/>&nbsp;&nbsp;';
-			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.gif" onclick="Address.window.display(\'copy\')"/>';
+			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" onclick="Address.window.load(\'edit\')"/>&nbsp;&nbsp;';
+			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.gif" onclick="Address.window.load(\'copy\')"/>';
 			return output;
 		},
 		dataIndex: 'uid'
@@ -143,7 +143,7 @@ Address.initGrid = function() {
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			Address.window.display('multipleEdit');
+			Address.window.load('multipleEdit');
 		}
 	},
 	'-',
@@ -208,7 +208,7 @@ Address.initGrid = function() {
 		bbar: configuration.bottomBar,
 		listeners: {
 			dblclick: function(e) {
-				Address.window.display('edit');
+				Address.window.load('edit');
 			},
 			keypress: function(key) {
 				if (key.keyCode == key.DELETE) {

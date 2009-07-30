@@ -36,60 +36,16 @@
 Address.initWindow = function() {
 
 	var configuration = new Object();
+
 	/**
 	 * Buttons: save - cancel attached to the form panel
 	 */
 	configuration.buttons = [{
 		text: Addresses.lang.save,
+		xtype: 'button',
 		id: 'addressSaveButton',
 		cls: 'x-btn-text-icon',
-		icon: 'Resources/Public/Icons/database_save.png',
-		listeners: {
-			click: function(){
-
-				// DEFINES THE SUBMIT OBJECT
-				var submit = {
-					clientValidation: true,
-					method: 'GET',
-					url: Addresses.statics.ajaxController,
-					waitMsg: Addresses.lang.saving,
-					params:{
-						ajaxID: 'AddressController::saveAction'
-					},
-					success: function(form,call){
-						Address.window.hide();
-						Ext.StoreMgr.get('addressStore').load();
-					},
-					failure: function(form,call){
-						if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
-							Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + call.response.status + ' ' + call.response.statusText);
-						}
-						else if (call.failureType === Ext.form.Action.SERVER_INVALID) {
-							Ext.Msg.alert(Addresses.lang.warning, call.result.errormsg);
-						}
-					}
-				};
-
-				// case multiple edition -> don't validate form
-				var form = Address.form
-				var uid = form.findField('address_uid').getValue();
-				if (uid == '' || uid.search(',') == -1) {
-					if (form.isValid()) {
-						submit.clientValidation = true;
-						form.submit(submit);
-						Address.window.wait();
-					}
-					else {
-						Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
-					}
-				}
-				else {
-					form.clearInvalid();
-					submit.clientValidation = false;
-					form.submit(submit);
-				}
-			}
-		}
+		icon: 'Resources/Public/Icons/database_save.png'
 	},
 	'-',
 	{
@@ -115,108 +71,17 @@ Address.initWindow = function() {
 		items: Address.windowFields
 	};
 
-
 	/*
 	 * Fom panel attached to the Window
 	 */
-	configuration.contactNumberForm = {
+	configuration.contactnumberForm = {
 		xtype: 'form',
-		id: 'contactNumberForm',
+		id: 'contactnumberForm',
+		waitMsgTarget: true,
 		frame: true,
-		//		bodyStyle: 'padding-left: 30%',
-		header: false,
-		title: 'Contact Number',
 		labelAlign: 'top',
 		hideMode: 'display',
-		defaults:{
-		//			"anchor":"40%",
-		//			"blankText":"Champ obligatoire",
-		//			"labelSeparator":"",
-		//			"selectOnFocus":true
-		},
-		items: {
-			xtype: 'panel',
-			layout:'column',
-			items: [{
-				columnWidth: .60,
-				items:
-				{
-					xtype:'tabpanel',
-					activeTab: 0,
-					deferredRender: false,
-					defaults:{
-						bodyStyle:'padding:5px'
-					//					autoHeight: true,
-					},
-					items: [{
-
-						"title":"Personne",
-						"layout":"form",
-						"defaults":{
-							"anchor":"95%",
-							"blankText":"Champ obligatoire",
-							"labelSeparator":""
-						},
-						"maxLengthText":"La longueur maximum pour ce champ est de {0} caract\u00e8res",
-						items: [
-						{
-							xtype: 'combo',
-							name:"storeType",
-							id:"contactNumberType",
-							fieldLabel: 'Type',
-							selectOnFocus: true,
-							mode:"local",
-							store: storeType,
-							displayField: "type_text",
-							triggerAction: "all",
-							editable: false,
-							valueField: "type",
-							hiddenName: "type"
-						},
-						{
-							"name":"number",
-							"id":"number",
-							"fieldLabel":"Number",
-							"xtype":"textfield",
-							"maxLength":256
-						},
-						{
-							xtype: 'combo',
-							name:"nature",
-							//			id:"contactNumberCombobox",
-							fieldLabel: 'Nature',
-							selectOnFocus:true,
-							mode:"local",
-							store:storeNature,
-							displayField:"nature",
-							triggerAction:"all",
-							valueField:"nature",
-							hiddenName:"nature"
-						}
-						]
-					}
-					]
-				}
-			},{
-				title: '&nbsp;',
-				columnWidth: .40,
-				xtype: 'panel',
-				layout:'form',
-				bodyStyle: 'padding: 5px 0 5px 5px',
-				items: {
-					xtype: "textarea",
-					height: 150,
-					name: "remarks",
-					id: "asdfaddressRemarks",
-					fieldLabel: Addresses.lang.remarks,
-					selectOnFocus:true,
-					anchor: "95%",
-					blankText: Addresses.lang.fieldMandatory,
-					labelSeparator: ""
-				}
-			}]
-		}
-		
+		items: Contactnumber.windowFields
 	};
 
 	/*
@@ -237,7 +102,7 @@ Address.initWindow = function() {
 			frame: false,
 			//			bodyStyle:'padding: 0',
 			labelAlign: 'top',
-			items: [configuration.contactNumberForm, configuration.addressForm]
+			items: [configuration.contactnumberForm, configuration.addressForm]
 		},
 		tbar: configuration.buttons,
 		bbar: new Ext.ux.StatusBar({
@@ -245,6 +110,7 @@ Address.initWindow = function() {
 			text: '&nbsp;',
 			items: {}
 		}),
+
 		/**
 		 * Closes the window and resets other things
 		 *
@@ -259,6 +125,57 @@ Address.initWindow = function() {
 					Ext.ComponentMgr.get('addressCancelButton').setDisabled(false);
 					Address.window.getBottomToolbar().setStatus('&nbsp;');
 				}
+			}
+		},
+
+		/**
+		 * Save the form
+		 *
+		 * @access private
+		 * @return void
+		 */
+		save: function(){
+
+			// Defines the submit Object
+			var submit = {
+				clientValidation: true,
+				method: 'GET',
+				url: Addresses.statics.ajaxController,
+				waitMsg: Addresses.lang.saving,
+				params:{
+					ajaxID: 'AddressController::saveAction'
+				},
+				success: function(form,call){
+					Address.window.hide();
+					Ext.StoreMgr.get('addressStore').load();
+				},
+				failure: function(form,call){
+					if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
+						Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + call.response.status + ' ' + call.response.statusText);
+					}
+					else if (call.failureType === Ext.form.Action.SERVER_INVALID) {
+						Ext.Msg.alert(Addresses.lang.warning, call.result.errormsg);
+					}
+				}
+			};
+
+			// case multiple edition -> don't validate form
+			var form = Address.form;
+			var uid = form.findField('address_uid').getValue();
+			if (uid == '' || uid.search(',') == -1) {
+				if (form.isValid()) {
+					submit.clientValidation = true;
+					form.submit(submit);
+					Address.window.wait();
+				}
+				else {
+					Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
+				}
+			}
+			else {
+				form.clearInvalid();
+				submit.clientValidation = false;
+				form.submit(submit);
 			}
 		},
 
@@ -293,17 +210,20 @@ Address.initWindow = function() {
 						'blur',
 						function(el) {
 							var value = el.getValue();
-							var id = el.getId().replace('address_', '').toLowerCase();
+							// Extract namespace + real id from the id name
+							var position = el.getId().search('_');
+							var namespace = el.getId().substr(0, 1).toUpperCase() + el.getId().substr(1, position - 1);
+							var id = el.getId().substr(position - 0 + 1, 64).toLowerCase()
 
 							// Makes sure the value is not null
 							if (value != '') {
-								eval('var record = Address.stores.' + id + '.getById("' + value + '");');
+								eval('var record = ' + namespace + ' .stores.' + id + '.getById("' + value + '");');
 
 								// Add a new value to the store object
 								if (typeof(record) == 'undefined') {
 
 									// Add this record
-									eval('Address.stores.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
+									eval(namespace + '.stores.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
 								}
 							}
 						});
@@ -368,17 +288,17 @@ Address.initWindow = function() {
 		focusOnFirstVisibleField : function() {
 			try {
 				var firstVisibleElement = Address.windowFields[0].items[1].id;
-				Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait for 100 miliseconds
+				Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait until the HTML rendering is finished
 			}
 			catch (e) {
-				console.log(e);
+				console.log('Error at focusOnFirstVisibleField in AddressWindows.js: ' + e.message);
 			}
 		},
 
 		/**
 		 * Mode could be either copy or new
 		 */
-		display: function(state) {
+		load: function(state) {
 			var sm = Address.grid.getSelectionModel();
 			var selections = sm.getSelections();
 			var dataSet = new Array();
@@ -450,6 +370,29 @@ Address.initWindow = function() {
 		},
 
 		/**
+		 * Defines the function that should be called whenever clicking on button "Save".
+		 *
+		 * @access public
+		 * @return void
+		 */
+		changeSaveMethod: function(save) {
+			// Fetches the save method
+			if (typeof(save) == 'string') {
+				save = Ext.ComponentMgr.get('address_' + save).save;
+			}
+			// Gets the reference on the object
+			var saveButton = Ext.ComponentMgr.get('addressSaveButton');
+
+			// Removes all listeners
+			saveButton.purgeListeners();
+
+			// Add a new click listener
+			saveButton.on({
+				'click': save
+			});
+		},
+
+		/**
 		 * Initialize function
 		 */
 		init: function() {
@@ -457,8 +400,15 @@ Address.initWindow = function() {
 			// For instance method KeyMap bellow won't work
 			this.show();
 			this.hide();
-						Ext.get('contactNumberForm').fadeOut({useDisplay: true, duration: 0.1});
-			//			Ext.get('contactNumberForm').hide();
+						Ext.get('contactnumberForm').fadeOut({
+							useDisplay: true,
+							duration: 0.1
+						});
+//			Ext.get('addressForm').hide();
+//			Ext.get('contactnumberForm').hide();
+			
+			// temporary method
+			this.changeSaveMethod('contactnumbers');
 
 			this.addListnerToTextareas();
 			this.addListnerToComboboxes();

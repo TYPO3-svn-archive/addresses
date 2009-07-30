@@ -597,7 +597,7 @@ EOF;
 	 * @param	string		$field
 	 * @return	string
 	 */
-	public static function getValueById($table, $field, $uid) {
+	public static function convertUidToValue($table, $field, $uid) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 		$result = '';

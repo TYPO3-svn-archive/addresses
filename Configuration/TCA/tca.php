@@ -36,12 +36,22 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
 			'config' => Array (
 				'type' => 'passthrough',
+				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
+				'userFuncFormat.' => array (
+					'table' => 'be_users',
+					'field' => 'username',
+				),
 			),
 		),
 		'upuser_id' => Array (
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
 			'config' => Array (
 				'type' => 'passthrough',
+				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
+				'userFuncFormat.' => array (
+					'table' => 'be_users',
+					'field' => 'username',
+				),
 			),
 		),
 		'hidden' => Array (
@@ -467,12 +477,22 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array(
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
 			'config' => Array (
 				'type' => 'passthrough',
+				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
+				'userFuncFormat.' => array (
+					'table' => 'be_users',
+					'field' => 'username',
+				),
 			),
 		),
 		'upuser_id' => Array (
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
 			'config' => Array (
 				'type' => 'passthrough',
+				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
+				'userFuncFormat.' => array (
+					'table' => 'be_users',
+					'field' => 'username',
+				),
 			),
 		),
 		'hidden' => array(
@@ -541,12 +561,22 @@ $TCA['tx_addresses_domain_model_contactnumber'] = array(
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
 			'config' => Array (
 				'type' => 'passthrough',
+				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
+				'userFuncFormat.' => array (
+					'table' => 'be_users',
+					'field' => 'username',
+				),
 			),
 		),
 		'upuser_id' => Array (
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
 			'config' => Array (
 				'type' => 'passthrough',
+				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
+				'userFuncFormat.' => array (
+					'table' => 'be_users',
+					'field' => 'username',
+				),
 			),
 		),
 		'hidden' => array(

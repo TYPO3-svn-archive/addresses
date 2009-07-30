@@ -76,12 +76,7 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
     'cruser_id' => array(
         'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
         'config' => Array (
-            'type' => 'user',
-            'userFunc' => 'Tx_Addresses_Utility_TCE::getValueById',
-            'userFunc.' => array (
-                'table' => 'be_users',
-                'field' => 'username',
-            ),
+            'type' => 'input',
             'width' => 100,
             'sortable' => TRUE,
             'hidden' => TRUE,
@@ -90,14 +85,10 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
     'upuser_id' => array(
         'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
         'config' => Array (
-            'type' => 'user',
-            'userFunc' => 'Tx_Addresses_Utility_TCE::getValueById',
-            'userFunc.' => array (
-                'table' => 'be_users',
-                'field' => 'username',
-            ),
+            'type' => 'input',
             'width' => 100,
             'sortable' => TRUE,
+            'hidden' => TRUE,
         )
     ),
 );

@@ -225,6 +225,12 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 					$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
 					$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
 				}
+				// userFuncFormat
+				else if (isset($config['userFuncFormat'])) {
+					$table = $config['userFuncFormat.']['table'];
+					$field = $config['userFuncFormat.']['field'];
+					$output[$fieldName] = call_user_func_array($config['userFuncFormat'], array($table, $field, $value));
+				}
 				else {
 					$output[$fieldName] = $value;
 				}

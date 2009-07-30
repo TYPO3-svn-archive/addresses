@@ -275,7 +275,6 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 				$configurations['items'][] = $_configuration;
 			}
 		}
-//		t3lib_div::debug($configurations, '$configurations');exit();
 		return $configurations;
 
 		// Stores configuration for not empty $configuration

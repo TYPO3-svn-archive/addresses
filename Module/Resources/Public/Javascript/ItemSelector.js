@@ -348,15 +348,13 @@ Ext.ux.ItemSelector = Ext.extend(Ext.form.Field,  {
 		this.toMultiselect.view.select(selectionsArray);
 	},
 
-	setValue: function(values) {
+	setValue: function(rows) {
 		this.reset();
-		ids = values.split(',');
 		var records = [];
-		
-		if (ids.length > 0 && values != 0) {
-			for (var i = 0; i < ids.length; i++) {
-				var id = ids[i];
 
+		if (rows.length > 0) {
+			for (var i = 0; i < rows.length; i++) {
+				var id = rows[i].uid;
 				var record = this.fromMultiselect.view.store.getById(id);
 				records.push(record);
 			}

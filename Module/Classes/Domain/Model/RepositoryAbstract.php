@@ -112,7 +112,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		$records = array();
 		if (!$TYPO3_DB->sql_error()) {
 			while($record = $TYPO3_DB->sql_fetch_assoc($res)) {
-				array_push($records, $this->formatRecordForHumans($record, $columns));
+				array_push($records, $this->formatForHumans($record, $columns));
 			}
 			$TYPO3_DB->sql_free_result($res);
 		}
@@ -154,7 +154,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				}
 			}
 
-			// Whenever editing multiple records get the intersection of the array.
+			// Gets the intersection of the array whenever editing multiple records.
 			if (!empty($records)) {
 				$_record = $records[0];
 				foreach($records as $record) {
@@ -167,7 +167,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 			// Fields from Grid TCA are merged into the Columns's TCA
 			$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
-			$output['data'] = $this->formatRecordForHumans($output['data'], $columns);
+			$output['data'] = $this->formatForHumans($output['data'], $columns);
 		}
 		return $output;
 	}
@@ -197,23 +197,30 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 *	<li>eval</li>
 	 * </ul>
 	 *
-	 * @param array $dataset
+	 * @param array $dataSet
 	 * @return array
 	 */
-	protected function formatRecordForHumans($dataset, $columns) {
+	protected function formatForHumans($dataSet, $columns) {
+		global $LANG;
 		$output = array();
 
 		// Traverses all $field and formats the date
-		foreach ($dataset as $fieldName => $value) {
+		foreach ($dataSet as $fieldName => $value) {
 			if (isset($columns[$fieldName])) {
+
+				// Shortcuts the array
 				$config = $columns[$fieldName]['config'];
-				// TRUE when value contains a sub array. Means it should call recursively formatRecordForHumans
+
+				// Set default value
+				$output[$fieldName] = $value;
+
+				// TRUE when value contains a sub array. Means it should call recursively formatForHumans
 				if (is_array($value) && isset($config['foreign_table'])) {
 					// Gets the namespace + the columns
 					$_columns = Tx_Addresses_Utility_TCA::getColumns($config['foreign_table']);
 					$_records = array();
 					foreach ($value as $_value) {
-						$_records[] = $this->formatRecordForHumans($_value, $_columns);
+						$_records[] = $this->formatForHumans($_value, $_columns);
 					}
 					$output[$fieldName] = $_records;
 				}
@@ -224,6 +231,22 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 					$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
 					$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
+				}
+				// eval function
+				else if ($config['type'] == 'select' && isset($config['items'])) {
+					
+					// When $value == 0, sets '' otherwise the default value is Okay.
+					$output[$fieldName . '_text'] = $value == 0 ? '' : 0;
+
+					// Tries to find out the text value
+					foreach ($config['items'] as $items) {
+						$_value = $LANG->sL($items[1]);
+						if ($_value == $value) {
+							$output[$fieldName . '_text'] = $LANG->sL($items[0]);
+							break;
+						}
+					}
+
 				}
 				// userFuncFormat
 				else if (isset($config['userFuncFormat'])) {

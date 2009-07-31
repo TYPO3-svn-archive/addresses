@@ -587,6 +587,11 @@ $TCA['tx_addresses_domain_model_contactnumber'] = array(
 				'default' => '1'
 			)
 		),
+		'uid_foreign' => array(
+			'config'    => array(
+				'type'    => 'passthrough',
+			)
+		),
 		// *not* editable combobox widget
 		'type' => array(
 			'exclude' => 1,

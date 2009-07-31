@@ -150,7 +150,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 			foreach($records as &$record) {
 				foreach($this->foreignTables as $fieldName => $tca) {
-					$record[$fieldName] = $this->getMMRelations($dataSet[0]->uid, $tca);
+					$record[$fieldName] = $this->getRelatedRecords($dataSet[0]->uid, $tca);
 				}
 			}
 
@@ -180,14 +180,20 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @param array $tca
 	 * @return array
 	 */
-	protected function getMMRelations($uid, &$tca) {
+	protected function getRelatedRecords($uid, &$tca) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 
 		// Namespace is necessary for fetching the fields
 		$columns = Tx_Addresses_Utility_TCA::getColumns($tca['config']['foreign_table']);
 		$fields = $this->getFields($columns, $tca['config']['foreign_table']);
-		return $TYPO3_DB->exec_SELECTgetRows($fields, $tca['config']['foreign_table'], 'uid IN (SELECT uid_foreign FROM ' . $tca['config']['MM'] . ' WHERE uid_local=' . $uid . ')', '', 'uid ASC');
+		if (isset($tca['config']['MM'])) {
+			$clause = 'uid IN (SELECT uid_foreign FROM ' . $tca['config']['MM'] . ' WHERE uid_local=' . $uid . ')';
+		}
+		else {
+			$clause = 'uid_foreign = ' . $uid;
+		}
+		return $TYPO3_DB->exec_SELECTgetRows($fields, $tca['config']['foreign_table'], $clause, '', 'uid ASC');
 	}
 
 	/**
@@ -405,9 +411,8 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				$fields[] = $fieldName;
 
 				// Stores foreign table for later use
-				if (isset($columns[$fieldName]['config']['foreign_table'])
-					&& isset($columns[$fieldName]['config']['MM'])) {
-
+				if (isset($columns[$fieldName]['config']['foreign_table'])) {
+					// && isset($columns[$fieldName]['config']['MM'])
 					$this->foreignTables[$fieldName] = $columns[$fieldName];
 				}
 			}

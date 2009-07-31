@@ -147,7 +147,6 @@ $TCA[$domainName]['columns']['contactnumbers']['config'] = Array(
 	'type' => 'user',
 	'userFunc' => 'Tx_Addresses_Utility_UserTCE::getContactnumbersField',
 	'foreign_table' => 'tx_addresses_domain_model_contactnumber',
-	'MM' => 'tx_addresses_address_contactnumber_mm',
 );
 
 // editable combobox widget

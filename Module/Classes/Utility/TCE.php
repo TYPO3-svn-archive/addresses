@@ -121,6 +121,7 @@ class Tx_Addresses_Utility_TCE {
 		global $LANG;
 		$configuration['title'] = $LANG->sL($title);
 		$configuration['layout'] = 'form';
+		
 		// Adds here default configuration
 		$configuration['defaults'] = self::getDefaults();
 		return $configuration;
@@ -203,8 +204,29 @@ class Tx_Addresses_Utility_TCE {
 					$stores[] = self::getStore($fieldName, $tca);
 				}
 			}
+			else if ($tca['type'] == 'user' && isset($tca['foreign_table'])) {
+				$stores[] = self::getStoreStructure($fieldName, $tca['foreign_table']);
+			}
 		}
 		return $stores;
+	}
+
+
+	/**
+	 * Returns the store configuration in Json formation
+	 *
+	 * @param	string	$fieldName
+	 * @param	string	$foreignTable
+	 * @return	string
+	 */
+	public static function getStoreStructure($fieldName, $foreignTable) {
+		$tca = Tx_Addresses_Utility_TCA::getColumns($foreignTable);
+		$fields = array_keys($tca);
+		$fieldsList = implode('","',$fields);
+		$store = <<<EOF
+$fieldName : new Ext.data.ArrayStore({idIndex: 0, fields: ["$fieldsList"], data: []})
+EOF;
+		return $store;
 	}
 
 	/**

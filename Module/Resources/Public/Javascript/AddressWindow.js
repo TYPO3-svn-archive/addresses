@@ -41,21 +41,19 @@ Address.initWindow = function() {
 	 * Buttons: save - cancel attached to the form panel
 	 */
 	configuration.buttons = [{
-		text: Addresses.lang.save,
-		xtype: 'button',
 		id: 'addressSaveButton',
+		xtype: 'button',
+		text: Addresses.lang.save,
 		cls: 'x-btn-text-icon',
 		icon: 'Resources/Public/Icons/database_save.png'
 	},
 	'-',
 	{
-		text: Addresses.lang.cancel,
 		id: 'addressCancelButton',
+		xtype: 'button',
+		text: Addresses.lang.cancel,
 		cls: 'x-btn-text-icon',
-		icon: 'Resources/Public/Icons/filter_clear.png',
-		handler: function(){
-			Address.window.hide();
-		}
+		icon: 'Resources/Public/Icons/filter_clear.png'
 	}];
 
 	/*
@@ -180,6 +178,13 @@ Address.initWindow = function() {
 		},
 
 		/**
+		 * Listener for cancel button.
+		 */
+		cancel: function() {
+			Address.window.hide();
+		},
+
+		/**
 		 * Generic method for adding a listner on a textarea. Enables the key stroke "enter"
 		 */
 		addListnerToTextareas: function() {
@@ -213,7 +218,7 @@ Address.initWindow = function() {
 							// Extract namespace + real id from the id name
 							var position = el.getId().search('_');
 							var namespace = el.getId().substr(0, 1).toUpperCase() + el.getId().substr(1, position - 1);
-							var id = el.getId().substr(position - 0 + 1, 64).toLowerCase()
+							var id = el.getId().substr(position - 0 + 1, 64).toLowerCase();
 
 							// Makes sure the value is not null
 							if (value != '') {
@@ -338,6 +343,14 @@ Address.initWindow = function() {
 						}
 						Address.window.waitMask.hide();
 						var data = call.result.data;
+//						for (row in data) {
+//							if (typeof(data[row])) {
+//								// @todo
+								var contactnumber = Ext.ComponentMgr.get('address_contactnumbers');
+								contactnumber.setValue(data.contactnumbers);
+//							}
+//						}
+
 						var message =  Addresses.lang.createdOn + ' ' + data.crdateTime + ' ' + Addresses.lang.by + ' ' + data.cruser_id;
 						message +=  '&nbsp;&nbsp; &bull; &nbsp;&nbsp;'
 						message += Addresses.lang.updatedOn + ' ' + data.tstampTime + ' ' + Addresses.lang.by + ' ' + data.upuser_id;
@@ -370,26 +383,38 @@ Address.initWindow = function() {
 		},
 
 		/**
-		 * Defines the function that should be called whenever clicking on button "Save".
+		 * Defines the function that should be called whenever clicking on button "Save" or "Cancel" button
 		 *
 		 * @access public
 		 * @return void
 		 */
-		changeSaveMethod: function(save) {
-			// Fetches the save method
-			if (typeof(save) == 'string') {
-				save = Ext.ComponentMgr.get('address_' + save).save;
+		setControllersAction: function(component) {
+
+			var buttonIds = ['Save', 'Cancel'];
+
+			for (var i = 0; i < buttonIds.length; i++) {
+				var buttonId = buttonIds[i];
+				var methodName = buttonId.toLowerCase();
+				// Fetches the save method
+				if (typeof(component) == 'string') {
+					eval('var method = Ext.ComponentMgr.get("address_' + component + '").' + methodName + ';');
+				}
+				else {
+					eval('var method = this.' + methodName + ';');
+				}
+
+				// Gets the reference on the object
+				var button = Ext.ComponentMgr.get('address' + buttonId + 'Button');
+
+				// Removes all listeners
+				button.purgeListeners();
+
+				// Add a new click listener
+				button.on({
+					'click': method
+				});
 			}
-			// Gets the reference on the object
-			var saveButton = Ext.ComponentMgr.get('addressSaveButton');
-
-			// Removes all listeners
-			saveButton.purgeListeners();
-
-			// Add a new click listener
-			saveButton.on({
-				'click': save
-			});
+			
 		},
 
 		/**
@@ -400,16 +425,16 @@ Address.initWindow = function() {
 			// For instance method KeyMap bellow won't work
 			this.show();
 			this.hide();
-						Ext.get('contactnumberForm').fadeOut({
-							useDisplay: true,
-							duration: 0.1
-						});
+			Ext.get('contactnumberForm').fadeOut({
+				useDisplay: true,
+				duration: 0.1
+			});
 //			Ext.get('addressForm').hide();
 //			Ext.get('contactnumberForm').hide();
 			
 			// temporary method
-			this.changeSaveMethod(this.save);
-//			this.changeSaveMethod('contactnumbers');
+			this.setControllersAction(this);
+//			this.setControllersAction('contactnumbers');
 
 			this.addListnerToTextareas();
 			this.addListnerToComboboxes();

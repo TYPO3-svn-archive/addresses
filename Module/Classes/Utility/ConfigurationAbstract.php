@@ -246,7 +246,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 						$tabpanels['xtype'] = 'tabpanel';
 						$tabpanels['activeTab'] = isset($showItem['activeTab']) ? $showItem['activeTab'] : 0;
 						$tabpanels['deferredRender'] = FALSE;
-						$tabpanels['defaults'] = array('bodyStyle' => 'padding:5px');
+						$tabpanels['defaults'] = array('bodyStyle' => 'padding:5px', 'height' => 555); // 'autoHeight' => TRUE
 						foreach ($showItem['panels'] as $panel) {
 							$_panel = array();
 							$_panel = Tx_Addresses_Utility_TCE::getTab($panel['title']);

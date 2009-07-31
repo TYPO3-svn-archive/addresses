@@ -47,7 +47,8 @@ class Tx_Addresses_Utility_UserTCE {
 		global $LANG;
 		$configuration['xtype'] = 'contactnumber';
 		$configuration['id'] = 'address_contactnumbers';
-		$configuration['text'] = $LANG->getLL('addNewElement');
+		$configuration['fieldLabel'] = $LANG->getLL('contactnumber');
+		$configuration['buttonText'] = $LANG->getLL('addNewElement');
 		return $configuration;
 //		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 //		$tca =  $columns[$fieldName]['config'];

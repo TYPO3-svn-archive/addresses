@@ -447,15 +447,27 @@ Address.initWindow = function() {
 			this.addListnerToComboboxes();
 			this.addListnerTolocality();
 
-			//map one key by key code
-			new Ext.KeyMap("addressForm", {
-				key: 13, // or Ext.EventObject.ENTER
-				fn: function() {
-					var component = Ext.ComponentMgr.get('addressSaveButton');
-					component.fireEvent('click');
-				},
-				stopEvent: true
-			});
+			this.attachKeyMap(['addressForm', 'contactnumberForm'])
+		},
+
+		/**
+		 * Attaches special key strokes like "Enter"
+		 * @access private
+		 */
+		attachKeyMap: function(forms) {
+			for (var index = 0; index < forms.length; index++) {
+				var form = forms[index];
+
+				//map one key by key code
+				new Ext.KeyMap(form, {
+					key: 13, // or Ext.EventObject.ENTER
+					fn: function() {
+						var component = Ext.ComponentMgr.get('addressSaveButton');
+						component.fireEvent('click');
+					},
+					stopEvent: true
+				});
+			}
 		}
 	});
 };

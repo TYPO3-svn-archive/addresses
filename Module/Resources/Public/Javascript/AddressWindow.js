@@ -302,8 +302,12 @@ Address.initWindow = function() {
 
 		/**
 		 * Mode could be either copy or new
+		 *
+		 * @param string type Used for defining specific behaviour of function load. Can be "multipleEdit", "edit" or "copy".
+		 * @access public
+		 * @return void
 		 */
-		load: function(state) {
+		load: function(type) {
 			var sm = Address.grid.getSelectionModel();
 			var selections = sm.getSelections();
 			var dataSet = new Array();
@@ -330,13 +334,13 @@ Address.initWindow = function() {
 					waitTitle: Addresses.lang.loading,
 					success: function(form,call) {
 						// Set title
-						if (state == 'multipleEdit') {
+						if (type == 'multipleEdit') {
 							Address.window.setTitle(Addresses.lang.multiple_update_record); // set title
 						}
-						else if (state == 'edit') {
+						else if (type == 'edit') {
 							Address.window.setTitle(Addresses.lang.update_record); // set title
 						}
-						else if (state == 'copy'){
+						else if (type == 'copy'){
 							// Removes the id so that the server will consider the data as a new record
 							form.findField('address_uid').setValue('');
 							Address.window.setTitle(Addresses.lang.copy_record); // set title
@@ -388,7 +392,7 @@ Address.initWindow = function() {
 		 * @access public
 		 * @return void
 		 */
-		setControllersAction: function(component) {
+		setControllersActionInTopBar: function(component) {
 
 			var buttonIds = ['Save', 'Cancel'];
 
@@ -433,8 +437,8 @@ Address.initWindow = function() {
 //			Ext.get('contactnumberForm').hide();
 			
 			// temporary method
-			this.setControllersAction(this);
-//			this.setControllersAction('contactnumbers');
+			this.setControllersActionInTopBar(this);
+//			this.setControllersActionInTopBar('contactnumbers');
 
 			this.addListnerToTextareas();
 			this.addListnerToComboboxes();

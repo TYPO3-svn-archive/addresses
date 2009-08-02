@@ -130,7 +130,16 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 			duration: 0.1
 		});
 		Ext.get('addressForm').fadeOut();
-		Address.window.setControllersAction('contactnumbers');
+		
+		// Get uid_foreign value
+		var uid_foreign = Address.form.findField('uid').getValue();
+
+		// Set it into field
+		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
+		form.findField('uid_foreign').setValue(uid_foreign);
+		
+		// Defines the actions of the buttons located in the top bar
+		Address.window.setControllersActionInTopBar('contactnumbers');
 	},
 
 	/**
@@ -219,7 +228,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		});
 
 		// Changes the controller (save - cancel) action
-		Address.window.setControllersAction(Address.window);
+		Address.window.setControllersActionInTopBar(Address.window);
 	},
 
 	/**

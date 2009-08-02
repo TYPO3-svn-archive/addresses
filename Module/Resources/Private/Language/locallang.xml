@@ -104,9 +104,8 @@
 			<label index="addNewElement">Ajouter un élément</label>
 			<label index="save">Sauver</label>
 			<label index="cancel">Annuler</label>
-			<label index="paging_label"><![CDATA[Enregistrements {0} à {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]>
+			<label index="paging_label"><![CDATA[Enregistrements {0} à {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]></label>
 			<label index="are_you_sure_contactnumber">Voulez-vous supprimer le numéro de contact</label>
-			</label>
 		</languageKey>
 	</data>
 </T3locallang>

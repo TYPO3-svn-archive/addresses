@@ -53,7 +53,7 @@ Address.initWindow = function() {
 		xtype: 'button',
 		text: Addresses.lang.cancel,
 		cls: 'x-btn-text-icon',
-		icon: 'Resources/Public/Icons/filter_clear.png'
+		icon: 'Resources/Public/Icons/database.png'
 	}];
 
 	/*
@@ -66,6 +66,7 @@ Address.initWindow = function() {
 		frame: true,
 		bodyStyle:'padding: 0',
 		labelAlign: 'top',
+		hideMode: 'display',
 		items: Address.windowFields
 	};
 
@@ -301,13 +302,13 @@ Address.initWindow = function() {
 		},
 
 		/**
-		 * Mode could be either copy or new
+		 * Load the window with the data
 		 *
-		 * @param string type Used for defining specific behaviour of function load. Can be "multipleEdit", "edit" or "copy".
+		 * @param string type Used for defining specific behaviour of function load. Can be "multiple", "single" or "copy".
 		 * @access public
 		 * @return void
 		 */
-		load: function(type) {
+		edit: function(type) {
 			var sm = Address.grid.getSelectionModel();
 			var selections = sm.getSelections();
 			var dataSet = new Array();
@@ -332,12 +333,12 @@ Address.initWindow = function() {
 						dataSet: Ext.util.JSON.encode(dataSet)
 					},
 					waitTitle: Addresses.lang.loading,
-					success: function(form,call) {
+					success: function(form, call) {
 						// Set title
-						if (type == 'multipleEdit') {
+						if (type == 'multiple') {
 							Address.window.setTitle(Addresses.lang.multiple_update_record); // set title
 						}
-						else if (type == 'edit') {
+						else if (type == 'single') {
 							Address.window.setTitle(Addresses.lang.update_record); // set title
 						}
 						else if (type == 'copy'){
@@ -401,6 +402,7 @@ Address.initWindow = function() {
 				var methodName = buttonId.toLowerCase();
 				// Fetches the save method
 				if (typeof(component) == 'string') {
+					methodName = methodName == 'cancel' ? 'hide' : methodName;
 					eval('var method = Ext.ComponentMgr.get("address_' + component + '").' + methodName + ';');
 				}
 				else {
@@ -429,10 +431,11 @@ Address.initWindow = function() {
 			// For instance method KeyMap bellow won't work
 			this.show();
 			this.hide();
-			Ext.get('contactnumberForm').fadeOut({
-				useDisplay: true,
-				duration: 0.1
-			});
+			Ext.ComponentMgr.get('contactnumberForm').setVisible(false);
+//			Ext.get('contactnumberForm').fadeOut({
+//				useDisplay: true,
+//				duration: 0.1
+//			});
 //			Ext.get('addressForm').hide();
 //			Ext.get('contactnumberForm').hide();
 			

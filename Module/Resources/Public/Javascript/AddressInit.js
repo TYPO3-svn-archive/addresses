@@ -37,6 +37,7 @@ Addresses.initialize = function() {
 //	Ext.QuickTips.init();
 
 	Address.initGrid();
+	// @debug For loading the first row automatically check AddressGrid.js, method "load:"
 
 	// Prepare + initialize editing window
 	Address.initWindow();

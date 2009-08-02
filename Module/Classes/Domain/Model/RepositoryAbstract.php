@@ -88,7 +88,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		$request = $TYPO3_DB->SELECTquery(
 			$this->getFields($columns, $this->tableName),
 			$this->tableName,
-			'deleted = 0 AND hidden = 0' . $this->getClause(),
+			$this->getClause(),
 			'', // groupBy
 			$this->getSort(), // orderBy
 			$this->getOrderBy()
@@ -120,7 +120,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		$results = $TYPO3_DB->exec_SELECTgetRows(
 			'count(*) as total',
 			$this->tableName,
-			'deleted = 0 AND hidden = 0' . $this->getClause()
+			$this->getClause()
 		);
 
 		$output['success'] = TRUE;
@@ -139,13 +139,15 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 		$clause = $this->getUidClause($dataSet);
+		$clause .= ' AND deleted = 0';
+		$clause .= t3lib_BEfunc::BEenableFields($this->tableName);
 		$output['success'] = FALSE;
 		if ($clause != '') {
 			$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
 			$records = $TYPO3_DB->exec_SELECTgetRows(
 				$this->getFields($columns, $this->tableName),
 				$this->tableName,
-				'deleted = 0 AND hidden = 0 AND ' . $clause
+				$clause
 			);
 
 			foreach($records as &$record) {
@@ -185,14 +187,17 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		global $TYPO3_DB;
 
 		// Namespace is necessary for fetching the fields
-		$columns = Tx_Addresses_Utility_TCA::getColumns($tca['config']['foreign_table']);
+		$tableName = $tca['config']['foreign_table'];
+		$columns = Tx_Addresses_Utility_TCA::getColumns($tableName);
 		$fields = $this->getFields($columns, $tca['config']['foreign_table']);
 		if (isset($tca['config']['MM'])) {
-			$clause = 'uid IN (SELECT uid_foreign FROM ' . $tca['config']['MM'] . ' WHERE uid_local=' . $uid . ')';
+			$clause = ' uid IN (SELECT uid_foreign FROM ' . $tca['config']['MM'] . ' WHERE uid_local=' . $uid . ')';
 		}
 		else {
-			$clause = 'uid_foreign = ' . $uid;
+			$clause = ' uid_foreign = ' . $uid;
 		}
+		$clause .= ' AND ' . $tableName . '.deleted = 0';
+		$clause .= t3lib_BEfunc::BEenableFields($tableName);
 		return $TYPO3_DB->exec_SELECTgetRows($fields, $tca['config']['foreign_table'], $clause, '', 'uid ASC');
 	}
 
@@ -274,11 +279,15 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	}
 
 	/**
-	 * Returns the SQL clause WHERE ...
+	 * Returns the SQL clause WHERE. Stores the clause for performance purposes.
 	 *
 	 * @return string
 	 */
 	protected function getClause() {
+		//Default value of clause
+		$this->clause = 'deleted = 0 ';
+
+		// Builds up the clause when searching for a string
 		$parameters = t3lib_div::_GET();
 		if (isset($parameters['filterTxt']) && $parameters['filterTxt'] != '' && $this->clause == '') {
 			$search = filter_input(INPUT_GET, 'filterTxt', FILTER_SANITIZE_STRING);
@@ -308,8 +317,9 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 			}
 			$this->clause = '(' . $this->clause . ')';
 		}
-		$and = $this->clause == '' ? '' : ' AND ';
-		return $and . $this->clause;
+		
+		$this->clause .= ' ' . t3lib_BEfunc::BEenableFields($this->tableName);
+		return $this->clause;
 	}
 
 	/**

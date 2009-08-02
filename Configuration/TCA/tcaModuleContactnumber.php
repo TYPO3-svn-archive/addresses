@@ -31,6 +31,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 );
 
 // editable combobox widget
+$TCA[$domainName]['columns']['type']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
 $TCA[$domainName]['columns']['nature'] = array(
     'exclude' => 1,
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nature',

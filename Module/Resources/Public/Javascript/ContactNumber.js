@@ -81,7 +81,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 					marginBottom:"10px",
 					marginLeft:"65%"
 				},
-				handler: this.load
+				handler: this.show
 			}
 			]
 		});
@@ -93,18 +93,21 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	//		Ext.ux.ContactNumber.superclass.onRender.apply(this, arguments);
 	//	},
 
+	/**
+	 * Attaches events on each rows whenever the component is drawed
+	 */
 	doLayout: function(shallow) {
 		Ext.ux.ContactNumber.superclass.doLayout.call(this);
-		if (typeof(shallow) == 'boolean') {
 
-			Ext.addBehaviors({
-				// add a listener for click on all anchors in element with id foo
-				'#contactNumber .contactNumberMainRow@dblclick' : this.load,
-				'#contactNumber img[alt=edit]@click' : this.load,
-				'#contactNumber img[alt=delete]@click' : this.deleteRecord
-			});
-		//			new Ext.Button({text: 'asdf',renderTo: 'contactNumberRow1'});
-		}
+		// Get contact element
+		var el = Ext.ComponentMgr.get('address_contactnumbers');
+		Ext.addBehaviors({
+			// add a listener for click on all anchors in element with id foo
+			'#contactNumber .contactNumberMainRow@dblclick' : el.load,
+			'#contactNumber img[alt=edit]@click' : el.load,
+			'#contactNumber img[alt=delete]@click' : el.deleteRecord
+		});
+		console.log('layout done');
 	},
 
 	/**
@@ -114,22 +117,22 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * @access private
 	 * @return void
 	 */
-	load: function(event, element) {
-		// Gets reference
-//		var uid = this.id.substring(20);
-		var speed = 0.4;
-		
-		// Makes the form visible
-		Ext.get('addressForm').fadeOut({
-			useDisplay: true,
-			duration: speed
-		});
-		
-		Ext.get('contactnumberForm').pause(speed + 0.2).fadeIn({
-			useDisplay: true,
-			duration: 0.1
-		});
-		Ext.get('addressForm').fadeOut();
+	show: function(event, element) {
+//		var speed = 0.4;
+//
+//		// Makes the form visible
+//		Ext.get('addressForm').fadeOut({
+////		useDisplay: true,
+//			endOpacity: 0,
+//			duration: speed
+//		});
+//
+//		Ext.get('contactnumberForm').pause(speed + 0.2).fadeIn({
+////			useDisplay: true,
+//			duration: 0.1
+//		});
+		Ext.ComponentMgr.get('addressForm').setVisible(false);
+		Ext.ComponentMgr.get('contactnumberForm').setVisible(true);
 		
 		// Get uid_foreign value
 		var uid_foreign = Address.form.findField('uid').getValue();
@@ -149,8 +152,46 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * @return void
 	 */
 	deleteRecord: function(event, element) {
-		console.log(element);
-		console.log(4);
+		var uid = element.id.replace('contactNumberDeleteImg', '');
+		var record = Address.stores.contactnumbers.getById(uid);
+		Ext.Msg.show({
+			title: Addresses.lang.remove,
+			buttons: Ext.MessageBox.YESNO,
+			msg: Addresses.lang.are_you_sure_contactnumber + ' ' + record.data.number + '?',
+			fn: function(btn){
+				if (btn == 'yes'){
+					// Defines the data to transmit
+					var dataSet = new Array();
+					dataSet[0] = {'uid': uid};
+
+					// Defines the connection
+					var conn = new Ext.data.Connection();
+					conn.request({
+						method: 'GET',
+						url: Addresses.statics.ajaxController,
+						params:{
+							ajaxID: 'ContactnumberController::deleteAction',
+							dataSet: Ext.util.JSON.encode(dataSet)
+						},
+						success: function(f,a){
+							Address.stores.contactnumbers.remove(record);
+						},
+						failure: function(f,a){
+							if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
+								Ext.Msg.alert('Failure', 'Server reported: ' + a.response.status + ' ' + a.response.statusText);
+							}
+							else if (a.failureType === Ext.form.Action.SERVER_INVALID) {
+								Ext.Msg.alert('Warning', a.result.errormsg);
+							}
+							else {
+								Ext.Msg.alert('Warning', 'Unknow error');
+							}
+
+						}
+					});
+				}
+			}
+		});
 	},
 
 	/**
@@ -169,11 +210,10 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 			params:{
 				ajaxID: 'ContactnumberController::saveAction'
 			},
-			success: function(form,call){
-				console.log(4);
-				return
-//				Address.window.hide();
-//				Ext.StoreMgr.get('addressStore').load();
+			success: function(form, call){
+				var data = call.result.rows[0];
+				Address.stores.contactnumbers.add(new Ext.data.Record(data, data.uid));
+				Ext.ComponentMgr.get('address_contactnumbers').hide();
 			},
 			failure: function(form,call){
 				if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -187,7 +227,6 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 
 		// case multiple edition -> don't validate form
 		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
-		console.log(form);
 		var uid = form.findField('contactnumber_uid').getValue();
 		if (uid == '' || uid.search(',') == -1) {
 			if (form.isValid()) {
@@ -210,22 +249,23 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	/**
 	 * Listener for cancel button.
 	 */
-	cancel: function() {
-		console.log(12);
+	hide: function() {
 		//	Ext.get('contactnumberForm').ghost('b', {easing: 'easeOut',duration: time ,remove: false,useDisplay: true});
 
-		// Gets reference
-		var speed = 0.4;
+//		var speed = 0.2;
 
 		// Makes the form visible
-		Ext.get('contactnumberForm').fadeOut({
-			useDisplay: true,
-			duration: speed
-		});
-		Ext.get('addressForm').pause(speed + 0.2).fadeIn({
-			useDisplay: true,
-			duration: 0.1
-		});
+//		Ext.get('contactnumberForm').fadeOut({
+//			useDisplay: true,
+//			duration: speed
+//		});
+//		Ext.get('addressForm').pause(speed + 0.2).fadeIn({
+//			useDisplay: true,
+//			duration: 0.1
+//		});
+
+		Ext.ComponentMgr.get('addressForm').setVisible(true);
+		Ext.ComponentMgr.get('contactnumberForm').setVisible(false);
 
 		// Changes the controller (save - cancel) action
 		Address.window.setControllersActionInTopBar(Address.window);

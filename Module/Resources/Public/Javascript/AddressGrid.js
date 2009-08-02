@@ -75,8 +75,8 @@ Address.initGrid = function() {
 		width: 50,
 		header : '&nbsp;',
 		renderer: function(val) {
-			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" onclick="Address.window.load(\'edit\')"/>&nbsp;&nbsp;';
-			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.gif" onclick="Address.window.load(\'copy\')"/>';
+			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" onclick="Address.window.edit(\'single\')"/>&nbsp;&nbsp;';
+			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.gif" onclick="Address.window.edit(\'copy\')"/>';
 			return output;
 		},
 		dataIndex: 'uid'
@@ -116,6 +116,11 @@ Address.initGrid = function() {
 				else {
 					element.remoteSort = false;
 				}
+
+				// @temporary Select first row
+//				var sm = Address.grid.getSelectionModel();
+//				sm.selectFirstRow();
+//				Address.window.edit('single');
 			}
 		}
 
@@ -143,7 +148,7 @@ Address.initGrid = function() {
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			Address.window.load('multipleEdit');
+			Address.window.edit('multiple');
 		}
 	},
 	'-',
@@ -208,7 +213,7 @@ Address.initGrid = function() {
 		bbar: configuration.bottomBar,
 		listeners: {
 			dblclick: function(e) {
-				Address.window.load('edit');
+				Address.window.edit('single');
 			},
 			keypress: function(key) {
 				if (key.keyCode == key.DELETE) {

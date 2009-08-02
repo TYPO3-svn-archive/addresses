@@ -231,12 +231,17 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 					$output[$fieldName] = $_records;
 				}
 				// eval function
-				else if (isset($config['eval'])
-					&& strpos($config['eval'], 'date') !== FALSE
-					&& $value) {
+				else if (isset($config['eval']) && $value) {
 
-					$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
-					$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
+					switch ($config['eval']) {
+						case 'date':
+							$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
+							$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
+							break;
+						case 'nbsp':
+							$output[$fieldName] = str_replace(' ', '&nbsp;', $value);
+							break;
+					}
 				}
 				// eval function
 				else if ($config['type'] == 'select' && isset($config['items'])) {
@@ -534,7 +539,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * Save address(es): UPDATE or INSERT depending on the uid
 	 *
 	 * @param	array	$values
-	 * @return	array
+	 * @return	array	Beware: cell 'rows' may return multiple records in case of multi editing
 	 */
 	public function save($dataSet) {
 		$dataSet = t3lib_div::_GET();
@@ -614,13 +619,30 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 			$result['request'] = 'UPDATE';
 		}
 		else {
-			$uid = $this->saveInsert($fields, $foreignTables);
-			$result['rows'] = $TYPO3_DB->exec_SELECTgetRows('*', $this->tableName, 'uid = ' . $uid);
+			// Saves in form of array. The user may update multiple records
+			$uids = array($this->saveInsert($fields, $foreignTables));
 			$result['request'] = 'INSERT';
+		}
+
+		// Loads the data
+		$columns = Tx_Addresses_Utility_TCA::getColumns($this->tableName);
+		$records = $TYPO3_DB->exec_SELECTgetRows('*', $this->tableName, $this->getUidsClause($uids));
+		foreach ($records as $record) {
+			$result['rows'][] = $this->formatForHumans($record, $columns);
 		}
 		return $result;
 	}
 
+	/**
+	 * Format a uid string uid = 1 OR uid = 2 etc...
+	 *
+	 * @param array $uids
+	 * @return string
+	 */
+	protected function getUidsClause($uids) {
+		$uidsClause = implode(' OR uid = ', $uids);
+		return 'uid =' . $uidsClause;
+	}
 
 	/**
 	 * Update a record

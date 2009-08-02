@@ -96,7 +96,7 @@ CREATE TABLE tx_addresses_domain_model_contactnumber (
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-	type int(11) unsigned DEFAULT '0' NOT NULL,
+	type tinytext NOT NULL,
 	nature tinytext NOT NULL,
 	standard tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	label tinytext NOT NULL,

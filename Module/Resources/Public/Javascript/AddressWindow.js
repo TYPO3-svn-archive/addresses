@@ -51,7 +51,7 @@ Address.initWindow = function() {
 	{
 		id: 'addressResetButton',
 		xtype: 'button',
-		text: Addresses.lang.cancel,
+		text: Addresses.lang.reset,
 		cls: 'x-btn-text-icon',
 		icon: 'Resources/Public/Icons/database.png'
 	}
@@ -199,7 +199,6 @@ Address.initWindow = function() {
 						if (key === 13){
 							e.stopPropagation();
 						}
-
 					}
 				});
 			}
@@ -231,6 +230,9 @@ Address.initWindow = function() {
 
 									// Add this record
 									eval(namespace + '.stores.' + id + '.add(new Ext.data.Record({"' + id + '_id": value,"' + id + '_text": value}, value));');
+								}
+								if (Addresses.DEBUG) {
+									console.log(namespace + ': Added new value to store "' + value + '"');
 								}
 							}
 						});
@@ -298,7 +300,7 @@ Address.initWindow = function() {
 				Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait until the HTML rendering is finished
 			}
 			catch (e) {
-				console.log('Error at focusOnFirstVisibleField in AddressWindows.js: ' + e.message);
+				console.log('Error thrown at focusOnFirstVisibleField in AddressWindows.js: ' + e.message);
 			}
 		},
 

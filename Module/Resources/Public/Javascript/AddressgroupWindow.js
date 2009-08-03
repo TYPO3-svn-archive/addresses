@@ -97,7 +97,7 @@ Addressgroup.initWindow = function() {
 		}
 	},
 	{
-		text: Addresses.lang.cancel,
+		text: Addresses.lang.reset,
 		id: 'addressgroupCancelButton',
 		cls: 'x-btn-text-icon',
 		icon: 'Resources/Public/Icons/filter_clear.png',

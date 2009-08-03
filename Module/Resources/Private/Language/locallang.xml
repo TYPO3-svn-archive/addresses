@@ -52,9 +52,10 @@
 			<label index="by">by</label>
 			<label index="addNewElement">Add new element</label>
 			<label index="save">Save</label>
-			<label index="cancel">Cancel</label>
+			<label index="reset">Cancel</label>
 			<label index="paging_label"><![CDATA[Record {0} to {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]></label>
 			<label index="are_you_sure_contactnumber">Do you want to remove the contact number</label>
+			<label index="saveContactnumber">Save contact number</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>
@@ -103,9 +104,10 @@
 			<label index="by">par</label>
 			<label index="addNewElement">Ajouter un élément</label>
 			<label index="save">Sauver</label>
-			<label index="cancel">Annuler</label>
+			<label index="reset">Annuler</label>
 			<label index="paging_label"><![CDATA[Enregistrements {0} à {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]></label>
 			<label index="are_you_sure_contactnumber">Voulez-vous supprimer le numéro de contact</label>
+			<label index="saveContactnumber">Sauver le numéro de contact</label>
 		</languageKey>
 	</data>
 </T3locallang>

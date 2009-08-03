@@ -114,7 +114,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		toolbar.insertButton(0,{
 			id: 'contactnumberSaveButton',
 			xtype: 'button',
-			text: 'Sauver le numéro de contact',
+			text: Addresses.lang.saveContactnumber,
 			cls: 'x-btn-text-icon',
 			icon: 'Resources/Public/Icons/database_save.png',
 			handler: Contactnumber.panel.save
@@ -122,7 +122,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		toolbar.insertButton(toolbar.items.items.length - 1,{
 			id: 'contactnumberResetButton',
 			xtype: 'button',
-			text: Addresses.lang.cancel,
+			text: Addresses.lang.reset,
 			cls: 'x-btn-text-icon',
 			icon: 'Resources/Public/Icons/database.png',
 			handler: Contactnumber.panel.reset
@@ -131,7 +131,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		// Re-draws the button
 		toolbar.doLayout();
 		if (Addresses.DEBUG) {
-			console.log('Contactnumber: buttons have been added on the toolbar');
+			console.log('Contactnumber: buttons have been added in the toolbar');
 		}
 	},
 	

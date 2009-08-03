@@ -99,7 +99,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 	array(
 		'columnWidth' => 0.6,
 		'xtype' => 'tabpanel',
-		'activeTab' => 2,
+		'activeTab' => 0,
 		// Describes the tab of the left panel
 		'panels' => array (
 			array(

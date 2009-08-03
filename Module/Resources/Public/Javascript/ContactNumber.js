@@ -78,7 +78,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	//	onRender: function(ct){
 	//		Ext.ux.ContactNumber.superclass.onRender.apply(this, arguments);
 	//	},
-
+	
 	/**
 	 * Attaches events on each rows whenever the component is drawed
 	 *
@@ -87,17 +87,30 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	doLayout: function() {
 		Ext.ux.ContactNumber.superclass.doLayout.call(this);
 
-		// Get contact element
-		Ext.addBehaviors({
-			// add a listener for click on all anchors in element with id foo
-			'#contactNumber .contactNumberMainRow@dblclick' : Contactnumber.panel.edit,
-			'#contactNumber img[alt=edit]@click' : Contactnumber.panel.edit,
-			'#contactNumber img[alt=delete]@click' : Contactnumber.panel.deleteRecord
-		});
-		
-		if (Addresses.DEBUG) {
-			console.log('Contactnumber: layout done');
+		var elements = Ext.select('#contactNumber img[alt=edit]');
+		if (elements.elements.length > 0) {
+
+			// Checks whether an event already exists at the first element by check attribute 'display'
+			// I know this is a silly trick but it works.
+			// I would rather check whether the event is attached on the DOM element but I don't know how...
+			var element = elements.elements[0];
+			if (!element.getAttribute('display')) {
+				element.setAttribute('display', 'block');
+
+				// Get contact element
+				Ext.addBehaviors({
+					// add a listener for click on all anchors in element with id foo
+					'#contactNumber .contactNumberMainRow@dblclick' : Contactnumber.panel.edit,
+					'#contactNumber img[alt=edit]@click' : Contactnumber.panel.edit,
+					'#contactNumber img[alt=delete]@click' : Contactnumber.panel.deleteRecord
+				});
+
+				if (Addresses.DEBUG) {
+					console.log('Contactnumber: attached events on rows');
+				}
+			}
 		}
+
 	},
 
 	/**

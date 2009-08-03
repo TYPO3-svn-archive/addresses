@@ -296,8 +296,9 @@ Address.initWindow = function() {
 		 */
 		focusOnFirstVisibleField : function() {
 			try {
-				var firstVisibleElement = Address.windowFields[0].items[1].id;
-				Ext.ComponentMgr.get(firstVisibleElement).focus(true,500); // wait until the HTML rendering is finished
+				var uid = Ext.ComponentMgr.get('address_uid');
+				var panel = uid.findParentByType('panel');
+				panel.items.items[0].focus(true,500);
 			}
 			catch (e) {
 				console.log('Error thrown at focusOnFirstVisibleField in AddressWindows.js: ' + e.message);

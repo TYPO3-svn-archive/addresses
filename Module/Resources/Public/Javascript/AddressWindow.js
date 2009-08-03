@@ -38,7 +38,7 @@ Address.initWindow = function() {
 	var configuration = new Object();
 
 	/**
-	 * Buttons: save - cancel attached to the form panel
+	 * Buttons: save - reset attached to the form panel
 	 */
 	configuration.buttons = [{
 		id: 'addressSaveButton',
@@ -49,19 +49,12 @@ Address.initWindow = function() {
 	},
 	'-',
 	{
-		id: 'addressCancelButton',
+		id: 'addressResetButton',
 		xtype: 'button',
 		text: Addresses.lang.cancel,
 		cls: 'x-btn-text-icon',
 		icon: 'Resources/Public/Icons/database.png'
 	}
-//	,{
-//		id: 'contactnumberSaveButton',
-//		xtype: 'button',
-//		text: 'Sauver le numéro de contact',
-//		cls: 'x-btn-text-icon',
-//		icon: 'Resources/Public/Icons/database_save.png'
-//	}
 ];
 
 	/*
@@ -129,7 +122,7 @@ Address.initWindow = function() {
 				if (typeof(Address.form) == 'object') {
 					Address.form.reset();
 					Ext.ComponentMgr.get('addressSaveButton').setDisabled(false);
-					Ext.ComponentMgr.get('addressCancelButton').setDisabled(false);
+					Ext.ComponentMgr.get('addressResetButton').setDisabled(false);
 					Address.window.getBottomToolbar().setStatus('&nbsp;');
 				}
 			}
@@ -187,9 +180,9 @@ Address.initWindow = function() {
 		},
 
 		/**
-		 * Listener for cancel button.
+		 * Listener for reset button.
 		 */
-		cancel: function() {
+		reset: function() {
 			Address.window.hide();
 		},
 
@@ -393,31 +386,26 @@ Address.initWindow = function() {
 		wait: function() {
 			//			Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
 			Ext.ComponentMgr.get('addressSaveButton').setDisabled(true);
-			Ext.ComponentMgr.get('addressCancelButton').setDisabled(true);
+			Ext.ComponentMgr.get('addressResetButton').setDisabled(true);
 		},
 
 		/**
-		 * Defines the function that should be called whenever clicking on button "Save" or "Cancel" button
+		 * Defines the function that should be called whenever clicking on button "Save" or "Reset" button
 		 *
 		 * @access public
 		 * @return void
 		 */
-		setControllersActionInTopBar: function(component) {
+		setControllersActionInTopBar: function() {
 
-			var buttonIds = ['Save', 'Cancel'];
+			var buttonIds = ['Save', 'Reset'];
 
 			for (var i = 0; i < buttonIds.length; i++) {
 				var buttonId = buttonIds[i];
 				var methodName = buttonId.toLowerCase();
-				// Fetches the save method
-				if (typeof(component) == 'string') {
-					methodName = methodName == 'cancel' ? 'hide' : methodName;
-					eval('var method = Ext.ComponentMgr.get("address_' + component + '").' + methodName + ';');
-				}
-				else {
-					eval('var method = this.' + methodName + ';');
-				}
 
+				// Fetches the save method
+				eval('var method = this.' + methodName + ';');
+				
 				// Gets the reference on the object
 				var button = Ext.ComponentMgr.get('address' + buttonId + 'Button');
 
@@ -429,7 +417,7 @@ Address.initWindow = function() {
 					'click': method
 				});
 			}
-			
+
 		},
 
 		/**
@@ -448,37 +436,31 @@ Address.initWindow = function() {
 //			Ext.get('addressForm').hide();
 //			Ext.get('contactnumberForm').hide();
 			
-			// temporary method
-			this.setControllersActionInTopBar(this);
-//			this.setControllersActionInTopBar('contactnumbers');
+			this.setControllersActionInTopBar();
 
 			this.addListnerToTextareas();
 			this.addListnerToComboboxes();
 			this.addListnerTolocality();
 
-			this.attachKeyMap(['addressForm', 'addressgroupForm', 'contactnumberForm'])
+			this.attachKeyMap()
 		},
 
 		/**
 		 * Attaches special key strokes like "Enter"
 		 * @access private
 		 */
-		attachKeyMap: function(forms) {
-			for (var index = 0; index < forms.length; index++) {
-				var form = forms[index];
-
-				// Before attaching key strokes event, makes sure that the component exist.
-				if(Ext.get(form)) {
-					//map one key by key code
-					new Ext.KeyMap(form, {
-						key: 13, // or Ext.EventObject.ENTER
-						fn: function() {
-							var component = Ext.ComponentMgr.get('addressSaveButton');
-							component.fireEvent('click');
-						},
-						stopEvent: true
-					});
-				}
+		attachKeyMap: function() {
+			var namespace = 'address';
+			if(Ext.get(namespace + 'Form')) {
+				//map one key by key code
+				new Ext.KeyMap(namespace + 'Form', {
+					key: 13, // or Ext.EventObject.ENTER
+					fn: function() {
+						var component = Ext.ComponentMgr.get(namespace + 'SaveButton');
+						component.fireEvent('click');
+					},
+					stopEvent: true
+				});
 			}
 		}
 	});

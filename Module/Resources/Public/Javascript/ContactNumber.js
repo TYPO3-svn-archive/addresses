@@ -9,33 +9,6 @@
  * @version $Id$
  */
 
-//function testMe2(uid) {
-//	time = 0.4;
-//	//	Ext.get('contactnumberForm').ghost('b', {easing: 'easeOut',duration: time ,remove: false,useDisplay: true});
-//	Ext.get('contactnumberForm').fadeOut({
-//		useDisplay: true,
-//		duration: time
-//	});
-//	Ext.get('addressForm').pause(time + 0.2).fadeIn({
-//		useDisplay: true,
-//		duration: 0.1
-//	});
-//}
-
-//var contactnumbersStore = new Ext.data.ArrayStore({
-//	data: [["1", "mobile", "079 770 70 65", 'Aumônerie'], ["2", "fixe", "032 511 08 18", 'Test'], ["3", "fax", "024 471 70 74", 'Paulin']],
-//	fields: ['uid', 'type', 'number' , "nature"]
-//})
-var storeType = new Ext.data.ArrayStore({
-	data: [["mobile", "mobile_text"], ["fixe", "fixe"], ["fax", "fax"]],
-	fields: ['type', 'type_text']
-})
-
-var storeNature = new Ext.data.ArrayStore({
-	data: [["Aumônerie", "Aumônerie"], ["Test", "Test"], ["TPL", "TPL"]],
-	fields: ['nature', 'nature_text']
-})
-
 Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	buttonText: '',
 
@@ -95,6 +68,10 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 			]
 		});
 
+		// Defines a global variable
+		Contactnumber.panel = Ext.ComponentMgr.get('address_contactnumbers');
+
+		// Calls parent method
 		Ext.ux.ContactNumber.superclass.initComponent.call(this, arguments);
 	},
 
@@ -104,21 +81,60 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 
 	/**
 	 * Attaches events on each rows whenever the component is drawed
+	 *
+	 * @access public
 	 */
-	doLayout: function(shallow) {
+	doLayout: function() {
 		Ext.ux.ContactNumber.superclass.doLayout.call(this);
 
 		// Get contact element
-		var el = Ext.ComponentMgr.get('address_contactnumbers');
 		Ext.addBehaviors({
 			// add a listener for click on all anchors in element with id foo
-			'#contactNumber .contactNumberMainRow@dblclick' : el.edit,
-			'#contactNumber img[alt=edit]@click' : el.edit,
-			'#contactNumber img[alt=delete]@click' : el.deleteRecord
+			'#contactNumber .contactNumberMainRow@dblclick' : Contactnumber.panel.edit,
+			'#contactNumber img[alt=edit]@click' : Contactnumber.panel.edit,
+			'#contactNumber img[alt=delete]@click' : Contactnumber.panel.deleteRecord
 		});
-		console.log('layout done');
+		
+		if (Addresses.DEBUG) {
+			console.log('Contactnumber: layout done');
+		}
 	},
 
+	/**
+	 * Adds button into the top toolbar
+	 *
+	 * @access private
+	 * @return void
+	 */
+	addButtons: function() {
+
+		// Add 2 buttons at a specific position
+		var toolbar = Address.window.getTopToolbar();
+		
+		toolbar.insertButton(0,{
+			id: 'contactnumberSaveButton',
+			xtype: 'button',
+			text: 'Sauver le numéro de contact',
+			cls: 'x-btn-text-icon',
+			icon: 'Resources/Public/Icons/database_save.png',
+			handler: Contactnumber.panel.save
+		});
+		toolbar.insertButton(toolbar.items.items.length - 1,{
+			id: 'contactnumberResetButton',
+			xtype: 'button',
+			text: Addresses.lang.cancel,
+			cls: 'x-btn-text-icon',
+			icon: 'Resources/Public/Icons/database.png',
+			handler: Contactnumber.panel.reset
+		});
+
+		// Re-draws the button
+		toolbar.doLayout();
+		if (Addresses.DEBUG) {
+			console.log('Contactnumber: buttons have been added on the toolbar');
+		}
+	},
+	
 	/**
 	 * Swaps between "addressForm" and "contactnumberForm"
 	 *
@@ -127,6 +143,41 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * @return void
 	 */
 	edit: function(event, element) {
+
+		if (!Ext.get('contactnumberSaveButton')) {
+			Contactnumber.panel.addButtons()
+		}
+
+		// TRUE means this is a new record
+		if (typeof(element.id) == 'undefined') {
+
+			Contactnumber.panel.editInsert();
+		}
+		else {
+			Contactnumber.panel.editUpdate(element);
+		}
+
+		// Show / hide widgets
+		Contactnumber.panel.setVisible(true);
+	},
+	
+	/**
+	 * Shows 
+	 *
+	 * @access private
+	 * @return void
+	 */
+	setVisible: function(isVisible) {
+		var namespaces = [{name: 'address', visible: !isVisible}, {name: 'contactnumber', visible: isVisible}]
+		for (var index = 0; index < namespaces.length; index ++) {
+			var namespace = namespaces[index];
+			Ext.ComponentMgr.get(namespace.name + 'Form').setVisible(namespace.visible);
+			Ext.ComponentMgr.get(namespace.name + 'SaveButton').setVisible(namespace.visible);
+			Ext.ComponentMgr.get(namespace.name + 'ResetButton').setVisible(namespace.visible);
+		}
+
+		//	Ext.get('contactnumberForm').ghost('b', {easing: 'easeOut',duration: time ,remove: false,useDisplay: true});
+
 //		var speed = 0.4;
 //
 //		// Makes the form visible
@@ -140,21 +191,6 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 ////			useDisplay: true,
 //			duration: 0.1
 //		});
-
-		// TRUE means this is a new record
-		if (typeof(element.id) == 'undefined') {
-
-			Ext.ComponentMgr.get('address_contactnumbers').editInsert();
-		}
-		else {
-			Ext.ComponentMgr.get('address_contactnumbers').editUpdate(element);
-		}
-		
-		Ext.ComponentMgr.get('addressForm').setVisible(false);
-		Ext.ComponentMgr.get('contactnumberForm').setVisible(true);
-		
-		// Defines the actions of the buttons located in the top bar
-		Address.window.setControllersActionInTopBar('contactnumbers');
 	},
 
 	/**
@@ -269,9 +305,8 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 				// Adds, sorts and regenerates the layout.
 				Address.stores.contactnumbers.add(new Ext.data.Record(record, record.uid));
 				Address.stores.contactnumbers.sort('uid', 'ASC');
-				Ext.ComponentMgr.get('address_contactnumbers').doLayout();
-				Ext.ComponentMgr.get('address_contactnumbers').hide();
-
+				Contactnumber.panel.doLayout();
+				Contactnumber.panel.reset();
 			},
 			failure: function(form,call){
 				if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -307,29 +342,13 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	/**
 	 * Listener for cancel button.
 	 */
-	hide: function() {
-		//	Ext.get('contactnumberForm').ghost('b', {easing: 'easeOut',duration: time ,remove: false,useDisplay: true});
+	reset: function() {
 
-//		var speed = 0.2;
-
-		// Makes the form visible
-//		Ext.get('contactnumberForm').fadeOut({
-//			useDisplay: true,
-//			duration: speed
-//		});
-//		Ext.get('addressForm').pause(speed + 0.2).fadeIn({
-//			useDisplay: true,
-//			duration: 0.1
-//		});
-
-		Ext.ComponentMgr.get('addressForm').setVisible(true);
-		Ext.ComponentMgr.get('contactnumberForm').setVisible(false);
+		// Show / hide widgets
+		Contactnumber.panel.setVisible(false);
 
 		// Resets form
 		Ext.ComponentMgr.get('contactnumberForm').getForm().reset();
-		
-		// Changes the controller (save - cancel) action
-		Address.window.setControllersActionInTopBar(Address.window);
 	},
 
 	/**
@@ -346,22 +365,36 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		}
 	},
 
-	afterRender: function(a) {
+	/**
+	 * After method
+	 *
+	 * @access public
+	 * @return void
+	 */
+	afterRender: function() {
 		Ext.ux.ContactNumber.superclass.afterRender.call(this);
+		Contactnumber.panel.attachKeyMap();
+	},
 
-	//
-	//		console.log(this);
-	//		console.log( this.getEl());
-	//		console.log( this.getEl().get('contactNumberRow1'));
-	//		console.log(this.el);
-	//		console.log(this.el.dom.getElementsByTagName("div"));
-	//		var test = this.el.dom.getElementsByTagName("div");
-	//		alert(test.length)
-	//		console.log(this.el.dom.select('div'));
-	//		console.log(this.el.dom.querySelector('div'));
-	//		new Ext.Button({text: 'asdf',renderTo: this.el});
+	/**
+	 * Attaches special key strokes like "Enter"
+	 *
+	 * @access private
+	 * @return void
+	 */
+	attachKeyMap: function() {
+		var namespace = 'contactnumber';
+		if(Ext.get(namespace + 'Form')) {
+			//map one key by key code
+			new Ext.KeyMap(namespace + 'Form', {
+				key: 13, // or Ext.EventObject.ENTER
+				fn: function() {
+					Contactnumber.panel.save();
+				},
+				stopEvent: true
+			});
+		}
 	}
-
 });
 
 Ext.reg('contactnumber', Ext.ux.ContactNumber);

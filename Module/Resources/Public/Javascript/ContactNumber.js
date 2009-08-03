@@ -141,30 +141,13 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 //			duration: 0.1
 //		});
 
-		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
 		// TRUE means this is a new record
 		if (typeof(element.id) == 'undefined') {
 
-			// Get uid_foreign value
-			var uid_foreign = Address.form.findField('uid').getValue();
-
-			// Set uid_foreign into field uid_foreign
-			form.findField('uid_foreign').setValue(uid_foreign);
-
+			Ext.ComponentMgr.get('address_contactnumbers').editInsert();
 		}
 		else {
-			// The user may have done a dblClick on the row.
-			// In this case, search the uid on the parentNode which contains the uid.
-			// The parentNode will be a <tr/> or a <img/>
-			if (element.id == '' && element.parentNode.id == '') {
-				element = element.parentNode.parentNode;
-			}
-			else if (element.id == '' ) {
-				element = element.parentNode;
-			}
-			var uid = element.id.substring(20);
-			var record = Address.stores.contactnumbers.getById(uid);
-			form.loadRecord(record);
+			Ext.ComponentMgr.get('address_contactnumbers').editUpdate(element);
 		}
 		
 		Ext.ComponentMgr.get('addressForm').setVisible(false);
@@ -180,19 +163,36 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * @access private
 	 * @return void
 	 */
-//	editInsert: function() {
-//
-//	},
+	editInsert: function() {
+		// Get uid_foreign value
+		var uid_foreign = Address.form.findField('uid').getValue();
+
+		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
+		// Set uid_foreign into field uid_foreign
+		form.findField('uid_foreign').setValue(uid_foreign);
+	},
 
 	/**
-	 * Prepares form for a new record.
+	 * Prepares form for an existing record.
 	 *
 	 * @access private
 	 * @return void
 	 */
-//	editUpdate: function() {
-//
-//	},
+	editUpdate: function(element) {
+		// The user may have done a dblClick on the row.
+		// In this case, search the uid on the parentNode which contains the uid.
+		// The parentNode will be a <tr/> or a <img/>
+		if (element.id == '' && element.parentNode.id == '') {
+			element = element.parentNode.parentNode;
+		}
+		else if (element.id == '' ) {
+			element = element.parentNode;
+		}
+		var uid = element.id.substring(20);
+		var record = Address.stores.contactnumbers.getById(uid);
+		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
+		form.loadRecord(record);
+	},
 
 	/**
 	 * Deletes a record

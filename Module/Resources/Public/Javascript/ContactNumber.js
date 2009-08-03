@@ -58,7 +58,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 									'{type_text}',
 								'</td>',
 								'<td style="width: 30%; padding: 3px 5px 3px 5px; border-bottom: 1px dotted gray;">',
-									'{number}',
+									'{number_evaluated}',
 								'</td>',
 								'<td style="padding: 3px 0; border-bottom: 1px dotted gray; color: gray">',
 									'{nature}',
@@ -81,7 +81,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 					marginBottom:"10px",
 					marginLeft:"65%"
 				},
-				handler: this.show
+				handler: this.edit
 			}
 			]
 		});
@@ -103,8 +103,8 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		var el = Ext.ComponentMgr.get('address_contactnumbers');
 		Ext.addBehaviors({
 			// add a listener for click on all anchors in element with id foo
-			'#contactNumber .contactNumberMainRow@dblclick' : el.load,
-			'#contactNumber img[alt=edit]@click' : el.load,
+			'#contactNumber .contactNumberMainRow@dblclick' : el.edit,
+			'#contactNumber img[alt=edit]@click' : el.edit,
 			'#contactNumber img[alt=delete]@click' : el.deleteRecord
 		});
 		console.log('layout done');
@@ -117,7 +117,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * @access private
 	 * @return void
 	 */
-	show: function(event, element) {
+	edit: function(event, element) {
 //		var speed = 0.4;
 //
 //		// Makes the form visible
@@ -131,15 +131,33 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 ////			useDisplay: true,
 //			duration: 0.1
 //		});
+		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
+		form.reset();
+
+		// TRUE means this is a new record
+		if (typeof(element.id) == 'undefined') {
+
+			// Get uid_foreign value
+			var uid_foreign = Address.form.findField('uid').getValue();
+
+			// Set uid_foreign into field uid_foreign
+			form.findField('uid_foreign').setValue(uid_foreign);
+
+		}
+		else {
+			// The user may have done a dblClick on the row.
+			// In this case, search the uid on the parentNode which contains the uid.
+			// The parentNode will be a <tr/>
+			if (element.id == '') {
+				element = element.parentNode;
+			}
+			var uid = element.id.substring(20);
+			var record = Address.stores.contactnumbers.getById(uid);
+			form.loadRecord(record);
+		}
+		
 		Ext.ComponentMgr.get('addressForm').setVisible(false);
 		Ext.ComponentMgr.get('contactnumberForm').setVisible(true);
-		
-		// Get uid_foreign value
-		var uid_foreign = Address.form.findField('uid').getValue();
-
-		// Set it into field
-		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
-		form.findField('uid_foreign').setValue(uid_foreign);
 		
 		// Defines the actions of the buttons located in the top bar
 		Address.window.setControllersActionInTopBar('contactnumbers');
@@ -157,7 +175,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		Ext.Msg.show({
 			title: Addresses.lang.remove,
 			buttons: Ext.MessageBox.YESNO,
-			msg: Addresses.lang.are_you_sure_contactnumber + ' ' + record.data.number + '?',
+			msg: Addresses.lang.are_you_sure_contactnumber + ' ' + record.data.number_evaluated + '?',
 			fn: function(btn){
 				if (btn == 'yes'){
 					// Defines the data to transmit
@@ -211,9 +229,18 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 				ajaxID: 'ContactnumberController::saveAction'
 			},
 			success: function(form, call){
-				var data = call.result.rows[0];
-				Address.stores.contactnumbers.add(new Ext.data.Record(data, data.uid));
+				var record = call.result.rows[0];
+				// removes the old record for updated record
+				if (call.result.request == 'UPDATE') {
+					var _record = Address.stores.contactnumbers.getById(record.uid);
+					Address.stores.contactnumbers.remove(_record)
+				}
+				// Adds, sorts and regenerates the layout.
+				Address.stores.contactnumbers.add(new Ext.data.Record(record, record.uid));
+				Address.stores.contactnumbers.sort('uid', 'ASC');
+				Ext.ComponentMgr.get('address_contactnumbers').doLayout();
 				Ext.ComponentMgr.get('address_contactnumbers').hide();
+
 			},
 			failure: function(form,call){
 				if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -266,7 +293,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 
 		Ext.ComponentMgr.get('addressForm').setVisible(true);
 		Ext.ComponentMgr.get('contactnumberForm').setVisible(false);
-
+		
 		// Changes the controller (save - cancel) action
 		Address.window.setControllersActionInTopBar(Address.window);
 	},

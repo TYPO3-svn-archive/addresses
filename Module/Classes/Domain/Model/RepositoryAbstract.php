@@ -244,7 +244,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 							$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
 							break;
 						case 'nbsp':
-							$output[$fieldName] = str_replace(' ', '&nbsp;', $value);
+							$output[$fieldName .'_evaluated'] = str_replace(' ', '&nbsp;', $value);
 							break;
 					}
 				}

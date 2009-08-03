@@ -13,7 +13,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 		'panels' => array (
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contactnumber',
-				'fields' => array('uid_foreign', 'type', 'number', 'nature'),
+				'fields' => array('type', 'number', 'nature', 'uid_foreign'),
 			),
 		),
 	),

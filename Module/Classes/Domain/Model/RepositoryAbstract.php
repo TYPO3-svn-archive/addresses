@@ -286,40 +286,50 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 */
 	protected function getClause() {
 		//Default value of clause
-		$this->clause = 'deleted = 0 ';
+		if ($this->clause == '') {
 
-		// Builds up the clause when searching for a string
-		$parameters = t3lib_div::_GET();
-		if (isset($parameters['filterTxt']) && $parameters['filterTxt'] != '' && $this->clause == '') {
-			$search = filter_input(INPUT_GET, 'filterTxt', FILTER_SANITIZE_STRING);
-			$this->clause = $this->getSearchClause($search, $this->tableName);
-			$foreignTables['be_users'] = array(
-				'localField' => 'cruser_id',
-				'includedFields' => array('username', 'realName', 'email'),
-			);
-			// Merge tables from the foreignTables
-			$foreignTables = array_merge($foreignTables, $this->getForeignTables());
+			// Builds up the clause when searching for a string
+			$parameters = t3lib_div::_GET();
+			if (isset($parameters['filterTxt']) && $parameters['filterTxt'] != '') {
+				$search = filter_input(INPUT_GET, 'filterTxt', FILTER_SANITIZE_STRING);
+				
+				$this->clause = $this->getSearchClause($search, $this->tableName);
 
-			// fetch other condition
-			foreach ($foreignTables as $foreignTable => $data) {
-			// Builds request for the 2 possible relations:
-			// 1. M-M relation
-			// 2. 1-M relation
-				if (isset($data['MM'])) {
-					$this->clause .= ' OR uid IN (SELECT uid_local FROM ' . $data['MM'] . ' WHERE tablenames = "' . $data['foreign_table'] . '" AND uid_foreign IN (SELECT uid FROM ' . $data['foreign_table'] . ' WHERE ' . $this->getSearchClause($search, $data['foreign_table']) . '))';
-				}
-				else {
-					$includedFields = array();
-					if (isset($data['includedFields'])) {
-						$includedFields = $data['includedFields']; // Maybe it is a better idea to work in an *exclude* way
+				// Handle a special table
+				$foreignTables['be_users'] = array(
+					'localField' => 'cruser_id',
+					'includedFields' => array('username', 'realName', 'email'),
+					'foreign_table' => 'be_users',
+				);
+				// Merge tables from the foreignTables
+				$foreignTables = array_merge($foreignTables, $this->getForeignTables());
+
+				// fetch other condition
+				foreach ($foreignTables as $foreignTable => $data) {
+				// Builds request for the 2 possible relations:
+				// 1. M-M relation
+				// 2. 1-M relation
+					if (isset($data['MM'])) {
+						$this->clause .= ' OR uid IN (SELECT uid_local FROM ' . $data['MM'] . ' WHERE tablenames = "' . $data['foreign_table'] . '" AND uid_foreign IN (SELECT uid FROM ' . $data['foreign_table'] . ' WHERE ' . $this->getSearchClause($search, $data['foreign_table']) . '))';
 					}
-					$this->clause .= ' OR ' . $data['localField'] . ' IN (SELECT uid FROM ' . $foreignTable . ' WHERE ' . $this->getSearchClause($search, $foreignTable, $includedFields) . ')';
+					else {
+						$includedFields = array();
+						if (isset($data['includedFields'])) {
+							$includedFields = $data['includedFields']; // Maybe it is a better idea to work on *exclude* fields
+						}
+						$message = $this->getSearchClause($search, $data['foreign_table'], $includedFields);
+						$uid = isset($data['localField']) ? $data['localField'] : 'uid';
+						$this->clause .= ' OR ' . $uid . ' IN (SELECT uid FROM ' . $data['foreign_table'] . ' WHERE ' . $this->getSearchClause($search, $data['foreign_table'], $includedFields) . ')';
+					}
 				}
-			}
-			$this->clause = '(' . $this->clause . ')';
+				$this->clause = '(' . $this->clause . ')';
+			} // end if
+
+			$enableFields = 'deleted = 0 ';
+			$enableFields .= t3lib_BEfunc::BEenableFields($this->tableName);
+			$and = $this->clause == '' ? '': ' AND ';
+			$this->clause = $enableFields . $and . $this->clause;
 		}
-		
-		$this->clause .= ' ' . t3lib_BEfunc::BEenableFields($this->tableName);
 		return $this->clause;
 	}
 
@@ -350,7 +360,10 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		}
 
 		$searchClause = ' LIKE "%' . $search . '%"';
-		return implode($searchClause . ' OR ', $fields) . $searchClause ;
+		$searchClause = implode($searchClause . ' OR ', $fields) . ' LIKE "%' . $search . '%"';
+		$searchClause .= ' AND ' . $tableName . '.deleted = 0 ';
+		$searchClause .= t3lib_BEfunc::BEenableFields($tableName);
+		return $searchClause;
 
 	}
 

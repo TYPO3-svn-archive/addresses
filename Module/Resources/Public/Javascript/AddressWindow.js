@@ -54,7 +54,15 @@ Address.initWindow = function() {
 		text: Addresses.lang.cancel,
 		cls: 'x-btn-text-icon',
 		icon: 'Resources/Public/Icons/database.png'
-	}];
+	}
+//	,{
+//		id: 'contactnumberSaveButton',
+//		xtype: 'button',
+//		text: 'Sauver le numéro de contact',
+//		cls: 'x-btn-text-icon',
+//		icon: 'Resources/Public/Icons/database_save.png'
+//	}
+];
 
 	/*
 	 * Fom panel attached to the Window
@@ -447,7 +455,7 @@ Address.initWindow = function() {
 			this.addListnerToComboboxes();
 			this.addListnerTolocality();
 
-			this.attachKeyMap(['addressForm', 'contactnumberForm'])
+			this.attachKeyMap(['addressForm', 'addressgroupForm', 'contactnumberForm'])
 		},
 
 		/**
@@ -458,15 +466,18 @@ Address.initWindow = function() {
 			for (var index = 0; index < forms.length; index++) {
 				var form = forms[index];
 
-				//map one key by key code
-				new Ext.KeyMap(form, {
-					key: 13, // or Ext.EventObject.ENTER
-					fn: function() {
-						var component = Ext.ComponentMgr.get('addressSaveButton');
-						component.fireEvent('click');
-					},
-					stopEvent: true
-				});
+				// Before attaching key strokes event, makes sure that the component exist.
+				if(Ext.get(form)) {
+					//map one key by key code
+					new Ext.KeyMap(form, {
+						key: 13, // or Ext.EventObject.ENTER
+						fn: function() {
+							var component = Ext.ComponentMgr.get('addressSaveButton');
+							component.fireEvent('click');
+						},
+						stopEvent: true
+					});
+				}
 			}
 		}
 	});

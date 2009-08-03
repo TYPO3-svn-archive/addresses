@@ -49,4 +49,17 @@ Addresses.initialize = function() {
 //	Addressgroup.window.init();
 //	Addressgroup.form = Addressgroup.window.getComponent('addressgroupForm').getForm();
 //	Addressgroup.window.show();
+
+	if (Ext.getUrlParam('debug') == 'undefined' || Ext.getUrlParam('debug') == 1) {
+		Addresses.DEBUG = true;
+	}
+	else  {
+		Addresses.DEBUG = false;
+	}
+};
+
+// Function that is used to analyse the URL.
+Ext.getUrlParam = function(param) {
+   var params = Ext.urlDecode(location.search.substring(1));
+   return param ? params[param] : params;
 };

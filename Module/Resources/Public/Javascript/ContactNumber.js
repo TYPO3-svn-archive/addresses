@@ -63,6 +63,11 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 								'<td style="padding: 3px 0; border-bottom: 1px dotted gray; color: gray">',
 									'{nature}',
 								'</td>',
+								'<td style="padding: 3px 0; border-bottom: 1px dotted gray; color: gray">',
+									'<tpl if="remarks">',
+										'<img src="/typo3conf/ext/addresses/Module/Resources/Public/Icons/note.png" alt="remarks" title="{remarks}"/>',
+									'</tpl>',
+								'</td>',
 							'</tr>',
 						'</tpl>',
 					'</tbody>',
@@ -131,9 +136,8 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 ////			useDisplay: true,
 //			duration: 0.1
 //		});
-		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
-		form.reset();
 
+		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
 		// TRUE means this is a new record
 		if (typeof(element.id) == 'undefined') {
 
@@ -147,8 +151,11 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		else {
 			// The user may have done a dblClick on the row.
 			// In this case, search the uid on the parentNode which contains the uid.
-			// The parentNode will be a <tr/>
-			if (element.id == '') {
+			// The parentNode will be a <tr/> or a <img/>
+			if (element.id == '' && element.parentNode.id == '') {
+				element = element.parentNode.parentNode;
+			}
+			else if (element.id == '' ) {
 				element = element.parentNode;
 			}
 			var uid = element.id.substring(20);
@@ -162,6 +169,26 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		// Defines the actions of the buttons located in the top bar
 		Address.window.setControllersActionInTopBar('contactnumbers');
 	},
+
+	/**
+	 * Prepares form for a new record.
+	 *
+	 * @access private
+	 * @return void
+	 */
+//	editInsert: function() {
+//
+//	},
+
+	/**
+	 * Prepares form for a new record.
+	 *
+	 * @access private
+	 * @return void
+	 */
+//	editUpdate: function() {
+//
+//	},
 
 	/**
 	 * Deletes a record
@@ -293,6 +320,9 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 
 		Ext.ComponentMgr.get('addressForm').setVisible(true);
 		Ext.ComponentMgr.get('contactnumberForm').setVisible(false);
+
+		// Resets form
+		Ext.ComponentMgr.get('contactnumberForm').getForm().reset();
 		
 		// Changes the controller (save - cancel) action
 		Address.window.setControllersActionInTopBar(Address.window);

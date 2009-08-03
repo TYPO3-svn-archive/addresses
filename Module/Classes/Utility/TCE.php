@@ -254,9 +254,8 @@ EOF;
 			$_fieldName = $tca['itemsProcFunc.']['field'];
 			if ($table != '' && $_fieldName != '') {
 				$records = call_user_func_array($tca['itemsProcFunc'], array($table, $_fieldName));
-				array_pop($records);
 			}
-			
+
 			// Merges array
 			$elements = array_merge($elements, $records);
 			$elements = self::arrayUnique($elements);
@@ -603,9 +602,10 @@ EOF;
 		if (is_string($table) && is_string($field)) {
 			$clause = 'deleted = 0 ';
 			$clause .= t3lib_BEfunc::BEenableFields($table);
+			$clause .= ' AND (' . $field . ' != "" OR ' . $field . ' != 0)';
 			$records = $TYPO3_DB->exec_SELECTgetRows('distinct(' . $field . ')', $table, $clause);
-
-			// TRUE Means the uid of the option will be the same as the value
+			
+			// TRUE would means the uid of the option will be the same as the value
 			if (!strpos($field, ',')) {
 				foreach($records as $record) {
 					$_records[] = array(

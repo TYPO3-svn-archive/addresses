@@ -227,7 +227,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 		// Adds the uid in the first panel
 		if (isset($showItems[0]['panels'][0]['fields'])) {
 			// Add manually the uid
-			array_unshift($showItems[0]['panels'][0]['fields'], 'uid');
+			array_push($showItems[0]['panels'][0]['fields'], 'uid');
 
 			// init configuration array
 			$configurations['xtype'] = 'panel';

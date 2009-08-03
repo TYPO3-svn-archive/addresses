@@ -90,7 +90,7 @@ Address.initGrid = function() {
 		autoLoad: true,
 		reader: new Ext.data.JsonReader({
 			fields: Address.gridFieldsType,
-			root: 'rows',
+			root: 'records',
 			totalProperty: 'total'
 		}),
 		baseParams: {

@@ -256,7 +256,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 				ajaxID: 'ContactnumberController::saveAction'
 			},
 			success: function(form, call){
-				var record = call.result.rows[0];
+				var record = call.result.records[0];
 				// removes the old record for updated record
 				if (call.result.request == 'UPDATE') {
 					var _record = Address.stores.contactnumbers.getById(record.uid);

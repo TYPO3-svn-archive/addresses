@@ -317,6 +317,7 @@ Address.initWindow = function() {
 		 * @return void
 		 */
 		edit: function(type) {
+			// dataSet is an array that will contains selected rows
 			var sm = Address.grid.getSelectionModel();
 			var selections = sm.getSelections();
 			var dataSet = new Array();
@@ -355,18 +356,18 @@ Address.initWindow = function() {
 							Address.window.setTitle(Addresses.lang.copy_record); // set title
 						}
 						Address.window.waitMask.hide();
-						var data = call.result.data;
+						var record = call.result.data;
 //						for (row in data) {
 //							if (typeof(data[row])) {
 //								// @todo
 								var contactnumber = Ext.ComponentMgr.get('address_contactnumbers');
-								contactnumber.setValue(data.contactnumbers);
+								contactnumber.setValue(record.contactnumbers);
 //							}
 //						}
 
-						var message =  Addresses.lang.createdOn + ' ' + data.crdateTime + ' ' + Addresses.lang.by + ' ' + data.cruser_id;
+						var message =  Addresses.lang.createdOn + ' ' + record.crdateTime + ' ' + Addresses.lang.by + ' ' + record.cruser_id;
 						message +=  '&nbsp;&nbsp; &bull; &nbsp;&nbsp;'
-						message += Addresses.lang.updatedOn + ' ' + data.tstampTime + ' ' + Addresses.lang.by + ' ' + data.upuser_id;
+						message += Addresses.lang.updatedOn + ' ' + record.tstampTime + ' ' + Addresses.lang.by + ' ' + record.upuser_id;
 						Address.window.getBottomToolbar().setStatus(message);
 
 						Address.window.show();

@@ -125,7 +125,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 		$output['success'] = TRUE;
 		$output['total'] = $results[0]['total'];
-		$output['rows'] = $records;
+		$output['records'] = $records;
 		return $output;
 	}
 
@@ -164,12 +164,13 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				}
 				$_record['uid'] = $this->getUidList($dataSet);
 				$output['success'] = TRUE;
-				$output['data'] = $_record;
+				$output['record'] = $_record;
 			}
 
 			// Fields from Grid TCA are merged into the Columns's TCA
 			$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
-			$output['data'] = $this->formatForHumans($output['data'], $columns);
+			// data is mandatory for ExtJS
+			$output['data'] = $this->formatForHumans($output['record'], $columns);
 		}
 		return $output;
 	}
@@ -549,7 +550,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * Save address(es): UPDATE or INSERT depending on the uid
 	 *
 	 * @param	array	$values
-	 * @return	array	Beware: cell 'rows' may return multiple records in case of multi editing
+	 * @return	array	Beware: cell 'records' may return multiple records in case of multi editing
 	 */
 	public function save($dataSet) {
 		$dataSet = t3lib_div::_GET();
@@ -638,7 +639,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		$columns = Tx_Addresses_Utility_TCA::getColumns($this->tableName);
 		$records = $TYPO3_DB->exec_SELECTgetRows('*', $this->tableName, $this->getUidsClause($uids));
 		foreach ($records as $record) {
-			$result['rows'][] = $this->formatForHumans($record, $columns);
+			$result['records'][] = $this->formatForHumans($record, $columns);
 		}
 		return $result;
 	}

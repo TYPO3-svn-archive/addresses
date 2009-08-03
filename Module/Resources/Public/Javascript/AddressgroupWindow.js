@@ -56,8 +56,8 @@ Addressgroup.initWindow = function() {
 						ajaxID: 'AddressgroupController::saveAction'
 					},
 					success: function(form, call){
-						var uid = call.result.rows[0].uid;
-						var title = call.result.rows[0].title
+						var uid = call.result.records[0].uid;
+						var title = call.result.records[0].title
 						//Add this record to the stores
 						Address.stores.addressgroups.add(new Ext.data.Record({
 							addressgroups: uid,

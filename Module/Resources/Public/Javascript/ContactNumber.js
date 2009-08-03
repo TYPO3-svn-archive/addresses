@@ -1,8 +1,12 @@
-/*!
- * Ext JS Library 3.0.0
- * Copyright(c) 2006-2009 Ext JS, LLC
- * licensing@extjs.com
- * http://www.extjs.com/license
+/**
+ * ExtJS for the 'addresses' extension.
+ *
+ * @author	Fabien Udriot <fabien.udriot@ecodev.ch>
+ * @copyright Copyright belongs to the respective authors
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
+ * @package	TYPO3
+ * @subpackage	tx_addresses
+ * @version $Id$
  */
 
 //function testMe2(uid) {

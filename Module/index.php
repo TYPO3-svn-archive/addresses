@@ -100,7 +100,7 @@ class tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * @var $pagingSize string
 	 */
-	protected $pagingSize = 2;
+	protected $pagingSize = 50;
 
 	/**
 	 * @var $minifyJavascript string

@@ -220,7 +220,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		foreach ($dataSet as $fieldName => $value) {
 			if (isset($columns[$fieldName])) {
 
-				// Shortcuts the array
+			// Shortcuts the array
 				$config = $columns[$fieldName]['config'];
 
 				// Set default value
@@ -228,7 +228,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 				// TRUE when value contains a sub array. Means it should call recursively formatForHumans
 				if (is_array($value) && isset($config['foreign_table'])) {
-					// Gets the namespace + the columns
+				// Gets the namespace + the columns
 					$_columns = Tx_Addresses_Utility_TCA::getColumns($config['foreign_table']);
 					$_records = array();
 					foreach ($value as $_value) {
@@ -239,41 +239,41 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				// eval function
 				else if (isset($config['eval']) && $value) {
 
-					switch ($config['eval']) {
-						case 'date':
-							$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
-							$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
-							break;
-						case 'nbsp':
-							$output[$fieldName .'_evaluated'] = str_replace(' ', '&nbsp;', $value);
-							break;
-					}
-				}
-				// eval function
-				else if ($config['type'] == 'select' && isset($config['items'])) {
-					
-					// When $value == 0, sets '' otherwise the default value is Okay.
-					$output[$fieldName . '_text'] = $value == 0 ? '' : 0;
-
-					// Tries to find out the text value
-					foreach ($config['items'] as $items) {
-						$_value = $LANG->sL($items[1]);
-						if ($_value == $value) {
-							$output[$fieldName . '_text'] = $LANG->sL($items[0]);
-							break;
+						switch ($config['eval']) {
+							case 'date':
+								$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
+								$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
+								break;
+							case 'nbsp':
+								$output[$fieldName .'_evaluated'] = str_replace(' ', '&nbsp;', $value);
+								break;
 						}
 					}
+					// eval function
+					else if ($config['type'] == 'select' && isset($config['items'])) {
 
-				}
-				// userFuncFormat
-				else if (isset($config['userFuncFormat'])) {
-					$table = $config['userFuncFormat.']['table'];
-					$field = $config['userFuncFormat.']['field'];
-					$output[$fieldName] = call_user_func_array($config['userFuncFormat'], array($table, $field, $value));
-				}
-				else {
-					$output[$fieldName] = $value;
-				}
+						// When $value == 0, sets '' otherwise the default value is Okay.
+							$output[$fieldName . '_text'] = $value == 0 ? '' : 0;
+
+							// Tries to find out the text value
+							foreach ($config['items'] as $items) {
+								$_value = $LANG->sL($items[1]);
+								if ($_value == $value) {
+									$output[$fieldName . '_text'] = $LANG->sL($items[0]);
+									break;
+								}
+							}
+
+						}
+						// userFuncFormat
+						else if (isset($config['userFuncFormat'])) {
+								$table = $config['userFuncFormat.']['table'];
+								$field = $config['userFuncFormat.']['field'];
+								$output[$fieldName] = call_user_func_array($config['userFuncFormat'], array($table, $field, $value));
+							}
+							else {
+								$output[$fieldName] = $value;
+							}
 			}
 		}
 		return $output;
@@ -285,14 +285,14 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @return string
 	 */
 	protected function getClause() {
-		//Default value of clause
+	//Default value of clause
 		if ($this->clause == '') {
 
-			// Builds up the clause when searching for a string
+		// Builds up the clause when searching for a string
 			$parameters = t3lib_div::_GET();
 			if (isset($parameters['filterTxt']) && $parameters['filterTxt'] != '') {
 				$search = filter_input(INPUT_GET, 'filterTxt', FILTER_SANITIZE_STRING);
-				
+
 				$this->clause = $this->getSearchClause($search, $this->tableName);
 
 				// Handle a special table
@@ -306,9 +306,9 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 				// fetch other condition
 				foreach ($foreignTables as $foreignTable => $data) {
-				// Builds request for the 2 possible relations:
-				// 1. M-M relation
-				// 2. 1-M relation
+					// Builds request for the 2 possible relations:
+					// 1. M-M relation
+					// 2. 1-M relation
 					if (isset($data['MM'])) {
 						$this->clause .= ' OR uid IN (SELECT uid_local FROM ' . $data['MM'] . ' WHERE tablenames = "' . $data['foreign_table'] . '" AND uid_foreign IN (SELECT uid FROM ' . $data['foreign_table'] . ' WHERE ' . $this->getSearchClause($search, $data['foreign_table']) . '))';
 					}
@@ -441,7 +441,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 				// Stores foreign table for later use
 				if (isset($columns[$fieldName]['config']['foreign_table'])) {
-					// && isset($columns[$fieldName]['config']['MM'])
+				// && isset($columns[$fieldName]['config']['MM'])
 					$this->foreignTables[$fieldName] = $columns[$fieldName];
 				}
 			}
@@ -643,7 +643,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 			$result['request'] = 'UPDATE';
 		}
 		else {
-			// Saves in form of array. The user may update multiple records
+		// Saves in form of array. The user may update multiple records
 			$uids = array($this->saveInsert($fields, $foreignTables));
 			$result['request'] = 'INSERT';
 		}

@@ -558,6 +558,12 @@ EOF;
 			$configuration['fieldLabel'] = $LANG->sL($columns[$fieldName]['label']);
 		}
 
+		// Hides field according "hidden" flag
+		if (isset($columns[$fieldName]['config']['hidden']) && $columns[$fieldName]['config']['hidden'] == TRUE) {
+			$configuration['hidden'] = TRUE;
+			$configuration['hideLabel'] = TRUE;
+		}
+
 		return $configuration;
 
 	}

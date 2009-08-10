@@ -30,7 +30,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @package	TYPO3
  * @subpackage	tx_addresses
- * @version $Id: AddressgroupRepository.php 22144 2009-07-08 11:42:11Z fabien_u $
+ * @version $Id$
  */
 
 class Tx_Addresses_Domain_Model_ContactnumberRepository extends Tx_Addresses_Domain_Model_RepositoryAbstract {

@@ -30,7 +30,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @package	TYPO3
  * @subpackage	tx_addresses
- * @version $Id: ContactnumberController.php 22144 2009-07-08 11:42:11Z fabien_u $
+ * @version $Id$
  */
 
 // Check whether the user has access to the module
@@ -54,7 +54,7 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/UserTCE.
  * @author		Fabien Udriot <fabien.udriot@ecodev.ch>
  * @package		TYPO3
  * @subpackage	tx_addresses
- * @version 	$Id: ContactnumberController.php 22144 2009-07-08 11:42:11Z fabien_u $
+ * @version 	$Id$
  */
 class Tx_Addresses_Controller_ContactnumberController extends Tx_Addresses_Controller_ControllerAbstract{
 

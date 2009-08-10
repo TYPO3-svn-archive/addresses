@@ -29,7 +29,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @package	TYPO3
  * @subpackage	tx_addresses
- * @version $Id: Namespaces.js 23048 2009-08-03 12:52:02Z fabien_u $
+ * @version $Id$
  */
 
 //Ext.namespace("Util");

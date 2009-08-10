@@ -36,7 +36,7 @@
 			<label index="update_record">Update record</label>
 			<label index="multiple_update_record">Multiple update record</label>
 			<label index="error">Error</label>
-			<label index="fields_error">Values are missing in some fields.</label>
+			<label index="fields_error">A values is missing for some field.</label>
 			<label index="warning">Warning</label>
 			<label index="failure">Failure</label>
 			<label index="saving">Saving...</label>
@@ -56,6 +56,8 @@
 			<label index="paging_label"><![CDATA[Record {0} to {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]></label>
 			<label index="are_you_sure_contactnumber">Do you want to remove the contact number</label>
 			<label index="saveContactnumber">Save contact number</label>
+			<label index="doSaveFirst">The current address is new and must be recorded first. Would you like to save it now?</label>
+			<label index="remove_selected_records">You are going to remove {0} records. Are you sure?</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>
@@ -108,6 +110,8 @@
 			<label index="paging_label"><![CDATA[Enregistrements {0} à {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]></label>
 			<label index="are_you_sure_contactnumber">Voulez-vous supprimer le numéro de contact</label>
 			<label index="saveContactnumber">Sauver le numéro de contact</label>
+			<label index="doSaveFirst">L'adresse en cours est nouvelle et doit être enregistré. Voulez vous la sauvegarder maintenant?</label>
+			<label index="remove_selected_records">Vous êtes sur le point de supprimer {0} enregistrements. Etes vous sûr?</label>
 		</languageKey>
 	</data>
 </T3locallang>

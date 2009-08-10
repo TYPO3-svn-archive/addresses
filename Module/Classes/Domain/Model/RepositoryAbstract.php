@@ -601,8 +601,14 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 							break;
 						case 'select':
 							if (isset($tca['config']['foreign_table'])) {
-								$foreignTables[$fieldName] = $value;
-								$fields[$fieldName] = count(explode(',', $value));
+								// Counts the number of element
+								if ($value == '') {
+									$fields[$fieldName] = 0;
+								}
+								else {
+									$fields[$fieldName] = count(explode(',', $value));
+									$foreignTables[$fieldName] = $value;
+								}
 							}
 							elseif ($this->validateComboboxValue($tca['config'], $value)) {
 								$fields[$fieldName] = $value;
@@ -614,7 +620,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				}
 			}
 		} // end foreach
-
+		
 		// Defines here whether it is a "multiple" update or "single" update
 		$uids = array();
 		if ($dataSet['uid'] != '') {

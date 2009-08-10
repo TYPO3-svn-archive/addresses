@@ -228,18 +228,25 @@ Address.initGrid = function() {
 		 *
 		 * @return String
 		 */
-		getSelectedNames: function() {
+		getDeleteMessage: function() {
 			var items = Address.grid.getSelectionModel().getSelections();
-			var names = '';
-			for (var index = 0; index < items.length; index ++) {
-				var item = items[index];
-				// Add ',' separtor
-				if (index > 0) {
-					names += ', ';
+			var message = '';
+			if (items.length <= 5) {
+				for (var index = 0; index < items.length; index ++) {
+					var item = items[index];
+					// Add ',' separtor
+					if (index > 0) {
+						message += ', ';
+					}
+					message += item.data.first_name + ' ' + item.data.last_name;
 				}
-				names += item.data.first_name + ' ' + item.data.last_name;
+				message = Addresses.lang.are_you_sure + ' ' + message + '?'
 			}
-			return names;
+			else {
+				message = Addresses.lang.remove_selected_records;
+				message = message.replace('{0}', items.length);
+			}
+			return message;
 		},
 
 		/**
@@ -281,7 +288,7 @@ Address.initGrid = function() {
 			Ext.Msg.show({
 				title: Addresses.lang.remove,
 				buttons: Ext.MessageBox.YESNO,
-				msg: Addresses.lang.are_you_sure + ' ' + Address.grid.getSelectedNames() + '?',
+				msg: Address.grid.getDeleteMessage(),
 				fn: function(btn){
 					if (btn == 'yes' && dataSet.length > 0){
 						var conn = new Ext.data.Connection();

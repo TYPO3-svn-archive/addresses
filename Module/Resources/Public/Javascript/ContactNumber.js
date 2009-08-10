@@ -114,7 +114,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	},
 
 	/**
-	 * Adds button into the top toolbar
+	 * Adds 2 buttons into the top toolbar: Save contact number + Cancel
 	 *
 	 * @access private
 	 * @return void
@@ -157,21 +157,34 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 */
 	edit: function(event, element) {
 
-		if (!Ext.get('contactnumberSaveButton')) {
-			Contactnumber.panel.addButtons()
-		}
+		// Sets default value
+		event = typeof(event) == 'undefined' ? {} : event
+		element = typeof(element) == 'undefined' ? {} : element
 
-		// TRUE means this is a new record
-		if (typeof(element.id) == 'undefined') {
 
-			Contactnumber.panel.editInsert();
+		// Makes sure the parent record (i.e. address) has an uid. Check whether uid_foreign exists
+		// Get uid_foreign value
+		var uid_foreign = Address.form.findField('uid').getValue();
+		if (uid_foreign == '') {
+			Contactnumber.panel.saveParent();
 		}
 		else {
-			Contactnumber.panel.editUpdate(element);
-		}
+			if (!Ext.get('contactnumberSaveButton')) {
+				Contactnumber.panel.addButtons();
+			}
 
-		// Show / hide widgets
-		Contactnumber.panel.setVisible(true);
+			// TRUE means this is a new record
+			if (typeof(element.id) == 'undefined') {
+
+				Contactnumber.panel.editInsert();
+			}
+			else {
+				Contactnumber.panel.editUpdate(element);
+			}
+
+			// Show / hide widgets
+			Contactnumber.panel.setVisible(true);
+		}
 	},
 	
 	/**
@@ -289,6 +302,36 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 					});
 				}
 			}
+		}); // end of show
+	},
+
+	saveParent: function() {
+
+		Ext.Msg.show({
+			title: '',
+			buttons: Ext.MessageBox.YESNO,
+			msg: Addresses.lang.doSaveFirst,
+			fn: function(btn){
+				if (btn == 'yes'){
+					// Close the window, save the address, reload the addresses
+					//this.close();
+
+					// Defines the submit based on the window.submit
+					var submit = Ext.util.clone(Address.window.submit);
+					submit.success = function(form, call) {
+
+						// Extract the uid and set it to field .uid
+						var record = call.result.records[0];
+						Address.form.findField('address_uid').setValue(record.uid);
+						var uid = Address.form.findField('address_uid').getValue();
+						Ext.StoreMgr.get('addressStore').load();
+
+						// Display re display the form
+						Contactnumber.panel.edit();
+					}
+					Address.form.submit(submit);
+				}
+			}
 		});
 	},
 
@@ -331,23 +374,13 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 			}
 		};
 
-		// case multiple edition -> don't validate form
+		// Send form
 		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
-		var uid = form.findField('contactnumber_uid').getValue();
-		if (uid == '' || uid.search(',') == -1) {
-			if (form.isValid()) {
-				submit.clientValidation = true;
-				form.submit(submit);
-//				Address.window.wait();
-			}
-			else {
-				Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
-			}
+		if (form.isValid()) {
+			form.submit(submit);
 		}
 		else {
-			form.clearInvalid();
-			submit.clientValidation = false;
-			form.submit(submit);
+			Ext.Msg.alert(Addresses.lang.error, Addresses.lang.fields_error);
 		}
 	},
 

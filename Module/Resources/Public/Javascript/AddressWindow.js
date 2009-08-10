@@ -123,7 +123,34 @@ Address.initWindow = function() {
 					Address.form.reset();
 					Ext.ComponentMgr.get('addressSaveButton').setDisabled(false);
 					Ext.ComponentMgr.get('addressResetButton').setDisabled(false);
+					if (Address.stores.contactnumbers) {
+						Address.stores.contactnumbers.removeAll();
+					}
 					Address.window.getBottomToolbar().setStatus('&nbsp;');
+				}
+			}
+		},
+
+		// Defines the submit Object
+		submit: {
+
+			clientValidation: true,
+			method: 'GET',
+			url: Addresses.statics.ajaxController,
+			waitMsg: Addresses.lang.saving,
+			params:{
+				ajaxID: 'AddressController::saveAction'
+			},
+			success: function(form,call){
+				Address.window.hide();
+				Ext.StoreMgr.get('addressStore').load();
+			},
+			failure: function(form,call){
+				if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
+					Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + call.response.status + ' ' + call.response.statusText);
+				}
+				else if (call.failureType === Ext.form.Action.SERVER_INVALID) {
+					Ext.Msg.alert(Addresses.lang.warning, call.result.errormsg);
 				}
 			}
 		},
@@ -135,33 +162,11 @@ Address.initWindow = function() {
 		 * @return void
 		 */
 		save: function(){
-
-			// Defines the submit Object
-			var submit = {
-				clientValidation: true,
-				method: 'GET',
-				url: Addresses.statics.ajaxController,
-				waitMsg: Addresses.lang.saving,
-				params:{
-					ajaxID: 'AddressController::saveAction'
-				},
-				success: function(form,call){
-					Address.window.hide();
-					Ext.StoreMgr.get('addressStore').load();
-				},
-				failure: function(form,call){
-					if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
-						Ext.Msg.alert(Addresses.lang.failure, 'Server reported: ' + call.response.status + ' ' + call.response.statusText);
-					}
-					else if (call.failureType === Ext.form.Action.SERVER_INVALID) {
-						Ext.Msg.alert(Addresses.lang.warning, call.result.errormsg);
-					}
-				}
-			};
+			var form = Address.form;
+			var submit = Address.window.submit;
+			var uid = form.findField('address_uid').getValue();
 
 			// case multiple edition -> don't validate form
-			var form = Address.form;
-			var uid = form.findField('address_uid').getValue();
 			if (uid == '' || uid.search(',') == -1) {
 				if (form.isValid()) {
 					submit.clientValidation = true;

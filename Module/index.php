@@ -80,7 +80,7 @@ class tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * @var $javascriptFiles array
 	 */
-	protected $javascriptFiles = array('Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'ContactNumber', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressgroupWindow');
+	protected $javascriptFiles = array('Ext.util', 'Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'ContactNumber', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressgroupWindow');
 
 	/**
 	 * @var $relativePath string

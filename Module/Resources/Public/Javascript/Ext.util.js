@@ -23,38 +23,28 @@
 
 /**
  * ExtJS for the 'addresses' extension.
- * Contains the Addresses functions
  *
  * @author	Fabien Udriot <fabien.udriot@ecodev.ch>
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @package	TYPO3
  * @subpackage	tx_addresses
- * @version $Id$
+ * @version $Id: Namespaces.js 23048 2009-08-03 12:52:02Z fabien_u $
  */
 
-Addresses.initialize = function() {
-//	Ext.QuickTips.init();
+//Ext.namespace("Util");
 
-	Address.initGrid();
-	// @debug For loading the first row automatically check AddressGrid.js, method "load:"
-
-	// Prepare + initialize editing window
-	Address.initWindow();
-	Address.window.init();
-	Address.form = Ext.ComponentMgr.get('addressForm').getForm();
-//	Address.window.findByType('tabpanel')[1].setActiveTab(2)
-//	Address.window.show();
-
-//	Addressgroup.initWindow();
-//	Addressgroup.window.init();
-//	Addressgroup.form = Addressgroup.window.getComponent('addressgroupForm').getForm();
-//	Addressgroup.window.show();
-
-	if (Ext.util.getUrlParameter('debug') == 'undefined' || Ext.util.getUrlParameter('debug') == 1) {
-		Addresses.DEBUG = true;
-	}
-	else  {
-		Addresses.DEBUG = false;
-	}
+// Function that is used to analyse the URL.
+Ext.util.getUrlParameter = function(param) {
+	var params = Ext.urlDecode(location.search.substring(1));
+	return param ? params[param] : params;
 };
+
+Ext.util.clone = function clone(obj) {
+	var clone = {};
+	clone.prototype = obj.prototype;
+	for (property in obj) clone[property] = obj[property];
+	return clone;
+}
+
+

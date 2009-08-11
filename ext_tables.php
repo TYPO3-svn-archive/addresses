@@ -1,17 +1,17 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-Tx_Extbase_Utility_Plugin::registerPlugin(
-	'Addresses',																	// The name of the extension in UpperCamelCase
-	'Pi1',																			// A unique name of the plugin in UpperCamelCase
-	'Address Management',															// A title shown in the backend dropdown field
-	array(																			// An array holding the controller-action-combinations that are accessible
-		'Address' => 'index,show,vcard,vcards',										// The first controller and its first action will be the default
-	),
-	array(
-		'Address' => 'index,show,vcard,vcards',										// An array of non-cachable controller-action-combinations (they must already be enabled)
-	)
-);
+//Tx_Extbase_Utility_Plugin::registerPlugin(
+//	'Addresses',																	// The name of the extension in UpperCamelCase
+//	'Pi1',																			// A unique name of the plugin in UpperCamelCase
+//	'Address Management',															// A title shown in the backend dropdown field
+//	array(																			// An array holding the controller-action-combinations that are accessible
+//		'Address' => 'index,show,vcard,vcards',										// The first controller and its first action will be the default
+//	),
+//	array(
+//		'Address' => 'index,show,vcard,vcards',										// An array of non-cachable controller-action-combinations (they must already be enabled)
+//	)
+//);
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Addresses');
 
@@ -85,4 +85,31 @@ $configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['add
 if (TYPO3_MODE=='BE' && $configurations['loadBEModule']) {
 	t3lib_extMgm::addModule('user', 'txaddresses', 'bottom', t3lib_extMgm::extPath($_EXTKEY).'Module/');
 }
+
+//if (TYPO3_MODE == 'BE') {
+//	Tx_MvcExtjs_Utility_Module::registerModule(
+//		$_EXTKEY,
+//		array(
+//			'BlankModule' => 'first,second,third',
+//			'SimpleForm' => 'index,genres'
+//		),
+//		array(
+//			'access' => 'user,group',
+//			'icon'   => 'EXT:mvc_extjs_samples/Resources/Public/Icons/movie_add.png',
+//			'labels' => 'LLL:EXT:mvc_extjs_samples/Resources/Private/Language/locallang_mod_blank.xml',
+//		),
+//		'user',	// Make Blank module a submodule of 'user'
+//		'blank'
+//	);
+//
+//
+//	// ========== Legacy (SCbase) function
+//
+//	t3lib_extMgm::insertModuleFunction(
+//		'addresses',	// Insert legacy function into function menu of Module Blank
+//		'tx_mvcextjssamples_modfunc1',
+//		t3lib_extMgm::extPath($_EXTKEY) . 'modfunc1/class.tx_mvcextjssamples_modfunc1.php',
+//		'LLL:EXT:mvc_extjs_samples/Resources/Private/Language/locallang_db.xml:moduleFunction.tx_mvcextjssamples_modfunc1'
+//	);
+//}
 ?>

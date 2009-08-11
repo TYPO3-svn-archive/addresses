@@ -49,7 +49,7 @@ class Tx_Addresses_Utility_Permission {
 		$hasPermission = FALSE;
 		if ($BE_USER->isAdmin() ||
 			(isset($columns[$fieldName]['exclude']) && !$columns[$fieldName]['exclude']) ||
-			$BE_USER->check('non_exclude_fields','tx_addresses_domain_model_address:' . $fieldName)) {
+			$BE_USER->check('non_exclude_fields','tx_addresses_domain_model_' . strtolower($namespace) . ':' . $fieldName)) {
 			$hasPermission = TRUE;
 		}
 		return $hasPermission;

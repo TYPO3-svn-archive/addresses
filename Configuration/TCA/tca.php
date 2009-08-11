@@ -7,13 +7,11 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 	'feInterface' => $TCA['tx_addresses_domain_model_address']['feInterface'],
 	'columns' => Array (
 		'uid' => Array (
-			'exclude' => 1,
 			'config' => Array (
 				'type' => 'passthrough'
 			)
 		),
 		'pid' => Array (
-			'exclude' => 1,
 			'config' => Array (
 				'type' => 'passthrough'
 			)
@@ -229,36 +227,6 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'type' => 'text',
 				'cols' => '20',
 				'rows' => '3'
-			)
-		),
-		'phone' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.phone',
-			'config' => Array (
-				'type' => 'input',
-				'eval' => 'trim',
-				'size' => '20',
-				'max' => '30'
-			)
-		),
-		'fax' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.fax',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '20',
-				'eval' => 'trim',
-				'max' => '30'
-			)
-		),
-		'mobile' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.mobile',
-			'config' => Array (
-				'type' => 'input',
-				'eval' => 'trim',
-				'size' => '20',
-				'max' => '30'
 			)
 		),
 		'website' => Array (

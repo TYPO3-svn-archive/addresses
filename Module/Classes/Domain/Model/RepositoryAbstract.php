@@ -213,7 +213,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @return array
 	 */
 	protected function formatForHumans($dataSet, $columns) {
-		global $LANG;
+		global $LANG, $TYPO3_DB;
 		$output = array();
 
 		// Traverses all $field and formats the date
@@ -237,43 +237,55 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 					$output[$fieldName] = $_records;
 				}
 				// eval function
-				else if (isset($config['eval']) && $value) {
+				elseif (isset($config['eval']) && $value) {
 
-						switch ($config['eval']) {
-							case 'date':
-								$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
-								$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
-								break;
-							case 'nbsp':
-								$output[$fieldName .'_evaluated'] = str_replace(' ', '&nbsp;', $value);
-								break;
+					switch ($config['eval']) {
+						case 'date':
+							$output[$fieldName] = date(Tx_Addresses_Utility_Configuration::getDateFormat(), $value);
+							$output[$fieldName . 'Time'] = date(Tx_Addresses_Utility_Configuration::getDateFormat() . ' @ H:i:s', $value);
+							break;
+						case 'nbsp':
+							$output[$fieldName .'_evaluated'] = str_replace(' ', '&nbsp;', $value);
+							break;
+					}
+				}
+				// eval function
+				elseif ($config['type'] == 'select' && isset($config['items'])) {
+
+				// When $value == 0, sets '' otherwise the default value is Okay.
+					$output[$fieldName . '_text'] = $value == 0 ? '' : 0;
+
+					// Tries to find out the text value
+					foreach ($config['items'] as $items) {
+						$_value = $LANG->sL($items[1]);
+						if ($_value == $value) {
+							$output[$fieldName . '_text'] = $LANG->sL($items[0]);
+							break;
 						}
 					}
-					// eval function
-					else if ($config['type'] == 'select' && isset($config['items'])) {
 
-						// When $value == 0, sets '' otherwise the default value is Okay.
-							$output[$fieldName . '_text'] = $value == 0 ? '' : 0;
-
-							// Tries to find out the text value
-							foreach ($config['items'] as $items) {
-								$_value = $LANG->sL($items[1]);
-								if ($_value == $value) {
-									$output[$fieldName . '_text'] = $LANG->sL($items[0]);
-									break;
-								}
-							}
-
-						}
-						// userFuncFormat
-						else if (isset($config['userFuncFormat'])) {
-								$table = $config['userFuncFormat.']['table'];
-								$field = $config['userFuncFormat.']['field'];
-								$output[$fieldName] = call_user_func_array($config['userFuncFormat'], array($table, $field, $value));
-							}
-							else {
-								$output[$fieldName] = $value;
-							}
+				}
+				// eval function
+				elseif ($config['type'] == 'select' && isset($config['foreign_table']) && isset($config['itemsProcFunc.'])) {
+					$_fieldName = $config['itemsProcFunc.']['field'];
+					$_tableName = $config['itemsProcFunc.']['table'];
+					$records = $TYPO3_DB->exec_SELECTgetRows($_fieldName, $_tableName, 'deleted = 0 AND hidden= 0 AND uid = ' . $value);
+					if (isset($records[0][$_fieldName])) {
+						$output[$fieldName . '_text'] = $records[0][$_fieldName];
+					}
+					else {
+						$output[$fieldName . '_text'] = '';
+					}
+				}
+				// userFuncFormat
+				elseif (isset($config['userFuncFormat'])) {
+					$table = $config['userFuncFormat.']['table'];
+					$field = $config['userFuncFormat.']['field'];
+					$output[$fieldName] = call_user_func_array($config['userFuncFormat'], array($table, $field, $value));
+				}
+				else {
+					$output[$fieldName] = $value;
+				}
 			}
 		}
 		return $output;
@@ -306,9 +318,9 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 				// fetch other condition
 				foreach ($foreignTables as $foreignTable => $data) {
-					// Builds request for the 2 possible relations:
-					// 1. M-M relation
-					// 2. 1-M relation
+				// Builds request for the 2 possible relations:
+				// 1. M-M relation
+				// 2. 1-M relation
 					if (isset($data['MM'])) {
 						$this->clause .= ' OR uid IN (SELECT uid_local FROM ' . $data['MM'] . ' WHERE tablenames = "' . $data['foreign_table'] . '" AND uid_foreign IN (SELECT uid FROM ' . $data['foreign_table'] . ' WHERE ' . $this->getSearchClause($search, $data['foreign_table']) . '))';
 					}
@@ -495,7 +507,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 */
 	private function deleteForeignTable($dataSet) {
 		global $TYPO3_DB;
-		
+
 		// Fetches the foreign tables
 		$foreignTables = $this->getForeignTables();
 
@@ -512,7 +524,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 						$tableName = $foreignTable['foreign_table'];
 						$clause = 'uid_foreign = ' . $value->uid;
 					}
-					
+
 					$request = $TYPO3_DB->UPDATEquery(
 						$tableName,
 						$clause,
@@ -537,7 +549,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 		// Deletes sub records
 		$this->deleteForeignTable($dataSet);
-		
+
 		// Deletes main record
 		$clause = $this->getUidClause($dataSet);
 		$request = $TYPO3_DB->UPDATEquery(
@@ -640,7 +652,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 							}
 							break;
 						case 'select':
-							if (isset($tca['config']['foreign_table'])) {
+							if (isset($tca['config']['foreign_table']) && isset($tca['config']['MM'])) {
 								// Counts the number of element
 								if ($value == '') {
 									$fields[$fieldName] = 0;
@@ -649,6 +661,9 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 									$fields[$fieldName] = count(explode(',', $value));
 									$foreignTables[$fieldName] = $value;
 								}
+							}
+							elseif (isset($tca['config']['foreign_table'])) {
+								$fields[$fieldName] = $value;
 							}
 							elseif ($this->validateComboboxValue($tca['config'], $value)) {
 								$fields[$fieldName] = $value;

@@ -598,7 +598,7 @@ EOF;
 	 * @param	string		$field
 	 * @return	array
 	 */
-	public static function getArrayForSelect($table, $field) {
+	public static function getItemsForComboBox($table, $field) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 		$_records = array();

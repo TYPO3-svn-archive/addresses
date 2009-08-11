@@ -37,7 +37,7 @@ $TCA[$domainName]['columns']['nature'] = array(
     'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nature',
     'config' => Array (
         'type' => 'select',
-        'itemsProcFunc' => 'Tx_Addresses_Utility_TCE::getArrayForSelect',
+        'itemsProcFunc' => 'Tx_Addresses_Utility_TCE::getItemsForComboBox',
         'itemsProcFunc.' => array (
             'table' => $domainName,
             'field' => 'nature',
@@ -48,4 +48,5 @@ $TCA[$domainName]['columns']['nature'] = array(
 		'editable' => TRUE,
     )
 );
+
 ?>

@@ -556,6 +556,8 @@ $TCA['tx_addresses_domain_model_contactnumber'] = array(
 			)
 		),
 		'uid_foreign' => array(
+			'exclude' => 1,
+			'label'     => 'uid_foreign (mandatory field)',
 			'config'    => array(
 				'type'   => 'input',
 				'hidden' => TRUE

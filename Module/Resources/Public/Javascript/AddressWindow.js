@@ -55,34 +55,7 @@ Address.initWindow = function() {
 		cls: 'x-btn-text-icon',
 		icon: 'Resources/Public/Icons/database.png'
 	}
-];
-
-	/*
-	 * Fom panel attached to the Window
-	 */
-	configuration.addressForm = {
-		xtype: 'form',
-		id: 'addressForm',
-		waitMsgTarget: true,
-		frame: true,
-		bodyStyle:'padding: 0',
-		labelAlign: 'top',
-		hideMode: 'display',
-		items: Address.windowFields
-	};
-
-	/*
-	 * Fom panel attached to the Window
-	 */
-	configuration.contactnumberForm = {
-		xtype: 'form',
-		id: 'contactnumberForm',
-		waitMsgTarget: true,
-		frame: true,
-		labelAlign: 'top',
-		hideMode: 'display',
-		items: Contactnumber.windowFields
-	};
+	];
 
 	/*
 	 * Modal window that enables record editing: add - update data
@@ -100,9 +73,18 @@ Address.initWindow = function() {
 		items: {
 			xtype: 'panel',
 			frame: false,
-			//			bodyStyle:'padding: 0',
+			//bodyStyle:'padding: 0',
 			labelAlign: 'top',
-			items: [configuration.contactnumberForm, configuration.addressForm]
+			items: [{
+				xtype: 'form',
+				id: 'addressForm',
+				waitMsgTarget: true,
+				frame: true,
+				bodyStyle:'padding: 0',
+				labelAlign: 'top',
+				hideMode: 'display',
+				items: Address.windowFields
+			}]
 		},
 		tbar: configuration.buttons,
 		bbar: new Ext.ux.StatusBar({
@@ -358,13 +340,22 @@ Address.initWindow = function() {
 						}
 						Address.window.waitMask.hide();
 						var record = call.result.data;
-//						for (row in data) {
-//							if (typeof(data[row])) {
-//								// @todo
-								var contactnumber = Ext.ComponentMgr.get('address_contactnumbers');
-								contactnumber.setValue(record.contactnumbers);
-//							}
-//						}
+
+						// Call external compoenent
+
+						// Attach external form
+						for (var index = 0; index < Addresses.statics.foreignFields.length; index ++) {
+							var fieldName = Addresses.statics.foreignFields[index];
+							try {
+								var element = Ext.ComponentMgr.get('address_' + fieldName);
+								var command = 'var records = record.' + fieldName + ';';
+								eval(command);
+								element.setValue(records);
+							}
+							catch (e) {
+								console.log(e);
+							}
+						}
 
 						var message =  Addresses.lang.createdOn + ' ' + record.crdateTime + ' ' + Addresses.lang.by + ' ' + record.cruser_id;
 						message +=  '&nbsp;&nbsp; &bull; &nbsp;&nbsp;'
@@ -392,7 +383,7 @@ Address.initWindow = function() {
 		 * @return void
 		 */
 		wait: function() {
-			//			Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
+			//Ext.Message.msg(Addresses.lang.saving, Addresses.lang.data_sent);
 			Ext.ComponentMgr.get('addressSaveButton').setDisabled(true);
 			Ext.ComponentMgr.get('addressResetButton').setDisabled(true);
 		},
@@ -425,7 +416,6 @@ Address.initWindow = function() {
 					'click': method
 				});
 			}
-
 		},
 
 		/**
@@ -436,13 +426,17 @@ Address.initWindow = function() {
 			// For instance method KeyMap bellow won't work
 			this.show();
 			this.hide();
-			Ext.ComponentMgr.get('contactnumberForm').setVisible(false);
-//			Ext.get('contactnumberForm').fadeOut({
-//				useDisplay: true,
-//				duration: 0.1
-//			});
-//			Ext.get('addressForm').hide();
-//			Ext.get('contactnumberForm').hide();
+
+			// Attach external form
+			for (var index = 0; index < Addresses.statics.foreignFields.length; index ++) {
+				var fieldName = Addresses.statics.foreignFields[index];
+				try {
+					Ext.ComponentMgr.get('address_' + fieldName).addFormPanel(fieldName);
+				}
+				catch (e) {
+					console.log(e);
+				}
+			}
 			
 			this.setControllersActionInTopBar();
 

@@ -117,7 +117,7 @@ Address.initGrid = function() {
 					element.remoteSort = false;
 				}
 
-				// @temporary Select first row
+				// @debug like a double click on the first row
 //				var sm = Address.grid.getSelectionModel();
 //				sm.selectFirstRow();
 //				Address.window.edit('single');

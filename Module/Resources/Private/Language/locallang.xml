@@ -55,9 +55,10 @@
 			<label index="reset">Cancel</label>
 			<label index="paging_label"><![CDATA[Record {0} to {1} &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;Total {2}]]></label>
 			<label index="are_you_sure_contactnumber">Do you want to remove the contact number</label>
-			<label index="saveContactnumber">Save contact number</label>
+			<label index="saveContactnumber">Save the contact number</label>
 			<label index="doSaveFirst">The current address is new and must be recorded first. Would you like to save it now?</label>
 			<label index="remove_selected_records">You are going to remove {0} records. Are you sure?</label>
+			<label index="saveaddressgroups">Save the group</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>
@@ -112,6 +113,7 @@
 			<label index="saveContactnumber">Sauver le numéro de contact</label>
 			<label index="doSaveFirst">L'adresse en cours est nouvelle et doit être enregistré. Voulez vous la sauvegarder maintenant?</label>
 			<label index="remove_selected_records">Vous êtes sur le point de supprimer {0} enregistrements. Etes vous sûr?</label>
+			<label index="saveaddressgroups">Sauver le groupe</label>
 		</languageKey>
 	</data>
 </T3locallang>

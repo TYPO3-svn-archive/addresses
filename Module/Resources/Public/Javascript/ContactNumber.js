@@ -75,6 +75,31 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		Ext.ux.ContactNumber.superclass.initComponent.call(this, arguments);
 	},
 
+	/**
+	 * Initializes the form panel
+	 *
+	 * @access public
+	 * @return void
+	 */
+	addFormPanel: function() {
+
+		// Attached formpanel to Address.window
+		var formPanel = new Ext.form.FormPanel({
+			id: 'contactnumberForm',
+			waitMsgTarget: true,
+			frame: true,
+			labelAlign: 'top',
+			hideMode: 'display',
+			items: Contactnumber.windowFields
+		});
+
+		var panel = Address.window.get(0);
+		panel.add(formPanel);
+		
+		// Hides form panel
+		Ext.ComponentMgr.get('contactnumberForm').setVisible(false);
+	},
+
 	//	onRender: function(ct){
 	//		Ext.ux.ContactNumber.superclass.onRender.apply(this, arguments);
 	//	},
@@ -155,12 +180,10 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * @access private
 	 * @return void
 	 */
-	edit: function(event, element) {
-
+	edit: function(element, event) {
 		// Sets default value
-		event = typeof(event) == 'undefined' ? {} : event
-		element = typeof(element) == 'undefined' ? {} : element
-
+		element = typeof(event) == 'undefined' ? {} : element
+		event = typeof(element) == 'undefined' ? {} : event
 
 		// Makes sure the parent record (i.e. address) has an uid. Check whether uid_foreign exists
 		// Get uid_foreign value
@@ -174,16 +197,17 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 			}
 
 			// TRUE means this is a new record
-			if (typeof(element.id) == 'undefined') {
+			if (typeof(event.id) == 'undefined') {
 
 				Contactnumber.panel.editInsert();
 			}
 			else {
-				Contactnumber.panel.editUpdate(element);
+				Contactnumber.panel.editUpdate(event);
 			}
 
 			// Show / hide widgets
 			Contactnumber.panel.setVisible(true);
+			Contactnumber.panel.attachKeyMap();
 		}
 	},
 	
@@ -260,10 +284,12 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * Deletes a record
 	 *
 	 * @access private
+	 * @param element Object
+	 * @param event string
 	 * @return void
 	 */
-	deleteRecord: function(event, element) {
-		var uid = element.id.replace('contactNumberDeleteImg', '');
+	deleteRecord: function(element, event) {
+		var uid = event.id.replace('contactNumberDeleteImg', '');
 		var record = Address.stores.contactnumbers.getById(uid);
 		Ext.Msg.show({
 			title: Addresses.lang.remove,
@@ -412,25 +438,23 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	},
 
 	/**
-	 * After method
-	 *
-	 * @access public
-	 * @return void
-	 */
-	afterRender: function() {
-		Ext.ux.ContactNumber.superclass.afterRender.call(this);
-		Contactnumber.panel.attachKeyMap();
-	},
-
-	/**
 	 * Attaches special key strokes like "Enter"
 	 *
 	 * @access private
 	 * @return void
 	 */
 	attachKeyMap: function() {
+		// Tricks to remember whether the event has been attached
+		if (typeof(this.isAttachedKeyMap) == 'undefined') {
+			this.isAttachedKeyMap = false;
+		}
+		
 		var namespace = 'contactnumber';
-		if(Ext.get(namespace + 'Form')) {
+		if(Ext.get(namespace + 'Form') && !this.isAttachedKeyMap) {
+
+			// Remembers that key has been attached
+			this.isAttachedKeyMap = true;
+			
 			//map one key by key code
 			new Ext.KeyMap(namespace + 'Form', {
 				key: 13, // or Ext.EventObject.ENTER

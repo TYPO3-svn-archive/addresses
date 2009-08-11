@@ -486,6 +486,46 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		return $clause;
 	}
 
+
+	/**
+	 * Delete foreign table
+	 *
+	 * @param array $data: the uid of the address(es)
+	 * @return	boolean
+	 */
+	private function deleteForeignTable($dataSet) {
+		global $TYPO3_DB;
+		
+		// Fetches the foreign tables
+		$foreignTables = $this->getForeignTables();
+
+		// Retireves the clause
+		foreach ($dataSet as $key => $value) {
+			if ((int)$value->uid > 0) {
+
+				foreach ($foreignTables as $foreignTable) {
+					if (isset($foreignTable['MM'])) {
+						$tableName = $foreignTable['MM'];
+						$clause = 'uid_local = ' . $value->uid;
+					}
+					else {
+						$tableName = $foreignTable['foreign_table'];
+						$clause = 'uid_foreign = ' . $value->uid;
+					}
+					
+					$request = $TYPO3_DB->UPDATEquery(
+						$tableName,
+						$clause,
+						array('deleted' => 1)
+					);
+					if ($this->debug) {
+						t3lib_div::devLog('Delete records: ' . $request, 'addresses', -1);
+					}
+					$TYPO3_DB->sql_query($request);
+				}
+			}
+		}
+	}
 	/**
 	 * Delete the address(es)
 	 *
@@ -495,16 +535,16 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	public function delete($dataSet) {
 		global $TYPO3_DB;
 
-		// Retireves the clause
+		// Deletes sub records
+		$this->deleteForeignTable($dataSet);
+		
+		// Deletes main record
 		$clause = $this->getUidClause($dataSet);
-
-		// Executes query
 		$request = $TYPO3_DB->UPDATEquery(
 			$this->tableName,
 			$clause,
 			array('deleted' => 1)
 		);
-		$config = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);
 		if ($this->debug) {
 			t3lib_div::devLog('Delete records: ' . $request, 'addresses', -1);
 		}

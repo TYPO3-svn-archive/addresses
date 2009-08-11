@@ -78,9 +78,14 @@ class tx_addresses_module extends t3lib_SCbase {
 	protected $namespaces = array('Address', 'Addressgroup', 'Contactnumber');
 
 	/**
+	 * @var $namespace string
+	 */
+	protected $foreignFields = array('addressgroups', 'contactnumbers');
+
+	/**
 	 * @var $javascriptFiles array
 	 */
-	protected $javascriptFiles = array('Ext.util', 'Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'ContactNumber', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow', 'AddressgroupWindow');
+	protected $javascriptFiles = array('Ext.util', 'Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'ContactNumber', 'Addressgroup', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow');
 
 	/**
 	 * @var $relativePath string
@@ -299,6 +304,7 @@ class tx_addresses_module extends t3lib_SCbase {
 			'path' => t3lib_extMgm::extRelPath('addresses'),
 			'isSSL' => t3lib_div::getIndpEnv('TYPO3_SSL'),
 			'ajaxController' => $this->doc->backPath . 'ajax.php',
+			'foreignFields' => $this->foreignFields,
 		);
 		return $configuration;
 	}

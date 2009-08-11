@@ -405,13 +405,15 @@ EOF;
 	 * @return	array
 	 */
 	public static function getItemSelector($namespace, &$columns, $fieldName) {
+		global $LANG;
 		$tca =  $columns[$fieldName]['config'];
 		$width = 170;
 		$height = self::getItemSelectorHeight($tca);
 
 		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
-
-		$configuration['xtype'] = 'itemselector';
+		$configuration['xtype'] = $fieldName;
+		$configuration['buttonText'] = $LANG->getLL('addNewElement');
+		$configuration['saveButtonText'] = $LANG->getLL('save' . $fieldName);
 		$configuration['imagePath'] = 'Resources/Public/Icons';
 		$fromMulitSelect['width'] = $width;
 		$fromMulitSelect['height'] = $height;
@@ -524,20 +526,21 @@ EOF;
 	 * @param	string	$foreignTable
 	 * @return	array
 	 */
-	public static function getEditForeignTableButton($namespace, $foreignClass) {
-		global $LANG;
-		$configuration['xtype'] = 'button';
-		$configuration['text'] = $LANG->getLL('addNewElement');
-		$configuration['cls'] = 'x-btn-text-icon';
-		$configuration['icon'] = 'Resources/Public/Icons/add.png';
-		$configuration['anchor'] = '30%';
-		$configuration['style'] = array('marginBottom' => '10px', 'marginLeft' => '65%');
-		$namespace = str_replace('Tx_Addresses_Domain_Model_', '', $foreignClass);
-		$function = $namespace . '.window.setTitle(Addresses.lang.new_record); ';
-		$function .= $namespace . '.window.show(); ';
-		$configuration['handler'] = 'function() {' . $function . '}';
-		return $configuration;
-	}
+//	public static function getEditForeignTableButton($namespace, $foreignClass) {
+//		global $LANG;
+//		$configuration['xtype'] = 'button';
+//		$configuration['buttonText'] = $LANG->getLL('addNewElement');
+//		$configuration['saveButtonText'] = $LANG->getLL('saveAddressgroups');
+//		$configuration['cls'] = 'x-btn-text-icon';
+//		$configuration['icon'] = 'Resources/Public/Icons/add.png';
+//		$configuration['anchor'] = '30%';
+//		$configuration['style'] = array('marginBottom' => '10px', 'marginLeft' => '65%');
+//		$namespace = str_replace('Tx_Addresses_Domain_Model_', '', $foreignClass);
+//		$function = $namespace . '.window.setTitle(Addresses.lang.new_record); ';
+//		$function .= $namespace . '.window.show(); ';
+//		$configuration['handler'] = 'function() {' . $function . '}';
+//		return $configuration;
+//	}
 
 	/**
 	 * Returns the common configuration of any elements.

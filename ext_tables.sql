@@ -79,6 +79,7 @@ CREATE TABLE tx_addresses_address_addressgroup_mm (
   uid_foreign int(11) DEFAULT '0' NOT NULL,
   tablenames varchar(64) DEFAULT '' NOT NULL,
   sorting int(11) DEFAULT '0' NOT NULL,
+  deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
   KEY uid_local (uid_local),
   KEY uid_foreign (uid_foreign)
 );

@@ -202,8 +202,9 @@ Ext.ux.ItemSelector = Ext.extend(Ext.form.Field,  {
 			this.toBottomIcon.dom.style.display='none';
 		}
 
-		var tb = panel.body.first();
-		this.el.setWidth(panel.body.first().getWidth());
+//		var tb = panel.body.first();
+//		console.log(panel.body.first().getWidth());
+//		this.el.setWidth(panel.body.first().getWidth());
 		panel.body.removeClass();
 
 		this.hiddenName = this.name;

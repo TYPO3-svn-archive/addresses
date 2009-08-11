@@ -97,7 +97,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		panel.add(formPanel);
 		
 		// Hides form panel
-		Ext.ComponentMgr.get('contactnumberForm').setVisible(false);
+//		Ext.ComponentMgr.get('contactnumberForm').setVisible(false);
 	},
 
 	//	onRender: function(ct){

@@ -38,7 +38,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 									'{number_evaluated}',
 								'</td>',
 								'<td style="padding: 3px 0; border-bottom: 1px dotted gray; color: gray">',
-									'{nature}',
+									'{nature_nature}',
 								'</td>',
 								'<td style="padding: 3px 0; border-bottom: 1px dotted gray; color: gray">',
 									'<tpl if="remarks">',

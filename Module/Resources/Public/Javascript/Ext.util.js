@@ -40,11 +40,21 @@ Ext.util.getUrlParameter = function(param) {
 	return param ? params[param] : params;
 };
 
-Ext.util.clone = function clone(obj) {
+Ext.util.clone = function(obj) {
 	var clone = {};
 	clone.prototype = obj.prototype;
 	for (property in obj) clone[property] = obj[property];
 	return clone;
+}
+
+Ext.util.fireEvent = function(element, eventName) {
+	if( document.createEvent ) {
+		var evObj = document.createEvent('MouseEvents');
+		evObj.initEvent( eventName, true, false );
+		element.dispatchEvent(evObj);
+	} else if( document.createEventObject ) {
+		element.fireEvent(eventName);
+	}
 }
 
 

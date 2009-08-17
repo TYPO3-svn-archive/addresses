@@ -80,3 +80,9 @@ div.x-tab-panel-header {
 .x-box-mc {
 	font-weight: normal;
 }
+
+.x-grid3-row td, .x-grid3-summary-row td {
+    -moz-user-select: text;
+    -khtml-user-select:text;
+    -webkit-user-select:text;
+}

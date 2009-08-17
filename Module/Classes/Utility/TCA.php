@@ -101,5 +101,18 @@ class Tx_Addresses_Utility_TCA {
 		$TCA = self::getTCA($namespace);
 		return $TCA['types']['module']['showitem'];
 	}
+
+	/**
+	 * Returns the expander template
+	 * @return array
+	 */
+	public static function getExpanderTemplate($namespace) {
+		$TCA = self::getTCA($namespace);
+		$result = '';
+		if (isset($TCA['types']['module']['expanderTemplate'])) {
+			$result = $TCA['types']['module']['expanderTemplate'];
+		}
+		return $result;
+	}
 }
 ?>

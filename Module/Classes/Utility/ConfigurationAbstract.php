@@ -99,6 +99,11 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 			}
 			array_push($result, $_array);
 		}
+
+		// Adds virtual expander field
+		if (Tx_Addresses_Utility_TCA::getExpanderTemplate($namespace) != '') {
+			array_push($result, array('name' => 'expander'));
+		}
 		return $result;
 	}
 

@@ -59,6 +59,8 @@
 			<label index="doSaveFirst">The current address is new and must be recorded first. Would you like to save it now?</label>
 			<label index="remove_selected_records">You are going to remove {0} records. Are you sure?</label>
 			<label index="saveaddressgroups">Save the group</label>
+			<label index="expand_all">Expand all</label>
+			<label index="collapse_all">Collapse all</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>
@@ -114,6 +116,8 @@
 			<label index="doSaveFirst">L'adresse en cours est nouvelle et doit être enregistré. Voulez vous la sauvegarder maintenant?</label>
 			<label index="remove_selected_records">Vous êtes sur le point de supprimer {0} enregistrements. Etes vous sûr?</label>
 			<label index="saveaddressgroups">Sauver le groupe</label>
+			<label index="expand_all">Tout ouvrir</label>
+			<label index="collapse_all">Tout fermer</label>
 		</languageKey>
 	</data>
 </T3locallang>

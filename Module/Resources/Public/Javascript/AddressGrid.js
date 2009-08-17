@@ -55,9 +55,8 @@ Address.initGrid = function() {
 	 * Row expander (plugins)
 	 */
 	configuration.expander = new Ext.grid.RowExpander({
-		tpl : new Ext.Template(
-			'<p style="margin-left:45px;"><b>' + Addresses.lang.name + ' :</b> {first_name} {last_name}</p>' +
-			'<br/>'
+		tpl : new Ext.XTemplate(
+			'{expander}'
 			)
 	});
 
@@ -72,11 +71,13 @@ Address.initGrid = function() {
 	 * Controller
 	 */
 	configuration.controller = new Object({
-		width: 50,
+		width: 70,
 		header : '&nbsp;',
 		renderer: function(val) {
-			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" onclick="Address.window.edit(\'single\')"/>&nbsp;&nbsp;';
-			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.gif" onclick="Address.window.edit(\'copy\')"/>';
+			//			output = '<img class="pointer" src="' + configuration.iconsPath + 'zoom.png" alt="view" onclick=""/>&nbsp;';
+			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" alt="edit" onclick="Address.window.edit(\'single\')"/>&nbsp;';
+			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.png" alt="copy" onclick="Address.window.edit(\'copy\')"/>&nbsp;';
+			output += '<img class="pointer" src="' + configuration.iconsPath + 'garbage.png" alt="delete" onclick=""/>&nbsp;';
 			return output;
 		},
 		dataIndex: 'uid'
@@ -116,11 +117,11 @@ Address.initGrid = function() {
 				else {
 					element.remoteSort = false;
 				}
-
-				// @debug like a double click on the first row
-//				var sm = Address.grid.getSelectionModel();
-//				sm.selectFirstRow();
-//				Address.window.edit('single');
+				
+			// @debug like a double click on the first row
+			//				var sm = Address.grid.getSelectionModel();
+			//				sm.selectFirstRow();
+			//				Address.window.edit('single');
 			}
 		}
 
@@ -155,12 +156,24 @@ Address.initGrid = function() {
 	{
 		id: 'deleteButton',
 		text: Addresses.lang.delete_selected,
-		icon: configuration.iconsPath + '/delete.gif',
+		icon: configuration.iconsPath + '/garbage.png',
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
 			Address.grid.deleteSelectedRecord();
 		}
+	},
+	{
+		id: 'expandButton',
+		text: Addresses.lang.expand_all,
+		icon: configuration.iconsPath + '/expand.png',
+		cls: 'x-btn-text-icon'
+	},
+	{
+		id: 'collapseButton',
+		text: Addresses.lang.collapse_all,
+		icon: configuration.iconsPath + '/collapse.png',
+		cls: 'x-btn-text-icon'
 	},
 	'->',
 	new Ext.app.SearchField({
@@ -208,12 +221,25 @@ Address.initGrid = function() {
 		},
 		plugins: configuration.expander,
 		columns: Address.gridFields,
-		selModel: configuration.checkbox,
+		sm: configuration.checkbox,
 		tbar: configuration.topBar,
 		bbar: configuration.bottomBar,
+		viewConfig: {
+			forceFit: true
+		},
+
 		listeners: {
-			dblclick: function(e) {
-				Address.window.edit('single');
+			dblclick: function(event) {
+				var parentNode = event.getTarget('div.x-grid3-row');
+				if (parentNode) {
+
+					var expander = Ext.query('.x-grid3-row-expander', parentNode)[0];
+					Ext.util.fireEvent(expander, 'mousedown');
+				}
+			},
+			click: function(event) {
+				// @todo simulate here the double click
+				//Address.window.edit('single');
 			},
 			keypress: function(key) {
 				if (key.keyCode == key.DELETE) {
@@ -318,9 +344,102 @@ Address.initGrid = function() {
 					}
 				}
 			});
+		},
+
+
+		/**
+		 * Expands / collapse all rows
+		 *
+		 * @access public
+		 * @scope Address.grid
+		 */
+		expand: function(element, event) {
+			element.disable();
+			element.setText(Addresses.lang.expanding);
+//			Ext.query('button', Address.e.getEl())
+//			Address.e.getEl().child('button')
+//this.el.child('button:first').dom.style.backgroundImage = 'url(/images/icon.gif)';
+
+//Ext.ux.Icon = function(icon){
+//  var path = 'img/icons/';
+//  if(!Ext.util.CSS.getRule('.icon-'+icon)){
+//    Ext.util.CSS.createStyleSheet('.icon-'+icon+' { background-image: url('path+icon+'.png) !important; }');
+//  }
+//  return 'icon-'+icon;
+//}
+//http://erhanabay.com/2009/02/12/simplifying-icon-management-in-ext-js/
+			var numberOfRows = this.getStore().getCount();
+
+			for (index = 0; index < numberOfRows; index++) {
+				var row = this.getView().getRow(index);
+//				x-grid3-row-over
+				if (!Ext.get(row).hasClass('x-grid3-row-expanded')) {
+					var expander = Ext.query('.x-grid3-row-expander', row)[0];
+					Ext.util.fireEvent(expander, 'mousedown');
+				}
+			}
+
+			// Reactivates the button
+			element.enable();
+			element.setText(Addresses.lang.expand_all);
+
+		},
+
+		/**
+		 * Expands / collapse all rows
+		 *
+		 * @access public
+		 * @scope Address.grid
+		 */
+		collapse: function(element, event) {
+			var numberOfRows = this.getStore().getCount();
+
+			for (index = 0; index < numberOfRows; index++) {
+				var row = this.getView().getRow(index);
+//				x-grid3-row-over
+				if (Ext.get(row).hasClass('x-grid3-row-expanded')) {
+					var expander = Ext.query('.x-grid3-row-expander', row)[0];
+					Ext.util.fireEvent(expander, 'mousedown');
+				}
+			}
+		},
+
+		/**
+		 * show / hide the controller cell (i.e the cell that contains the icons)
+		 *
+		 * @access public
+		 */
+		showControlIcons: function(event, element) {
+
+			// this= a row of the grid
+			var gridView = Address.grid.getView();
+
+			// Find out the column index
+			var columnIndex = gridView.findRowIndex(element);
+
+			var row = gridView.getRow(columnIndex);
+
+			// Find the image that belons to the controll cell
+			var images = Ext.query('img[alt=edit]', row);
+
+			// ... and Find out the cell index
+			var cellIndex = Address.grid.getView().findCellIndex(images[0]);
+
+			// Get reference of the cell that contains the control icon
+			var controlIconCell = gridView.getCell(columnIndex, cellIndex);
+
+			// Makes it invisible
+			Ext.get(controlIconCell).setStyle({
+				visibility: this.visibility
+			})
+
 		}
 
 	});
+
+	// Attaches event
+	Ext.getCmp('expandButton').on ('click', Address.grid.expand, this.grid);
+	Ext.getCmp('collapseButton').on ('click', Address.grid.collapse, this.grid);
 
 	/**
 	 * Initializes the listener on the selection
@@ -342,6 +461,32 @@ Address.initGrid = function() {
 		}
 		);
 
+	/**
+	 * Attach event when the grid is refreshed.
+	 */
+	Address.grid.getView().on({
+		refresh: function() {
+			var numberOfRows = this.grid.getStore().getCount();
+
+			for (index = 0; index < numberOfRows; index++) {
+
+				// By default, hide the cell that contains the controller icon
+				var row = this.grid.getView().getRow(index);
+				var images = Ext.query('img[alt=edit]', row)[0];
+				Ext.get(images).parent('td').setStyle({
+					visibility: 'hidden'
+				});
+
+				// Attache some event
+				Ext.get(row).on('mouseenter', Address.grid.showControlIcons, {
+					visibility: 'visible'
+				});
+				Ext.get(row).on('mouseleave', Address.grid.showControlIcons, {
+					visibility: 'hidden'
+				});
+			}
+		}
+	});
 
 	/**
 	 * Resizes the grid to fit the window
@@ -353,9 +498,10 @@ Address.initGrid = function() {
 	for (var index = 0; index < elements.length; index ++) {
 		var element = elements[index];
 		Ext.select('.' + element).setStyle({
-			height: window.innerHeight - 200 + 'px'
+			height: window.innerHeight - 120 + 'px'
 		});
 	}
+
 //		grid.getView().getRowClass = function(record, index){
 //			var cssStyle = (record.data.change<0.7 ? (record.data.change<0.5 ? (record.data.change<0.2 ? 'red-row' : 'green-row') : 'blue-row') : '');
 //			return 'red-row';

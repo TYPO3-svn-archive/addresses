@@ -62,7 +62,6 @@ Ext.extend(Ext.grid.RowExpander, Ext.util.Observable, {
 		view.getRowClass = this.getRowClass.createDelegate(this);
 
 		view.enableRowBody = true;
-
 		grid.on('render', function() {
 			view.mainBody.on('mousedown', this.onMouseDown, this);
 		}, this);

@@ -85,6 +85,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 		$columns = Tx_Addresses_Utility_TCA::getFieldsFromGrid($this->namespace);
+//		t3lib_div::debug($this->getFields($columns, $this->tableName), '$this->getFields($columns, $this->tableName)');
 		$request = $TYPO3_DB->SELECTquery(
 			$this->getFields($columns, $this->tableName),
 			$this->tableName,
@@ -112,7 +113,10 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		$records = array();
 		if (!$TYPO3_DB->sql_error()) {
 			while($record = $TYPO3_DB->sql_fetch_assoc($res)) {
-				array_push($records, $this->formatForHumans($record, $columns));
+				$record = $this->formatForHumans($record, $columns);
+				$record['expander'] = $this->getExpander();
+//				t3lib_div::debug($record, '$record');
+				array_push($records, $record);
 			}
 			$TYPO3_DB->sql_free_result($res);
 		}
@@ -127,6 +131,32 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		$output['total'] = $results[0]['total'];
 		$output['records'] = $records;
 		return $output;
+	}
+
+	protected function getExpander() {
+		$expanderTemplate = Tx_Addresses_Utility_TCA::getExpanderTemplate($this->tableName);
+		$templatePath = $this->resolvePath($expanderTemplate);
+		$content = file_get_contents($templatePath);
+		return $content;
+	}
+
+
+	/**
+	 * Substitutes EXT: with extension path in a file path
+	 *
+	 * @param string The path
+	 * @return string The resolved path
+	 * @static
+	 */
+	protected function resolvePath($path) {
+		$path = explode('/', $path);
+		if(strpos($path[0], 'EXT') > -1) {
+			$parts = explode(':', $path[0]);
+			$path[0] = t3lib_extMgm::extPath($parts[1]);
+		}
+		$path = implode('/', $path);
+		$path = str_replace('//', '/', $path);
+		return $path;
 	}
 
 	/**

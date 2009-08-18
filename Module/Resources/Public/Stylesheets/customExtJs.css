@@ -86,3 +86,9 @@ div.x-tab-panel-header {
     -khtml-user-select:text;
     -webkit-user-select:text;
 }
+
+.x-grid3-row td.x-grid3-cell {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: ignore;
+}

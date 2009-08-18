@@ -84,10 +84,9 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	public function findAll() {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
-		$columns = Tx_Addresses_Utility_TCA::getFieldsFromGrid($this->namespace);
-//		t3lib_div::debug($this->getFields($columns, $this->tableName), '$this->getFields($columns, $this->tableName)');
+		
 		$request = $TYPO3_DB->SELECTquery(
-			$this->getFields($columns, $this->tableName),
+			'*',
 			$this->tableName,
 			$this->getClause(),
 			'', // groupBy
@@ -108,15 +107,26 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 		// Fields from Grid TCA are merged into the Columns's TCA
 		$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
+		$columnsFromGrid = Tx_Addresses_Utility_TCA::getFieldsFromGrid($this->namespace);
+		$fieldsFromGrid = $this->getFields($columnsFromGrid, $this->tableName);
 
 		// Formats array
 		$records = array();
 		if (!$TYPO3_DB->sql_error()) {
 			while($record = $TYPO3_DB->sql_fetch_assoc($res)) {
+
+				// Format the content
 				$record = $this->formatForHumans($record, $columns);
-				$record['expander'] = $this->getExpander();
-//				t3lib_div::debug($record, '$record');
-				array_push($records, $record);
+
+				// Only keep the fields that are going to be displayed in the grid.
+				foreach ($fieldsFromGrid as $fieldName) {
+					$_record[$fieldName] = $record[$fieldName];
+				}
+				
+				// Gets the expander HTML
+				$_record['expander'] = $this->getExpander($record);
+
+				array_push($records, $_record);
 			}
 			$TYPO3_DB->sql_free_result($res);
 		}
@@ -133,10 +143,53 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		return $output;
 	}
 
-	protected function getExpander() {
+	/**
+	 * Get the HTML that goes in the expander field
+	 *
+	 * @global t3lib_DB $TYPO3_DB
+	 * @param array $record
+	 * @return string
+	 */
+	protected function getExpander($record) {
+		global $TYPO3_DB;
+		
+		// Fetches the template
 		$expanderTemplate = Tx_Addresses_Utility_TCA::getExpanderTemplate($this->tableName);
 		$templatePath = $this->resolvePath($expanderTemplate);
-		$content = file_get_contents($templatePath);
+		$template = t3lib_div::makeInstance('Tx_Addresses_Temp_Template', $templatePath);
+
+		// Set template variables
+		$template->set('address', $record);
+		$columns = Tx_Addresses_Utility_TCA::getColumns($this->tableName);
+		foreach ($columns as $fieldName => $tca) {
+			$config = $tca['config'];
+			if ($config['foreign_table']) {
+				if (isset($config['MM'])) {
+					$subRecords = $TYPO3_DB->exec_SELECTgetRows(
+						'*',
+						$config['foreign_table'],
+						'uid in (SELECT uid_foreign FROM ' . $config['MM'] . ' WHERE uid_local = ' . $record['uid'] . ' AND ' . $config['MM'] . '.deleted = 0)'
+					);
+				}
+				else {
+					$subRecords = $TYPO3_DB->exec_SELECTgetRows(
+						'*',
+						$config['foreign_table'],
+						'uid_foreign  = ' . $record['uid'] . ' AND ' . $config['foreign_table'] . '.deleted = 0'
+					);
+				}
+				
+				// Format sub records
+				$subColumns = Tx_Addresses_Utility_TCA::getColumns($config['foreign_table']);
+				$_subRecords = array();
+				foreach ($subRecords as &$subRecord) {
+					$subRecord = $this->formatForHumans($subRecord, $subColumns);
+				}
+				$template->set($fieldName, $subRecords);
+			}
+		}
+
+		$content = $template->fetch();
 		return $content;
 	}
 
@@ -175,7 +228,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		if ($clause != '') {
 			$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);
 			$records = $TYPO3_DB->exec_SELECTgetRows(
-				$this->getFields($columns, $this->tableName),
+				$this->getFieldsName($columns, $this->tableName),
 				$this->tableName,
 				$clause
 			);
@@ -220,7 +273,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		// Namespace is necessary for fetching the fields
 		$tableName = $tca['config']['foreign_table'];
 		$columns = Tx_Addresses_Utility_TCA::getColumns($tableName);
-		$fields = $this->getFields($columns, $tca['config']['foreign_table']);
+		$fields = $this->getFieldsName($columns, $tca['config']['foreign_table']);
 		if (isset($tca['config']['MM'])) {
 			$clause = ' uid IN (SELECT uid_foreign FROM ' . $tca['config']['MM'] . ' WHERE uid_local=' . $uid . ')';
 		}
@@ -299,12 +352,14 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				elseif ($config['type'] == 'select' && isset($config['foreign_table']) && isset($config['itemsProcFunc.'])) {
 					$_fieldName = $config['itemsProcFunc.']['field'];
 					$_tableName = $config['itemsProcFunc.']['table'];
-					$records = $TYPO3_DB->exec_SELECTgetRows($_fieldName, $_tableName, 'deleted = 0 AND hidden= 0 AND uid = ' . $value);
-					if (isset($records[0][$_fieldName])) {
-						$output[$fieldName . '_text'] = $records[0][$_fieldName];
-					}
-					else {
-						$output[$fieldName . '_text'] = '';
+					if (is_int($value)) {
+						$records = $TYPO3_DB->exec_SELECTgetRows($_fieldName, $_tableName, 'deleted = 0 AND hidden= 0 AND uid = ' . $value);
+						if (isset($records[0][$_fieldName])) {
+							$output[$fieldName . '_text'] = $records[0][$_fieldName];
+						}
+						else {
+							$output[$fieldName . '_text'] = '';
+						}
 					}
 				}
 				// userFuncFormat
@@ -406,7 +461,6 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		$searchClause .= ' AND ' . $tableName . '.deleted = 0 ';
 		$searchClause .= t3lib_BEfunc::BEenableFields($tableName);
 		return $searchClause;
-
 	}
 
 	/**
@@ -465,10 +519,21 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		return $request;
 	}
 
+
 	/**
 	 * Builds up the clause e.g.uid=10 AND uid=8
 	 * @param array $data
 	 * @return string
+	 */
+	protected function getFieldsName($columns, $tableName) {
+		$fields = $this->getFields($columns, $tableName);
+		return implode(',', $fields);
+	}
+
+	/**
+	 * Builds up the clause e.g.uid=10 AND uid=8
+	 * @param array $data
+	 * @return array
 	 */
 	protected function getFields($columns, $tableName) {
 		global $BE_USER;
@@ -488,7 +553,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				}
 			}
 		}
-		return implode(',', $fields);
+		return $fields;
 	}
 
 

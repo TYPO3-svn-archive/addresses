@@ -346,7 +346,6 @@ Address.initGrid = function() {
 			});
 		},
 
-
 		/**
 		 * Expands / collapse all rows
 		 *
@@ -354,35 +353,15 @@ Address.initGrid = function() {
 		 * @scope Address.grid
 		 */
 		expand: function(element, event) {
-			element.disable();
-			element.setText(Addresses.lang.expanding);
-//			Ext.query('button', Address.e.getEl())
-//			Address.e.getEl().child('button')
-//this.el.child('button:first').dom.style.backgroundImage = 'url(/images/icon.gif)';
-
-//Ext.ux.Icon = function(icon){
-//  var path = 'img/icons/';
-//  if(!Ext.util.CSS.getRule('.icon-'+icon)){
-//    Ext.util.CSS.createStyleSheet('.icon-'+icon+' { background-image: url('path+icon+'.png) !important; }');
-//  }
-//  return 'icon-'+icon;
-//}
-//http://erhanabay.com/2009/02/12/simplifying-icon-management-in-ext-js/
 			var numberOfRows = this.getStore().getCount();
 
 			for (index = 0; index < numberOfRows; index++) {
 				var row = this.getView().getRow(index);
-//				x-grid3-row-over
 				if (!Ext.get(row).hasClass('x-grid3-row-expanded')) {
 					var expander = Ext.query('.x-grid3-row-expander', row)[0];
 					Ext.util.fireEvent(expander, 'mousedown');
 				}
 			}
-
-			// Reactivates the button
-			element.enable();
-			element.setText(Addresses.lang.expand_all);
-
 		},
 
 		/**
@@ -396,7 +375,6 @@ Address.initGrid = function() {
 
 			for (index = 0; index < numberOfRows; index++) {
 				var row = this.getView().getRow(index);
-//				x-grid3-row-over
 				if (Ext.get(row).hasClass('x-grid3-row-expanded')) {
 					var expander = Ext.query('.x-grid3-row-expander', row)[0];
 					Ext.util.fireEvent(expander, 'mousedown');

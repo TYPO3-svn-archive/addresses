@@ -13,17 +13,19 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
             'type' => 'input',
             'width' => 40,
             'sortable' => TRUE,
+            'hidden' => TRUE,
         )
     ),
-//    'pid' => array(
-//        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.pid',
-//        'config' => Array (
-//            'type' => 'input',
-//            'width' => 40,
-//            'sortable' => TRUE,
-//            'eval' => 'int',
-//        )
-//    ),
+    'pid' => array(
+        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.pid',
+        'config' => Array (
+            'type' => 'input',
+            'width' => 40,
+            'sortable' => TRUE,
+            'eval' => 'int',
+            'hidden' => TRUE,
+        )
+    ),
     'first_name' => array(
         'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
         'config' => Array (
@@ -92,6 +94,9 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
         )
     ),
 );
+
+// Path to the template for the expander
+$TCA[$domainName]['types']['module']['expanderTemplate'] = 'EXT:addresses/Module/Resources/Private/Templates/expander.html';
 
 // Describes the fields of the editing window
 $TCA[$domainName]['types']['module']['showitem'] = array(

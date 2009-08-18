@@ -47,6 +47,7 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Preferen
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCE.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/UserTCE.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Temp/Template.php'));
 
 /**
  * Controller class for the 'addresses' extension. Handles the AJAX Requests

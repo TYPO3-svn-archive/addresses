@@ -4,18 +4,29 @@
 			<td>
 				<p style="font-size: 104%; color: gray">Contact</p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
-					<p>Monsieur</p>
-					<p>Fabien Udriot</p>
+					<p><?php print $address['title'] ?></p>
+					<p><?php print $address['first_name'] ?> <?php print $address['last_name'] ?></p>
 				</div>
 				<p style="font-size: 104%; color: gray">Info</p>
 				<div style="margin-left: 20px">
-					<p>Genre: Masculin</p>
-					<p>Langue: Français</p>
-					<p>Date de naissance: 09.12.78</p>
-					<p>Etat civil: Marié</p>
-					<p>Nationalité: Suisse</p>
+					<?php if ($address['gender'] != ''): ?>
+						<p>Genre: <?php print $address['gender'] ?></p>
+					<?php endif ?>
+					<?php if ($address['language'] != ''): ?>
+						<p>Langue: <?php print $address['language'] ?></p>
+					<?php endif ?>
+					<?php if ($address['birth_date'] != ''): ?>
+						<p>Date de naissance: <?php print $address['birth_date'] ?></p>
+					<?php endif ?>
+					<?php if ($address['marital_status'] != ''): ?>
+						<p>Etat civil: <?php print $address['marital_status'] ?></p>
+					<?php endif ?>
+					<?php if ($address['nationality'] != ''): ?>
+						<p>Nationalité: <?php print $address['nationality'] ?></p>
+					<?php endif ?>
 				</div>
 			</td>
+			<!--
 			<td>
 				<p style="font-size: 104%; color: gray">Home</p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
@@ -31,29 +42,35 @@
 					<button>Map</button>
 				</div>
 			</td>
+			-->
+			<?php if (!empty($contactnumbers)): ?>
 			<td>
-				<p style="font-size: 104%; color: gray;">Mobile</p>
+				<?php foreach ($contactnumbers as $contactnumber): ?>
+				<p style="font-size: 104%; color: gray;"><?php print $contactnumber['nature']?></p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
-					<p>078 770 70 65</p>
+					<p><?php print $contactnumber['number_evaluated']?></p>
 				</div>
-				<p style="font-size: 104%; color: gray">Privé</p>
-				<div style="margin-left: 20px; margin-bottom: 20px">
-					<p>032 511 08 17</p>
-				</div>
+				<?php endforeach ?>
 			</td>
+			<?php endif ?>
+			<?php if (!empty($addressgroups)): ?>
 			<td>
 				<p style="font-size: 104%; color: gray">Groupes</p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
-					<p>Aumônier</p>
-					<p>Pasteur</p>
+					<?php foreach ($addressgroups as $addressgroup): ?>
+					<p><?php print $addressgroup['title']?></p>
+					<?php endforeach ?>
 				</div>
 			</td>
+			<?php endif ?>
+			<?php if ($address['remarks'] != ''): ?>
 			<td>
 				<p style="font-size: 104%; color: gray">Remarque</p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
-					<p>vel lectus. Cum sociis et netus et malesuada</p>
+					<p><?php print $address['remarks']?></p>
 				</div>
 			</td>
+			<?php endif ?>
 		</tr>
 	</tbody>
 </table>

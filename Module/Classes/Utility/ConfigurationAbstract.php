@@ -168,7 +168,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 						}
 					} // end if
 				} // end foreach
-			}
+			} // end if
 			if (!empty($_panels)) {
 				$_showItem = $showItem;
 				$_showItem['panels'] = $_panels;
@@ -228,7 +228,7 @@ abstract class Tx_Addresses_Utility_ConfigurationAbstract {
 		$columns = Tx_Addresses_Utility_TCA::getColumns($namespace);
 		$showItems = Tx_Addresses_Utility_TCA::getShowItems($namespace);
 		$showItems = self::getShowItems($namespace, $showItems);
-
+		
 		// Adds the uid in the first panel
 		if (isset($showItems[0]['panels'][0]['fields'])) {
 			// Add manually the uid

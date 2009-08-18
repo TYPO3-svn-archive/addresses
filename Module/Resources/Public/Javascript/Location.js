@@ -9,7 +9,7 @@
  * @version $Id$
  */
 
-Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
+Ext.ux.Location = Ext.extend(Ext.Panel, {
 	buttonText: '',
 
 	//	// Overriden parent object method, with additional functionality
@@ -21,26 +21,25 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 			{
 				xtype: 'dataview',
 				tpl: [
-				'<table id="contactNumber" style="width:100%; border-spacing: 0; cursor: pointer; margin-bottom: 5px">',
+				'<table id="location" style="width:100%; border-spacing: 0; cursor: pointer; margin-bottom: 5px">',
 					'<tbody>',
 						'<tpl for=".">',
-							'<tr id="contactNumberMainRow{uid}" class="contactNumberMainRow" style="" onmouseover="this.childNodes[0].childNodes[0].style.visibility = \'visible\'; this.style.backgroundColor = \'#EFEFF4\';" onmouseout="this.childNodes[0].childNodes[0].style.visibility = \'hidden\'; this.style.backgroundColor = \'\'">',
-								'<td style="padding: 3px 0; border-bottom: 1px dotted gray; width:10%; text-align: center;">',
+							'<tr id="locationMainRow{uid}" class="locationMainRow" style="" onmouseover="this.childNodes[0].childNodes[0].style.visibility = \'visible\'; this.style.backgroundColor = \'#EFEFF4\';" onmouseout="this.childNodes[0].childNodes[0].style.visibility = \'hidden\'; this.style.backgroundColor = \'\'">',
+								'<td style="width:12%; padding: 3px 0; border-bottom: 1px dotted gray; text-align: center;">',
 									'<div style="visibility: hidden;">',
-										'<img id="contactNumberDeleteImg{uid}" src="/typo3conf/ext/addresses/Module/Resources/Public/Icons/delete.png" alt="delete" />',
-										'<img id="contactNumberEditImg{uid}" src="/typo3conf/ext/addresses/Module/Resources/Public/Icons/pencil.png" alt="edit" style="margin-left: 5px"/>',
+										'<img id="locationDeleteImg{uid}" src="/typo3conf/ext/addresses/Module/Resources/Public/Icons/delete.png" alt="delete" />',
+										'<img id="locationEditImg{uid}" src="/typo3conf/ext/addresses/Module/Resources/Public/Icons/pencil.png" alt="edit" style="margin-left: 5px"/>',
 									'</div>',
 								'</td>',
-								'<td style="width: 12%; padding: 3px 0; border-bottom: 1px dotted gray; text-align: right; color:gray">',
-									'{type_text}',
+								'<td style="width: 60%; padding: 3px 0; border-bottom: 1px dotted gray;">',
+									'<p>{street}</p>',
+									'<p>{postal_code} {locality}</p>',
+									'<p>{country}</p>',
 								'</td>',
-								'<td style="width: 30%; padding: 3px 5px 3px 5px; border-bottom: 1px dotted gray;">',
-									'{number_evaluated}',
+								'<td style="padding: 3px 0; border-bottom: 1px dotted gray; color:gray">',
+									'{nature}',
 								'</td>',
-								'<td style="padding: 3px 0; border-bottom: 1px dotted gray; color: gray">',
-									'{nature_nature}',
-								'</td>',
-								'<td style="padding: 3px 0; border-bottom: 1px dotted gray; color: gray">',
+								'<td style="width:7%; padding: 3px 0; border-bottom: 1px dotted gray; color: gray">',
 									'<tpl if="remarks">',
 										'<img src="/typo3conf/ext/addresses/Module/Resources/Public/Icons/note.png" alt="remarks" title="{remarks}"/>',
 									'</tpl>',
@@ -51,7 +50,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 				'</table>'
 				],
 				itemSelector: 'tr',
-				store: Address.stores.contactnumbers
+				store: Address.stores.locations
 			},
 			{
 				xtype: 'button',
@@ -69,10 +68,10 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		});
 
 		// Defines a global variable
-		Contactnumber.panel = Ext.ComponentMgr.get('address_contactnumbers');
+		Location.panel = Ext.ComponentMgr.get('address_locations');
 
 		// Calls parent method
-		Ext.ux.ContactNumber.superclass.initComponent.call(this, arguments);
+		Ext.ux.Location.superclass.initComponent.call(this, arguments);
 	},
 
 	/**
@@ -85,23 +84,23 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 
 		// Attached formpanel to Address.window
 		var formPanel = new Ext.form.FormPanel({
-			id: 'contactnumberForm',
+			id: 'locationForm',
 			waitMsgTarget: true,
 			frame: true,
 			labelAlign: 'top',
 			hideMode: 'display',
-			items: Contactnumber.windowFields
+			items: Location.windowFields
 		});
 
 		var panel = Address.window.get(0);
 		panel.add(formPanel);
 		
 		// Hides form panel
-		Ext.ComponentMgr.get('contactnumberForm').setVisible(false);
+		Ext.ComponentMgr.get('locationForm').setVisible(false);
 	},
 
 	//	onRender: function(ct){
-	//		Ext.ux.ContactNumber.superclass.onRender.apply(this, arguments);
+	//		Ext.ux.Location.superclass.onRender.apply(this, arguments);
 	//	},
 	
 	/**
@@ -110,9 +109,9 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * @access public
 	 */
 	doLayout: function() {
-		Ext.ux.ContactNumber.superclass.doLayout.call(this);
+		Ext.ux.Location.superclass.doLayout.call(this);
 
-		var elements = Ext.select('#contactNumber img[alt=edit]');
+		var elements = Ext.select('#location img[alt=edit]');
 		if (elements.elements.length > 0) {
 
 			// Checks whether an event already exists at the first element by check attribute 'display'
@@ -125,13 +124,13 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 				// Get contact element
 				Ext.addBehaviors({
 					// add a listener for click on all anchors in element with id foo
-					'#contactNumber .contactNumberMainRow@dblclick' : Contactnumber.panel.edit,
-					'#contactNumber img[alt=edit]@click' : Contactnumber.panel.edit,
-					'#contactNumber img[alt=delete]@click' : Contactnumber.panel.deleteRecord
+					'#location .locationMainRow@dblclick' : Location.panel.edit,
+					'#location img[alt=edit]@click' : Location.panel.edit,
+					'#location img[alt=delete]@click' : Location.panel.deleteRecord
 				});
 
 				if (Addresses.DEBUG) {
-					console.log('Contactnumber: attached events on rows');
+					console.log('Location: attached events on rows');
 				}
 			}
 		}
@@ -139,7 +138,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	},
 
 	/**
-	 * Adds 2 buttons into the top toolbar: Save contact number + Cancel
+	 * Adds 2 buttons into the top toolbar: Save the record + Cancel
 	 *
 	 * @access private
 	 * @return void
@@ -148,66 +147,65 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 
 		// Add 2 buttons at a specific position
 		var toolbar = Address.window.getTopToolbar();
-		
+
 		toolbar.insertButton(0,{
-			id: 'contactnumberSaveButton',
+			id: 'locationSaveButton',
 			xtype: 'button',
-			text: Addresses.lang.saveContactnumber,
+			text: Addresses.lang.saveLocation,
 			cls: 'x-btn-text-icon',
 			icon: 'Resources/Public/Icons/database_save.png',
-			handler: Contactnumber.panel.save
+			handler: Location.panel.save
 		});
 		toolbar.insertButton(toolbar.items.items.length - 1,{
-			id: 'contactnumberResetButton',
+			id: 'locationResetButton',
 			xtype: 'button',
 			text: Addresses.lang.reset,
 			cls: 'x-btn-text-icon',
 			icon: 'Resources/Public/Icons/database.png',
-			handler: Contactnumber.panel.reset
+			handler: Location.panel.reset
 		});
 
 		// Re-draws the button
 		toolbar.doLayout();
 		if (Addresses.DEBUG) {
-			console.log('Contactnumber: buttons have been added in the toolbar');
+			console.log('Location: buttons have been added in the toolbar');
 		}
 	},
 	
 	/**
-	 * Swaps between "addressForm" and "contactnumberForm"
+	 * Swaps between "addressForm" and "locationForm"
 	 *
 	 * @todo check the parameter + access of the method
 	 * @access private
 	 * @return void
 	 */
-	edit: function(element, event) {
+	edit: function(event, element) {
 		// Sets default value
-		element = typeof(event) == 'undefined' ? {} : element
-		event = typeof(element) == 'undefined' ? {} : event
+		event = typeof(event) == 'undefined' ? {} : event
+		element = typeof(element) == 'undefined' ? {} : element
 
 		// Makes sure the parent record (i.e. address) has an uid. Check whether uid_foreign exists
 		// Get uid_foreign value
 		var uid_foreign = Address.form.findField('uid').getValue();
 		if (uid_foreign == '') {
-			Contactnumber.panel.saveParent();
+			Location.panel.saveParent();
 		}
 		else {
-			if (!Ext.get('contactnumberSaveButton')) {
-				Contactnumber.panel.addButtons();
+			if (!Ext.get('locationSaveButton')) {
+				Location.panel.addButtons();
 			}
 
 			// TRUE means this is a new record
-			if (typeof(event.id) == 'undefined') {
-
-				Contactnumber.panel.editInsert();
+			if (typeof(element.id) == 'undefined') {
+				Location.panel.editInsert();
 			}
 			else {
-				Contactnumber.panel.editUpdate(event);
+				Location.panel.editUpdate(element);
 			}
 
 			// Show / hide widgets
-			Contactnumber.panel.setVisible(true);
-			Contactnumber.panel.attachKeyMap();
+			Location.panel.setVisible(true);
+			Location.panel.attachKeyMap();
 		}
 	},
 	
@@ -218,29 +216,13 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * @return void
 	 */
 	setVisible: function(isVisible) {
-		var namespaces = [{name: 'address', visible: !isVisible}, {name: 'contactnumber', visible: isVisible}]
+		var namespaces = [{name: 'address', visible: !isVisible}, {name: 'location', visible: isVisible}]
 		for (var index = 0; index < namespaces.length; index ++) {
 			var namespace = namespaces[index];
 			Ext.ComponentMgr.get(namespace.name + 'Form').setVisible(namespace.visible);
 			Ext.ComponentMgr.get(namespace.name + 'SaveButton').setVisible(namespace.visible);
 			Ext.ComponentMgr.get(namespace.name + 'ResetButton').setVisible(namespace.visible);
 		}
-
-		//	Ext.get('contactnumberForm').ghost('b', {easing: 'easeOut',duration: time ,remove: false,useDisplay: true});
-
-//		var speed = 0.4;
-//
-//		// Makes the form visible
-//		Ext.get('addressForm').fadeOut({
-////		useDisplay: true,
-//			endOpacity: 0,
-//			duration: speed
-//		});
-//
-//		Ext.get('contactnumberForm').pause(speed + 0.2).fadeIn({
-////			useDisplay: true,
-//			duration: 0.1
-//		});
 	},
 
 	/**
@@ -253,7 +235,8 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		// Get uid_foreign value
 		var uid_foreign = Address.form.findField('uid').getValue();
 
-		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
+		var form = Ext.ComponentMgr.get('locationForm').getForm();
+		
 		// Set uid_foreign into field uid_foreign
 		form.findField('uid_foreign').setValue(uid_foreign);
 	},
@@ -274,9 +257,9 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		else if (element.id == '' ) {
 			element = element.parentNode;
 		}
-		var uid = element.id.substring(20);
-		var record = Address.stores.contactnumbers.getById(uid);
-		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
+		var uid = element.id.replace(/[a-zA-Z]+/, '');
+		var record = Address.stores.locations.getById(uid);
+		var form = Ext.ComponentMgr.get('locationForm').getForm();
 		form.loadRecord(record);
 	},
 
@@ -284,17 +267,17 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * Deletes a record
 	 *
 	 * @access private
+	 * @param event Object
 	 * @param element Object
-	 * @param event string
 	 * @return void
 	 */
-	deleteRecord: function(element, event) {
-		var uid = event.id.replace('contactNumberDeleteImg', '');
-		var record = Address.stores.contactnumbers.getById(uid);
+	deleteRecord: function(event, element) {
+		var uid = element.id.replace('locationDeleteImg', '');
+		var record = Address.stores.locations.getById(uid);
 		Ext.Msg.show({
 			title: Addresses.lang.remove,
 			buttons: Ext.MessageBox.YESNO,
-			msg: Addresses.lang.are_you_sure_contactnumber + ' ' + record.data.number_evaluated + '?',
+			msg: Addresses.lang.are_you_sure.replace('{0}', record.data.label),
 			fn: function(btn){
 				if (btn == 'yes'){
 					// Defines the data to transmit
@@ -307,11 +290,11 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 						method: 'GET',
 						url: Addresses.statics.ajaxController,
 						params:{
-							ajaxID: 'ContactnumberController::deleteAction',
+							ajaxID: 'LocationController::deleteAction',
 							dataSet: Ext.util.JSON.encode(dataSet)
 						},
 						success: function(f,a){
-							Address.stores.contactnumbers.remove(record);
+							Address.stores.locations.remove(record);
 						},
 						failure: function(f,a){
 							if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -353,7 +336,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 						Ext.StoreMgr.get('addressStore').load();
 
 						// Display re display the form
-						Contactnumber.panel.edit();
+						Location.panel.edit();
 					}
 					Address.form.submit(submit);
 				}
@@ -375,20 +358,20 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 			url: Addresses.statics.ajaxController,
 			waitMsg: Addresses.lang.saving,
 			params:{
-				ajaxID: 'ContactnumberController::saveAction'
+				ajaxID: 'LocationController::saveAction'
 			},
 			success: function(form, call){
 				var record = call.result.records[0];
 				// removes the old record for updated record
 				if (call.result.request == 'UPDATE') {
-					var _record = Address.stores.contactnumbers.getById(record.uid);
-					Address.stores.contactnumbers.remove(_record)
+					var _record = Address.stores.locations.getById(record.uid);
+					Address.stores.locations.remove(_record)
 				}
 				// Adds, sorts and regenerates the layout.
-				Address.stores.contactnumbers.add(new Ext.data.Record(record, record.uid));
-				Address.stores.contactnumbers.sort('uid', 'ASC');
-				Contactnumber.panel.doLayout();
-				Contactnumber.panel.reset();
+				Address.stores.locations.add(new Ext.data.Record(record, record.uid));
+				Address.stores.locations.sort('uid', 'ASC');
+				Location.panel.doLayout();
+				Location.panel.reset();
 			},
 			failure: function(form,call){
 				if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -401,7 +384,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 		};
 
 		// Send form
-		var form = Ext.ComponentMgr.get('contactnumberForm').getForm();
+		var form = Ext.ComponentMgr.get('locationForm').getForm();
 		if (form.isValid()) {
 			form.submit(submit);
 		}
@@ -417,10 +400,10 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	reset: function() {
 
 		// Show / hide widgets
-		Contactnumber.panel.setVisible(false);
+		Location.panel.setVisible(false);
 
 		// Resets form
-		Ext.ComponentMgr.get('contactnumberForm').getForm().reset();
+		Ext.ComponentMgr.get('locationForm').getForm().reset();
 	},
 
 	/**
@@ -430,10 +413,10 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	 * @return void
 	 */
 	setValue: function(records) {
-		Address.stores.contactnumbers.removeAll();
+		Address.stores.locations.removeAll();
 		for (var i=0; i < records.length; i++) {
 			var record = records[i];
-			Address.stores.contactnumbers.add(new Ext.data.Record(record, record.uid));
+			Address.stores.locations.add(new Ext.data.Record(record, record.uid));
 		}
 	},
 
@@ -449,7 +432,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 			this.isAttachedKeyMap = false;
 		}
 		
-		var namespace = 'contactnumber';
+		var namespace = 'location';
 		if(Ext.get(namespace + 'Form') && !this.isAttachedKeyMap) {
 
 			// Remembers that key has been attached
@@ -459,7 +442,7 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 			new Ext.KeyMap(namespace + 'Form', {
 				key: 13, // or Ext.EventObject.ENTER
 				fn: function() {
-					Contactnumber.panel.save();
+					Location.panel.save();
 				},
 				stopEvent: true
 			});
@@ -467,4 +450,4 @@ Ext.ux.ContactNumber = Ext.extend(Ext.Panel, {
 	}
 });
 
-Ext.reg('contactnumber', Ext.ux.ContactNumber);
+Ext.reg('location', Ext.ux.Location);

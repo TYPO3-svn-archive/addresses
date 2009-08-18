@@ -442,7 +442,7 @@ Address.initWindow = function() {
 
 			this.addListnerToTextareas();
 			this.addListnerToComboboxes();
-			this.addListnerTolocality();
+//			this.addListnerTolocality();
 
 			this.attachKeyMap()
 		},

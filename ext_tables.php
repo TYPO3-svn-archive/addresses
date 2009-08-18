@@ -72,12 +72,29 @@ $TCA['tx_addresses_domain_model_contactnumber'] = array (
 	)
 );
 
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_location');
+$TCA['tx_addresses_domain_model_location'] = array (
+	'ctrl' => array (
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:location',
+	'label'				=> 'title',
+	'tstamp'            => 'tstamp',
+	'crdate'            => 'crdate',
+	'delete'            => 'deleted',
+	'enablecolumns'     => array (
+		'disabled' => 'hidden'
+	),
+	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_address.gif'
+	)
+);
+
 // This lines will changed the TCA for the BE module
 if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !== FALSE
 	|| strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'typo3/ajax.php') !== FALSE) {
     require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleAddress.php');
     require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleAddressgroup.php');
     require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleContactnumber.php');
+    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleLocation.php');
 }
 
 $configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);

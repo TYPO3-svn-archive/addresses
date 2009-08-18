@@ -57,6 +57,7 @@
 			<label index="tx_addresses_domain_model_address.number">Number</label>
 			<label index="tx_addresses_domain_model_address.nature">Nature</label>
 			<label index="tx_addresses_domain_model_address.contactnumber">Contact number</label>
+			<label index="tx_addresses_domain_model_address.locations">Locations</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tx_addresses_domain_model_address.mobile">Mobile</label>
@@ -109,6 +110,7 @@
 			<label index="tx_addresses_domain_model_address.number">Numéro</label>
 			<label index="tx_addresses_domain_model_address.nature">Nature</label>
 			<label index="tx_addresses_domain_model_address.contactnumber">Numéro de contact</label>
+			<label index="tx_addresses_domain_model_address.locations">Lieux</label>
 		</languageKey>
 	</data>
 </T3locallang>

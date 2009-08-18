@@ -19,6 +19,12 @@ $TYPO3_CONF_VARS['BE']['AJAX']['ContactnumberController::editAction'] = t3lib_ex
 $TYPO3_CONF_VARS['BE']['AJAX']['ContactnumberController::deleteAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/ContactnumberController.php:Tx_Addresses_Controller_ContactnumberController->deleteAction';
 $TYPO3_CONF_VARS['BE']['AJAX']['ContactnumberController::saveAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/ContactnumberController.php:Tx_Addresses_Controller_ContactnumberController->saveAction';
 
+// Location
+$TYPO3_CONF_VARS['BE']['AJAX']['LocationController::indexAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/LocationController.php:Tx_Addresses_Controller_LocationController->indexAction';
+$TYPO3_CONF_VARS['BE']['AJAX']['LocationController::editAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/LocationController.php:Tx_Addresses_Controller_LocationController->editAction';
+$TYPO3_CONF_VARS['BE']['AJAX']['LocationController::deleteAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/LocationController.php:Tx_Addresses_Controller_LocationController->deleteAction';
+$TYPO3_CONF_VARS['BE']['AJAX']['LocationController::saveAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/LocationController.php:Tx_Addresses_Controller_LocationController->saveAction';
+
 // GroupAddresses
 $TYPO3_CONF_VARS['FE']['eID_include']['vcard'] = 'EXT:addresses/Resources/Private/Lib/eid_vcard.php'; 
 

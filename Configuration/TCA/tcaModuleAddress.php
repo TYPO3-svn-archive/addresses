@@ -109,22 +109,16 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 		'panels' => array (
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person',
-				'fields' => array('gender', 'title', 'first_name', 'last_name', 'preferred_language', 'birth_date', 'marital_status', 'nationality'),
+				'fields' => array('gender', 'title', 'first_name', 'last_name', 'preferred_language', 'birth_date', 'marital_status', 'nationality', 'website'),
 			),
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses',
 				// 2 fields on the same line
-				'fields' => array(
-					'street',
-					array(
-						array('fieldName' => 'postal_code', 'columnWidth' => 0.25),
-						array('fieldName' => 'locality', 'columnWidth' => 0.75),
-					),
-					'country'),
+				'fields' => array('locations'),
 			),
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts',
-				'fields' => array('website', 'contactnumbers'),
+				'fields' => array('contactnumbers'),
 			),
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups',
@@ -154,6 +148,12 @@ $TCA[$domainName]['columns']['contactnumbers']['config'] = Array(
 	'foreign_table' => 'tx_addresses_domain_model_contactnumber',
 );
 
+$TCA[$domainName]['columns']['locations']['config'] = Array(
+	'type' => 'user',
+	'userFunc' => 'Tx_Addresses_Utility_UserTCE::getLocationField',
+	'foreign_table' => 'tx_addresses_domain_model_location',
+);
+
 // editable combobox widget
 $TCA[$domainName]['columns']['title'] = array(
     'exclude' => 1,
@@ -173,27 +173,6 @@ $TCA[$domainName]['columns']['title'] = array(
         'size' => 1,
         'minitems' => 0,
         'maxitems' => 1,
-    )
-);
-
-// editable combobox widget
-$TCA[$domainName]['columns']['country'] = array(
-    'exclude' => 1,
-    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.country',
-    'config' => Array (
-        'type' => 'select',
-        'items' => Array (
-            Array('Suisse','Suisse'),
-        ),
-        'itemsProcFunc' => 'Tx_Addresses_Utility_TCE::getItemsForComboBox',
-        'itemsProcFunc.' => array (
-            'table' => $domainName,
-            'field' => 'country',
-        ),
-        'size' => 1,
-        'minitems' => 0,
-        'maxitems' => 1,
-		'editable' => TRUE,
     )
 );
 

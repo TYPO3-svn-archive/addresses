@@ -61,6 +61,8 @@
 			<label index="saveaddressgroups">Save the group</label>
 			<label index="expand_all">Expand all</label>
 			<label index="collapse_all">Collapse all</label>
+			<label index="saveLocation">Save the location</label>
+			<label index="are_you_sure">Do you want to remove {0}?</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>
@@ -118,6 +120,8 @@
 			<label index="saveaddressgroups">Sauver le groupe</label>
 			<label index="expand_all">Tout ouvrir</label>
 			<label index="collapse_all">Tout fermer</label>
+			<label index="saveLocation">Sauver le lieu</label>
+			<label index="are_you_sure">Voulez-vous supprimer {0}?</label>
 		</languageKey>
 	</data>
 </T3locallang>

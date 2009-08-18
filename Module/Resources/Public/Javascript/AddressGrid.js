@@ -77,7 +77,7 @@ Address.initGrid = function() {
 			//			output = '<img class="pointer" src="' + configuration.iconsPath + 'zoom.png" alt="view" onclick=""/>&nbsp;';
 			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" alt="edit" onclick="Address.window.edit(\'single\')"/>&nbsp;';
 			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.png" alt="copy" onclick="Address.window.edit(\'copy\')"/>&nbsp;';
-			output += '<img class="pointer" src="' + configuration.iconsPath + 'garbage.png" alt="delete" onclick=""/>&nbsp;';
+			output += '<img class="pointer" src="' + configuration.iconsPath + 'garbage.png" alt="delete" onclick="Address.grid.deleteRecords()"/>&nbsp;';
 			return output;
 		},
 		dataIndex: 'uid'
@@ -118,10 +118,10 @@ Address.initGrid = function() {
 					element.remoteSort = false;
 				}
 				
-			// @debug like a double click on the first row
-			//				var sm = Address.grid.getSelectionModel();
-			//				sm.selectFirstRow();
-			//				Address.window.edit('single');
+				// @debug like a double click on the first row
+				var sm = Address.grid.getSelectionModel();
+				sm.selectFirstRow();
+				Address.window.edit('single');
 			}
 		}
 
@@ -160,7 +160,7 @@ Address.initGrid = function() {
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			Address.grid.deleteSelectedRecord();
+			Address.grid.deleteRecords();
 		}
 	},
 	{
@@ -238,12 +238,12 @@ Address.initGrid = function() {
 				}
 			},
 			click: function(event) {
-				// @todo simulate here the double click
-				//Address.window.edit('single');
+			// @todo simulate here the double click
+			//Address.window.edit('single');
 			},
 			keypress: function(key) {
 				if (key.keyCode == key.DELETE) {
-					this.deleteSelectedRecord();
+					this.deleteRecords();
 				}
 			}
 		},
@@ -308,7 +308,7 @@ Address.initGrid = function() {
 		 *
 		 * @return void
 		 */
-		deleteSelectedRecord: function() {
+		deleteRecords: function() {
 			var dataSet = Address.grid.getSelectedUids();
 
 			Ext.Msg.show({

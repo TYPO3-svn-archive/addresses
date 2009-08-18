@@ -32,7 +32,7 @@
  * @subpackage addresses
  * @version $ID:$
  */
-class Tx_Addresses_Utility_UserTCE {
+	class Tx_Addresses_Utility_UserTCE {
 	
 	/**
 	 * Returns the configuration of element textfield.
@@ -85,6 +85,26 @@ class Tx_Addresses_Utility_UserTCE {
 //		}
 //		return $configuration;
 	}
+
+
+	/**
+	 * Returns the configuration of element textfield.
+	 *
+	 * @global	Language	$LANG
+	 * @param	string		$namespace
+	 * @param	array		$columns which corresponds the TCA's columns
+	 * @param	array		$fieldName
+	 * @return	array
+	 */
+	public static function getLocationField($namespace, &$columns, $fieldName) {
+		global $LANG;
+		$configuration['xtype'] = 'location';
+		$configuration['id'] = 'address_locations';
+		$configuration['fieldLabel'] = '';
+		$configuration['buttonText'] = $LANG->getLL('addNewElement');
+		return $configuration;
+	}
+
 
 
 }

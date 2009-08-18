@@ -119,9 +119,9 @@ Address.initGrid = function() {
 				}
 				
 				// @debug like a double click on the first row
-				var sm = Address.grid.getSelectionModel();
-				sm.selectFirstRow();
-				Address.window.edit('single');
+//				var sm = Address.grid.getSelectionModel();
+//				sm.selectFirstRow();
+//				Address.window.edit('single');
 			}
 		}
 

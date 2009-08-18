@@ -43,7 +43,7 @@ Addresses.initialize = function() {
 	Address.initWindow();
 	Address.window.init();
 	Address.form = Ext.ComponentMgr.get('addressForm').getForm();
-	Address.window.findByType('tabpanel')[0].setActiveTab(1);
+//	Address.window.findByType('tabpanel')[0].setActiveTab(1);
 //	Address.window.show();
 
 	if (Ext.util.getUrlParameter('debug') == 'undefined' || Ext.util.getUrlParameter('debug') == 1) {

@@ -57,9 +57,11 @@
 			<td>
 				<p style="font-size: 104%; color: gray">Groupes</p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
+					<ul>
 					<?php foreach ($addressgroups as $addressgroup): ?>
-					<p><?php print $addressgroup['title']?></p>
+						<li style="list-style-type: disc"><?php print $addressgroup['title']?></li>
 					<?php endforeach ?>
+					</ul>
 				</div>
 			</td>
 			<?php endif ?>

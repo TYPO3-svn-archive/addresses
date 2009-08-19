@@ -103,10 +103,15 @@ Address.initWindow = function() {
 			beforehide: function() {
 				if (typeof(Address.form) == 'object') {
 					Address.form.reset();
-					Ext.ComponentMgr.get('addressSaveButton').setDisabled(false);
-					Ext.ComponentMgr.get('addressResetButton').setDisabled(false);
-					if (Address.stores.contactnumbers) {
-						Address.stores.contactnumbers.removeAll();
+					Ext.ComponentMgr.get('addressSaveButton').enable();
+					Ext.ComponentMgr.get('addressResetButton').enable();
+					for (var index = 0; index < Addresses.statics.foreignFields.length; index ++) {
+						var storeName = Addresses.statics.foreignFields[index];
+						if (storeName != 'addressgroups') {
+							if (eval('Address.stores.' + storeName)) {
+								eval('Address.stores.' + storeName + '.removeAll();');
+							}
+						}
 					}
 					Address.window.getBottomToolbar().setStatus('&nbsp;');
 				}

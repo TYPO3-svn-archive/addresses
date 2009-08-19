@@ -205,6 +205,9 @@ Address.initGrid = function() {
 	 * @return void
 	 **/
 	Address.grid = new Ext.grid.GridPanel({
+		/**
+		 * Public property
+		 */
 		id: 'addresses_grid',
 		renderTo: Addresses.statics.renderTo,
 		store: configuration.datasource,
@@ -228,6 +231,16 @@ Address.initGrid = function() {
 			forceFit: true
 		},
 
+		/**
+		 * Private property. Useful for simulating a triple click
+		 */
+		counter: 0,
+		timer: 0,
+
+
+		/**
+		 * Listeners
+		 */
 		listeners: {
 			dblclick: function(event) {
 				var parentNode = event.getTarget('div.x-grid3-row');
@@ -237,9 +250,11 @@ Address.initGrid = function() {
 					Ext.util.fireEvent(expander, 'mousedown');
 				}
 			},
-			click: function(event) {
-			// @todo simulate here the double click
-			//Address.window.edit('single');
+			mouseup: function() {
+				// Simulates a triple click
+				clearTimeout(Address.grid.timer)
+				Address.grid.counter++
+				Address.grid.timer = setTimeout("Address.grid.checkCount()", 300)
 			},
 			keypress: function(key) {
 				if (key.keyCode == key.DELETE) {
@@ -248,6 +263,18 @@ Address.initGrid = function() {
 			}
 		},
 
+		/**
+		 * Count the number of click. If 3 mouse clicks have been hitted, then edit the record
+		 *
+		 * @access public
+		 * @return void
+		 */
+		checkCount: function() {
+			if(Address.grid.counter == 3) {
+				Address.window.edit('single');
+			}
+			Address.grid.counter = 0;
+		},
 
 		/**
 		 * Returns a formated string: "first_name last_name"

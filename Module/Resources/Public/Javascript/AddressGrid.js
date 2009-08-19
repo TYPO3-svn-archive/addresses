@@ -254,7 +254,7 @@ Address.initGrid = function() {
 				// Simulates a triple click
 				clearTimeout(Address.grid.timer)
 				Address.grid.counter++
-				Address.grid.timer = setTimeout("Address.grid.checkCount()", 300)
+				Address.grid.timer = setTimeout("Address.grid.checkCount()", 200)
 			},
 			keypress: function(key) {
 				if (key.keyCode == key.DELETE) {

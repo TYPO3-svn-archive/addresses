@@ -58,6 +58,7 @@
 			<label index="tx_addresses_domain_model_address.nature">Nature</label>
 			<label index="tx_addresses_domain_model_address.contactnumber">Contact number</label>
 			<label index="tx_addresses_domain_model_address.locations">Locations</label>
+			<label index="tx_addresses_domain_model_address.label">Label</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tx_addresses_domain_model_address.mobile">Mobile</label>
@@ -71,7 +72,7 @@
 			<label index="tx_addresses_domain_model_address.title.I.3">Mlle</label>
 			<label index="tx_addresses_domain_model_address.region">Région</label>
 			<label index="tx_addresses_domain_model_address.room">Chambre</label>
-			<label index="tx_addresses_domain_model_address.building">Immeublre</label>
+			<label index="tx_addresses_domain_model_address.building">Immeuble</label>
 			<label index="tx_addresses_domain_model_address.addressgroup">Addresse groupe</label>
 			<label index="tx_addresses_domain_model_address.uid">ID</label>
 			<label index="tx_addresses_domain_model_address.marital_status">Etat civil</label>
@@ -111,6 +112,7 @@
 			<label index="tx_addresses_domain_model_address.nature">Nature</label>
 			<label index="tx_addresses_domain_model_address.contactnumber">Numéro de contact</label>
 			<label index="tx_addresses_domain_model_address.locations">Lieux</label>
+			<label index="tx_addresses_domain_model_address.label">Label</label>
 		</languageKey>
 	</data>
 </T3locallang>

@@ -486,7 +486,7 @@ $TCA['tx_addresses_domain_model_contactnumber'] = array(
 		),
 		'label' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.label',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '20',
@@ -612,15 +612,6 @@ $TCA['tx_addresses_domain_model_location'] = array(
 				'hidden' => TRUE
 			)
 		),
-		'label' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
-			'config' => Array (
-				'type' => 'text',
-				'cols' => '20',
-				'rows' => '3'
-			)
-		),
 		// *not* editable combobox widget
 		'type' => array(
 			'exclude' => 1,
@@ -636,6 +627,25 @@ $TCA['tx_addresses_domain_model_location'] = array(
 				'minitems' => 0,
 				'maxitems' => 1,
 				'editable' => FALSE,
+			)
+		),
+		// editable combobox widget
+		'nature' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nature',
+			'config'  => array(
+				'type' => 'input',
+				'size' => '30',
+				'eval' => 'required',
+			)
+		),
+		'label' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.label',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '20',
+				'rows' => '3'
 			)
 		),
 		'address' => Array (

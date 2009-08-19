@@ -42,30 +42,6 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
             'sortable' => TRUE,
         )
     ),
-    'street' => array(
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
-        'config' => Array (
-            'type' => 'input',
-            'width' => 120,
-            'sortable' => TRUE,
-        )
-    ),
-    'postal_code' => array(
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.postal_code',
-        'config' => Array (
-            'type' => 'input',
-            'width' => 120,
-            'sortable' => TRUE,
-        )
-    ),
-    'locality' => array(
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.locality',
-        'config' => Array (
-            'type' => 'input',
-            'width' => 120,
-            'sortable' => TRUE,
-        )
-    ),
     'tstamp' => array(
         'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.tstamp',
         'config' => Array (

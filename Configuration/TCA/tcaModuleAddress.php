@@ -117,7 +117,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 				'fields' => array('locations'),
 			),
 			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contacts',
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contactnumbers',
 				'fields' => array('contactnumbers'),
 			),
 			array(

@@ -59,8 +59,7 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 				icon:"Resources\/Public\/Icons\/add.png",
 				anchor:"30%",
 				style:{
-					marginBottom:"10px",
-					marginLeft:"65%"
+					marginBottom:"10px"
 				},
 				handler: this.edit
 			}
@@ -216,7 +215,7 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 	 * @return void
 	 */
 	setVisible: function(isVisible) {
-		var namespaces = [{name: 'address', visible: !isVisible}, {name: 'location', visible: isVisible}]
+		var namespaces = [{name: 'location', visible: isVisible}, {name: 'address', visible: !isVisible}]
 		for (var index = 0; index < namespaces.length; index ++) {
 			var namespace = namespaces[index];
 			Ext.ComponentMgr.get(namespace.name + 'Form').setVisible(namespace.visible);

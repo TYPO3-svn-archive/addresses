@@ -47,8 +47,8 @@
 		global $LANG;
 		$configuration['xtype'] = 'contactnumber';
 		$configuration['id'] = 'address_contactnumbers';
-		$configuration['fieldLabel'] = $LANG->getLL('contactnumber');
-		$configuration['buttonText'] = $LANG->getLL('addNewElement');
+		$configuration['fieldLabel'] = '';
+		$configuration['buttonText'] = $LANG->getLL('addNewContactnumber');
 		return $configuration;
 //		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 //		$tca =  $columns[$fieldName]['config'];
@@ -101,7 +101,7 @@
 		$configuration['xtype'] = 'location';
 		$configuration['id'] = 'address_locations';
 		$configuration['fieldLabel'] = '';
-		$configuration['buttonText'] = $LANG->getLL('addNewElement');
+		$configuration['buttonText'] = $LANG->getLL('addNewLocation');
 		return $configuration;
 	}
 

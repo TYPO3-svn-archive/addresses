@@ -12,14 +12,14 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 		// Describes the tab of the left panel
 		'panels' => array(
 			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:location',
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses',
 				'fields' => array(
 					'street',
 					array(
 						array('fieldName' => 'postal_code', 'columnWidth' => 0.25),
 						array('fieldName' => 'locality', 'columnWidth' => 0.75),
 					),
-					'country', 'uid_foreign',
+					'country', 'nature', 'uid_foreign',
 				),
 			),
 		),

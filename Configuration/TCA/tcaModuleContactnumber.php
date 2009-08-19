@@ -12,7 +12,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 		// Describes the tab of the left panel
 		'panels' => array (
 			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contactnumber',
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contactnumbers',
 				'fields' => array('type', 'number', 'nature', 'uid_foreign'),
 			),
 		),

@@ -26,6 +26,14 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
             'hidden' => TRUE,
         )
     ),
+    'title' => array(
+        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title',
+        'config' => Array (
+            'type' => 'input',
+            'width' => 60,
+            'sortable' => TRUE,
+        )
+    ),
     'first_name' => array(
         'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
         'config' => Array (

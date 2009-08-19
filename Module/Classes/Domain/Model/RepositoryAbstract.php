@@ -151,7 +151,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @return string
 	 */
 	protected function getExpander($record) {
-		global $TYPO3_DB;
+		global $TYPO3_DB, $LANG;
 		
 		// Fetches the template
 		$expanderTemplate = Tx_Addresses_Utility_TCA::getExpanderTemplate($this->tableName);
@@ -190,6 +190,15 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		}
 
 		$content = $template->fetch();
+
+
+		// translates labels
+		preg_match_all('/#{3}(.+)#{3}/isU', $content, $matches, PREG_SET_ORDER);
+		foreach($matches as $match) {
+			$marker = $match[0];
+			$label = $match[1];
+			$content = str_replace($marker, $LANG->sL($label), $content);
+		}
 		return $content;
 	}
 

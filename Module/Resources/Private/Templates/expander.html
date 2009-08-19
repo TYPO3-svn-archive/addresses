@@ -2,12 +2,12 @@
 	<tbody>
 		<tr>
 			<td>
-				<p style="font-size: 104%; color: gray">Contact</p>
+				<p style="font-size: 104%; color: gray">###LLL:EXT:addresses/Module/Resources/Private/Language/locallang.xml:name###</p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
 					<p><?php print $address['title'] ?></p>
 					<p><?php print $address['first_name'] ?> <?php print $address['last_name'] ?></p>
 				</div>
-				<p style="font-size: 104%; color: gray">Info</p>
+				<p style="font-size: 104%; color: gray">###LLL:EXT:addresses/Module/Resources/Private/Language/locallang.xml:information###</p>
 				<div style="margin-left: 20px">
 					<?php if ($address['gender'] != ''): ?>
 						<p>Genre: <?php print $address['gender'] ?></p>
@@ -26,23 +26,19 @@
 					<?php endif ?>
 				</div>
 			</td>
-			<!--
+			<?php if (!empty($locations)): ?>
 			<td>
-				<p style="font-size: 104%; color: gray">Home</p>
-				<div style="margin-left: 20px; margin-bottom: 20px">
-					<p>Av Beauregard 12</p>
-					<p>1700 Fribourg</p>
-					<button>Map</button>
+				<?php foreach ($locations as $location): ?>
+				<p style="font-size: 104%; color: gray"><?php print $location['nature'] ?></p>
+				<div style="margin-left: 20px; margin-bottom: 10px">
+					<p><?php print $location['street'] ?></p>
+					<p><?php print $location['postal_code'] ?> <?php print $location['locality'] ?></p>
+					<button onclick="window.open('http://maps.google.com/maps?q=<?php print $location['street'] ?> <?php print $location['postal_code'] ?> <?php print $location['locality'] ?>')"
+							style="margin-top: 10px">###LLL:EXT:addresses/Module/Resources/Private/Language/locallang.xml:get_map###</button>
 				</div>
-				<p style="font-size: 104%; color: gray;">Professional</p>
-				<div style="margin-left: 20px; margin-bottom: 20px">
-					<p>Rue de la Serre 11</p>
-					<p>2000 Neuchâtel</p>
-					<p>Switzerland</p>
-					<button>Map</button>
-				</div>
+				<?php endforeach ?>
 			</td>
-			-->
+			<?php endif ?>
 			<?php if (!empty($contactnumbers)): ?>
 			<td>
 				<?php foreach ($contactnumbers as $contactnumber): ?>
@@ -55,7 +51,7 @@
 			<?php endif ?>
 			<?php if (!empty($addressgroups)): ?>
 			<td>
-				<p style="font-size: 104%; color: gray">Groupes</p>
+				<p style="font-size: 104%; color: gray">###LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups###</p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
 					<ul>
 					<?php foreach ($addressgroups as $addressgroup): ?>
@@ -67,7 +63,7 @@
 			<?php endif ?>
 			<?php if ($address['remarks'] != ''): ?>
 			<td>
-				<p style="font-size: 104%; color: gray">Remarque</p>
+				<p style="font-size: 104%; color: gray">###LLL:EXT:addresses/Module/Resources/Private/Language/locallang.xml:remarks###</p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
 					<p><?php print $address['remarks']?></p>
 				</div>

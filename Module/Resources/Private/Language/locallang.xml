@@ -65,6 +65,9 @@
 			<label index="are_you_sure">Do you want to remove {0}?</label>
 			<label index="addNewContactnumber">Add a contact number</label>
 			<label index="addNewLocation">Add a location</label>
+			<label index="get_map">Get map</label>
+			<label index="name">Name</label>
+			<label index="information">Information</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="comment">commentaire</label>
@@ -126,6 +129,9 @@
 			<label index="are_you_sure">Voulez-vous supprimer {0}?</label>
 			<label index="addNewContactnumber">Ajouter un nouveau numéro</label>
 			<label index="addNewLocation">Ajouter un nouveau lieu</label>
+			<label index="get_map">Afficher la carte</label>
+			<label index="name">Nom</label>
+			<label index="information">Information</label>
 		</languageKey>
 	</data>
 </T3locallang>

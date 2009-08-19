@@ -15,7 +15,7 @@
 					<?php if ($address['language'] != ''): ?>
 						<p>Langue: <?php print $address['language'] ?></p>
 					<?php endif ?>
-					<?php if ($address['birth_date'] != ''): ?>
+					<?php if ($address['birth_date'] != '' && $address['birth_date'] != '0'): ?>
 						<p>Date de naissance: <?php print $address['birth_date'] ?></p>
 					<?php endif ?>
 					<?php if ($address['marital_status_text'] != ''): ?>

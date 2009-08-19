@@ -352,7 +352,7 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				elseif ($config['type'] == 'select' && isset($config['foreign_table']) && isset($config['itemsProcFunc.'])) {
 					$_fieldName = $config['itemsProcFunc.']['field'];
 					$_tableName = $config['itemsProcFunc.']['table'];
-					if (is_int($value)) {
+					if (is_int((int)$value)) {
 						$records = $TYPO3_DB->exec_SELECTgetRows($_fieldName, $_tableName, 'deleted = 0 AND hidden= 0 AND uid = ' . $value);
 						if (isset($records[0][$_fieldName])) {
 							$output[$fieldName . '_text'] = $records[0][$_fieldName];

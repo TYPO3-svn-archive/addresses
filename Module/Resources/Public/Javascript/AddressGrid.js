@@ -266,7 +266,7 @@ Address.initGrid = function() {
 					}
 					message += item.data.first_name + ' ' + item.data.last_name;
 				}
-				message = Addresses.lang.are_you_sure + ' ' + message + '?'
+				message = Addresses.lang.are_you_sure.replace('{0}', message);
 			}
 			else {
 				message = Addresses.lang.remove_selected_records;

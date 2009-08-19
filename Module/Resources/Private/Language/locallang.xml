@@ -31,7 +31,6 @@
 			<label index="remove">Remove</label>
 			<label index="uid">Id</label>
 			<label index="person">person</label>
-			<label index="are_you_sure">Do you want to remove</label>
 			<label index="new_record">New record</label>
 			<label index="update_record">Update record</label>
 			<label index="multiple_update_record">Multiple update record</label>
@@ -95,7 +94,6 @@
 			<label index="remove">Supprimer</label>
 			<label index="uid">Id</label>
 			<label index="person">personne</label>
-			<label index="are_you_sure">Désirez-vous supprimer</label>
 			<label index="new_record">Nouvel enregistrement</label>
 			<label index="update_record">Modification</label>
 			<label index="multiple_update_record">Modification multiple</label>

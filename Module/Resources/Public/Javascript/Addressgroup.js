@@ -49,8 +49,7 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 				icon:"Resources\/Public\/Icons\/add.png",
 				anchor:"30%",
 				style:{
-					marginBottom:"10px",
-					marginLeft:"65%"
+					marginBottom:"10px"
 				},
 				handler: this.edit
 			}

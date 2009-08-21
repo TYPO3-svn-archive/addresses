@@ -124,6 +124,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 );
 
 // Overrides default TCA configuration according to ExtJS needs
+$TCA[$domainName]['columns']['addressgroups']['config']['label'] = '';
 $TCA[$domainName]['columns']['gender']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
 $TCA[$domainName]['columns']['marital_status']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
 $TCA[$domainName]['columns']['contactnumbers']['config'] = Array(

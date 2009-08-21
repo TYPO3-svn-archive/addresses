@@ -55,7 +55,7 @@
 			<label index="tx_addresses_domain_model_address.image">Image</label>
 			<label index="tx_addresses_domain_model_address.type">Type</label>
 			<label index="tx_addresses_domain_model_address.number">Number</label>
-			<label index="tx_addresses_domain_model_address.nature">Nature</label>
+			<label index="tx_addresses_domain_model_address.nature">Function</label>
 			<label index="tx_addresses_domain_model_address.contactnumber">Contact number</label>
 			<label index="tx_addresses_domain_model_address.locations">Locations</label>
 			<label index="tx_addresses_domain_model_address.label">Label</label>
@@ -67,9 +67,9 @@
 			<label index="tx_addresses_domain_model_address.gender">Genre</label>
 			<label index="tx_addresses_domain_model_address.gender.m">Masculin</label>
 			<label index="tx_addresses_domain_model_address.gender.f">Féminin</label>
-			<label index="tx_addresses_domain_model_address.title.I.1">M.</label>
-			<label index="tx_addresses_domain_model_address.title.I.2">Mme</label>
-			<label index="tx_addresses_domain_model_address.title.I.3">Mlle</label>
+			<label index="tx_addresses_domain_model_address.title.I.1">Monsieur</label>
+			<label index="tx_addresses_domain_model_address.title.I.2">Madame</label>
+			<label index="tx_addresses_domain_model_address.title.I.3">Mademoiselle</label>
 			<label index="tx_addresses_domain_model_address.region">Région</label>
 			<label index="tx_addresses_domain_model_address.room">Chambre</label>
 			<label index="tx_addresses_domain_model_address.building">Immeuble</label>
@@ -109,7 +109,7 @@
 			<label index="tx_addresses_domain_model_address.hidden">Caché</label>
 			<label index="tx_addresses_domain_model_address.type">Type</label>
 			<label index="tx_addresses_domain_model_address.number">Numéro</label>
-			<label index="tx_addresses_domain_model_address.nature">Nature</label>
+			<label index="tx_addresses_domain_model_address.nature">Fonction</label>
 			<label index="tx_addresses_domain_model_address.contactnumber">Numéro de contact</label>
 			<label index="tx_addresses_domain_model_address.locations">Lieux</label>
 			<label index="tx_addresses_domain_model_address.label">Label</label>

@@ -198,7 +198,7 @@ class Tx_Addresses_Utility_TCE {
 			if ($tca['type'] == 'select') {
 
 				if (isset($tca['foreign_table'])) {
-					$stores[] = self::getStoreForeignTable($fieldName, $tca['foreign_table']);
+					$stores[] = self::getStoreForeignTable($fieldName, $tca['foreign_table'], $tca);
 				}
 				else {
 					$stores[] = self::getStore($fieldName, $tca);
@@ -273,7 +273,7 @@ EOF;
 		// Add a possible default value
 		if (isset($tca['default']) && is_array($tca['default'])) {
 			$value = $LANG->sL($tca['default'][0]);
-			$id = $tca['default'][1];
+			$id = $LANG->sL($tca['default'][1]);
 			array_unshift($elements, array($id, $value));
 		}
 
@@ -291,17 +291,23 @@ EOF;
 	 * @global	t3lib_DB	$TYPO3_DB
 	 * @param	string		$fieldName
 	 * @param	string		$foreignTable
+	 * @param	array		$tca
 	 * @return	string
 	 */
-	public static function getStoreForeignTable($fieldName, $foreignTable) {
+	public static function getStoreForeignTable($fieldName, $foreignTable, $tca) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
-		global $TCA;
+		global $LANG;
 
 		$label = Tx_Addresses_Utility_TCA::getLabel($foreignTable);
 		$clause = 'deleted = 0 ';
 		$clause .= t3lib_BEfunc::BEenableFields($foreignTable);
 		$records = $TYPO3_DB->exec_SELECTgetRows('uid as "0", ' . $label . ' as "1"', $foreignTable, $clause);
+		if (isset($tca['default']) && is_array($tca['default'])) {
+			$tca['default'][0] = $LANG->sL($tca['default'][0]);
+			$tca['default'][1] = $LANG->sL($tca['default'][1]);
+			array_unshift($records, $tca['default']);
+		}
 
 		$json = json_encode($records);
 		$store = <<<EOF

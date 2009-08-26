@@ -395,8 +395,11 @@ EOF;
 			$record = $TYPO3_DB->exec_SELECTcountRows('*', $foreignTable, $clause);
 			$_height = $record * 22;
 			// Defines the limit
-			if ($_height > 150 && $_height < 300) {
+			if ($_height > 150 && $_height < 350) {
 				$height = $_height;
+			}
+			elseif ($_height >= 350) {
+				$height = 350;
 			}
 		}
 		return $height;

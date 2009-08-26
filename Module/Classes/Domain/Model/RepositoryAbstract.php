@@ -94,7 +94,6 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 			$this->getOrderBy()
 		);
 
-
 		if ($this->debug) {
 			t3lib_div::devLog('Select records: ' . $request, 'addresses', -1);
 		}
@@ -400,47 +399,23 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 				$search = filter_input(INPUT_GET, 'filterTxt', FILTER_SANITIZE_STRING);
 
 				$this->clause = $this->getSearchClause($search, $this->tableName);
-
-				// Handle a special table
-				$foreignTables['be_users'] = array(
-					'localField' => 'cruser_id',
-					'includedFields' => array('username', 'realName', 'email'),
-					'foreign_table' => 'be_users',
-				);
-				// Merge tables from the foreignTables
-				$foreignTables = array_merge($foreignTables, $this->getForeignTables());
-
-				// fetch other condition
-				foreach ($foreignTables as $foreignTable => $data) {
-				// Builds request for the 2 possible relations:
-				// 1. M-M relation
-				// 2. 1-M relation
-					if (isset($data['MM'])) {
-						$this->clause .= ' OR uid IN (SELECT uid_local FROM ' . $data['MM'] . ' WHERE tablenames = "' . $data['foreign_table'] . '" AND uid_foreign IN (SELECT uid FROM ' . $data['foreign_table'] . ' WHERE ' . $this->getSearchClause($search, $data['foreign_table']) . '))';
-					}
-					else {
-						$includedFields = array();
-						if (isset($data['includedFields'])) {
-							$includedFields = $data['includedFields']; // Maybe it is a better idea to work on *exclude* fields
-						}
-						$message = $this->getSearchClause($search, $data['foreign_table'], $includedFields);
-						$uid = isset($data['localField']) ? $data['localField'] : 'uid';
-						$this->clause .= ' OR ' . $uid . ' IN (SELECT uid FROM ' . $data['foreign_table'] . ' WHERE ' . $this->getSearchClause($search, $data['foreign_table'], $includedFields) . ')';
-					}
-				}
-				$this->clause = '(' . $this->clause . ')';
-			} // end if
-
-			$enableFields = 'deleted = 0 ';
-			$enableFields .= t3lib_BEfunc::BEenableFields($this->tableName);
-			$and = $this->clause == '' ? '': ' AND ';
-			$this->clause = $enableFields . $and . $this->clause;
+				// Old code for handling a special table
+//				$foreignTables['be_users'] = array(
+//					'localField' => 'cruser_id',
+//					'includedFields' => array('username', 'realName', 'email'),
+//					'foreign_table' => 'be_users',
+//				);
+			}
+			else {
+				$this->clause = 'deleted = 0 ';
+				$this->clause .= t3lib_BEfunc::BEenableFields($this->tableName);
+			}
 		}
 		return $this->clause;
 	}
 
 	/**
-	 * Returns a clause part
+	 * Returns the clause part. Call recursively this method for every foreign tables
 	 *
 	 * @global t3div_DB $TYPO3_DB
 	 * @param string $search
@@ -448,27 +423,57 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 	 * @param array $fields
 	 * @return string
 	 */
-	protected function getSearchClause($search, $tableName, $fields = array()) {
+	protected function getSearchClause($search, $tableName) {
 		/* @var $TYPO3_DB t3lib_DB */
 		global $TYPO3_DB;
 
-		if (empty($fields)) {
-			$res = $TYPO3_DB->sql_query('SHOW COLUMNS from ' . $tableName);
-			$fields = array();
-			while ($row = $TYPO3_DB->sql_fetch_row($res)) {
-				$fieldName = $row[0];
-				$fieldType = $row[1];
-				if (strpos($fieldType, 'char') !== FALSE
-					|| strpos($fieldType, 'text')  !== FALSE) {
-					$fields[] = $fieldName;
+//		if (empty($fields)) {
+		$searchClause = $separator = '';
+		$foreignFields = array();
+		$columns = Tx_Addresses_Utility_TCA::getColumns($tableName);
+		if (!is_array($columns)) {
+			throw new Exception('<strong>Script stopped</strong> table ' . $tableName . ' has no TCA in ' . __FILE__ . ', line ' .  __LINE__);
+		}
+
+		// Loops around the columns
+		foreach ($columns as $fieldName => $tca) {
+			if (isset($tca['config']['foreign_table'])) {
+				$foreignFields[] = $tca['config'];
+			}
+			else {
+				switch($tca['config']['type']) {
+					case 'select':
+					case 'input':
+					case 'text':
+						$searchClause .= $separator . $fieldName . ' LIKE "%' . $search . '%" ';
+						$separator = ' OR ';
+						break;
+					case 'passthrough':
+					case 'user':
+					default:
+						break;
 				}
 			}
 		}
-
-		$searchClause = ' LIKE "%' . $search . '%"';
-		$searchClause = implode($searchClause . ' OR ', $fields) . ' LIKE "%' . $search . '%"';
-		$searchClause .= ' AND ' . $tableName . '.deleted = 0 ';
+		if ($separator != '') {
+			$searchClause = '(' . $searchClause . ')';
+			$separator = ' AND ';
+		}
+		$searchClause .= $separator . $tableName . '.deleted = 0 ';
 		$searchClause .= t3lib_BEfunc::BEenableFields($tableName);
+
+		// Gets subSelect
+		foreach ($foreignFields as $foreignConfig) {
+			if (isset($foreignConfig['MM'])) {
+				$subSearchClause = $this->getSearchClause($search, $foreignConfig['foreign_table']);
+				$searchClause .= chr(10) . ' OR uid IN (SELECT uid_local FROM ' . $foreignConfig['MM'] . ' WHERE tablenames = "' . $foreignConfig['foreign_table'] . '" AND uid_foreign IN (SELECT uid FROM ' . $foreignConfig['foreign_table'] . ' WHERE ' . $subSearchClause . '))';
+			}
+			else {
+				$subSearchClause = $this->getSearchClause($search, $foreignConfig['foreign_table']);
+				$searchClause .= chr(10) . ' OR uid IN (SELECT uid_foreign FROM ' . $foreignConfig['foreign_table'] . ' WHERE ' . $subSearchClause . ')';
+			}
+		}
+		
 		return $searchClause;
 	}
 

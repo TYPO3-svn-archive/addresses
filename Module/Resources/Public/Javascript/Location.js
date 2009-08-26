@@ -231,6 +231,24 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 	 * @return void
 	 */
 	editInsert: function() {
+		// Fix a bug in ExtJS: reset manually the form
+		// Ext.ComponentMgr.get('functionForm').getForm().reset(); does not work if the form has been loaded
+
+		// Gets the fields
+		var values = Ext.ComponentMgr.get('locationForm').getForm().getValues();
+
+		// Defines a blank object
+		var emptyValues = {};
+		for(property in values) {
+			emptyValues[property] = ""
+		}
+
+		var record = new Ext.data.Record(emptyValues)
+
+		// Loads this blank record
+		Ext.ComponentMgr.get('locationForm').getForm().loadRecord(record);
+		////// end of the fix
+
 		// Get uid_foreign value
 		var uid_foreign = Address.form.findField('uid').getValue();
 

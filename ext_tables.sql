@@ -97,7 +97,8 @@ CREATE TABLE tx_addresses_domain_model_contactnumber (
 	remarks text NOT NULL,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid),
+	KEY uid_foreign (uid_foreign)
 );
 
 #
@@ -128,5 +129,6 @@ CREATE TABLE tx_addresses_domain_model_location (
 	remarks text NOT NULL,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid),
+	KEY uid_foreign (uid_foreign)
 );

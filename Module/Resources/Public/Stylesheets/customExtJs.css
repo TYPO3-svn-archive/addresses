@@ -92,3 +92,7 @@ div.x-tab-panel-header {
     -khtml-user-select: none;
     -webkit-user-select: ignore;
 }
+
+.x-tool-close {
+	visibility: hidden;
+}

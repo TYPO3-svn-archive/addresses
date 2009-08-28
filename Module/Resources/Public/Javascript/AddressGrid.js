@@ -232,48 +232,33 @@ Address.initGrid = function() {
 		},
 
 		/**
-		 * Private property. Useful for simulating a triple click
-		 */
-		counter: 0,
-		timer: 0,
-
-
-		/**
 		 * Listeners
 		 */
 		listeners: {
-			dblclick: function(event) {
-				var parentNode = event.getTarget('div.x-grid3-row');
-				if (parentNode) {
+			click: function(event) {
+				// Don't send mousedown event
+				// - clicking on the checkbox
+				// - clicking on icon edit
+				// - clicking on the expander icon
+				if (event.getTarget().className != 'x-grid3-row-checker' 
+					&& event.getTarget().className != 'pointer'
+					&& event.getTarget().className != 'x-grid3-row-expander') {
 
-					var expander = Ext.query('.x-grid3-row-expander', parentNode)[0];
-					Ext.util.fireEvent(expander, 'mousedown');
+					var parentNode = event.getTarget('div.x-grid3-row');
+					if (parentNode) {
+						var expander = Ext.query('.x-grid3-row-expander', parentNode)[0];
+						Ext.util.fireEvent(expander, 'mousedown');
+					}
 				}
 			},
-			mouseup: function() {
-				// Simulates a triple click
-				clearTimeout(Address.grid.timer)
-				Address.grid.counter++
-				Address.grid.timer = setTimeout("Address.grid.checkCount()", 200)
+			dblclick: function() {
+				Address.window.edit('single');
 			},
 			keypress: function(key) {
 				if (key.keyCode == key.DELETE) {
 					this.deleteRecords();
 				}
 			}
-		},
-
-		/**
-		 * Count the number of click. If 3 mouse clicks have been hitted, then edit the record
-		 *
-		 * @access public
-		 * @return void
-		 */
-		checkCount: function() {
-			if(Address.grid.counter == 3) {
-				Address.window.edit('single');
-			}
-			Address.grid.counter = 0;
 		},
 
 		/**

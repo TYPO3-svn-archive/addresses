@@ -33,7 +33,7 @@
 				<div style="margin-left: 20px; margin-bottom: 10px">
 					<p><?php print $location['street'] ?></p>
 					<p><?php print $location['postal_code'] ?> <?php print $location['locality'] ?></p>
-					<button onclick="window.open('http://maps.google.com/maps?q=<?php print $location['street'] ?> <?php print $location['postal_code'] ?> <?php print $location['locality'] ?>')"
+					<button onclick="window.open('http://maps.google.com/maps?q=<?php print urlencode($location['street']) ?> <?php print $location['postal_code'] ?> <?php print urlencode($location['locality']) ?>')"
 							style="margin-top: 10px">###LLL:EXT:addresses/Module/Resources/Private/Language/locallang.xml:get_map###</button>
 				</div>
 				<?php endforeach ?>

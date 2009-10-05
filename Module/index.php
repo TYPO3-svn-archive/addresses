@@ -197,9 +197,8 @@ class tx_addresses_module extends t3lib_SCbase {
 	 */
 	protected function loadExtJSStaff() {
 
-	// Loads extjs
-		$this->doc->enableExtJsDebug(); // use for debug
-		$this->doc->loadExtJS(true);
+		// Loads extjs
+		$this->doc->getPageRenderer()->loadExtJS();
 
 		// Load special CSS Stylesheets:
 		$this->loadStylesheet($this->resourcesPath . 'Stylesheets/customExtJs.css');

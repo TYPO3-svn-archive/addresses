@@ -1,17 +1,11 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-//Tx_Extbase_Utility_Plugin::registerPlugin(
-//	'Addresses',																	// The name of the extension in UpperCamelCase
-//	'Pi1',																			// A unique name of the plugin in UpperCamelCase
-//	'Address Management',															// A title shown in the backend dropdown field
-//	array(																			// An array holding the controller-action-combinations that are accessible
-//		'Address' => 'index,show,vcard,vcards',										// The first controller and its first action will be the default
-//	),
-//	array(
-//		'Address' => 'index,show,vcard,vcards',										// An array of non-cachable controller-action-combinations (they must already be enabled)
-//	)
-//);
+Tx_Extbase_Utility_Extension::registerPlugin(
+	$_EXTKEY,// The extension name (in UpperCamelCase) or the extension key (in lower_underscore)
+	'Pi1',				// A unique name of the plugin in UpperCamelCase
+	'Addresses Ultimate Edition'	// A title shown in the backend dropdown field
+);
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Addresses');
 

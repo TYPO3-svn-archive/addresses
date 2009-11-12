@@ -29,17 +29,31 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  */
-class Tx_Addresses_Domain_Model_AddressRepository extends Tx_Extbase_Persistence_Repository {
+class Tx_Addresses_Domain_Repository_AddressRepository extends Tx_Extbase_Persistence_Repository {
 	/**
 	 * Find all objects up to a certain limit with a given offset and a sorting order
 	 *
 	 * @param int $limit The maximum items to be displayed at once
+	 * @param int $offset The offset (where to start)
 	 * @param string $sortBy Field to sort the result set
 	 * @return array An array of objects, an empty array if no objects found
 	 */
-	public function findLimit($limit,$sortBy='last_name') {
-		//return $this->findWhere($where, $groupBy = '', $orderBy = '', $limit, $useEnableFields = TRUE);
-		return $this->findWhere('', '', $sortBy, $limit);
+	public function findLimit($limit, $offset, $sortBy='last_name') {
+		$query = $this->createQuery();
+		return  $query->setOrderings(array($sortBy => Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING))
+			->setLimit($limit)
+			->setOffset($offset)
+			->execute();
+	}
+	
+	/**
+	 * Find the count of all objects
+	 *
+	 * @return array An array of objects, an empty array if no objects found
+	 */
+	public function findTotal() {
+		$query = $this->createQuery();
+		return  $query->count();
 	}
 	/**
 	 * Fetch objects with a certain group (doesn't work, don't know how to get mm_query)
@@ -56,14 +70,14 @@ class Tx_Addresses_Domain_Model_AddressRepository extends Tx_Extbase_Persistence
 		$foreign_table = 'tx_addresses_domain_model_addressgroup';
 		$whereClause = 'AND tx_addresses_domain_model_addressgroup.uid IN (' . $groups . ')';
 		
-		$res = $GLOBALS['TYPO3_DB']->exec_SELECT_mm_query($select,$local_table,$mm_table,$foreign_table,$whereClause,'',$sortBy,$limit); 
+		//$res = $GLOBALS['TYPO3_DB']->exec_SELECT_mm_query($select,$local_table,$mm_table,$foreign_table,$whereClause,'',$sortBy,$limit); 
 		
 		$rows = Array();
 		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$rows[] = $row['uid'];	
 		}
 		$foundAddressesList = implode(',', $rows);
-		return $this->findWhere('uid IN (' . $foundAddressesList . ')', '', $sortBy);
+		//return $this->findWhere('uid IN (' . $foundAddressesList . ')', '', $sortBy);
 	}
 	
 

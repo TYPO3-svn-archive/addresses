@@ -54,7 +54,6 @@ class Tx_Addresses_ViewHelpers_PagebrowserViewHelper extends Tx_Fluid_Core_ViewH
 	 * @author Susanne Moog <typo3@susanne-moog.de>
 	 */
 public function render($totalCountOfAddresses=NULL,$maxAddressesToDisplay=5, $previousLabel='previous', $pageLabel='Page', $outOfLabel='out of', $nextLabel='next') {
-
 	$pagesTotal = ceil($totalCountOfAddresses/$maxAddressesToDisplay);
 	if($this->controllerContext->getRequest()->hasArgument('currentPage')) {
 		$currentPage = $this->controllerContext->getRequest()->getArgument('currentPage');
@@ -85,9 +84,11 @@ public function render($totalCountOfAddresses=NULL,$maxAddressesToDisplay=5, $pr
 	 * @author Susanne Moog <typo3@susanne-moog.de>
 	 */
 	private function getLink($page,$linktext='') {
-		$URIBuilder = $this->controllerContext->getURIBuilder();
-		//$uri = $URIBuilder->URIFor($GLOBALS['TSFE']->id, 'index', Array('currentPage' => $page), $controllerName = NULL, $extensionName = NULL, $pluginName = NULL, $pageType = 0, $noCache = FALSE, $useCacheHash = TRUE, $section = '', $linkAccessRestrictedPages = FALSE, $additionalParams = '');
-		$uri = $URIBuilder->URIFor($GLOBALS['TSFE']->id, 'index', Array('currentPage' => $page));
+		$uriBuilder = $this->controllerContext->getUriBuilder();
+		$uri = $uriBuilder
+			->reset()
+			->uriFor('index', Array('currentPage' => $page));		
+
 		$this->tag->addAttribute('href', $uri);
 		$this->tag->setContent($linktext);
 

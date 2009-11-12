@@ -42,7 +42,7 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	 * @return void
 	 */
 	public function initializeAction() {		
-		$this->addressRepository = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');	
+		$this->addressRepository = t3lib_div::makeInstance('Tx_Addresses_Domain_Repository_AddressRepository');	
 	}
 
 	/**
@@ -52,35 +52,25 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	 * @return string The rendered view
 	 */
 	public function indexAction($currentPage = NULL) {
-		$limit = ''; // used to fetch this count of addresses from the database with a given offset (example: 0,5)
-		$data = Array(); // used to store the objects fetched from the repository
-		
 		// TS Config transformed to shorter variable
-		$this->indexSettings = $this->settings['controllers']['Address']['actions']['index'];
-		
-		if($this->indexSettings['stylesheet'] != '') {
-			// "EXT:" shortcut replaced with the extension path
-			$this->indexSettings['stylesheet'] = str_replace('EXT:', t3lib_extMgm::siteRelPath('addresses'), $this->indexSettings['stylesheet']);
-			
-			// Stylesheet
-			$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . $this->indexSettings['stylesheet'] .  '" />');
-		}
-		
-		//SQL limit - like 5,5	
-		$limit = $this->indexSettings['maxItems'] * ($currentPage) . ',' . $this->indexSettings['maxItems'];
-		
-		// Find with or without taking groups into account
-		if(isset($this->indexSettings['groups']) && $this->indexSettings['groups'] != '') {
-			$data = $this->addressRepository->findWithGroups($this->indexSettings['groups'], $limit, $this->indexSettings['sortBy']); 
-			$this->view->assign('totalPages', count($this->addressRepository->findWithGroups($this->indexSettings['groups'])));
-		} else {
-			$data = $this->addressRepository->findLimit($limit,$this->indexSettings['sortBy']);
-			$this->view->assign('totalPages', count($this->addressRepository->findAll()));
-		}
+		$indexSettings = $this->settings['controllers']['Address']['actions']['index'];
+		$limit = (integer)$indexSettings['maxItems']; // used to fetch this count of addresses from the database with a given offset (example: 0,5)
+		$offset = $currentPage ? $limit*$currentPage : 0;
+		$data = Array(); // used to store the objects fetched from the repository
+	
+		$data = $this->addressRepository->findLimit($limit, $offset);
 
-		// Hand the maxItems to the view (for use in the pagebrowser)
-		$this->view->assign('maxItems', $this->indexSettings['maxItems']); 
+		$total = $this->addressRepository->findTotal();
+
+		// "EXT:" shortcut replaced with the extension path
+		$indexSettings['stylesheet'] = str_replace('EXT:', t3lib_extMgm::siteRelPath('addresses'), $indexSettings['stylesheet']);
+
+		// Stylesheet
+		 $GLOBALS['TSFE']->getPageRenderer()->addCssFile($indexSettings['stylesheet']);
 		
+		// Hand the maxItems to the view (for use in the pagebrowser)
+		$this->view->assign('maxItems', $limit); 
+		$this->view->assign('totalPages', $total); 
 		$this->view->assign('addresses', $data);
 		
 	}
@@ -96,11 +86,12 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 		$this->showSettings = $this->settings['controllers']['Address']['actions']['show'];
 		
 		if($this->showSettings['stylesheet'] != '') {
+
 			// "EXT:" shortcut replaced with the extension path
 			$this->showSettings['stylesheet'] = str_replace('EXT:', t3lib_extMgm::siteRelPath('addresses'), $this->showSettings['stylesheet']);
-				
+
 			// Stylesheet
-			$this->response->addAdditionalHeaderData('<link rel="stylesheet" href="' . $this->showSettings['stylesheet'] .  '" />');
+			 $GLOBALS['TSFE']->getPageRenderer()->addCssFile($this->showSettings['stylesheet']);
 		}
 		
 		$this->view->assign('address', $address);

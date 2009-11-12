@@ -1,6 +1,23 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
+/**
+ * Configure the Plugin to call the
+ * right combination of Controller and Action according to
+ * the user input (default settings, FlexForm, URL etc.)
+ */
+Tx_Extbase_Utility_Extension::configurePlugin(
+	$_EXTKEY,
+	'Pi1',		
+	array(																			
+		'Address' => 'index,show,vcard,vcards',	
+		),
+	array(																			
+		'Address' => 'index,show,vcard,vcards',	
+		)
+);
+
+
 // Address
 $TYPO3_CONF_VARS['BE']['AJAX']['AddressController::indexAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/AddressController.php:Tx_Addresses_Controller_AddressController->indexAction';
 $TYPO3_CONF_VARS['BE']['AJAX']['AddressController::editAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/AddressController.php:Tx_Addresses_Controller_AddressController->editAction';

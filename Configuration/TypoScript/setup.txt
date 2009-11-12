@@ -1,17 +1,19 @@
 plugin.tx_addresses {
-	controllers {
-		Address {
-			actions {
-				index {
-					maxItems = 5 
-					groups = 
-					sortBy = first_name
-					stylesheet = EXT:Resources/Public/Stylesheets/index.css				
+	settings{
+		controllers {
+			Address {
+				actions {
+					index {
+						maxItems = 5 
+						groups = 
+						sortBy = first_name
+						stylesheet = EXT:Resources/Public/Stylesheets/index.css				
+					}
+					show {
+						stylesheet = EXT:Resources/Public/Stylesheets/show.css
+					}
 				}
-				show {
-					stylesheet = EXT:Resources/Public/Stylesheets/show.css
-				}
-			}
-		}	
+			}	
+		}
 	}
 }

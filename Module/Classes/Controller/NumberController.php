@@ -42,7 +42,7 @@ $BE_USER->modAccess($MCONF, 1);	// This checks makes sure the user has the permi
 // Pre-Include all models and views
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Controller/ControllerAbstract.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/RepositoryAbstract.php'));
-require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/ContactnumberRepository.php'));
+require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Domain/Model/NumberRepository.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/Preferences.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCA.php'));
 require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/TCE.php'));
@@ -56,7 +56,7 @@ require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/UserTCE.
  * @subpackage	tx_addresses
  * @version 	$Id$
  */
-class Tx_Addresses_Controller_ContactnumberController extends Tx_Addresses_Controller_ControllerAbstract{
+class Tx_Addresses_Controller_NumberController extends Tx_Addresses_Controller_ControllerAbstract{
 
 	/**
 	 * Stores relevant data from extJS
@@ -71,7 +71,7 @@ class Tx_Addresses_Controller_ContactnumberController extends Tx_Addresses_Contr
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'Contactnumber';
+	protected $namespace = 'Number';
 
 	/**
 	 * Initialize method

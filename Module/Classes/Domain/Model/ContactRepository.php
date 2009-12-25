@@ -33,13 +33,13 @@
  * @version $Id$
  */
 
-class Tx_Addresses_Domain_Model_AddressRepository extends Tx_Addresses_Domain_Model_RepositoryAbstract {
+class Tx_Addresses_Domain_Model_ContactRepository extends Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 	/**
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'Address';
+	protected $namespace = 'Contact';
 
 	/**
 	 * Constructor
@@ -60,7 +60,7 @@ class Tx_Addresses_Domain_Model_AddressRepository extends Tx_Addresses_Domain_Mo
 	/**
 	 * Get address(es) for the grid
 	 *
-	 * @param array $data: the uid of the address
+	 * @param array $data: the uid of the contact
 	 * @return	array
 	 */
 	public function findById($dataSet) {
@@ -68,9 +68,9 @@ class Tx_Addresses_Domain_Model_AddressRepository extends Tx_Addresses_Domain_Mo
 	}
 
 	/**
-	 * Delete the address(es)
+	 * Delete the contact(s)
 	 *
-	 * @param array $data: the uid of the address(es)
+	 * @param array $data: the uid of the contact(s)
 	 * @return	boolean
 	 */
 	public function delete($dataSet) {
@@ -78,7 +78,7 @@ class Tx_Addresses_Domain_Model_AddressRepository extends Tx_Addresses_Domain_Mo
 	}
 
 	/**
-	 * Save address(es): UPDATE or INSERT depending on the uid
+	 * Save contact(es): UPDATE or INSERT depending on the uid
 	 *
 	 * @param	array	$values
 	 * @return	array

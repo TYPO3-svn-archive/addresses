@@ -33,13 +33,13 @@
  * @version $Id$
  */
 
-class Tx_Addresses_Domain_Model_ContactnumberRepository extends Tx_Addresses_Domain_Model_RepositoryAbstract {
+class Tx_Addresses_Domain_Model_GroupRepository extends Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 	/**
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'Contactnumber';
+	protected $namespace = 'Group';
 
 	/**
 	 * Constructor
@@ -87,4 +87,5 @@ class Tx_Addresses_Domain_Model_ContactnumberRepository extends Tx_Addresses_Dom
 		return parent::save($dataSet);
 	}
 }
+
 ?>

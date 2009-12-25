@@ -7,7 +7,7 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="address">Address</label>
-			<label index="addressgroup">Addressgroup</label>
+			<label index="group">Group</label>
 			<label index="select_value">Select value...</label>
 			<label index="single">Single</label>
 			<label index="married">Married</label>
@@ -29,14 +29,14 @@
 			<label index="fixed">Fixed</label>
 			<label index="mobile">Mobile</label>
 			<label index="fax">Fax</label>
-			<label index="contactnumber">Contact number</label>
-			<label index="contactnumbers">Contact numbers</label>
+			<label index="number">Contact number</label>
+			<label index="numbers">Contact numbers</label>
 			<label index="location">Location</label>
 			<label index="locations">Locations</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="address">Addresse</label>
-			<label index="addressgroup">Groupe</label>
+			<label index="group">Groupe</label>
 			<label index="select_value">Sélectionner une valeur...</label>
 			<label index="single">Célibataire</label>
 			<label index="married">Marié</label>
@@ -57,8 +57,8 @@
 			<label index="fixed">Fixe</label>
 			<label index="mobile">Mobile</label>
 			<label index="fax">Fax</label>
-			<label index="contactnumber">Numéro de contact</label>
-			<label index="contactnumbers">Numéros de contact</label>
+			<label index="number">Numéro de contact</label>
+			<label index="numbers">Numéros de contact</label>
 			<label index="location">Lieu</label>
 			<label index="locations">Lieux</label>
 		</languageKey>

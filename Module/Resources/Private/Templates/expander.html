@@ -39,23 +39,23 @@
 				<?php endforeach ?>
 			</td>
 			<?php endif ?>
-			<?php if (!empty($contactnumbers)): ?>
+			<?php if (!empty($numbers)): ?>
 			<td>
-				<?php foreach ($contactnumbers as $contactnumber): ?>
-				<p style="font-size: 104%; color: gray;"><?php print $contactnumber['nature']?></p>
+				<?php foreach ($numbers as $number): ?>
+				<p style="font-size: 104%; color: gray;"><?php print $number['nature']?></p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
-					<p><?php print $contactnumber['number_evaluated']?></p>
+					<p><?php print $number['number_evaluated']?></p>
 				</div>
 				<?php endforeach ?>
 			</td>
 			<?php endif ?>
-			<?php if (!empty($addressgroups)): ?>
+			<?php if (!empty($groups)): ?>
 			<td>
 				<p style="font-size: 104%; color: gray">###LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups###</p>
 				<div style="margin-left: 20px; margin-bottom: 20px">
 					<ul>
-					<?php foreach ($addressgroups as $addressgroup): ?>
-						<li style="list-style-type: disc"><?php print $addressgroup['title']?></li>
+					<?php foreach ($groups as $group): ?>
+						<li style="list-style-type: disc"><?php print $group['title']?></li>
 					<?php endforeach ?>
 					</ul>
 				</div>

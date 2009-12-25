@@ -24,7 +24,7 @@
 ***************************************************************/
 
 /**
- * A single addressgroup
+ * A single group
  *
  * @version $Id:$
  * @copyright Copyright belongs to the respective authors
@@ -32,17 +32,17 @@
  * @scope prototype
  * @entity
  */
-class Tx_Addresses_Domain_Model_Addressgroup extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_Addresses_Domain_Model_Group extends Tx_Extbase_DomainObject_AbstractEntity {
 	
 	/**
-	 * The addressgroups title
+	 * The groups title
 	 *
 	 * @var string
 	 */
 	protected $title = '';
 
 	/**
-	 * The addressgroups description
+	 * The groups description
 	 *
 	 * @var string
 	 */
@@ -50,7 +50,7 @@ class Tx_Addresses_Domain_Model_Addressgroup extends Tx_Extbase_DomainObject_Abs
 
 
 	/**
-	 * Constructs this addressgroup
+	 * Constructs this group
 	 *
 	 * @return
 	 */
@@ -58,9 +58,9 @@ class Tx_Addresses_Domain_Model_Addressgroup extends Tx_Extbase_DomainObject_Abs
 	}
 	
 	/**
-	 * Sets this addressgroups title
+	 * Sets this groups title
 	 *
-	 * @param string $title The addressgroups title
+	 * @param string $title The groups title
 	 * @return void
 	 */
 	public function setTitle($title) {
@@ -68,16 +68,16 @@ class Tx_Addresses_Domain_Model_Addressgroup extends Tx_Extbase_DomainObject_Abs
 	}
 
 	/**
-	 * Returns the addressgroups title
+	 * Returns the groups title
 	 *
-	 * @return string The addressgroups title
+	 * @return string The groups title
 	 */
 	public function getTitle() {
 		return $this->title;
 	}
 
 	/**
-	 * Sets the remarks for the addressgroup
+	 * Sets the remarks for the group
 	 *
 	 * @param string $remarks
 	 * @return void
@@ -97,7 +97,7 @@ class Tx_Addresses_Domain_Model_Addressgroup extends Tx_Extbase_DomainObject_Abs
 
 
 	/**
-	 * Returns this addressgroup as a formatted string
+	 * Returns this group as a formatted string
 	 *
 	 * @return string
 	 */

@@ -261,11 +261,11 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	protected $remarks = '';
 
 	/**
-	 * The addressgroups of the contact
+	 * The groups of the contact
 	 *
 	 * @var array
 	 */
-	protected $addressgroups = array();
+	protected $groups = array();
 
 	/**
 	 * Constructs this address
@@ -884,34 +884,34 @@ class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
-	 * Sets the addressgroups for the contact
+	 * Sets the groups for the contact
 	 *
-	 * @param array $addressgroups
+	 * @param array $groups
 	 * @return void
 	 */
-	public function setAddressgroups(array $addressgroups) {
-		foreach ($addressgroups as $addressgroup) {
-			$this->addAddressgroup($addressgroup);
+	public function setGroups(array $groups) {
+		foreach ($groups as $group) {
+			$this->addGroup($group);
 		}
 	}
 
 	/**
-	 * Returns the addressgroups
+	 * Returns the groups
 	 *
 	 * @return string
 	 */
-	public function getAddressgroups() {
-		return $this->addressgroups;
+	public function getGroups() {
+		return $this->groups;
 	}
 
 	/**
-	 * Adds a addressgroup to this contact
+	 * Adds a group to this contact
 	 *
-	 * @param Tx_Addresses_Domain_Model_Addressgroup $addressgroup
+	 * @param Tx_Addresses_Domain_Model_Group $group
 	 * @return void
 	 */
-	public function addAddressgroup(Tx_Addresses_Domain_Model_Addressgroup $addressgroup) {
-		$this->addressgroups[] = $addressgroup;
+	public function addGroup(Tx_Addresses_Domain_Model_Group $group) {
+		$this->groups[] = $group;
 	}
 
 	/**

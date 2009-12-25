@@ -2,7 +2,7 @@
 $TCA['tx_addresses_domain_model_address'] = Array (
 	'ctrl' => $TCA['tx_addresses_domain_model_address']['ctrl'],
 	'interface' => Array (
-		'showRecordFieldList' => 'gender,first_name,last_name,birth_date,marital_status,address,locality,postal_code,country,preferred_language,phone,fax,email,website,title,company,room,building,image,addressgroups,region'
+		'showRecordFieldList' => 'gender,first_name,last_name,birth_date,marital_status,address,locality,postal_code,country,preferred_language,phone,fax,email,website,title,company,room,building,image,groups,region'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_address']['feInterface'],
 	'columns' => Array (
@@ -259,9 +259,9 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			)
 		),
 		// itemselector widget
-		'addressgroups' => array(
+		'groups' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.addressgroup',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.group',
 			'config' => array(
 				'type' => 'select',
 				'size' => 10,
@@ -269,17 +269,17 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 				'maxitems' => 9999,
 				'autoSizeMax' => 30,
 				'multiple' => 1,
-				'foreign_class' => 'Tx_Addresses_Domain_Model_Addressgroup',
-				'foreign_table' => 'tx_addresses_domain_model_addressgroup',
-				'MM' => 'tx_addresses_address_addressgroup_mm',
+				'foreign_class' => 'Tx_Addresses_Domain_Model_Group',
+				'foreign_table' => 'tx_addresses_domain_model_group',
+				'MM' => 'tx_addresses_address_group_mm',
 				'MM_match_fields' => array(
-					'tablenames' => 'tx_addresses_domain_model_addressgroup'
+					'tablenames' => 'tx_addresses_domain_model_group'
 				),
 			)
 		),
-		'contactnumbers' => array(
+		'numbers' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.contactnumber',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.number',
 			'config' => array(
 				'type' => 'input',
 				'size' => '20',
@@ -327,7 +327,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 	),
 	'types' => Array (
-		'1' => Array('showitem' => 'hidden;;;;1-1-1, gender, first_name, last_name;;2;;3-3-3,company;;6, address, postal_code, locality;;3, email;;5, phone;;4, image;;;;4-4-4, remarks;;;;4-4-4, addressgroups')
+		'1' => Array('showitem' => 'hidden;;;;1-1-1, gender, first_name, last_name;;2;;3-3-3,company;;6, address, postal_code, locality;;3, email;;5, phone;;4, image;;;;4-4-4, remarks;;;;4-4-4, groups')
 	),
 	'palettes' => Array (
 		'2' => Array('showitem' => 'title, birth_date, marital_status'),
@@ -336,12 +336,12 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 	)
 );
 
-$TCA['tx_addresses_domain_model_addressgroup'] = array(
-	'ctrl' => $TCA['tx_addresses_domain_model_addressgroup']['ctrl'],
+$TCA['tx_addresses_domain_model_group'] = array(
+	'ctrl' => $TCA['tx_addresses_domain_model_group']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => 'hidden,title,remarks'
 	),
-	'feInterface' => $TCA['tx_addresses_domain_model_addressgroup']['feInterface'],
+	'feInterface' => $TCA['tx_addresses_domain_model_group']['feInterface'],
 	'columns' => array(
 		'uid' => Array (
 			'config' => Array (
@@ -420,12 +420,12 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array(
 	)
 );
 
-$TCA['tx_addresses_domain_model_contactnumber'] = array(
-	'ctrl' => $TCA['tx_addresses_domain_model_contactnumber']['ctrl'],
+$TCA['tx_addresses_domain_model_number'] = array(
+	'ctrl' => $TCA['tx_addresses_domain_model_number']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => 'hidden,title,remarks'
 	),
-	'feInterface' => $TCA['tx_addresses_domain_model_contactnumber']['feInterface'],
+	'feInterface' => $TCA['tx_addresses_domain_model_number']['feInterface'],
 	'columns' => array(
 		'uid' => Array (
 			'config' => Array (

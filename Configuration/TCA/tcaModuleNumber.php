@@ -1,7 +1,7 @@
 <?php
 
 // This section describes the columns of the grid.
-$domainName = 'tx_addresses_domain_model_contactnumber';
+$domainName = 'tx_addresses_domain_model_number';
 t3lib_div::loadTCA($domainName);
 
 $TCA[$domainName]['types']['module']['showitem'] = array(
@@ -12,7 +12,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 		// Describes the tab of the left panel
 		'panels' => array (
 			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contactnumbers',
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:numbers',
 				'fields' => array(
 					array(
 						array('fieldName' => 'type', 'columnWidth' => 0.5),

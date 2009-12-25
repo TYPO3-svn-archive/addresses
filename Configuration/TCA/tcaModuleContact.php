@@ -101,12 +101,12 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 				'fields' => array('locations'),
 			),
 			array(
-				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contactnumbers',
-				'fields' => array('contactnumbers'),
+				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:numbers',
+				'fields' => array('numbers'),
 			),
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:groups',
-				'fields' => array('addressgroups'),
+				'fields' => array('groups'),
 			),
 		),
 	),
@@ -124,13 +124,13 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 );
 
 // Overrides default TCA configuration according to ExtJS needs
-$TCA[$domainName]['columns']['addressgroups']['config']['label'] = '';
+$TCA[$domainName]['columns']['groups']['config']['label'] = '';
 $TCA[$domainName]['columns']['gender']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
 $TCA[$domainName]['columns']['marital_status']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
-$TCA[$domainName]['columns']['contactnumbers']['config'] = Array(
+$TCA[$domainName]['columns']['numbers']['config'] = Array(
 	'type' => 'user',
-	'userFunc' => 'Tx_Addresses_Utility_UserTCE::getContactnumbersField',
-	'foreign_table' => 'tx_addresses_domain_model_contactnumber',
+	'userFunc' => 'Tx_Addresses_Utility_UserTCE::getNumbersField',
+	'foreign_table' => 'tx_addresses_domain_model_number',
 );
 
 $TCA[$domainName]['columns']['locations']['config'] = Array(

@@ -1,7 +1,7 @@
 <?php
 
 // This section describes the columns of the grid.
-$domainName = 'tx_addresses_domain_model_addressgroup';
+$domainName = 'tx_addresses_domain_model_group';
 t3lib_div::loadTCA($domainName);
 
 $TCA[$domainName]['types']['module']['showitem'] = array(

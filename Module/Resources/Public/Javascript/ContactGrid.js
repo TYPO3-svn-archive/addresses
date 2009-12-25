@@ -33,7 +33,7 @@
  * @version $Id$
  */
 
-Address.initGrid = function() {
+Contact.initGrid = function() {
 
 	// Overrides weird translation (At least for French)
 	if(Ext.PagingToolbar) {
@@ -43,7 +43,7 @@ Address.initGrid = function() {
 	}
 
 	// Defines variables
-	Address.utility = new Object();
+	Contact.utility = new Object();
 	var configuration = new Object();
 
 	/**
@@ -75,9 +75,9 @@ Address.initGrid = function() {
 		header : '&nbsp;',
 		renderer: function(val) {
 			//			output = '<img class="pointer" src="' + configuration.iconsPath + 'zoom.png" alt="view" onclick=""/>&nbsp;';
-			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" alt="edit" onclick="Address.window.edit(\'single\')"/>&nbsp;';
-			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.png" alt="copy" onclick="Address.window.edit(\'copy\')"/>&nbsp;';
-			output += '<img class="pointer" src="' + configuration.iconsPath + 'garbage.png" alt="delete" onclick="Address.grid.deleteRecords()"/>&nbsp;';
+			output = '<img class="pointer" src="' + configuration.iconsPath + 'pencil.png" alt="edit" onclick="Contact.window.edit(\'single\')"/>&nbsp;';
+			output += '<img class="pointer" src="' + configuration.iconsPath + 'clip_copy.png" alt="copy" onclick="Contact.window.edit(\'copy\')"/>&nbsp;';
+			output += '<img class="pointer" src="' + configuration.iconsPath + 'garbage.png" alt="delete" onclick="Contact.grid.deleteRecords()"/>&nbsp;';
 			return output;
 		},
 		dataIndex: 'uid'
@@ -87,15 +87,15 @@ Address.initGrid = function() {
 	 * Datasource
 	 */
 	configuration.datasource = new Ext.data.Store({
-		storeId: 'addressStore',
+		storeId: 'contactStore',
 		autoLoad: true,
 		reader: new Ext.data.JsonReader({
-			fields: Address.gridFieldsType,
+			fields: Contact.gridFieldsType,
 			root: 'records',
 			totalProperty: 'total'
 		}),
 		baseParams: {
-			ajaxID: 'AddressController::indexAction',
+			ajaxID: 'ContactController::indexAction',
 			limit: Addresses.statics.pagingSize
 		},
 		remoteSort: true,
@@ -119,9 +119,9 @@ Address.initGrid = function() {
 				}
 				
 				// @debug like a double click on the first row
-//				var sm = Address.grid.getSelectionModel();
+//				var sm = Contact.grid.getSelectionModel();
 //				sm.selectFirstRow();
-//				Address.window.edit('single');
+//				Contact.window.edit('single');
 			}
 		}
 
@@ -136,9 +136,9 @@ Address.initGrid = function() {
 		icon: configuration.iconsPath + 'accept.png',
 		cls: 'x-btn-text-icon',
 		handler: function() {
-			Address.window.setTitle(Addresses.lang.new_record); // set title
-			Address.window.show();
-			Address.window.focusOnFirstVisibleField();
+			Contact.window.setTitle(Addresses.lang.new_record); // set title
+			Contact.window.show();
+			Contact.window.focusOnFirstVisibleField();
 		}
 	},
 	'-',
@@ -149,7 +149,7 @@ Address.initGrid = function() {
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			Address.window.edit('multiple');
+			Contact.window.edit('multiple');
 		}
 	},
 	'-',
@@ -160,7 +160,7 @@ Address.initGrid = function() {
 		cls: 'x-btn-text-icon',
 		disabled: true,
 		handler: function() {
-			Address.grid.deleteRecords();
+			Contact.grid.deleteRecords();
 		}
 	},
 	{
@@ -196,15 +196,15 @@ Address.initGrid = function() {
 	};
 
 	// adjust columns layout + render the grid
-	Address.gridFields.unshift(configuration.checkbox, configuration.expander); // add checkbox + expander to the grid
-	Address.gridFields.push(configuration.controller);
+	Contact.gridFields.unshift(configuration.checkbox, configuration.expander); // add checkbox + expander to the grid
+	Contact.gridFields.push(configuration.controller);
 	
 	/**
 	 * Initializes the grid
 	 *
 	 * @return void
 	 **/
-	Address.grid = new Ext.grid.GridPanel({
+	Contact.grid = new Ext.grid.GridPanel({
 		/**
 		 * Public property
 		 */
@@ -223,7 +223,7 @@ Address.initGrid = function() {
 			msg: Addresses.lang.loading
 		},
 		plugins: configuration.expander,
-		columns: Address.gridFields,
+		columns: Contact.gridFields,
 		sm: configuration.checkbox,
 		tbar: configuration.topBar,
 		bbar: configuration.bottomBar,
@@ -252,7 +252,7 @@ Address.initGrid = function() {
 				}
 			},
 			dblclick: function() {
-				Address.window.edit('single');
+				Contact.window.edit('single');
 			},
 			keypress: function(key) {
 				if (key.keyCode == key.DELETE) {
@@ -267,7 +267,7 @@ Address.initGrid = function() {
 		 * @return String
 		 */
 		getDeleteMessage: function() {
-			var items = Address.grid.getSelectionModel().getSelections();
+			var items = Contact.grid.getSelectionModel().getSelections();
 			var message = '';
 			if (items.length <= 5) {
 				for (var index = 0; index < items.length; index ++) {
@@ -293,7 +293,7 @@ Address.initGrid = function() {
 		 * @return Array
 		 */
 		getSelection: function() {
-			return Address.grid.getSelectionModel().getSelections();
+			return Contact.grid.getSelectionModel().getSelections();
 		},
 
 
@@ -321,12 +321,12 @@ Address.initGrid = function() {
 		 * @return void
 		 */
 		deleteRecords: function() {
-			var dataSet = Address.grid.getSelectedUids();
+			var dataSet = Contact.grid.getSelectedUids();
 
 			Ext.Msg.show({
 				title: Addresses.lang.remove,
 				buttons: Ext.MessageBox.YESNO,
-				msg: Address.grid.getDeleteMessage(),
+				msg: Contact.grid.getDeleteMessage(),
 				fn: function(btn){
 					if (btn == 'yes' && dataSet.length > 0){
 						var conn = new Ext.data.Connection();
@@ -402,7 +402,7 @@ Address.initGrid = function() {
 		showControlIcons: function(event, element) {
 
 			// this= a row of the grid
-			var gridView = Address.grid.getView();
+			var gridView = Contact.grid.getView();
 
 			// Find out the column index
 			var columnIndex = gridView.findRowIndex(element);
@@ -413,7 +413,7 @@ Address.initGrid = function() {
 			var images = Ext.query('img[alt=edit]', row);
 
 			// ... and Find out the cell index
-			var cellIndex = Address.grid.getView().findCellIndex(images[0]);
+			var cellIndex = Contact.grid.getView().findCellIndex(images[0]);
 
 			// Get reference of the cell that contains the control icon
 			var controlIconCell = gridView.getCell(columnIndex, cellIndex);
@@ -428,15 +428,15 @@ Address.initGrid = function() {
 	});
 
 	// Attaches event
-	Ext.getCmp('expandButton').on ('click', Address.grid.expand, this.grid);
-	Ext.getCmp('collapseButton').on ('click', Address.grid.collapse, this.grid);
+	Ext.getCmp('expandButton').on ('click', Contact.grid.expand, this.grid);
+	Ext.getCmp('collapseButton').on ('click', Contact.grid.collapse, this.grid);
 
 	/**
 	 * Initializes the listener on the selection
 	 *
 	 * @return void
 	 **/
-	Address.grid.getSelectionModel().on(
+	Contact.grid.getSelectionModel().on(
 		'selectionchange',
 		function(selModel) {
 			// Other possible writing
@@ -454,7 +454,7 @@ Address.initGrid = function() {
 	/**
 	 * Attach event when the grid is refreshed.
 	 */
-	Address.grid.getView().on({
+	Contact.grid.getView().on({
 		refresh: function() {
 			var numberOfRows = this.grid.getStore().getCount();
 
@@ -468,10 +468,10 @@ Address.initGrid = function() {
 				});
 
 				// Attache some event
-				Ext.get(row).on('mouseenter', Address.grid.showControlIcons, {
+				Ext.get(row).on('mouseenter', Contact.grid.showControlIcons, {
 					visibility: 'visible'
 				});
-				Ext.get(row).on('mouseleave', Address.grid.showControlIcons, {
+				Ext.get(row).on('mouseleave', Contact.grid.showControlIcons, {
 					visibility: 'hidden'
 				});
 			}

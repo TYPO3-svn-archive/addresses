@@ -107,7 +107,7 @@ Address.initWindow = function() {
 					Ext.ComponentMgr.get('addressResetButton').enable();
 					for (var index = 0; index < Addresses.statics.foreignFields.length; index ++) {
 						var storeName = Addresses.statics.foreignFields[index];
-						if (storeName != 'addressgroups') {
+						if (storeName != 'groups') {
 							if (eval('Address.stores.' + storeName)) {
 								eval('Address.stores.' + storeName + '.removeAll();');
 							}

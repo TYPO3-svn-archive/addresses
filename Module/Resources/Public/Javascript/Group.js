@@ -9,7 +9,7 @@
  * @version $Id$
  */
 
-Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
+Ext.ux.Group = Ext.extend(Ext.Panel, {
 	buttonText: '',
 	saveButtonText: '',
 
@@ -23,7 +23,7 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 			items:[
 			{
 				name: this.name,
-//				id:"address_addressgroups",
+//				id:"address_groups",
 				fieldLabel: this.fieldLabel,
 				xtype: "itemselector",
 				imagePath: "Resources\/Public\/Icons",
@@ -57,7 +57,7 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 		});
 
 		// Calls parent method
-		Ext.ux.Addressgroup.superclass.initComponent.call(this, arguments);
+		Ext.ux.Group.superclass.initComponent.call(this, arguments);
 	},
 
 	/**
@@ -75,7 +75,7 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 			frame: true,
 			labelAlign: 'top',
 			hideMode: 'display',
-			items: Addressgroup.windowFields
+			items: Group.windowFields
 		});
 
 		var panel = Address.window.get(0);
@@ -138,7 +138,7 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 
 		// TRUE means this is a new record
 		if (typeof(event.id) == 'undefined') {
-//			Addressgroup.panel.editInsert();
+//			Group.panel.editInsert();
 		}
 		else {
 
@@ -185,8 +185,8 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 //			element = element.parentNode;
 //		}
 //		var uid = element.id.substring(20);
-//		var record = Address.stores.addressgroups.getById(uid);
-//		var form = Ext.ComponentMgr.get('addressgroupForm').getForm();
+//		var record = Address.stores.groups.getById(uid);
+//		var form = Ext.ComponentMgr.get('groupForm').getForm();
 //		form.loadRecord(record);
 //	},
 
@@ -197,12 +197,12 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 	 * @return void
 	 */
 //	deleteRecord: function(event, element) {
-//		var uid = element.id.replace('contactNumberDeleteImg', '');
-//		var record = Address.stores.addressgroups.getById(uid);
+//		var uid = element.id.replace('numberDeleteImg', '');
+//		var record = Address.stores.groups.getById(uid);
 //		Ext.Msg.show({
 //			title: Addresses.lang.remove,
 //			buttons: Ext.MessageBox.YESNO,
-//			msg: Addresses.lang.are_you_sure_addressgroup + ' ' + record.data.number_evaluated + '?',
+//			msg: Addresses.lang.are_you_sure_group + ' ' + record.data.number_evaluated + '?',
 //			fn: function(btn){
 //				if (btn == 'yes'){
 //					// Defines the data to transmit
@@ -215,11 +215,11 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 //						method: 'GET',
 //						url: Addresses.statics.ajaxController,
 //						params:{
-//							ajaxID: 'AddressgroupController::deleteAction',
+//							ajaxID: 'GroupController::deleteAction',
 //							dataSet: Ext.util.JSON.encode(dataSet)
 //						},
 //						success: function(f,a){
-//							Address.stores.addressgroups.remove(record);
+//							Address.stores.groups.remove(record);
 //						},
 //						failure: function(f,a){
 //							if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -257,14 +257,14 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 			url: Addresses.statics.ajaxController,
 			waitMsg: Addresses.lang.saving,
 			params:{
-				ajaxID: 'AddressgroupController::saveAction'
+				ajaxID: 'GroupController::saveAction'
 			},
 			success: function(form, call){
 				var record = call.result.records[0];
 				// removes the old record for updated record
 //				if (call.result.request == 'UPDATE') {
-//					var _record = Address.stores.addressgroups.getById(record.uid);
-//					Address.stores.addressgroups.remove(_record)
+//					var _record = Address.stores.groups.getById(record.uid);
+//					Address.stores.groups.remove(_record)
 //				}
 				// Adds, sorts and regenerates the layout.
 //				console.log(fieldName);
@@ -278,8 +278,8 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 					'' + fieldName + '_text: title' +
 				'}, uid));'
 				eval(command)
-//				Address.stores.addressgroups.add(new Ext.data.Record(record, record.uid));
-//				Address.stores.addressgroups.sort('uid', 'ASC');
+//				Address.stores.groups.add(new Ext.data.Record(record, record.uid));
+//				Address.stores.groups.sort('uid', 'ASC');
 				Ext.ComponentMgr.get('address_' + fieldName).reset();
 			},
 			failure: function(form,call){
@@ -356,4 +356,4 @@ Ext.ux.Addressgroup = Ext.extend(Ext.Panel, {
 	}
 });
 
-Ext.reg('addressgroups', Ext.ux.Addressgroup);
+Ext.reg('groups', Ext.ux.Group);

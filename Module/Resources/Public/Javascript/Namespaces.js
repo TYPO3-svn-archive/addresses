@@ -33,7 +33,7 @@
  */
 
 Ext.namespace("Addresses");
-Ext.namespace("Address");
-Ext.namespace("Addressgroup");
-Ext.namespace("Contactnumber");
+Ext.namespace("Contact");
+Ext.namespace("Group");
+Ext.namespace("Number");
 Ext.namespace("Location");

@@ -36,13 +36,14 @@
 Addresses.initialize = function() {
 //	Ext.QuickTips.init();
 
-	Address.initGrid();
+	Contact.initGrid();
 	// @debug For loading the first row automatically check AddressGrid.js, method "load:"
 
 	// Prepare + initialize editing window
-	Address.initWindow();
-	Address.window.init();
-	Address.form = Ext.ComponentMgr.get('addressForm').getForm();
+//	Address.initWindow();
+//	Address.window.init();
+//	Address.form = Ext.ComponentMgr.get('addressForm').getForm();
+
 //	Address.window.findByType('tabpanel')[0].setActiveTab(1);
 //	Address.window.show();
 

@@ -539,7 +539,7 @@ EOF;
 //		global $LANG;
 //		$configuration['xtype'] = 'button';
 //		$configuration['buttonText'] = $LANG->getLL('addNewElement');
-//		$configuration['saveButtonText'] = $LANG->getLL('saveAddressgroups');
+//		$configuration['saveButtonText'] = $LANG->getLL('saveGroups');
 //		$configuration['cls'] = 'x-btn-text-icon';
 //		$configuration['icon'] = 'Resources/Public/Icons/add.png';
 //		$configuration['anchor'] = '30%';

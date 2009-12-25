@@ -43,12 +43,12 @@
 	 * @param	array		$fieldName
 	 * @return	array
 	 */
-	public static function getContactnumbersField($namespace, &$columns, $fieldName) {
+	public static function getNumbersField($namespace, &$columns, $fieldName) {
 		global $LANG;
-		$configuration['xtype'] = 'contactnumber';
-		$configuration['id'] = 'address_contactnumbers';
+		$configuration['xtype'] = 'number';
+		$configuration['id'] = 'address_numbers';
 		$configuration['fieldLabel'] = '';
-		$configuration['buttonText'] = $LANG->getLL('addNewContactnumber');
+		$configuration['buttonText'] = $LANG->getLL('addNewNumber');
 		return $configuration;
 //		$configuration = self::getCommonConfiguration($columns, $fieldName, $namespace);
 //		$tca =  $columns[$fieldName]['config'];

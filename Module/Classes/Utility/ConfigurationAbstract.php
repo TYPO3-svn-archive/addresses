@@ -26,7 +26,7 @@
 ***************************************************************/
 
 /**
- * Utilities to manage the configuration of tx_addresses_domain_model_addressgroup
+ * Utilities to manage the configuration of tx_addresses_domain_model_group
  *
  * @package Addresses
  * @subpackage addresses

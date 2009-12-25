@@ -26,19 +26,19 @@
 ***************************************************************/
 
 /**
- * Utilities to manage the configuration of tx_addresses_domain_model_addressgroup
+ * Utilities to manage the configuration of tx_addresses_domain_model_group
  *
  * @package Addresses
  * @subpackage addresses
  * @version $ID:$
  */
-class Tx_Addresses_Utility_ContactnumberConfiguration extends Tx_Addresses_Utility_ConfigurationAbstract {
+class Tx_Addresses_Utility_GroupConfiguration extends Tx_Addresses_Utility_ConfigurationAbstract {
 
 	/**
 	 *
 	 * @var array
 	 */
-	protected static $namespace = 'Contactnumber';
+	protected static $namespace = 'Group';
 
 	
 	/**
@@ -76,7 +76,7 @@ class Tx_Addresses_Utility_ContactnumberConfiguration extends Tx_Addresses_Utili
 	 * @return	array
 	 */
 	 public static function getStores() {
-		return parent::getStores(self::$namespace);
+		return array();
 	 }
 
 }

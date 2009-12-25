@@ -26,20 +26,21 @@
 ***************************************************************/
 
 /**
- * Utilities to manage the configuration of tx_addresses_domain_model_address
+ * Utilities to manage the configuration of tx_addresses_domain_model_group
  *
  * @package Addresses
  * @subpackage addresses
  * @version $ID:$
  */
-class Tx_Addresses_Utility_AddressConfiguration extends Tx_Addresses_Utility_ConfigurationAbstract {
+class Tx_Addresses_Utility_NumberConfiguration extends Tx_Addresses_Utility_ConfigurationAbstract {
 
 	/**
 	 *
 	 * @var array
 	 */
-	protected static $namespace = 'Address';
+	protected static $namespace = 'Number';
 
+	
 	/**
 	 * Gets the configuration for the Ext JS interface. The return array is going to be converted into JSON.
 	 *
@@ -47,16 +48,16 @@ class Tx_Addresses_Utility_AddressConfiguration extends Tx_Addresses_Utility_Con
 	 * @return	array
 	 */
 	public static function getGridConfiguration() {
-		return parent::getGridConfiguration(self::$namespace);
+		return array();
 	}
-
+	
 	/**
 	 * Extracts the JavaScript configuration fields name.
 	 *
 	 * @return array
 	 */
 	public static function getFieldsTypeInGrid() {
-		return parent::getFieldsTypeInGrid(self::$namespace);
+		return array();
 	}
 
 	/**
@@ -75,8 +76,6 @@ class Tx_Addresses_Utility_AddressConfiguration extends Tx_Addresses_Utility_Con
 	 * @return	array
 	 */
 	 public static function getStores() {
-//		$stores[] = Tx_Addresses_Utility_TCE::getCustomStore('localities', 'postal_code', 'locality', 'tx_addresses_domain_model_address');
-//		return array_merge($stores, parent::getStores(self::$namespace));
 		return parent::getStores(self::$namespace);
 	 }
 

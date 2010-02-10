@@ -231,7 +231,8 @@ abstract class Tx_Addresses_Domain_Model_RepositoryAbstract {
 		global $TYPO3_DB;
 		$clause = $this->getUidClause($dataSet);
 		$clause .= ' AND deleted = 0';
-		$clause .= t3lib_BEfunc::BEenableFields($this->tableName);
+		# hidden = 0 is not wanted in the clause
+		#$clause .= t3lib_BEfunc::BEenableFields($this->tableName);
 		$output['success'] = FALSE;
 		if ($clause != '') {
 			$columns = Tx_Addresses_Utility_TCA::getColumns($this->namespace);

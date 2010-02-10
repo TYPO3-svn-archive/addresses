@@ -1,7 +1,7 @@
 #
 # Table structure for table 'tx_addresses_domain_model_address'
 #
-CREATE TABLE tx_addresses_domain_model_address (
+CREATE TABLE tx_addresses_domain_model_contact (
 	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
 	pid int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -26,24 +26,24 @@ CREATE TABLE tx_addresses_domain_model_address (
 	marital_status int(11) unsigned DEFAULT '0' NOT NULL,
 	org_type tinytext NOT NULL,
 	org_name tinytext NOT NULL,
-	email varchar(80) DEFAULT '' NOT NULL,
 	company varchar(80) DEFAULT '' NOT NULL,
 	website tinytext NOT NULL,
 	image tinyblob NOT NULL,
 	remarks text NOT NULL,
-	addressgroups int(11) DEFAULT '0' NOT NULL,
-	contactnumbers int(11) DEFAULT '0' NOT NULL,
+	groups int(11) DEFAULT '0' NOT NULL,
+	functions int(11) DEFAULT '0' NOT NULL,
+	numbers int(11) DEFAULT '0' NOT NULL,
 	locations int(11) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY pid (pid,email)
+	KEY pid (pid)
 );
 
 
 #
-# Table structure for table 'tx_addresses_domain_model_addressgroup'
+# Table structure for table 'tx_addresses_domain_model_group'
 #
-CREATE TABLE tx_addresses_domain_model_addressgroup (
+CREATE TABLE tx_addresses_domain_model_group (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,
@@ -60,10 +60,10 @@ CREATE TABLE tx_addresses_domain_model_addressgroup (
 );
 
 #
-# Table structure for table 'tx_addresses_address_addressgroup_mm'
+# Table structure for table 'tx_addresses_address_group_mm'
 #
 #
-CREATE TABLE tx_addresses_address_addressgroup_mm (
+CREATE TABLE tx_addresses_address_group_mm (
 	uid_local int(11) DEFAULT '0' NOT NULL,
 	uid_foreign int(11) DEFAULT '0' NOT NULL,
 	tablenames varchar(64) DEFAULT '' NOT NULL,
@@ -74,9 +74,9 @@ CREATE TABLE tx_addresses_address_addressgroup_mm (
 );
 
 #
-# Table structure for table 'tx_addresses_address_contactnumber'
+# Table structure for table 'tx_addresses_address_contact_number'
 #
-CREATE TABLE tx_addresses_domain_model_contactnumber (
+CREATE TABLE tx_addresses_domain_model_number (
 	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
 	pid int(11) unsigned DEFAULT '0' NOT NULL,
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
@@ -102,7 +102,28 @@ CREATE TABLE tx_addresses_domain_model_contactnumber (
 );
 
 #
-# Table structure for table 'tx_addresses_address_contactnumber'
+# Table structure for table 'tx_addresses_domain_model_email_address'
+#
+CREATE TABLE tx_addresses_domain_model_email (
+	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
+	pid int(11) unsigned DEFAULT '0' NOT NULL,
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	email_address varchar(80) DEFAULT '' NOT NULL,
+	remarks text NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid),
+	KEY uid_foreign (uid_foreign)
+);
+
+#
+# Table structure for table 'tx_addresses_addresse_location'
 #
 CREATE TABLE tx_addresses_domain_model_location (
 	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
@@ -130,5 +151,37 @@ CREATE TABLE tx_addresses_domain_model_location (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
+	KEY uid_foreign (uid_foreign)
+);
+
+#
+# Table structure for table 'tx_addresses_address_function'
+#
+CREATE TABLE tx_addresses_domain_model_function (
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	tstamp int(11) DEFAULT '0' NOT NULL,
+	crdate int(11) DEFAULT '0' NOT NULL,
+	cruser_id int(11) DEFAULT '0' NOT NULL,
+	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(10) DEFAULT '0' NOT NULL,
+	deleted tinyint(4) DEFAULT '0' NOT NULL,
+	hidden tinyint(4) DEFAULT '0' NOT NULL,
+	title tinytext NOT NULL,
+	remarks text NOT NULL,
+	PRIMARY KEY (uid),
+	KEY parent (pid)
+);
+
+#
+# Table structure for table 'tx_addresses_address_function_mm'
+#
+CREATE TABLE tx_addresses_address_function_mm (
+	uid_local int(11) DEFAULT '0' NOT NULL,
+	uid_foreign int(11) DEFAULT '0' NOT NULL,
+	tablenames varchar(64) DEFAULT '' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	KEY uid_local (uid_local),
 	KEY uid_foreign (uid_foreign)
 );

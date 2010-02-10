@@ -34,10 +34,10 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_address');
 t3lib_extMgm::addToInsertRecords('tx_addresses_domain_model_address');
 
-t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_addressgroup');
-$TCA['tx_addresses_domain_model_addressgroup'] = array (
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_group');
+$TCA['tx_addresses_domain_model_group'] = array (
 	'ctrl' => array (
-	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addressgroup',
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:group',
 	'label'				=> 'title',
 	'tstamp'            => 'tstamp',
 	'crdate'            => 'crdate',
@@ -50,10 +50,10 @@ $TCA['tx_addresses_domain_model_addressgroup'] = array (
 	)
 );
 
-t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_contactnumber');
-$TCA['tx_addresses_domain_model_contactnumber'] = array (
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_number');
+$TCA['tx_addresses_domain_model_number'] = array (
 	'ctrl' => array (
-	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:contactnumber',
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:number',
 	'label'				=> 'title',
 	'tstamp'            => 'tstamp',
 	'crdate'            => 'crdate',
@@ -85,42 +85,34 @@ $TCA['tx_addresses_domain_model_location'] = array (
 // This lines will changed the TCA for the BE module
 if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !== FALSE
 	|| strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'typo3/ajax.php') !== FALSE) {
-    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleAddress.php');
-    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleAddressgroup.php');
-    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleContactnumber.php');
+    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleContact.php');
+    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleGroup.php');
+    require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleNumber.php');
     require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleLocation.php');
 }
 
 $configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);
 // Registers BE module
 if (TYPO3_MODE=='BE' && $configurations['loadBEModule']) {
-	t3lib_extMgm::addModule('user', 'txaddresses', 'bottom', t3lib_extMgm::extPath($_EXTKEY).'Module/');
+	#t3lib_extMgm::addModule('user', 'txaddresses', 'bottom', t3lib_extMgm::extPath($_EXTKEY).'Module/');
+
+	Tx_Extbase_Utility_Extension::registerModule(
+		$_EXTKEY,
+		'user',			// Make Blank module a submodule of 'user'
+		'manager',	// Submodule key
+		'bottom',		// Position
+		array(
+			'BackendContact' => 'index',
+			'BackendGroup' => 'index',
+			'BackendNumber' => 'index',
+			'BackendLocation' => 'index',
+		),
+		array(
+			'access' => 'user,group',
+			'icon'   => 'EXT:addresses/Resources/Public/Icons/book_open.png',
+			'labels' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_module.xml',
+		)
+	);
 }
 
-//if (TYPO3_MODE == 'BE') {
-//	Tx_MvcExtjs_Utility_Module::registerModule(
-//		$_EXTKEY,
-//		array(
-//			'BlankModule' => 'first,second,third',
-//			'SimpleForm' => 'index,genres'
-//		),
-//		array(
-//			'access' => 'user,group',
-//			'icon'   => 'EXT:mvc_extjs_samples/Resources/Public/Icons/movie_add.png',
-//			'labels' => 'LLL:EXT:mvc_extjs_samples/Resources/Private/Language/locallang_mod_blank.xml',
-//		),
-//		'user',	// Make Blank module a submodule of 'user'
-//		'blank'
-//	);
-//
-//
-//	// ========== Legacy (SCbase) function
-//
-//	t3lib_extMgm::insertModuleFunction(
-//		'addresses',	// Insert legacy function into function menu of Module Blank
-//		'tx_mvcextjssamples_modfunc1',
-//		t3lib_extMgm::extPath($_EXTKEY) . 'modfunc1/class.tx_mvcextjssamples_modfunc1.php',
-//		'LLL:EXT:mvc_extjs_samples/Resources/Private/Language/locallang_db.xml:moduleFunction.tx_mvcextjssamples_modfunc1'
-//	);
-//}
 ?>

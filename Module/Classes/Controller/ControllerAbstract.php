@@ -68,7 +68,7 @@ abstract class Tx_Addresses_Controller_ControllerAbstract {
 	 **/
 	public function indexAction() {
 		try {
-			$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_AddressRepository');
+			$this->model = t3lib_div::makeInstance('Tx_Addresses_Domain_Model_ContactRepository');
 			$message = $this->model->findAll();
 			echo json_encode($message);
 		}

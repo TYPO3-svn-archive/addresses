@@ -32,9 +32,9 @@
 class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controller_ActionController {
 
 	/**
-	 * @var Tx_Addresses_Domain_Model_AddressRepository
+	 * @var Tx_Addresses_Domain_Model_ContactRepository
 	 */
-	protected $addressRepository;
+	protected $contactRepository;
 
 	/**
 	 * Initializes the current action
@@ -42,7 +42,7 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	 * @return void
 	 */
 	public function initializeAction() {		
-		$this->addressRepository = t3lib_div::makeInstance('Tx_Addresses_Domain_Repository_AddressRepository');	
+		$this->contactRepository = t3lib_div::makeInstance('Tx_Addresses_Domain_Repository_ContactRepository');	
 	}
 
 	/**
@@ -58,9 +58,9 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 		$offset = $currentPage ? $limit*$currentPage : 0;
 		$data = Array(); // used to store the objects fetched from the repository
 	
-		$data = $this->addressRepository->findLimit($limit, $offset);
+		$data = $this->contactRepository->findLimit($limit, $offset);
 
-		$total = $this->addressRepository->findTotal();
+		$total = $this->contactRepository->findTotal();
 
 		// "EXT:" shortcut replaced with the extension path
 		$indexSettings['stylesheet'] = str_replace('EXT:', t3lib_extMgm::siteRelPath('addresses'), $indexSettings['stylesheet']);
@@ -116,7 +116,7 @@ class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controlle
 	 */
 	public function vcardsAction() {
 		$data = Array();
-		$data = $this->addressRepository->findAll();
+		$data = $this->contactRepository->findAll();
 		$this->view->assign('addresses', $data);
 		$this->response->setHeader('Content-Type','text/x-vCard');
 		$this->response->setHeader('Content-Disposition','attachment; filename= "addresses.vcf"');

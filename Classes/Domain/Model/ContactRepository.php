@@ -29,7 +29,7 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  */
-class Tx_Addresses_Domain_Model_AddressRepository extends Tx_Extbase_Persistence_Repository {
+class Tx_Addresses_Domain_Model_ContactRepository extends Tx_Extbase_Persistence_Repository {
 	/**
 	 * Find all objects up to a certain limit with a given offset and a sorting order
 	 *

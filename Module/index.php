@@ -41,7 +41,7 @@ require($BACK_PATH . 'init.php');
 require($BACK_PATH . 'template.php');
 require_once(PATH_t3lib . 'class.t3lib_scbase.php');
 
-$classes = array('ConfigurationAbstract', 'AddressConfiguration', 'AddressgroupConfiguration', 'ContactnumberConfiguration', 'LocationConfiguration','Preferences', 'Permission', 'TCA', 'TCE', 'UserTCE');
+$classes = array('ConfigurationAbstract', 'ContactConfiguration', 'GroupConfiguration', 'NumberConfiguration', 'LocationConfiguration','Preferences', 'Permission', 'TCA', 'TCE', 'UserTCE');
 foreach ($classes as $class) {
 	require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/' . $class . '.php'));
 }
@@ -62,9 +62,9 @@ $LANG->includeLLFile('EXT:addresses/Resources/Private/Language/locallang_tca.xml
  */
 class tx_addresses_module extends t3lib_SCbase {
 
-/**
- * @var template
- */
+	/**
+	 * @var template
+	 */
 	public $doc;
 
 	/**
@@ -75,17 +75,17 @@ class tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * @var $namespace string
 	 */
-	protected $namespaces = array('Address', 'Addressgroup', 'Contactnumber', 'Location');
+	protected $namespaces = array('Contact', 'Group', 'Number', 'Location');
 
 	/**
 	 * @var $namespace string
 	 */
-	protected $foreignFields = array('addressgroups', 'contactnumbers', 'locations');
+	protected $foreignFields = array('groups', 'numbers', 'locations');
 
 	/**
 	 * @var $javascriptFiles array
 	 */
-	protected $javascriptFiles = array('Ext.util', 'Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'Addressgroup', 'ContactNumber', 'Location', 'ext_expander', 'search_field', 'Namespaces', 'AddressInit', 'AddressGrid', 'AddressWindow');
+	protected $javascriptFiles = array('Ext.util', 'Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'Group', 'Number', 'Location', 'ext_expander', 'search_field', 'Namespaces', 'AddressesInit', 'ContactGrid'); //AddressWindow
 
 	/**
 	 * @var $relativePath string
@@ -106,11 +106,6 @@ class tx_addresses_module extends t3lib_SCbase {
 	 * @var $pagingSize string
 	 */
 	protected $pagingSize = 50;
-
-	/**
-	 * @var $minifyJavascript string
-	 */
-	protected $minifyJavascript = FALSE;
 
 	/**
 	 * @var $version string
@@ -140,7 +135,6 @@ class tx_addresses_module extends t3lib_SCbase {
 
 		$configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);
 		$this->pageSize = (int) $configurations['PAGE_SIZE'];
-		$this->minifyJavascript = (boolean) $configurations['minifyJavascript'];
 		$this->relativePath = t3lib_extMgm::extRelPath('addresses');
 		$this->absolutePath = t3lib_extMgm::extPath('addresses');
 		$this->resourcesPath = $this->relativePath . 'Module/Resources/Public/';
@@ -165,7 +159,7 @@ class tx_addresses_module extends t3lib_SCbase {
 			// div container for renderTo
 			$this->content .= '<div id="addressesContent"></div>';
 		} else {
-		// If no access or if ID == zero
+			// If no access or if ID == zero
 			$this->content .= $this->doc->spacer(10);
 		}
 	}
@@ -179,9 +173,9 @@ class tx_addresses_module extends t3lib_SCbase {
 		global $LANG;
 		$content = $this->doc->startPage($LANG->getLL('title'));
 		$content .= $this->doc->moduleBody(
-			$this->pageRecord,
-			$this->getDocHeaderButtons(),
-			$this->getTemplateMarkers()
+				$this->pageRecord,
+				$this->getDocHeaderButtons(),
+				$this->getTemplateMarkers()
 		);
 		$content .= $this->doc->endPage();
 		//		$content.= $this->doc->insertStylesAndJS($this->content);
@@ -198,36 +192,16 @@ class tx_addresses_module extends t3lib_SCbase {
 	protected function loadExtJSStaff() {
 
 		// Loads extjs
+		$this->doc->getPageRenderer()->enableExtJsDebug();
 		$this->doc->getPageRenderer()->loadExtJS();
 
 		// Load special CSS Stylesheets:
 		$this->loadStylesheet($this->resourcesPath . 'Stylesheets/customExtJs.css');
 		$this->loadStylesheet($this->resourcesPath . 'Stylesheets/StatusBar.css');
 
-		// Load special JS
-		if ($this->minifyJavascript) {
-			$tempFolder = PATH_site . 'typo3temp/tx_addresses/';
-			$tempFileName = 'addresse-' . $this->version . '.js';
-			$tempFile = $tempFolder . $tempFileName;
-			if (!is_dir($tempFolder)) {
-				t3lib_div::mkdir($tempFolder);
-			}
-
-			if (!is_file($tempFile)) {
-				$fileContent = '';
-				foreach($this->javascriptFiles as $file) {
-					$filename = $this->absolutePath . 'Module/Resources/Public/Javascript/' . $file . '.js';
-					$fileContent .= t3lib_div::minifyJavaScript(file_get_contents($filename));
-				}
-				t3lib_div::writeFileToTypo3tempDir($tempFile, $fileContent);
-			}
-			$this->loadJavaScript('../typo3temp/tx_addresses/' . $tempFileName);
-		}
-		else {
 		// Load Plugins JavaScript:
-			foreach($this->javascriptFiles as $file) {
-				$this->loadJavaScript($this->resourcesPath . 'Javascript/' . $file . '.js');
-			}
+		foreach($this->javascriptFiles as $file) {
+			$this->loadJavaScript($this->resourcesPath . 'Javascript/' . $file . '.js');
 		}
 
 	}
@@ -244,7 +218,7 @@ class tx_addresses_module extends t3lib_SCbase {
 		foreach ($this->namespaces as $namespace) {
 
 			$gridFields = $gridFieldsType = array();
-			if ($namespace == 'Address') {
+			if ($namespace == 'Contact') {
 				$gridFields = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getGridConfiguration');
 				$gridFieldsType = call_user_func('Tx_Addresses_Utility_' . $namespace . 'Configuration::getFieldsTypeInGrid');
 			}
@@ -298,12 +272,12 @@ class tx_addresses_module extends t3lib_SCbase {
 	 */
 	protected function getStaticConfiguration() {
 		$configuration = array(
-			'pagingSize' => $this->pagingSize,
-			'renderTo' => 'addressesContent',
-			'path' => t3lib_extMgm::extRelPath('addresses'),
-			'isSSL' => t3lib_div::getIndpEnv('TYPO3_SSL'),
-			'ajaxController' => $this->doc->backPath . 'ajax.php',
-			'foreignFields' => $this->foreignFields,
+				'pagingSize' => $this->pagingSize,
+				'renderTo' => 'addressesContent',
+				'path' => t3lib_extMgm::extRelPath('addresses'),
+				'isSSL' => t3lib_div::getIndpEnv('TYPO3_SSL'),
+				'ajaxController' => $this->doc->backPath . 'ajax.php',
+				'foreignFields' => $this->foreignFields,
 		);
 		return $configuration;
 	}
@@ -316,12 +290,12 @@ class tx_addresses_module extends t3lib_SCbase {
 	protected function getLabels() {
 		global $LANG;
 		$coreLabels = array(
-			'title'	=> $LANG->getLL('title'),
-			'newRecord'	=> $LANG->getLL('newRecord'),
-			'updateRecord'	=> $LANG->getLL('updateRecord'),
-			'multipleUpdateRecord'	=> $LANG->getLL('multipleUpdateRecord'),
-			'table'	=> $LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.table'),
-			'addNewElement'	=> $LANG->getLL('addNewElement'),
+				'title'	=> $LANG->getLL('title'),
+				'newRecord'	=> $LANG->getLL('newRecord'),
+				'updateRecord'	=> $LANG->getLL('updateRecord'),
+				'multipleUpdateRecord'	=> $LANG->getLL('multipleUpdateRecord'),
+				'table'	=> $LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.table'),
+				'addNewElement'	=> $LANG->getLL('addNewElement'),
 		);
 		$extensionLabels = $this->getLabelsFromLocallang('js.', 'label_');
 		return array_merge($coreLabels, $extensionLabels);
@@ -355,9 +329,9 @@ class tx_addresses_module extends t3lib_SCbase {
 	 */
 	protected function getDocHeaderButtons() {
 		$buttons = array(
-			'csh'		=> t3lib_BEfunc::cshItem('_MOD_web_func', '', $this->doc->backPath),
-			'shortcut'	=> $this->getShortcutButton(),
-			'save'		=> ''
+				'csh'		=> t3lib_BEfunc::cshItem('_MOD_web_func', '', $this->doc->backPath),
+				'shortcut'	=> $this->getShortcutButton(),
+				'save'		=> ''
 		);
 		return $buttons;
 	}
@@ -382,9 +356,9 @@ class tx_addresses_module extends t3lib_SCbase {
 	 */
 	protected function getTemplateMarkers() {
 		$markers = array(
-			'FUNC_MENU'	=> $this->getFunctionMenu(),
-			'CONTENT'	=> $this->content,
-			'TITLE'		=> $GLOBALS['LANG']->getLL('title'),
+				'FUNC_MENU'	=> $this->getFunctionMenu(),
+				'CONTENT'	=> $this->content,
+				'TITLE'		=> $GLOBALS['LANG']->getLL('title'),
 		);
 		return $markers;
 	}
@@ -396,10 +370,10 @@ class tx_addresses_module extends t3lib_SCbase {
 	 */
 	protected function getFunctionMenu() {
 		return t3lib_BEfunc::getFuncMenu(
-		0,
-		'SET[function]',
-		$this->MOD_SETTINGS['function'],
-		$this->MOD_MENU['function']
+				0,
+				'SET[function]',
+				$this->MOD_SETTINGS['function'],
+				$this->MOD_MENU['function']
 		);
 	}
 }

@@ -29,7 +29,7 @@
  * @version $Id: $
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  */
-class Tx_Addresses_Controller_AddressController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_Addresses_Controller_ContactController extends Tx_Extbase_MVC_Controller_ActionController {
 
 	/**
 	 * @var Tx_Addresses_Domain_Model_ContactRepository

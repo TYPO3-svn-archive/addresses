@@ -334,7 +334,7 @@ Contact.initGrid = function() {
 							method: 'GET',
 							url: Addresses.statics.ajaxController,
 							params:{
-								ajaxID: 'AddressController::deleteAction',
+								ajaxID: 'ContactController::deleteAction',
 								dataSet: Ext.util.JSON.encode(dataSet)
 							},
 							success: function(f,a){

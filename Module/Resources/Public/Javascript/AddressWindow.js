@@ -126,7 +126,7 @@ Address.initWindow = function() {
 			url: Addresses.statics.ajaxController,
 			waitMsg: Addresses.lang.saving,
 			params:{
-				ajaxID: 'AddressController::saveAction'
+				ajaxID: 'ContactController::saveAction'
 			},
 			success: function(form,call){
 				Address.window.hide();
@@ -326,7 +326,7 @@ Address.initWindow = function() {
 					url: Addresses.statics.ajaxController,
 					params:{
 						method: 'GET',
-						ajaxID: 'AddressController::editAction',
+						ajaxID: 'ContactController::editAction',
 						dataSet: Ext.util.JSON.encode(dataSet)
 					},
 					waitTitle: Addresses.lang.loading,

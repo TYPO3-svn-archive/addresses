@@ -1,10 +1,10 @@
 <?php
-$TCA['tx_addresses_domain_model_address'] = Array (
-	'ctrl' => $TCA['tx_addresses_domain_model_address']['ctrl'],
+$TCA['tx_addresses_domain_model_contact'] = Array (
+	'ctrl' => $TCA['tx_addresses_domain_model_contact']['ctrl'],
 	'interface' => Array (
 		'showRecordFieldList' => 'gender,first_name,last_name,birth_date,marital_status,address,locality,postal_code,country,preferred_language,phone,fax,email,website,title,company,room,building,image,groups,region'
 	),
-	'feInterface' => $TCA['tx_addresses_domain_model_address']['feInterface'],
+	'feInterface' => $TCA['tx_addresses_domain_model_contact']['feInterface'],
 	'columns' => Array (
 		'uid' => Array (
 			'config' => Array (
@@ -17,21 +17,21 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			)
 		),
 		'tstamp' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.tstamp',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.tstamp',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'crdate' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.crdate',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.crdate',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'cruser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.cruser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -42,7 +42,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 			),
 		),
 		'upuser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.upuser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -54,14 +54,14 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'hidden' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.hidden',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.hidden',
 			'config' => Array (
 				'type' => 'check'
 			)
 		),
 		'status' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.status',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.status',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '40',
@@ -70,7 +70,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'type' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.type',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.type',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '40',
@@ -80,12 +80,12 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		// *not* editable combobox widget
 		'gender' => array (
 			'exclude' => 1,
-			'label'  => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender',
+			'label'  => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.gender',
 			'config' => array (
 				'type' => 'select',
 				'items'   => array(
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.m', 'm'),
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.gender.f', 'f')
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.gender.m', 'm'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.gender.f', 'f')
 				),
 				'size' => 1,
 				'minitems' => 0,
@@ -96,7 +96,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'first_name' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.first_name',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '40',
@@ -105,7 +105,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'last_name' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.last_name',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.last_name',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '40',
@@ -114,7 +114,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'title' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.title',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -124,7 +124,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'birth_date' => array (
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.birth_date',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.birth_date',
 			'config'  => array (
 				'type' => 'input',
 				'eval' => 'date',
@@ -134,7 +134,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'birth_place' => Array (
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.birth_place',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.birth_place',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -144,7 +144,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'death_date' => array (
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.death_date',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.death_date',
 			'config'  => array (
 				'type' => 'input',
 				'eval' => 'date',
@@ -154,7 +154,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'death_place' => Array (
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.death_place',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.death_place',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -164,7 +164,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'nationality' => Array (
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nationality',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.nationality',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -174,7 +174,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'religion' => Array (
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.religion',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.religion',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -184,7 +184,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'org_type' => Array (
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.org_type',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.org_type',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -194,7 +194,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'org_name' => Array (
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.org_name',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.org_name',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -204,7 +204,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'website' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.website',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.website',
 			'config' => Array (
 				'type' => 'input',
 				'eval' => 'trim',
@@ -215,7 +215,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'email' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.email',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.email',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '40',
@@ -225,7 +225,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'company' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.company',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.company',
 			'config' => Array (
 				'type' => 'input',
 				'eval' => 'trim',
@@ -235,7 +235,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'image' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.image',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.image',
 			'config' => Array (
 				'type' => 'group',
 				'internal_type' => 'file',
@@ -250,7 +250,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'remarks' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.remarks',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.remarks',
 			'config' => Array (
 				'type' => 'text',
 				'rows' => 5,
@@ -261,7 +261,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		// itemselector widget
 		'groups' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.group',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.group',
 			'config' => array(
 				'type' => 'select',
 				'size' => 10,
@@ -279,7 +279,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'numbers' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.number',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.number',
 			'config' => array(
 				'type' => 'input',
 				'size' => '20',
@@ -289,7 +289,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'locations' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.locations',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.locations',
 			'config' => array(
 				'type' => 'input',
 				'size' => '20',
@@ -300,7 +300,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		// *not* editable combobox widget
 		'marital_status' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.marital_status',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.marital_status',
 			'config' => Array (
 				'type' => 'select',
 				'items' => Array (
@@ -317,7 +317,7 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'preferred_language' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.preferred_language',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.preferred_language',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -349,21 +349,21 @@ $TCA['tx_addresses_domain_model_group'] = array(
 			)
 		),
 		'tstamp' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.tstamp',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.tstamp',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'crdate' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.crdate',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.crdate',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'cruser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.cruser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -374,7 +374,7 @@ $TCA['tx_addresses_domain_model_group'] = array(
 			),
 		),
 		'upuser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.upuser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -403,7 +403,7 @@ $TCA['tx_addresses_domain_model_group'] = array(
 		),
 		'remarks' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.remarks',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.remarks',
 			'config'  => array(
 				'type' => 'text',
 				'cols' => '30',
@@ -433,21 +433,21 @@ $TCA['tx_addresses_domain_model_number'] = array(
 			)
 		),
 		'tstamp' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.tstamp',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.tstamp',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'crdate' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.crdate',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.crdate',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'cruser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.cruser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -458,7 +458,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 			),
 		),
 		'upuser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.upuser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -486,7 +486,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 		),
 		'label' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.label',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.label',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '20',
@@ -496,7 +496,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 		// *not* editable combobox widget
 		'type' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.type',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.type',
 			'config'  => array(
 				'type' => 'select',
 				'items'   => array(
@@ -513,7 +513,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 		// editable combobox widget
 		'nature' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nature',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.nature',
 			'config'  => array(
 				'type' => 'input',
 				'size' => '30',
@@ -522,7 +522,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 		),
 		'number' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.number',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.number',
 			'config'  => array(
 				'type' => 'input',
 				'size' => '30',
@@ -531,7 +531,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 		),
 		'remarks' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.remarks',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.remarks',
 			'config'  => array(
 				'type' => 'text',
 				'cols' => '30',
@@ -561,21 +561,21 @@ $TCA['tx_addresses_domain_model_location'] = array(
 			)
 		),
 		'tstamp' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.tstamp',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.tstamp',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'crdate' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.crdate',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.crdate',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'cruser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.cruser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -586,7 +586,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 			),
 		),
 		'upuser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.upuser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -615,7 +615,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		// *not* editable combobox widget
 		'type' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.type',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.type',
 			'config'  => array(
 				'type' => 'select',
 				'items'   => array(
@@ -632,7 +632,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		// editable combobox widget
 		'nature' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nature',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.nature',
 			'config'  => array(
 				'type' => 'input',
 				'size' => '30',
@@ -641,7 +641,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'label' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.label',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.label',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '20',
@@ -650,7 +650,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'address' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.address',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '20',
@@ -659,7 +659,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'street' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.street',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.street',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '20',
@@ -668,7 +668,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'street_number' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.street_number',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.street_number',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '20',
@@ -677,7 +677,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'building' => array (
 			'exclude' => 1,
-			'label'  => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.building',
+			'label'  => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.building',
 			'config' => array (
 				'type' => 'input',
 				'eval' => 'trim',
@@ -687,7 +687,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'room' => array (
 			'exclude' => 1,
-			'label'  => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.room',
+			'label'  => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.room',
 			'config' => array (
 				'type' => 'input',
 				'eval' => 'trim',
@@ -697,7 +697,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'locality' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.locality',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.locality',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -707,7 +707,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'postal_code' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.postal_code',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.postal_code',
 			'config' => Array (
 				'type' => 'input',
 				'eval' => 'trim',
@@ -717,7 +717,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'country' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.country',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.country',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -727,7 +727,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'region' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.region',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.region',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -737,7 +737,7 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 		'remarks' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.remarks',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.remarks',
 			'config'  => array(
 				'type' => 'text',
 				'cols' => '30',

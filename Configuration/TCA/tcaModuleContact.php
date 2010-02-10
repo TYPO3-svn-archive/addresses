@@ -1,14 +1,14 @@
 <?php
 // Beware: this file is loaded only for the BE module.
 
-$domainName = 'tx_addresses_domain_model_address';
+$domainName = 'tx_addresses_domain_model_contact';
 t3lib_div::loadTCA($domainName);
 
 // Describes the column of the grid
 $TCA[$domainName]['interface']['showGridFieldList'] = array(
     'uid' => array(
         'id' => TRUE,
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.uid',
+        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.uid',
         'config' => Array (
             'type' => 'input',
             'width' => 40,
@@ -17,7 +17,7 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
         )
     ),
     'pid' => array(
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.pid',
+        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.pid',
         'config' => Array (
             'type' => 'input',
             'width' => 40,
@@ -27,7 +27,7 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
         )
     ),
     'title' => array(
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title',
+        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.title',
         'config' => Array (
             'type' => 'input',
             'width' => 60,
@@ -35,7 +35,7 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
         )
     ),
     'first_name' => array(
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.first_name',
+        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.first_name',
         'config' => Array (
             'type' => 'input',
             'width' => 120,
@@ -43,7 +43,7 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
         )
     ),
     'last_name' => array(
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.last_name',
+        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.last_name',
         'config' => Array (
             'type' => 'input',
             'width' => 120,
@@ -51,7 +51,7 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
         )
     ),
     'tstamp' => array(
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.tstamp',
+        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.tstamp',
         'config' => Array (
             'type' => 'input',
             'width' => 100,
@@ -60,7 +60,7 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
         )
     ),
     'cruser_id' => array(
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.cruser_id',
+        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.cruser_id',
         'config' => Array (
             'type' => 'input',
             'width' => 100,
@@ -69,7 +69,7 @@ $TCA[$domainName]['interface']['showGridFieldList'] = array(
         )
     ),
     'upuser_id' => array(
-        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.upuser_id',
+        'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.upuser_id',
         'config' => Array (
             'type' => 'input',
             'width' => 100,
@@ -142,13 +142,13 @@ $TCA[$domainName]['columns']['locations']['config'] = Array(
 // editable combobox widget
 $TCA[$domainName]['columns']['title'] = array(
     'exclude' => 1,
-    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title',
+    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.title',
     'config' => Array (
         'type' => 'select',
         'items' => Array (
-            Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.1', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.1'),
-            Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.2', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.2'),
-            Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.3', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.title.I.3'),
+            Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.title.I.1', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.title.I.1'),
+            Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.title.I.2', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.title.I.2'),
+            Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.title.I.3', 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.title.I.3'),
         ),
         'itemsProcFunc' => 'Tx_Addresses_Utility_TCE::getItemsForComboBox',
         'itemsProcFunc.' => array (
@@ -164,7 +164,7 @@ $TCA[$domainName]['columns']['title'] = array(
 // editable combobox widget
 $TCA[$domainName]['columns']['preferred_language'] = array(
     'exclude' => 1,
-    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.preferred_language',
+    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.preferred_language',
     'config' => Array (
         'type' => 'select',
         'items' => Array (
@@ -187,7 +187,7 @@ $TCA[$domainName]['columns']['preferred_language'] = array(
 // editable combobox widget
 $TCA[$domainName]['columns']['nationality'] = array(
     'exclude' => 1,
-    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nationality',
+    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.nationality',
     'config' => Array (
         'type' => 'select',
         'items' => Array (

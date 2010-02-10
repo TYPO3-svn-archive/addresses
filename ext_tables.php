@@ -9,7 +9,7 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Addresses');
 
-$TCA['tx_addresses_domain_model_address'] = Array (
+$TCA['tx_addresses_domain_model_contact'] = Array (
 	'ctrl' => Array (
 		'label' => 'last_name',
 		'label_alt' => 'first_name',
@@ -24,15 +24,15 @@ $TCA['tx_addresses_domain_model_address'] = Array (
 		),
 		'thumbnail' => 'image',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
-		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_address.gif'
+		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_contact.gif'
 		),
 		'feInterface' => Array (
 		'fe_admin_fieldList' => 'pid,hidden,first_name,last_name,title,address,phone,fax,mobile,website,email,locality,postal_code,company,country,remarks'
 	)
 );
 
-t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_address');
-t3lib_extMgm::addToInsertRecords('tx_addresses_domain_model_address');
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_contact');
+t3lib_extMgm::addToInsertRecords('tx_addresses_domain_model_contact');
 
 t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_group');
 $TCA['tx_addresses_domain_model_group'] = array (
@@ -46,7 +46,7 @@ $TCA['tx_addresses_domain_model_group'] = array (
 		'disabled' => 'hidden'
 	),
 	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
-	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_address.gif'
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_contact.gif'
 	)
 );
 
@@ -62,7 +62,7 @@ $TCA['tx_addresses_domain_model_number'] = array (
 		'disabled' => 'hidden'
 	),
 	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
-	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_address.gif'
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_contact.gif'
 	)
 );
 
@@ -78,7 +78,7 @@ $TCA['tx_addresses_domain_model_location'] = array (
 		'disabled' => 'hidden'
 	),
 	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
-	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_address.gif'
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_contact.gif'
 	)
 );
 

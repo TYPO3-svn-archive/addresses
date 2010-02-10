@@ -41,7 +41,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 $TCA[$domainName]['columns']['type']['config']['default'] = Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:select_value', '0');
 $TCA[$domainName]['columns']['nature'] = array(
     'exclude' => 1,
-    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.nature',
+    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.nature',
     'config' => Array (
         'type' => 'select',
         'itemsProcFunc' => 'Tx_Addresses_Utility_TCE::getItemsForComboBox',
@@ -59,7 +59,7 @@ $TCA[$domainName]['columns']['nature'] = array(
 // editable combobox widget
 $TCA[$domainName]['columns']['country'] = array(
     'exclude' => 1,
-    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.country',
+    'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.country',
     'config' => Array (
         'type' => 'select',
         'items' => Array (

@@ -59,6 +59,8 @@
 			<label index="tx_addresses_domain_model_contact.number">Contact number</label>
 			<label index="tx_addresses_domain_model_contact.locations">Locations</label>
 			<label index="tx_addresses_domain_model_contact.label">Label</label>
+			<label index="tx_addresses_domain_model_email.uid_foreign">Contact</label>
+			<label index="tx_addresses_domain_model_email.email_address">Email Address</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tx_addresses_domain_model_contact.mobile">Mobile</label>

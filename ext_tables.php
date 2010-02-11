@@ -82,6 +82,22 @@ $TCA['tx_addresses_domain_model_location'] = array (
 	)
 );
 
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_email');
+$TCA['tx_addresses_domain_model_email'] = array (
+	'ctrl' => array (
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:email',
+	'label'				=> 'email_address',
+	'tstamp'            => 'tstamp',
+	'crdate'            => 'crdate',
+	'delete'            => 'deleted',
+	'enablecolumns'     => array (
+		'disabled' => 'hidden'
+	),
+	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/icon_tx_addresses_domain_model_contact.gif'
+	)
+);
+
 // This lines will changed the TCA for the BE module
 if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !== FALSE
 	|| strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'typo3/ajax.php') !== FALSE) {

@@ -27,7 +27,6 @@ CREATE TABLE tx_addresses_domain_model_contact (
 	org_type tinytext NOT NULL,
 	org_name tinytext NOT NULL,
 	company varchar(80) DEFAULT '' NOT NULL,
-  email tinytext NOT NULL,
 	website tinytext NOT NULL,
 	image tinyblob NOT NULL,
 	remarks text NOT NULL,
@@ -75,7 +74,7 @@ CREATE TABLE tx_addresses_address_group_mm (
 );
 
 #
-# Table structure for table 'tx_addresses_address_contact_number'
+# Table structure for table 'tx_addresses_domain_model_number'
 #
 CREATE TABLE tx_addresses_domain_model_number (
 	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
@@ -103,7 +102,7 @@ CREATE TABLE tx_addresses_domain_model_number (
 );
 
 #
-# Table structure for table 'tx_addresses_domain_model_email_address'
+# Table structure for table 'tx_addresses_domain_model_email'
 #
 CREATE TABLE tx_addresses_domain_model_email (
 	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
@@ -136,7 +135,7 @@ CREATE TABLE tx_addresses_domain_model_location (
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-	type tinytext NOT NULL,
+	type tinyint(4) NOT NULL,
 	nature tinytext NOT NULL,
 	label tinytext NOT NULL,
 	street tinytext NOT NULL,
@@ -144,8 +143,8 @@ CREATE TABLE tx_addresses_domain_model_location (
 	address tinytext NOT NULL,
 	building varchar(20) DEFAULT '' NOT NULL,
 	room varchar(15) DEFAULT '' NOT NULL,
-	locality tinytext NOT NULL,
 	postal_code varchar(20) DEFAULT '' NOT NULL,
+	city tinytext NOT NULL,
 	region varchar(100) DEFAULT '' NOT NULL,
 	country varchar(30) DEFAULT '' NOT NULL,
 	remarks text NOT NULL,

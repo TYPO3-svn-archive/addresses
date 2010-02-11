@@ -33,6 +33,7 @@
 			<label index="numbers">Contact numbers</label>
 			<label index="location">Location</label>
 			<label index="locations">Locations</label>
+			<label index="email">Email</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="address">Addresse</label>

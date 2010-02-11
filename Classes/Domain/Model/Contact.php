@@ -141,11 +141,11 @@ class Tx_Addresses_Domain_Model_Contact extends Tx_Extbase_DomainObject_Abstract
 	protected $orgName = '';
 
 	/**
-	 * The email address
+	 * The email addresses
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $email = '';
+	protected $emailAddresses = array();
 
 	/**
 	 * The phone number
@@ -428,22 +428,22 @@ class Tx_Addresses_Domain_Model_Contact extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
-	 * Sets this contact's bearthPlace
+	 * Sets this contact's birthPlace
 	 *
-	 * @param string $bearthPlace The contact's bearthPlace
+	 * @param string $birthPlace The contact's birthPlace
 	 * @return void
 	 */
-	public function setBearthPlace(DateTime $bearthPlace) {
-		$this->bearthPlace = $bearthPlace;
+	public function setBirthPlace($birthPlace) {
+		$this->birthPlace = $birthPlace;
 	}
 
 	/**
-	 * Returns the contact's bearthPlace
+	 * Returns the contact's birthPlace
 	 *
 	 * @return string
 	 */
-	public function getBearthPlace() {
-		return $this->bearthPlace;
+	public function getBirthPlace() {
+		return $this->birthPlace;
 	}
 
 	/**
@@ -561,25 +561,6 @@ class Tx_Addresses_Domain_Model_Contact extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
-	 * Sets this contact's email address
-	 *
-	 * @param string $email The contact's email address
-	 * @return void
-	 */
-	public function setEmail($email) {
-		$this->email = $email;
-	}
-
-	/**
-	 * Returns the contact's email address
-	 *
-	 * @return string The contact's email address
-	 */
-	public function getEmail() {
-		return $this->email;
-	}
-
-	/**
 	 * Sets this contact's phone number
 	 *
 	 * @param string $phone The contact's phone number
@@ -637,63 +618,6 @@ class Tx_Addresses_Domain_Model_Contact extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
-	 * Sets this contact's address (street and number)
-	 *
-	 * @param string $address The contact's address
-	 * @return void
-	 */
-	public function setAddress($address) {
-		$this->address = $address;
-	}
-
-	/**
-	 * Returns the contact's address
-	 *
-	 * @return string The contact's address
-	 */
-	public function getAddress() {
-		return $this->address;
-	}
-
-	/**
-	 * Sets this contact's street
-	 *
-	 * @param string $street The contact's street
-	 * @return void
-	 */
-	public function setStreet($street) {
-		$this->street = $street;
-	}
-
-	/**
-	 * Returns the contact's street
-	 *
-	 * @return string The contact's street
-	 */
-	public function getStreet() {
-		return $this->street;
-	}
-
-	/**
-	 * Sets this contact's streetNumber
-	 *
-	 * @param string $streetNumber The contact's street
-	 * @return void
-	 */
-	public function setStreetNumber($streetNumber) {
-		$this->streetNumber = $streetNumber;
-	}
-
-	/**
-	 * Returns the contact's streetNumber
-	 *
-	 * @return string The contact's streetNumber
-	 */
-	public function getStreetNumber() {
-		return $this->streetNumber;
-	}
-
-	/**
 	 * Sets this contact's company
 	 *
 	 * @param string $company The contact's company
@@ -710,101 +634,6 @@ class Tx_Addresses_Domain_Model_Contact extends Tx_Extbase_DomainObject_Abstract
 	 */
 	public function getCompany() {
 		return $this->company;
-	}
-
-	/**
-	 * Sets the room
-	 *
-	 * @param string $room The room
-	 * @return void
-	 */
-	public function setRoom($room) {
-		$this->room = $room;
-	}
-
-	/**
-	 * Returns the room
-	 *
-	 * @return string The room
-	 */
-	public function getRoom() {
-		return $this->room;
-	}
-
-	/**
-	 * Sets the building
-	 *
-	 * @param string $building The building
-	 * @return void
-	 */
-	public function setBuilding($building) {
-		$this->building = $building;
-	}
-
-	/**
-	 * Returns the building
-	 *
-	 * @return string The building
-	 */
-	public function getBuilding() {
-		return $this->building;
-	}
-
-	/**
-	 * Sets this contact's locality
-	 *
-	 * @param string $locality The contact's locality
-	 * @return void
-	 */
-	public function setLocality($locality) {
-		$this->locality = $locality;
-	}
-
-	/**
-	 * Returns the contact's locality
-	 *
-	 * @return string The contact's locality
-	 */
-	public function getLocality() {
-		return $this->locality;
-	}
-
-	/**
-	 * Sets this contact's postalCode code
-	 *
-	 * @param string $postalCode The contact's postalCode code
-	 * @return void
-	 */
-	public function setPostalCode($postalCode) {
-		$this->postalCode = $postalCode;
-	}
-
-	/**
-	 * Returns the contact's postalCode code
-	 *
-	 * @return string The contact's postalCode code
-	 */
-	public function getPostalCode() {
-		return $this->postalCode;
-	}
-
-	/**
-	 * Sets this contact's country
-	 *
-	 * @param string $country The contact's country
-	 * @return void
-	 */
-	public function setCountry($country) {
-		$this->country = $country;
-	}
-
-	/**
-	 * Returns the contact's country
-	 *
-	 * @return string The contact's country
-	 */
-	public function getCountry() {
-		return $this->country;
 	}
 
 	/**

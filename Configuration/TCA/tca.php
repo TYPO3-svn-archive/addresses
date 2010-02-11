@@ -213,16 +213,6 @@ $TCA['tx_addresses_domain_model_contact'] = Array (
 				'validation' => 'http://',
 			)
 		),
-		'email' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.email',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '40',
-				'eval' => 'trim',
-				'max' => '80'
-			)
-		),
 		'company' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.company',
@@ -551,7 +541,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 $TCA['tx_addresses_domain_model_location'] = array(
 	'ctrl' => $TCA['tx_addresses_domain_model_location']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'hidden,title,remarks'
+		'showRecordFieldList' => 'hidden,type,nature,label,address,street,street_number,building,room,locality,postal_code,country,region,remarks'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_location']['feInterface'],
 	'columns' => array(
@@ -747,7 +737,101 @@ $TCA['tx_addresses_domain_model_location'] = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'hidden;;;;1-1-1, title;;;;2-2-2, remarks')
+		'0' => array('showitem' => 'hidden,type,nature,label,address,street,street_number,building,room,locality,postal_code,country,region,remarks')
+	),
+	'palettes' => array(
+
+	)
+);
+
+$TCA['tx_addresses_domain_model_email'] = array(
+	'ctrl' => $TCA['tx_addresses_domain_model_email']['ctrl'],
+	'interface' => array(
+		'showRecordFieldList' => 'hidden,uid_foreign,email_address,remarks'
+	),
+	'feInterface' => $TCA['tx_addresses_domain_model_number']['feInterface'],
+	'columns' => array(
+		'uid' => Array (
+			'config' => Array (
+				'type' => 'passthrough'
+			)
+		),
+		'tstamp' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.tstamp',
+			'config' => Array (
+				'type' => 'passthrough',
+				'eval' => 'date'
+			),
+		),
+		'crdate' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.crdate',
+			'config' => Array (
+				'type' => 'passthrough',
+				'eval' => 'date'
+			),
+		),
+		'cruser_id' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.cruser_id',
+			'config' => Array (
+				'type' => 'passthrough',
+				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
+				'userFuncFormat.' => array (
+					'table' => 'be_users',
+					'field' => 'username',
+				),
+			),
+		),
+		'upuser_id' => Array (
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.upuser_id',
+			'config' => Array (
+				'type' => 'passthrough',
+				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
+				'userFuncFormat.' => array (
+					'table' => 'be_users',
+					'field' => 'username',
+				),
+			),
+		),
+		'hidden' => array(
+			'exclude'   => 1,
+			'label'     => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+			'config'    => array(
+				'type'    => 'check',
+				'default' => '1'
+			)
+		),
+		'uid_foreign' => array(
+			'exclude' => 1,
+			'label'     => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.uid_foreign',
+            'config' => array (
+                'type' => 'group',    
+                'internal_type' => 'db',    
+                'allowed' => 'tx_addresses_domain_model_contact',    
+                'size' => 1,    
+                'minitems' => 0,
+                'maxitems' => 1,
+            )
+		),
+		'email_address' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.email_address',
+			'config' => Array (
+				'type' => 'input'
+			)
+		),
+		'remarks' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.remarks',
+			'config'  => array(
+				'type' => 'text',
+				'cols' => '30',
+				'rows' => '5',
+				'height' => 150
+			)
+		),
+	),
+	'types' => array(
+		'0' => array('showitem' => 'hidden;;;;1-1-1, uid_foreign,email_address;;;;2-2-2, remarks')
 	),
 	'palettes' => array(
 

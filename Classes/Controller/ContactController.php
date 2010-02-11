@@ -70,7 +70,7 @@ class Tx_Addresses_Controller_ContactController extends Tx_Extbase_MVC_Controlle
 		// Hand the maxItems to the view (for use in the pagebrowser)
 		$this->view->assign('maxItems', $limit); 
 		$this->view->assign('totalPages', $total); 
-		$this->view->assign('addresses', $data);
+		$this->view->assign('contacts', $data);
 		
 	}
 

@@ -2,13 +2,13 @@
 
 <div class="tx_addresses_pi1_index">
 	<ul>
-		<f:for each="{addresses}" as="address">
+		<f:for each="{contacts}" as="contact">
 			<li>
-				<h3><f:link.action action="show" arguments="{address : address}">{address.title} {address.firstName} {address.lastName}</f:link.action></h3>
+				<h3><f:link.action action="show" arguments="{contact : contact}">{contact.firstName} {contact.lastName}</f:link.action></h3>
 				<p>
-					<f:format.Nl2br>{address.address}</f:format.Nl2br><br />
-					{address.postalCode} {address.locality} <br />
-					{address.country}
+					<f:format.Nl2br>{contact.address}</f:format.Nl2br><br />
+					{contact.postalCode} {contact.locality} <br />
+					{contact.country}
 				</p>
 			</li>
 		</f:for>
@@ -24,10 +24,9 @@
 				nextLabel="<f:translate key='nextLabel'>Next</f:translate>" 			
 			/>
 	</div>
-<!--  	<div class="download">
+  	<div class="download">
 		<f:link.action action="vcards" additionalParams="{eID : 'vcard'}">
 			<f:image src="typo3conf/ext/addresses/Resources/Private/Icons/v-vcards.png" maxWidth="140" alt="<f:translate key='download_vcards'>Download all as vCards</f:translate>" />
 		</f:link.action>
 	</div>
--->
 </div>

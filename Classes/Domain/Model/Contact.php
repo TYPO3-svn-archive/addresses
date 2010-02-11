@@ -24,7 +24,7 @@
 ***************************************************************/
 
 /**
- * A single address
+ * A single contact
  *
  * @version $Id:$
  * @copyright Copyright belongs to the respective authors
@@ -32,7 +32,7 @@
  * @scope prototype
  * @entity
  */
-class Tx_Addresses_Domain_Model_Address extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_Addresses_Domain_Model_Contact extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
 	 * The contact's gender

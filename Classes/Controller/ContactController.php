@@ -53,13 +53,12 @@ class Tx_Addresses_Controller_ContactController extends Tx_Extbase_MVC_Controlle
 	 */
 	public function indexAction($currentPage = NULL) {
 		// TS Config transformed to shorter variable
-		$indexSettings = $this->settings['controllers']['Address']['actions']['index'];
+		$indexSettings = $this->settings['controllers']['Contact']['actions']['index'];
 		$limit = (integer)$indexSettings['maxItems']; // used to fetch this count of addresses from the database with a given offset (example: 0,5)
 		$offset = $currentPage ? $limit*$currentPage : 0;
+		
 		$data = Array(); // used to store the objects fetched from the repository
-	
 		$data = $this->contactRepository->findLimit($limit, $offset);
-
 		$total = $this->contactRepository->findTotal();
 
 		// "EXT:" shortcut replaced with the extension path
@@ -81,9 +80,9 @@ class Tx_Addresses_Controller_ContactController extends Tx_Extbase_MVC_Controlle
 	 * @param Tx_Addresses_Domain_Model_Address $address The address to show
 	 * @return string The rendered view of a single address
 	 */
-	public function showAction(Tx_Addresses_Domain_Model_Address $address) {
+	public function showAction(Tx_Addresses_Domain_Model_Contact $contact) {
 		// Transform show settings to shorter variable
-		$this->showSettings = $this->settings['controllers']['Address']['actions']['show'];
+		$this->showSettings = $this->settings['controllers']['Contact']['actions']['show'];
 		
 		if($this->showSettings['stylesheet'] != '') {
 
@@ -94,7 +93,7 @@ class Tx_Addresses_Controller_ContactController extends Tx_Extbase_MVC_Controlle
 			 $GLOBALS['TSFE']->getPageRenderer()->addCssFile($this->showSettings['stylesheet']);
 		}
 		
-		$this->view->assign('address', $address);
+		$this->view->assign('address', $contact);
 	}
 	
 	/**

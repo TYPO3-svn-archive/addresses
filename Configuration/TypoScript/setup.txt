@@ -1,7 +1,7 @@
 plugin.tx_addresses {
 	settings{
 		controllers {
-			Address {
+			Contact {
 				actions {
 					index {
 						maxItems = 5 

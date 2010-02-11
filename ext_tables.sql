@@ -27,6 +27,7 @@ CREATE TABLE tx_addresses_domain_model_contact (
 	org_type tinytext NOT NULL,
 	org_name tinytext NOT NULL,
 	company varchar(80) DEFAULT '' NOT NULL,
+  email tinytext NOT NULL,
 	website tinytext NOT NULL,
 	image tinyblob NOT NULL,
 	remarks text NOT NULL,
@@ -123,7 +124,7 @@ CREATE TABLE tx_addresses_domain_model_email (
 );
 
 #
-# Table structure for table 'tx_addresses_addresse_location'
+# Table structure for table 'tx_addresses_domain_model_location'
 #
 CREATE TABLE tx_addresses_domain_model_location (
 	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,

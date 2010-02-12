@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Susanne Moog <s.moog@neusta.de>
+*  (c) 2010 Susanne Moog <typo3@susanne-moog.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,12 +24,54 @@
 ***************************************************************/
 
 /**
- * A repository for Groups
+ * A tag
  *
+ * @version $Id: $
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
+ * @scope prototype
+ * @valueobject
  */
-class Tx_Addresses_Domain_Model_GroupRepository extends Tx_Extbase_Persistence_Repository {
+class Tx_Addresses_Domain_Model_Tag extends Tx_Extbase_DomainObject_AbstractValueObject {
 
+	/**
+	 * @var string
+	 */
+	protected $name;
+
+	/*
+	 * Constructs this tag
+	 */
+	public function __construct($name) {
+		$this->name = $name;
+	}
+
+	/**
+	 * Setter for name
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
+
+	/**
+	 * Returns this tag's name
+	 *
+	 * @return string This tag's name
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * Returns this tag as a formatted string
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->getName();
+	}
 }
 ?>

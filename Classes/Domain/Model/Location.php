@@ -68,13 +68,6 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	 * @var string
 	 */
 	protected $streetNumber = '';
-
-	/**
-	 * The address
-	 *
-	 * @var string
-	 */
-	protected $address = '';
 	
 	/**
 	 * The building
@@ -230,24 +223,6 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 		return $this->streetNumber;
 	}
 
-	/**
-	 * Sets this location's address (street and number)
-	 *
-	 * @param string $address The location's address
-	 * @return void
-	 */
-	public function setAddress($address) {
-		$this->address = $address;
-	}
-
-	/**
-	 * Returns the location's address
-	 *
-	 * @return string The location's address
-	 */
-	public function getAddress() {
-		return $this->address;
-	}
 
 	/**
 	 * Sets the room

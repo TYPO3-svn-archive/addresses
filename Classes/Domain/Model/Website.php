@@ -24,90 +24,101 @@
 ***************************************************************/
 
 /**
- * Abstract base class for contacts (possible children: person, organization)
+ * A single website
  *
  * @version $Id: $
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
- * @scope prototype
- * @entity
+ * @valueobject
  */
-class Tx_Addresses_Domain_Model_Contact extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_Addresses_Domain_Model_Website extends Tx_Extbase_DomainObject_AbstractValueObject {
 
 	/**
-	 * The contact's type
+	 * The uid of the parent contact
+	 *
+	 * @var Object
+	 */
+	protected $contact;
+
+	/**
+	 * The website
 	 *
 	 * @var string
 	 */
-	protected $type = '';
-	
-	/**
-	 * The contact's tags
-	 *
-	 * @var array
-	 */
-	protected $tags = array();
-	
-	/**
-	 * The email addresses
-	 *
-	 * @var array
-	 */
-	protected $emailAddresses = array();
-	
-	/**
-	 * The website address
-	 *
-	 * @var array
-	 */
-	protected $websites = array();
+	protected $website = '';
 
 	/**
-	 * Sets this contact's type
+	 * The remarks of the email address
 	 *
-	 * @param string $type The contact's type
+	 * @var string
+	 */
+	protected $remarks = '';
+	
+	/**
+	 * Sets the contact
+	 *
+	 * @param Tx_Addresses_Domain_Model_Contact $contact The contact
 	 * @return void
 	 */
-	public function setType($type) {
-		$this->type = $type;
+	public function setContact(Tx_Addresses_Domain_Model_Contact $contact) {
+		$this->contact = $contact;
 	}
 
 	/**
-	 * Returns the contact's type
+	 * Returns the contact
 	 *
-	 * @return string The contact's type
+	 * @return Tx_Addresses_Domain_Model_Contact the contact
 	 */
-	public function getType() {
-		return $this->type;
+	public function getContact() {
+		return $this->contact;
 	}
 	
+
 	/**
-	 * Sets this contact's tags
+	 * Sets the website
 	 *
-	 * @param array $tags The contact's tags
+	 * @param string $website The website
 	 * @return void
 	 */
-	public function setTags($tags) {
-		$this->tags = $tags;
+	public function setWebsite($website) {
+		$this->website = $website;
 	}
 
 	/**
-	 * Returns the contact's tags
+	 * Returns the website 
 	 *
-	 * @return array The contact's tags
+	 * @return string the website
 	 */
-	public function getTags() {
-		return $this->tags;
-	}
-	
-	/**
-	 * Returns the contact's tags
-	 *
-	 * @return array The contact's tags
-	 */
-	public function addTag($tag) {
-		$this->tags[] = $tag;
+	public function getWebsite() {
+		return $this->website;
 	}
 
+	/**
+	 * Sets the remarks
+	 *
+	 * @param string $remarks
+	 * @return void
+	 */
+	public function setRemarks($remarks) {
+		$this->remarks = $remarks;
+	}
+
+	/**
+	 * Returns the remarks
+	 *
+	 * @return string
+	 */
+	public function getRemarks() {
+		return $this->remarks;
+	}
+
+	/**
+	 * Returns this address as a formatted string
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->website;
+	}
 }
 ?>

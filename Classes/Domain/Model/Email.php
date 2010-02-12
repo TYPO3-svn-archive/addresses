@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Susanne Moog <s.moog@neusta.de>
+*  (c) 2010 Susanne Moog <s.moog@neusta.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,6 +29,7 @@
  * @version $Id: $
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
+ * @valueobject
  */
 class Tx_Addresses_Domain_Model_Email extends Tx_Extbase_DomainObject_AbstractValueObject {
 
@@ -37,7 +38,7 @@ class Tx_Addresses_Domain_Model_Email extends Tx_Extbase_DomainObject_AbstractVa
 	 *
 	 * @var Object
 	 */
-	protected $uidForeign;
+	protected $contact;
 
 	/**
 	 * The email address
@@ -54,29 +55,29 @@ class Tx_Addresses_Domain_Model_Email extends Tx_Extbase_DomainObject_AbstractVa
 	protected $remarks = '';
 	
 	/**
-	 * Sets the foreign uid
+	 * Sets the contact
 	 *
-	 * @param Tx_Addresses_Domain_Model_Contact $uidForeign The foreign uid
+	 * @param Tx_Addresses_Domain_Model_Contact $contact The contact
 	 * @return void
 	 */
-	public function setUidForeign(Tx_Addresses_Domain_Model_Contact $uidForeign) {
-		$this->uidForeign = $uidForeign;
+	public function setContact(Tx_Addresses_Domain_Model_Contact $contact) {
+		$this->contact = $contact;
 	}
 
 	/**
-	 * Returns the foreign uid
+	 * Returns the contact
 	 *
-	 * @return Tx_Addresses_Domain_Model_Contact the foreign uid
+	 * @return Tx_Addresses_Domain_Model_Contact the contact
 	 */
-	public function getUidForegin() {
-		return $this->uidForeign;
+	public function getContact() {
+		return $this->contact;
 	}
 	
 
 	/**
 	 * Sets the email address
 	 *
-	 * @param string $type The email address
+	 * @param string $emailAddress The email address
 	 * @return void
 	 */
 	public function setEmailAddress($emailAddress) {

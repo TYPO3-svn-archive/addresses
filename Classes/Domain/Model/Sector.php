@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Susanne Moog <s.moog@neusta.de>
+*  (c) 2010 Susanne Moog <s.moog@neusta.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,60 +24,77 @@
 ***************************************************************/
 
 /**
- * A single group
+ * A single sector
  *
- * @version $Id:$
+ * @version $Id: $
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
- * @scope prototype
- * @entity
+ * @valueobject
  */
-class Tx_Addresses_Domain_Model_Group extends Tx_Extbase_DomainObject_AbstractEntity {
-	
+class Tx_Addresses_Domain_Model_Sector extends Tx_Extbase_DomainObject_AbstractValueObject {
+
 	/**
-	 * The groups title
+	 * The uid of the parent organization
+	 *
+	 * @var Object
+	 */
+	protected $organization;
+
+	/**
+	 * The sector name
 	 *
 	 * @var string
 	 */
-	protected $title = '';
+	protected $name = '';
 
 	/**
-	 * The groups description
+	 * The remarks of the email address
 	 *
 	 * @var string
 	 */
 	protected $remarks = '';
-
-
-	/**
-	 * Constructs this group
-	 *
-	 * @return
-	 */
-	public function __construct() {
-	}
 	
 	/**
-	 * Sets this groups title
+	 * Sets the organization
 	 *
-	 * @param string $title The groups title
+	 * @param Tx_Addresses_Domain_Model_Organization $organization The organization
 	 * @return void
 	 */
-	public function setTitle($title) {
-		$this->title = $title;
+	public function setOrganization(Tx_Addresses_Domain_Model_Organization $organization) {
+		$this->organization = $organization;
 	}
 
 	/**
-	 * Returns the groups title
+	 * Returns the organization 
 	 *
-	 * @return string The groups title
+	 * @return Tx_Addresses_Domain_Model_Organization the organization
 	 */
-	public function getTitle() {
-		return $this->title;
+	public function getOrganization() {
+		return $this->organization;
+	}
+	
+
+	/**
+	 * Sets the name
+	 *
+	 * @param string $name The name
+	 * @return void
+	 */
+	public function setName($name) {
+		$this->name = $name;
 	}
 
 	/**
-	 * Sets the remarks for the group
+	 * Returns the name
+	 *
+	 * @return string the name
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * Sets the remarks
 	 *
 	 * @param string $remarks
 	 * @return void
@@ -95,14 +112,13 @@ class Tx_Addresses_Domain_Model_Group extends Tx_Extbase_DomainObject_AbstractEn
 		return $this->remarks;
 	}
 
-
 	/**
-	 * Returns this group as a formatted string
+	 * Returns this address as a formatted string
 	 *
 	 * @return string
 	 */
 	public function __toString() {
-		return $this->title;
+		return $this->name;
 	}
 }
 ?>

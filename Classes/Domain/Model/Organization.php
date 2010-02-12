@@ -24,7 +24,7 @@
 ***************************************************************/
 
 /**
- * Abstract base class for contacts (possible children: person, organization)
+ * A single organization
  *
  * @version $Id: $
  * @copyright Copyright belongs to the respective authors
@@ -32,82 +32,66 @@
  * @scope prototype
  * @entity
  */
-class Tx_Addresses_Domain_Model_Contact extends Tx_Extbase_DomainObject_AbstractEntity {
-
+class Tx_Addresses_Domain_Model_Organization extends Tx_Addresses_Domain_Model_Contact {
+	
 	/**
-	 * The contact's type
+	 * The organization's type
 	 *
 	 * @var string
 	 */
-	protected $type = '';
+	protected $type = 'organization';	
 	
 	/**
-	 * The contact's tags
+	 * The organization's name
 	 *
-	 * @var array
+	 * @var string
 	 */
-	protected $tags = array();
+	protected $name = '';
 	
 	/**
-	 * The email addresses
+	 * The organization's sector
 	 *
-	 * @var array
+	 * @var string
 	 */
-	protected $emailAddresses = array();
+	protected $sector = '';
+	
 	
 	/**
-	 * The website address
+	 * Sets this organization's name
 	 *
-	 * @var array
-	 */
-	protected $websites = array();
-
-	/**
-	 * Sets this contact's type
-	 *
-	 * @param string $type The contact's type
+	 * @param string $name The organization's name
 	 * @return void
 	 */
-	public function setType($type) {
-		$this->type = $type;
+	public function setName($name) {
+		$this->name = $name;
 	}
 
 	/**
-	 * Returns the contact's type
+	 * Returns the organization's name
 	 *
-	 * @return string The contact's type
+	 * @return string The organization's name
 	 */
-	public function getType() {
-		return $this->type;
+	public function getName() {
+		return $this->name;
 	}
-	
+
 	/**
-	 * Sets this contact's tags
+	 * Sets this organization's sector
 	 *
-	 * @param array $tags The contact's tags
+	 * @param string $sector The organization's sector
 	 * @return void
 	 */
-	public function setTags($tags) {
-		$this->tags = $tags;
+	public function setSector($sector) {
+		$this->sector = $sector;
 	}
 
 	/**
-	 * Returns the contact's tags
+	 * Returns the organization's sector
 	 *
-	 * @return array The contact's tags
+	 * @return string The organization's sector
 	 */
-	public function getTags() {
-		return $this->tags;
-	}
-	
-	/**
-	 * Returns the contact's tags
-	 *
-	 * @return array The contact's tags
-	 */
-	public function addTag($tag) {
-		$this->tags[] = $tag;
-	}
-
+	public function getSector() {
+		return $this->sector;
+	}	
 }
 ?>

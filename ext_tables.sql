@@ -11,9 +11,9 @@ CREATE TABLE tx_addresses_domain_model_person (
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(3) unsigned DEFAULT '0' NOT NULL,
 
-	type blob NOT NULL,
+	type tinytext NOT NULL,
 	gender tinytext NOT NULL,
-  status int(11) unsigned DEFAULT '0' NOT NULL,
+	status int(11) unsigned DEFAULT '0' NOT NULL,
 	first_name tinytext NOT NULL,
 	last_name tinytext NOT NULL,
 	marital_status int(11) unsigned DEFAULT '0' NOT NULL,
@@ -25,14 +25,14 @@ CREATE TABLE tx_addresses_domain_model_person (
 	nationality tinytext NOT NULL,
 	religion tinytext NOT NULL,
 	email_addresses int(11) DEFAULT '0' NOT NULL,
-  websites int(11) DEFAULT '0' NOT NULL,
-  company int(11) DEFAULT '0' NOT NULL,
+	websites int(11) DEFAULT '0' NOT NULL,
+	company int(11) DEFAULT '0' NOT NULL,
 	addresses int(11) DEFAULT '0' NOT NULL,
 	preferred_language varchar(40) DEFAULT '' NOT NULL,
 	image tinyblob NOT NULL,
 	remarks text NOT NULL,
 	numbers int(11) DEFAULT '0' NOT NULL,
-  tags int(11) DEFAULT '0' NOT NULL,
+	tags int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
@@ -53,10 +53,10 @@ CREATE TABLE tx_addresses_domain_model_organization (
 	deleted tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	name tinytext NOT NULL,
 	email_addresses int(11) DEFAULT '0' NOT NULL,
-  websites int(11) DEFAULT '0' NOT NULL,
+	websites int(11) DEFAULT '0' NOT NULL,
 	numbers int(11) DEFAULT '0' NOT NULL,
-  tags int(11) DEFAULT '0' NOT NULL,
-  sector int(11) DEFAULT '0' NOT NULL,
+	tags int(11) DEFAULT '0' NOT NULL,
+	sector int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
@@ -122,7 +122,7 @@ CREATE TABLE tx_addresses_domain_model_number (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY uid_foreign (uid_foreign)
+	KEY uid_foreign (contact)
 );
 
 #
@@ -201,7 +201,7 @@ CREATE TABLE tx_addresses_domain_model_location (
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-	type tinyint(4) NOT NULL,
+	type tinytext NOT NULL,
 	nature tinytext NOT NULL,
 	label tinytext NOT NULL,
 	street tinytext NOT NULL,

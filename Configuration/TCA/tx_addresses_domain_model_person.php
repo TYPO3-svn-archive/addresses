@@ -283,12 +283,10 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.email',
 			'config' => array(
-				'type' => 'group',
-				'internal_type' => 'db',
-				'allowed' => 'tx_addresses_domain_model_email',
-				'size' => 10,
-				'minitems' => 0,
-				'maxitems' => 10,
+				'type' => 'inline',
+				'foreign_table' => 'tx_addresses_domain_model_email',
+				'foreign_field' => 'contact',
+				'foreign_label' => 'email_address',
 			)
 		),
 		'locations' => array(

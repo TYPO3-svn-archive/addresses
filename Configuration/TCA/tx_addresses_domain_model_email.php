@@ -2,7 +2,7 @@
 $TCA['tx_addresses_domain_model_email'] = array(
 	'ctrl' => $TCA['tx_addresses_domain_model_email']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'hidden,uid_foreign,email_address,remarks'
+		'showRecordFieldList' => 'hidden,email_address,remarks'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_number']['feInterface'],
 	'columns' => array(
@@ -86,7 +86,7 @@ $TCA['tx_addresses_domain_model_email'] = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'hidden;;;;1-1-1, uid_foreign,email_address;;;;2-2-2, remarks')
+		'0' => array('showitem' => 'email_address,remarks')
 	),
 	'palettes' => array(
 

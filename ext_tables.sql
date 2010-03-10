@@ -212,7 +212,7 @@ CREATE TABLE tx_addresses_domain_model_location (
 	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
-	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	contact int(11) unsigned DEFAULT '0' NOT NULL,
 	type tinytext NOT NULL,
 	nature tinytext NOT NULL,
 	label tinytext NOT NULL,
@@ -228,6 +228,6 @@ CREATE TABLE tx_addresses_domain_model_location (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY uid_foreign (uid_foreign)
+	KEY uid_foreign (contact)
 );
 

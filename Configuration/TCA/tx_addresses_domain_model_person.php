@@ -2,7 +2,7 @@
 $TCA['tx_addresses_domain_model_person'] = Array (
 	'ctrl' => $TCA['tx_addresses_domain_model_person']['ctrl'],
 	'interface' => Array (
-		'showRecordFieldList' => 'gender,first_name,last_name,birth_date,marital_status,address,locality,postal_code,country,preferred_language,numbers,emails,website,title,company,room,building,image,tags,region'
+		'showRecordFieldList' => 'gender,first_name,last_name,birth_date,marital_status,country,preferred_language,numbers,emails,website,title,company,room,building,image,tags,region'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_person']['feInterface'],
 	'columns' => Array (
@@ -182,26 +182,6 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'max' => '40'
 			)
 		),
-		'org_type' => Array (
-			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.org_type',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '20',
-				'eval' => 'trim',
-				'max' => '40'
-			)
-		),
-		'org_name' => Array (
-			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.org_name',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '20',
-				'eval' => 'trim',
-				'max' => '40'
-			)
-		),
 		'website' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.website',
@@ -271,12 +251,10 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.number',
 			'config' => array(
-				'type' => 'group',
-				'internal_type' => 'db',
-				'allowed' => 'tx_addresses_domain_model_number',
-				'size' => 10,
-				'minitems' => 0,
-				'maxitems' => 10,
+				'type' => 'inline',
+				'foreign_table' => 'tx_addresses_domain_model_number',
+				'foreign_field' => 'contact',
+				'foreign_label' => 'label',
 			)
 		),
 		'emails' => array(
@@ -289,14 +267,14 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'foreign_label' => 'email_address',
 			)
 		),
-		'locations' => array(
+		'addresses' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.locations',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.addresses',
 			'config' => array(
-				'type' => 'input',
-				'size' => '20',
-				'eval' => 'trim',
-				'max' => '30',
+				'type' => 'inline',
+				'foreign_table' => 'tx_addresses_domain_model_address',
+				'foreign_field' => 'contact',
+				'foreign_label' => 'label',
 			)
 		),
 		// *not* editable combobox widget
@@ -329,7 +307,11 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		),
 	),
 	'types' => Array (
-		'1' => Array('showitem' => 'hidden, gender, first_name, last_name,company, address, postal_code, locality, numbers, emails, image, remarks, tags')
+		'1' => Array('showitem' => 'hidden,gender, first_name, last_name,company, image, remarks ,
+									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.contactInfos, numbers, emails,
+									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.addresses, tags,
+									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.tags, tags,
+									'),
 	),
 	'palettes' => Array (
 		'2' => Array('showitem' => 'title, birth_date, marital_status'),

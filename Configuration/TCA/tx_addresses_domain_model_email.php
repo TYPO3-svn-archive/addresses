@@ -55,18 +55,6 @@ $TCA['tx_addresses_domain_model_email'] = array(
 				'default' => '1'
 			)
 		),
-		'uid_foreign' => array(
-			'exclude' => 1,
-			'label'     => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.uid_foreign',
-            'config' => array (
-                'type' => 'group',    
-                'internal_type' => 'db',    
-                'allowed' => 'tx_addresses_domain_model_email',
-                'size' => 1,    
-                'minitems' => 0,
-                'maxitems' => 1,
-            )
-		),
 		'email_address' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.email_address',

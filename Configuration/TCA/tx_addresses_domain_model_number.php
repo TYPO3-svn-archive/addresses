@@ -55,14 +55,6 @@ $TCA['tx_addresses_domain_model_number'] = array(
 				'default' => '1'
 			)
 		),
-		'uid_foreign' => array(
-			'exclude' => 1,
-			'label'     => 'uid_foreign (mandatory field)',
-			'config'    => array(
-				'type'   => 'input',
-				'hidden' => TRUE
-			)
-		),
 		'label' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_number.label',

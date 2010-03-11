@@ -64,16 +64,20 @@ $TCA['tx_addresses_domain_model_number'] = array(
 				'rows' => '3'
 			)
 		),
-		// *not* editable combobox widget
+		// ExtJS note: *not* editable combobox widget
 		'type' => array(
 			'exclude' => 1,
 			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_number.type',
 			'config'  => array(
 				'type' => 'select',
 				'items'   => array(
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:fixed', 'fixed'),
+					Array('', ''),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:work', 'work'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:home', 'home'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:mobile', 'mobile'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:main', 'main'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:fax', 'fax'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:other', 'other'),
 				),
 				'size' => 1,
 				'minitems' => 0,
@@ -81,7 +85,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 				'editable' => FALSE,
 			)
 		),
-		// editable combobox widget
+		// ExtJS note: editable combobox widget
 		'nature' => array(
 			'exclude' => 1,
 			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_number.nature',
@@ -106,13 +110,13 @@ $TCA['tx_addresses_domain_model_number'] = array(
 			'config'  => array(
 				'type' => 'text',
 				'cols' => '30',
-				'rows' => '5',
+				'rows' => '1',
 				'height' => 150
 			)
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'hidden,number,remarks')
+		'0' => array('showitem' => 'type,number,remarks')
 	),
 	'palettes' => array(
 

@@ -61,16 +61,21 @@
 			<label index="tx_addresses_domain_model_person.number">Contact number</label>
 			<label index="tx_addresses_domain_model_person.addresses">Addresses</label>
 			<label index="tx_addresses_domain_model_person.label">Label</label>
-			
+
 			<!-- DOMAIN EMAIL -->
 			<label index="tx_addresses_domain_model_email.email_address">Email Address</label>
+			<label index="tx_addresses_domain_model_email.type">Type</label>
 			<label index="tx_addresses_domain_model_email.remarks">Remarks</label>
-			
+
 			<!-- DOMAIN NUMBER -->
 			<label index="tx_addresses_domain_model_number.number">Phone number</label>
+			<label index="tx_addresses_domain_model_number.type">Type</label>
+			<label index="tx_addresses_domain_model_number.remarks">Remarks</label>
+			
+			<!-- DOMAIN ADDRESS -->
 			
 			<!-- TABS -->
-			<label index="tabs.contactInfos">Contact informations</label>
+			<label index="tabs.contactInfo">Contact information</label>
 			<label index="tabs.addresses">Addresses</label>
 			<label index="tabs.tags">Tags</label>
 		</languageKey>
@@ -132,13 +137,18 @@
 
 			<!-- DOMAIN EMAIL -->
 			<label index="tx_addresses_domain_model_email.email_address">Adresse email</label>
+			<label index="tx_addresses_domain_model_email.type">Type</label>
 			<label index="tx_addresses_domain_model_email.remarks">Remarques</label>
 
 			<!-- DOMAIN NUMBER -->
 			<label index="tx_addresses_domain_model_number.number">Numéro de téléphone</label>
+			<label index="tx_addresses_domain_model_number.type">Type</label>
+			<label index="tx_addresses_domain_model_number.remarks">Remarques</label>
+
+			<!-- DOMAIN ADDRESS -->
 
 			<!-- TABS -->
-			<label index="tabs.contactInfos">Informations de contact</label>
+			<label index="tabs.contactInfo">Information de contact</label>
 			<label index="tabs.addresses">Addresses</label>
 			<label index="tabs.tags">Tags</label>
 		</languageKey>

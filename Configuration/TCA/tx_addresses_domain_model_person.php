@@ -77,7 +77,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'max' => '256'
 			)
 		),
-		// *not* editable combobox widget
+		// ExtJS note: *not* editable combobox widget
 		'gender' => array (
 			'exclude' => 1,
 			'label'  => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.gender',
@@ -264,7 +264,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'type' => 'inline',
 				'foreign_table' => 'tx_addresses_domain_model_email',
 				'foreign_field' => 'contact',
-				'foreign_label' => 'email_address',
+				'foreign_label' => 'label',
 			)
 		),
 		'addresses' => array(
@@ -277,7 +277,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'foreign_label' => 'label',
 			)
 		),
-		// *not* editable combobox widget
+		// ExtJS note: *not* editable combobox widget
 		'marital_status' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.marital_status',
@@ -308,7 +308,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 	),
 	'types' => Array (
 		'1' => Array('showitem' => 'hidden,gender, first_name, last_name,company, image, remarks ,
-									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.contactInfos, numbers, emails,
+									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.contactInfo, numbers, emails,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.addresses, addresses,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.tags, tags,
 									'),

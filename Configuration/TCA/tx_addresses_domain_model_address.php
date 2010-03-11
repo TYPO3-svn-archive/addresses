@@ -192,7 +192,7 @@ $TCA['tx_addresses_domain_model_address'] = array(
 			'config'  => array(
 				'type' => 'text',
 				'cols' => '30',
-				'rows' => '5',
+				'rows' => '1',
 				'height' => 150
 			)
 		),

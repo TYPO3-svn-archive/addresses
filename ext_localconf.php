@@ -1,6 +1,9 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
+# TCE HOOK. Used to define the labels
+$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:addresses/class.tx_addresses_tcehook.php:&tx_addresses_tcehook';
+
 /**
  * Configure the Plugin to call the
  * right combination of Controller and Action according to

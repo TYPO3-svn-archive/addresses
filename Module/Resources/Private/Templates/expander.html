@@ -26,14 +26,14 @@
 					<?php endif ?>
 				</div>
 			</td>
-			<?php if (!empty($locations)): ?>
+			<?php if (!empty($addresses)): ?>
 			<td>
-				<?php foreach ($locations as $location): ?>
-				<p style="font-size: 104%; color: gray"><?php print $location['nature'] ?></p>
+				<?php foreach ($addresses as $address): ?>
+				<p style="font-size: 104%; color: gray"><?php print $address['nature'] ?></p>
 				<div style="margin-left: 20px; margin-bottom: 10px">
-					<p><?php print $location['street'] ?></p>
-					<p><?php print $location['postal_code'] ?> <?php print $location['locality'] ?></p>
-					<button onclick="window.open('http://maps.google.com/maps?q=<?php print urlencode($location['street']) ?> <?php print $location['postal_code'] ?> <?php print urlencode($location['locality']) ?>')"
+					<p><?php print $address['street'] ?></p>
+					<p><?php print $address['postal_code'] ?> <?php print $address['locality'] ?></p>
+					<button onclick="window.open('http://maps.google.com/maps?q=<?php print urlencode($address['street']) ?> <?php print $address['postal_code'] ?> <?php print urlencode($address['locality']) ?>')"
 							style="margin-top: 10px">###LLL:EXT:addresses/Module/Resources/Private/Language/locallang.xml:get_map###</button>
 				</div>
 				<?php endforeach ?>

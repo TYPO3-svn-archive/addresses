@@ -36,4 +36,4 @@ Ext.namespace("Addresses");
 Ext.namespace("Contact");
 Ext.namespace("Group");
 Ext.namespace("Number");
-Ext.namespace("Location");
+Ext.namespace("Address");

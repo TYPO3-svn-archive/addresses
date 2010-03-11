@@ -98,7 +98,7 @@ $TCA[$domainName]['types']['module']['showitem'] = array(
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:addresses',
 				// 2 fields on the same line
-				'fields' => array('locations'),
+				'fields' => array('addresses'),
 			),
 			array(
 				'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:numbers',
@@ -133,10 +133,10 @@ $TCA[$domainName]['columns']['numbers']['config'] = Array(
 	'foreign_table' => 'tx_addresses_domain_model_number',
 );
 
-$TCA[$domainName]['columns']['locations']['config'] = Array(
+$TCA[$domainName]['columns']['addresses']['config'] = Array(
 	'type' => 'user',
-	'userFunc' => 'Tx_Addresses_Utility_UserTCE::getLocationField',
-	'foreign_table' => 'tx_addresses_domain_model_location',
+	'userFunc' => 'Tx_Addresses_Utility_UserTCE::getAddressField',
+	'foreign_table' => 'tx_addresses_domain_model_address',
 );
 
 // editable combobox widget

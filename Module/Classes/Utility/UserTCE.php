@@ -96,12 +96,12 @@
 	 * @param	array		$fieldName
 	 * @return	array
 	 */
-	public static function getLocationField($namespace, &$columns, $fieldName) {
+	public static function getAddressField($namespace, &$columns, $fieldName) {
 		global $LANG;
-		$configuration['xtype'] = 'location';
-		$configuration['id'] = 'address_locations';
+		$configuration['xtype'] = 'address';
+		$configuration['id'] = 'address_addresses';
 		$configuration['fieldLabel'] = '';
-		$configuration['buttonText'] = $LANG->getLL('addNewLocation');
+		$configuration['buttonText'] = $LANG->getLL('addNewAddress');
 		return $configuration;
 	}
 

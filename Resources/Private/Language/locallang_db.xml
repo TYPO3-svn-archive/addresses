@@ -6,8 +6,8 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="tx_addresses_domain_model_number.number">Number</label>
-			
+
+			<!-- DOMAIN PERSON -->
 			<label index="tx_addresses_domain_model_person.mobile">Mobile</label>
 			<label index="tx_addresses_domain_model_person.first_name">First name</label>
 			<label index="tx_addresses_domain_model_person.last_name">Last name</label>
@@ -59,13 +59,24 @@
 			<label index="tx_addresses_domain_model_person.number">Number</label>
 			<label index="tx_addresses_domain_model_person.nature">Function</label>
 			<label index="tx_addresses_domain_model_person.number">Contact number</label>
-			<label index="tx_addresses_domain_model_person.locations">Locations</label>
+			<label index="tx_addresses_domain_model_person.addresses">Addresses</label>
 			<label index="tx_addresses_domain_model_person.label">Label</label>
+			
+			<!-- DOMAIN EMAIL -->
 			<label index="tx_addresses_domain_model_email.email_address">Email Address</label>
 			<label index="tx_addresses_domain_model_email.remarks">Remarks</label>
+			
+			<!-- DOMAIN NUMBER -->
+			<label index="tx_addresses_domain_model_number.number">Phone number</label>
+			
+			<!-- TABS -->
+			<label index="tabs.contactInfos">Contact informations</label>
+			<label index="tabs.addresses">Addresses</label>
+			<label index="tabs.tags">Tags</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
-			<label index="tx_addresses_domain_model_person.mobile">Mobile</label>
+
+			<!-- DOMAIN PERSON -->
 			<label index="tx_addresses_domain_model_person.first_name">Prénom</label>
 			<label index="tx_addresses_domain_model_person.last_name">Nom</label>
 			<label index="tx_addresses_domain_model_person.gender">Genre</label>
@@ -115,9 +126,21 @@
 			<label index="tx_addresses_domain_model_person.number">Numéro</label>
 			<label index="tx_addresses_domain_model_person.nature">Fonction</label>
 			<label index="tx_addresses_domain_model_person.number">Numéro de contact</label>
-			<label index="tx_addresses_domain_model_person.locations">Lieux</label>
+			<label index="tx_addresses_domain_model_person.addresses">Adresses</label>
 			<label index="tx_addresses_domain_model_person.label">Label</label>
 			<label index="tx_addresses_domain_model_email.remarks">Remarques</label>
+
+			<!-- DOMAIN EMAIL -->
+			<label index="tx_addresses_domain_model_email.email_address">Adresse email</label>
+			<label index="tx_addresses_domain_model_email.remarks">Remarques</label>
+
+			<!-- DOMAIN NUMBER -->
+			<label index="tx_addresses_domain_model_number.number">Numéro de téléphone</label>
+
+			<!-- TABS -->
+			<label index="tabs.contactInfos">Informations de contact</label>
+			<label index="tabs.addresses">Addresses</label>
+			<label index="tabs.tags">Tags</label>
 		</languageKey>
 	</data>
 </T3locallang>

@@ -309,7 +309,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 	'types' => Array (
 		'1' => Array('showitem' => 'hidden,gender, first_name, last_name,company, image, remarks ,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.contactInfos, numbers, emails,
-									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.addresses, tags,
+									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.addresses, addresses,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.tags, tags,
 									'),
 	),

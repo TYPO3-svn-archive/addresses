@@ -24,15 +24,15 @@
 ***************************************************************/
 
 /**
- * A single location
+ * A single address
  *
- * @version $Id: $
+ * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @scope prototype
  * @entity
  */
-class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_AbstractEntity {
+class tx_addresses_domain_model_address extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
 	 * The type
@@ -42,14 +42,14 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	protected $type = '';
 
 	/**
-	 * The nature of the location
+	 * The nature of the address
 	 *
 	 * @var string
 	 */
 	protected $nature = '';
 	
 	/**
-	 * The label of the location
+	 * The label of the address
 	 *
 	 * @var string
 	 */
@@ -112,7 +112,7 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	protected $country = '';
 
 	/**
-	 * The remarks of the location
+	 * The remarks of the address
 	 *
 	 * @var string
 	 */
@@ -120,7 +120,7 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 
 
 	/**
-	 * Constructs this location
+	 * Constructs this address
 	 *
 	 * @return
 	 */
@@ -129,9 +129,9 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 
 
 	/**
-	 * Sets this location's type
+	 * Sets this address's type
 	 *
-	 * @param string $type The location's type
+	 * @param string $type The address's type
 	 * @return void
 	 */
 	public function setType($type) {
@@ -139,18 +139,18 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	}
 
 	/**
-	 * Returns the location's type
+	 * Returns the address's type
 	 *
-	 * @return string The location's type
+	 * @return string The address's type
 	 */
 	public function getType() {
 		return $this->type;
 	}
 	
 	/**
-	 * Sets this location's nature
+	 * Sets this address's nature
 	 *
-	 * @param string $nature The location's nature
+	 * @param string $nature The address's nature
 	 * @return void
 	 */
 	public function setNature($nature) {
@@ -158,18 +158,18 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	}
 
 	/**
-	 * Returns the location's nature
+	 * Returns the address's nature
 	 *
-	 * @return string The location's nature
+	 * @return string The address's nature
 	 */
 	public function getNature() {
 		return $this->nature;
 	}
 	
 	/**
-	 * Sets this location's label
+	 * Sets this address's label
 	 *
-	 * @param string $label The location's label
+	 * @param string $label The address's label
 	 * @return void
 	 */
 	public function setLabel($label) {
@@ -177,18 +177,18 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	}
 
 	/**
-	 * Returns the location's label
+	 * Returns the address's label
 	 *
-	 * @return string The location's label
+	 * @return string The address's label
 	 */
 	public function getLabel() {
 		return $this->label;
 	}
 
 	/**
-	 * Sets this location's street
+	 * Sets this address's street
 	 *
-	 * @param string $street The location's street
+	 * @param string $street The address's street
 	 * @return void
 	 */
 	public function setStreet($street) {
@@ -196,18 +196,18 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	}
 
 	/**
-	 * Returns the location's street
+	 * Returns the address's street
 	 *
-	 * @return string The location's street
+	 * @return string The address's street
 	 */
 	public function getStreet() {
 		return $this->street;
 	}
 
 	/**
-	 * Sets this location's streetNumber
+	 * Sets this address's streetNumber
 	 *
-	 * @param string $streetNumber The location's street
+	 * @param string $streetNumber The address's street
 	 * @return void
 	 */
 	public function setStreetNumber($streetNumber) {
@@ -215,9 +215,9 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	}
 
 	/**
-	 * Returns the location's streetNumber
+	 * Returns the address's streetNumber
 	 *
-	 * @return string The location's streetNumber
+	 * @return string The address's streetNumber
 	 */
 	public function getStreetNumber() {
 		return $this->streetNumber;
@@ -263,9 +263,9 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	}
 
 	/**
-	 * Sets this location's postalCode code
+	 * Sets this address's postalCode code
 	 *
-	 * @param string $postalCode The location's postalCode code
+	 * @param string $postalCode The address's postalCode code
 	 * @return void
 	 */
 	public function setPostalCode($postalCode) {
@@ -273,9 +273,9 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	}
 
 	/**
-	 * Returns the location's postalCode code
+	 * Returns the address's postalCode code
 	 *
-	 * @return string The location's postalCode code
+	 * @return string The address's postalCode code
 	 */
 	public function getPostalCode() {
 		return $this->postalCode;
@@ -301,9 +301,9 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	}
 	
 	/**
-	 * Sets this location's region
+	 * Sets this address's region
 	 *
-	 * @param string $region The location's region
+	 * @param string $region The address's region
 	 * @return void
 	 */
 	public function setRegion($region) {
@@ -311,18 +311,18 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	}
 
 	/**
-	 * Returns the location's region
+	 * Returns the address's region
 	 *
-	 * @return string The location's region
+	 * @return string The address's region
 	 */
 	public function getRegion() {
 		return $this->region;
 	}
 	
 	/**
-	 * Sets this location's country
+	 * Sets this address's country
 	 *
-	 * @param string $country The location's country
+	 * @param string $country The address's country
 	 * @return void
 	 */
 	public function setCountry($country) {
@@ -330,16 +330,16 @@ class Tx_Addresses_Domain_Model_Location extends Tx_Extbase_DomainObject_Abstrac
 	}
 
 	/**
-	 * Returns the location's country
+	 * Returns the address's country
 	 *
-	 * @return string The location's country
+	 * @return string The address's country
 	 */
 	public function getCountry() {
 		return $this->country;
 	}
 
 	/**
-	 * Sets the remarks for the location
+	 * Sets the remarks for the address
 	 *
 	 * @param string $remarks
 	 * @return void

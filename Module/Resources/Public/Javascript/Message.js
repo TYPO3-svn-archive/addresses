@@ -84,7 +84,7 @@ Ext.Message = function(){
 			t.on('change', function(){
 				Cookies.set('exttheme', t.getValue());
 				setTimeout(function(){
-					window.location.reload();
+					window.address.reload();
 				}, 250);
 			});
 

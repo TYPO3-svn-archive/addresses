@@ -84,7 +84,7 @@ class Tx_Addresses_Utility_TCE {
 	}
 	
 	/**
-	 * Returns the locations store
+	 * Returns the addresses store
 	 *
 	 * @global t3lib_DB $TYPO3_DB
 	 * @param	string	$storeName

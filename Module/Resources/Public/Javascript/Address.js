@@ -9,7 +9,7 @@
  * @version $Id$
  */
 
-Ext.ux.Location = Ext.extend(Ext.Panel, {
+Ext.ux.Address = Ext.extend(Ext.Panel, {
 	buttonText: '',
 
 	//	// Overriden parent object method, with additional functionality
@@ -21,14 +21,14 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 			{
 				xtype: 'dataview',
 				tpl: [
-				'<table id="location" style="width:100%; border-spacing: 0; cursor: pointer; margin-bottom: 5px">',
+				'<table id="address" style="width:100%; border-spacing: 0; cursor: pointer; margin-bottom: 5px">',
 					'<tbody>',
 						'<tpl for=".">',
-							'<tr id="locationMainRow{uid}" class="locationMainRow" style="" onmouseover="this.childNodes[0].childNodes[0].style.visibility = \'visible\'; this.style.backgroundColor = \'#EFEFF4\';" onmouseout="this.childNodes[0].childNodes[0].style.visibility = \'hidden\'; this.style.backgroundColor = \'\'">',
+							'<tr id="addressMainRow{uid}" class="addressMainRow" style="" onmouseover="this.childNodes[0].childNodes[0].style.visibility = \'visible\'; this.style.backgroundColor = \'#EFEFF4\';" onmouseout="this.childNodes[0].childNodes[0].style.visibility = \'hidden\'; this.style.backgroundColor = \'\'">',
 								'<td style="width:12%; padding: 3px 0; border-bottom: 1px dotted gray; text-align: center;">',
 									'<div style="visibility: hidden;">',
-										'<img id="locationDeleteImg{uid}" src="/typo3conf/ext/addresses/Module/Resources/Public/Icons/delete.png" alt="delete" />',
-										'<img id="locationEditImg{uid}" src="/typo3conf/ext/addresses/Module/Resources/Public/Icons/pencil.png" alt="edit" style="margin-left: 5px"/>',
+										'<img id="addressDeleteImg{uid}" src="/typo3conf/ext/addresses/Module/Resources/Public/Icons/delete.png" alt="delete" />',
+										'<img id="addressEditImg{uid}" src="/typo3conf/ext/addresses/Module/Resources/Public/Icons/pencil.png" alt="edit" style="margin-left: 5px"/>',
 									'</div>',
 								'</td>',
 								'<td style="width: 60%; padding: 3px 0; border-bottom: 1px dotted gray;">',
@@ -50,7 +50,7 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 				'</table>'
 				],
 				itemSelector: 'tr',
-				store: Address.stores.locations
+				store: Address.stores.addresses
 			},
 			{
 				xtype: 'button',
@@ -67,10 +67,10 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 		});
 
 		// Defines a global variable
-		Location.panel = Ext.ComponentMgr.get('address_locations');
+		Address.panel = Ext.ComponentMgr.get('address_addresses');
 
 		// Calls parent method
-		Ext.ux.Location.superclass.initComponent.call(this, arguments);
+		Ext.ux.Address.superclass.initComponent.call(this, arguments);
 	},
 
 	/**
@@ -83,23 +83,23 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 
 		// Attached formpanel to Address.window
 		var formPanel = new Ext.form.FormPanel({
-			id: 'locationForm',
+			id: 'addressForm',
 			waitMsgTarget: true,
 			frame: true,
 			labelAlign: 'top',
 			hideMode: 'display',
-			items: Location.windowFields
+			items: Address.windowFields
 		});
 
 		var panel = Address.window.get(0);
 		panel.add(formPanel);
 		
 		// Hides form panel
-		Ext.ComponentMgr.get('locationForm').setVisible(false);
+		Ext.ComponentMgr.get('addressForm').setVisible(false);
 	},
 
 	//	onRender: function(ct){
-	//		Ext.ux.Location.superclass.onRender.apply(this, arguments);
+	//		Ext.ux.Address.superclass.onRender.apply(this, arguments);
 	//	},
 	
 	/**
@@ -108,9 +108,9 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 	 * @access public
 	 */
 	doLayout: function() {
-		Ext.ux.Location.superclass.doLayout.call(this);
+		Ext.ux.Address.superclass.doLayout.call(this);
 
-		var elements = Ext.select('#location img[alt=edit]');
+		var elements = Ext.select('#address img[alt=edit]');
 		if (elements.elements.length > 0) {
 
 			// Checks whether an event already exists at the first element by check attribute 'display'
@@ -123,13 +123,13 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 				// Get contact element
 				Ext.addBehaviors({
 					// add a listener for click on all anchors in element with id foo
-					'#location .locationMainRow@dblclick' : Location.panel.edit,
-					'#location img[alt=edit]@click' : Location.panel.edit,
-					'#location img[alt=delete]@click' : Location.panel.deleteRecord
+					'#address .addressMainRow@dblclick' : Address.panel.edit,
+					'#address img[alt=edit]@click' : Address.panel.edit,
+					'#address img[alt=delete]@click' : Address.panel.deleteRecord
 				});
 
 				if (Addresses.DEBUG) {
-					console.log('Location: attached events on rows');
+					console.log('Address: attached events on rows');
 				}
 			}
 		}
@@ -148,31 +148,31 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 		var toolbar = Address.window.getTopToolbar();
 
 		toolbar.insertButton(0,{
-			id: 'locationSaveButton',
+			id: 'addressSaveButton',
 			xtype: 'button',
-			text: Addresses.lang.saveLocation,
+			text: Addresses.lang.saveAddress,
 			cls: 'x-btn-text-icon',
 			icon: 'Resources/Public/Icons/database_save.png',
-			handler: Location.panel.save
+			handler: Address.panel.save
 		});
 		toolbar.insertButton(toolbar.items.items.length - 1,{
-			id: 'locationResetButton',
+			id: 'addressResetButton',
 			xtype: 'button',
 			text: Addresses.lang.reset,
 			cls: 'x-btn-text-icon',
 			icon: 'Resources/Public/Icons/database.png',
-			handler: Location.panel.reset
+			handler: Address.panel.reset
 		});
 
 		// Re-draws the button
 		toolbar.doLayout();
 		if (Addresses.DEBUG) {
-			console.log('Location: buttons have been added in the toolbar');
+			console.log('Address: buttons have been added in the toolbar');
 		}
 	},
 	
 	/**
-	 * Swaps between "addressForm" and "locationForm"
+	 * Swaps between "addressForm" and "addressForm"
 	 *
 	 * @todo check the parameter + access of the method
 	 * @access private
@@ -187,24 +187,24 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 		// Get uid_foreign value
 		var uid_foreign = Address.form.findField('uid').getValue();
 		if (uid_foreign == '') {
-			Location.panel.saveParent();
+			Address.panel.saveParent();
 		}
 		else {
-			if (!Ext.get('locationSaveButton')) {
-				Location.panel.addButtons();
+			if (!Ext.get('addressSaveButton')) {
+				Address.panel.addButtons();
 			}
 
 			// TRUE means this is a new record
 			if (typeof(element.id) == 'undefined') {
-				Location.panel.editInsert();
+				Address.panel.editInsert();
 			}
 			else {
-				Location.panel.editUpdate(element);
+				Address.panel.editUpdate(element);
 			}
 
 			// Show / hide widgets
-			Location.panel.setVisible(true);
-			Location.panel.attachKeyMap();
+			Address.panel.setVisible(true);
+			Address.panel.attachKeyMap();
 		}
 	},
 	
@@ -215,7 +215,7 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 	 * @return void
 	 */
 	setVisible: function(isVisible) {
-		var namespaces = [{name: 'location', visible: isVisible}, {name: 'address', visible: !isVisible}]
+		var namespaces = [{name: 'address', visible: isVisible}, {name: 'address', visible: !isVisible}]
 		for (var index = 0; index < namespaces.length; index ++) {
 			var namespace = namespaces[index];
 			Ext.ComponentMgr.get(namespace.name + 'Form').setVisible(namespace.visible);
@@ -235,7 +235,7 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 		// Ext.ComponentMgr.get('functionForm').getForm().reset(); does not work if the form has been loaded
 
 		// Gets the fields
-		var values = Ext.ComponentMgr.get('locationForm').getForm().getValues();
+		var values = Ext.ComponentMgr.get('addressForm').getForm().getValues();
 
 		// Defines a blank object
 		var emptyValues = {};
@@ -246,13 +246,13 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 		var record = new Ext.data.Record(emptyValues)
 
 		// Loads this blank record
-		Ext.ComponentMgr.get('locationForm').getForm().loadRecord(record);
+		Ext.ComponentMgr.get('addressForm').getForm().loadRecord(record);
 		////// end of the fix
 
 		// Get uid_foreign value
 		var uid_foreign = Address.form.findField('uid').getValue();
 
-		var form = Ext.ComponentMgr.get('locationForm').getForm();
+		var form = Ext.ComponentMgr.get('addressForm').getForm();
 		
 		// Set uid_foreign into field uid_foreign
 		form.findField('uid_foreign').setValue(uid_foreign);
@@ -275,8 +275,8 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 			element = element.parentNode;
 		}
 		var uid = element.id.replace(/[a-zA-Z]+/, '');
-		var record = Address.stores.locations.getById(uid);
-		var form = Ext.ComponentMgr.get('locationForm').getForm();
+		var record = Address.stores.addresses.getById(uid);
+		var form = Ext.ComponentMgr.get('addressForm').getForm();
 		form.loadRecord(record);
 	},
 
@@ -289,8 +289,8 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 	 * @return void
 	 */
 	deleteRecord: function(event, element) {
-		var uid = element.id.replace('locationDeleteImg', '');
-		var record = Address.stores.locations.getById(uid);
+		var uid = element.id.replace('addressDeleteImg', '');
+		var record = Address.stores.addresses.getById(uid);
 		Ext.Msg.show({
 			title: Addresses.lang.remove,
 			buttons: Ext.MessageBox.YESNO,
@@ -307,11 +307,11 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 						method: 'GET',
 						url: Addresses.statics.ajaxController,
 						params:{
-							ajaxID: 'LocationController::deleteAction',
+							ajaxID: 'AddressController::deleteAction',
 							dataSet: Ext.util.JSON.encode(dataSet)
 						},
 						success: function(f,a){
-							Address.stores.locations.remove(record);
+							Address.stores.addresses.remove(record);
 						},
 						failure: function(f,a){
 							if (a.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -353,7 +353,7 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 						Ext.StoreMgr.get('addressStore').load();
 
 						// Display re display the form
-						Location.panel.edit();
+						Address.panel.edit();
 					}
 					Address.form.submit(submit);
 				}
@@ -375,20 +375,20 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 			url: Addresses.statics.ajaxController,
 			waitMsg: Addresses.lang.saving,
 			params:{
-				ajaxID: 'LocationController::saveAction'
+				ajaxID: 'AddressController::saveAction'
 			},
 			success: function(form, call){
 				var record = call.result.records[0];
 				// removes the old record for updated record
 				if (call.result.request == 'UPDATE') {
-					var _record = Address.stores.locations.getById(record.uid);
-					Address.stores.locations.remove(_record)
+					var _record = Address.stores.addresses.getById(record.uid);
+					Address.stores.addresses.remove(_record)
 				}
 				// Adds, sorts and regenerates the layout.
-				Address.stores.locations.add(new Ext.data.Record(record, record.uid));
-				Address.stores.locations.sort('uid', 'ASC');
-				Location.panel.doLayout();
-				Location.panel.reset();
+				Address.stores.addresses.add(new Ext.data.Record(record, record.uid));
+				Address.stores.addresses.sort('uid', 'ASC');
+				Address.panel.doLayout();
+				Address.panel.reset();
 			},
 			failure: function(form,call){
 				if (call.failureType === Ext.form.Action.CONNECT_FAILURE) {
@@ -401,7 +401,7 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 		};
 
 		// Send form
-		var form = Ext.ComponentMgr.get('locationForm').getForm();
+		var form = Ext.ComponentMgr.get('addressForm').getForm();
 		if (form.isValid()) {
 			form.submit(submit);
 		}
@@ -417,10 +417,10 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 	reset: function() {
 
 		// Show / hide widgets
-		Location.panel.setVisible(false);
+		Address.panel.setVisible(false);
 
 		// Resets form
-		Ext.ComponentMgr.get('locationForm').getForm().reset();
+		Ext.ComponentMgr.get('addressForm').getForm().reset();
 	},
 
 	/**
@@ -430,10 +430,10 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 	 * @return void
 	 */
 	setValue: function(records) {
-		Address.stores.locations.removeAll();
+		Address.stores.addresses.removeAll();
 		for (var i=0; i < records.length; i++) {
 			var record = records[i];
-			Address.stores.locations.add(new Ext.data.Record(record, record.uid));
+			Address.stores.addresses.add(new Ext.data.Record(record, record.uid));
 		}
 	},
 
@@ -449,7 +449,7 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 			this.isAttachedKeyMap = false;
 		}
 		
-		var namespace = 'location';
+		var namespace = 'address';
 		if(Ext.get(namespace + 'Form') && !this.isAttachedKeyMap) {
 
 			// Remembers that key has been attached
@@ -459,7 +459,7 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 			new Ext.KeyMap(namespace + 'Form', {
 				key: 13, // or Ext.EventObject.ENTER
 				fn: function() {
-					Location.panel.save();
+					Address.panel.save();
 				},
 				stopEvent: true
 			});
@@ -467,4 +467,4 @@ Ext.ux.Location = Ext.extend(Ext.Panel, {
 	}
 });
 
-Ext.reg('location', Ext.ux.Location);
+Ext.reg('address', Ext.ux.Address);

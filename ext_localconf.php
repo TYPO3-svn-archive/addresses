@@ -36,11 +36,11 @@ $TYPO3_CONF_VARS['BE']['AJAX']['NumberController::editAction'] = t3lib_extMgm::e
 $TYPO3_CONF_VARS['BE']['AJAX']['NumberController::deleteAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/NumberController.php:Tx_Addresses_Controller_NumberController->deleteAction';
 $TYPO3_CONF_VARS['BE']['AJAX']['NumberController::saveAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/NumberController.php:Tx_Addresses_Controller_NumberController->saveAction';
 
-// Location
-$TYPO3_CONF_VARS['BE']['AJAX']['LocationController::indexAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/LocationController.php:Tx_Addresses_Controller_LocationController->indexAction';
-$TYPO3_CONF_VARS['BE']['AJAX']['LocationController::editAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/LocationController.php:Tx_Addresses_Controller_LocationController->editAction';
-$TYPO3_CONF_VARS['BE']['AJAX']['LocationController::deleteAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/LocationController.php:Tx_Addresses_Controller_LocationController->deleteAction';
-$TYPO3_CONF_VARS['BE']['AJAX']['LocationController::saveAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/LocationController.php:Tx_Addresses_Controller_LocationController->saveAction';
+// Address
+$TYPO3_CONF_VARS['BE']['AJAX']['AddressController::indexAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/AddressController.php:Tx_Addresses_Controller_AddressController->indexAction';
+$TYPO3_CONF_VARS['BE']['AJAX']['AddressController::editAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/AddressController.php:Tx_Addresses_Controller_AddressController->editAction';
+$TYPO3_CONF_VARS['BE']['AJAX']['AddressController::deleteAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/AddressController.php:Tx_Addresses_Controller_AddressController->deleteAction';
+$TYPO3_CONF_VARS['BE']['AJAX']['AddressController::saveAction'] = t3lib_extMgm::extPath($_EXTKEY) . 'Module/Classes/Controller/AddressController.php:Tx_Addresses_Controller_AddressController->saveAction';
 
 // GroupAddresses
 $TYPO3_CONF_VARS['FE']['eID_include']['vcard'] = 'EXT:addresses/Resources/Private/Lib/eid_vcard.php'; 

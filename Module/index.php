@@ -41,7 +41,7 @@ require($BACK_PATH . 'init.php');
 require($BACK_PATH . 'template.php');
 require_once(PATH_t3lib . 'class.t3lib_scbase.php');
 
-$classes = array('ConfigurationAbstract', 'ContactConfiguration', 'GroupConfiguration', 'NumberConfiguration', 'LocationConfiguration','Preferences', 'Permission', 'TCA', 'TCE', 'UserTCE');
+$classes = array('ConfigurationAbstract', 'ContactConfiguration', 'GroupConfiguration', 'NumberConfiguration', 'AddressConfiguration','Preferences', 'Permission', 'TCA', 'TCE', 'UserTCE');
 foreach ($classes as $class) {
 	require_once(t3lib_extMgm::extPath('addresses', 'Module/Classes/Utility/' . $class . '.php'));
 }
@@ -75,17 +75,17 @@ class tx_addresses_module extends t3lib_SCbase {
 	/**
 	 * @var $namespace string
 	 */
-	protected $namespaces = array('Contact', 'Group', 'Number', 'Location');
+	protected $namespaces = array('Contact', 'Group', 'Number', 'Address');
 
 	/**
 	 * @var $namespace string
 	 */
-	protected $foreignFields = array('groups', 'numbers', 'locations');
+	protected $foreignFields = array('groups', 'numbers', 'addresses');
 
 	/**
 	 * @var $javascriptFiles array
 	 */
-	protected $javascriptFiles = array('Ext.util', 'Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'Group', 'Number', 'Location', 'ext_expander', 'search_field', 'Namespaces', 'AddressesInit', 'ContactGrid'); //AddressWindow
+	protected $javascriptFiles = array('Ext.util', 'Message', 'MultiSelect', 'ItemSelector', 'ProgressBarPager', 'StatusBar', 'Group', 'Number', 'Address', 'ext_expander', 'search_field', 'Namespaces', 'AddressesInit', 'ContactGrid'); //AddressWindow
 
 	/**
 	 * @var $relativePath string

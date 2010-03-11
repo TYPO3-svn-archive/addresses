@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the address management extension</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="mlang_tabs_tab">Addresses</label>
+			<label index="mlang_labels_tabdescr">Allow to manage addresses, groups, functions</label>
+			<label index="mlang_labels_tablabel">Addresses manager</label>
+		</languageKey>
+		<languageKey index="fr" type="array">
+			<label index="mlang_tabs_tab">Adresses</label>
+			<label index="mlang_labels_tabdescr">Permet la gestion des adresses, groupes, fonction, etc...</label>
+			<label index="mlang_labels_tablabel">Gestion des adresses</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+		</languageKey>
+	</data>
+</T3locallang>

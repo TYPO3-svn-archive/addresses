@@ -201,9 +201,9 @@ CREATE TABLE tx_addresses_domain_model_website (
 );
 
 #
-# Table structure for table 'tx_addresses_domain_model_location'
+# Table structure for table 'tx_addresses_domain_model_address'
 #
-CREATE TABLE tx_addresses_domain_model_location (
+CREATE TABLE tx_addresses_domain_model_address (
 	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
 	pid int(11) unsigned DEFAULT '0' NOT NULL,
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,

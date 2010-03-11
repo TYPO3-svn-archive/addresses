@@ -33,13 +33,13 @@
  * @version $Id$
  */
 
-class Tx_Addresses_Domain_Model_LocationRepository extends Tx_Addresses_Domain_Model_RepositoryAbstract {
+class tx_addresses_domain_model_addressRepository extends Tx_Addresses_Domain_Model_RepositoryAbstract {
 
 	/**
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'Location';
+	protected $namespace = 'Address';
 
 	/**
 	 * Constructor

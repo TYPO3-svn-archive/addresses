@@ -60,10 +60,10 @@
 			<label index="savegroups">Save the group</label>
 			<label index="expand_all">Expand all</label>
 			<label index="collapse_all">Collapse all</label>
-			<label index="saveLocation">Save the location</label>
+			<label index="saveAddress">Save the address</label>
 			<label index="are_you_sure">Do you want to remove {0}?</label>
 			<label index="addNewNumber">Add a contact number</label>
-			<label index="addNewLocation">Add a location</label>
+			<label index="addNewAddress">Add a address</label>
 			<label index="get_map">Get map</label>
 			<label index="name">Name</label>
 			<label index="information">Information</label>
@@ -123,10 +123,10 @@
 			<label index="savegroups">Sauver le groupe</label>
 			<label index="expand_all">Tout ouvrir</label>
 			<label index="collapse_all">Tout fermer</label>
-			<label index="saveLocation">Sauver le lieu</label>
+			<label index="saveAddress">Sauver le lieu</label>
 			<label index="are_you_sure">Voulez-vous supprimer {0}?</label>
 			<label index="addNewNumber">Ajouter un nouveau numéro</label>
-			<label index="addNewLocation">Ajouter un nouveau lieu</label>
+			<label index="addNewAddress">Ajouter un nouveau lieu</label>
 			<label index="get_map">Afficher la carte</label>
 			<label index="name">Nom</label>
 			<label index="information">Information</label>

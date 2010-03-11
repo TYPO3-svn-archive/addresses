@@ -24,11 +24,12 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		),
 		'thumbnail' => 'image',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_person.php',
-		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_person.png'
+		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_person.png',
+		'dividers2tabs' => 1,
 		),
 		'feInterface' => Array (
 		'fe_admin_fieldList' => 'pid,hidden,first_name,last_name,title,address,phone,fax,mobile,website,email,locality,postal_code,company,country,remarks'
-	)
+		),
 );
 
 t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_person');
@@ -50,10 +51,10 @@ $TCA['tx_addresses_domain_model_number'] = array (
 	)
 );
 
-t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_location');
-$TCA['tx_addresses_domain_model_location'] = array (
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_address');
+$TCA['tx_addresses_domain_model_address'] = array (
 	'ctrl' => array (
-	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:location',
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:address',
 	'label'				=> 'label',
 	'tstamp'            => 'tstamp',
 	'crdate'            => 'crdate',
@@ -61,8 +62,8 @@ $TCA['tx_addresses_domain_model_location'] = array (
 	'enablecolumns'     => array (
 		'disabled' => 'hidden'
 	),
-	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_location.php',
-	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_location.png'
+	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_address.php',
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_address.png'
 	)
 );
 
@@ -104,7 +105,7 @@ if (strpos(t3lib_div::getIndpEnv('SCRIPT_NAME'), 'addresses/Module/index.php') !
     #require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleContact.php');
     #require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleGroup.php');
     #require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleNumber.php');
-    #require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleLocation.php');
+    #require(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tcaModuleAddress.php');
 }
 
 $configurations = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['addresses']);

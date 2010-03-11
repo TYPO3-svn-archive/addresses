@@ -26,19 +26,19 @@
 ***************************************************************/
 
 /**
- * Utilities to manage the configuration of tx_addresses_domain_model_location
+ * Utilities to manage the configuration of tx_addresses_domain_model_address
  *
  * @package Addresses
  * @subpackage addresses
  * @version $ID:$
  */
-class Tx_Addresses_Utility_LocationConfiguration extends Tx_Addresses_Utility_ConfigurationAbstract {
+class Tx_Addresses_Utility_AddressConfiguration extends Tx_Addresses_Utility_ConfigurationAbstract {
 
 	/**
 	 *
 	 * @var array
 	 */
-	protected static $namespace = 'Location';
+	protected static $namespace = 'Address';
 
 	
 	/**

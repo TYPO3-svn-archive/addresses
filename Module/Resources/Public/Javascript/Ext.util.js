@@ -36,7 +36,7 @@
 
 // Function that is used to analyse the URL.
 Ext.util.getUrlParameter = function(param) {
-	var params = Ext.urlDecode(location.search.substring(1));
+	var params = Ext.urlDecode(address.search.substring(1));
 	return param ? params[param] : params;
 };
 

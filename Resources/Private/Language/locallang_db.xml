@@ -73,6 +73,12 @@
 			<label index="tx_addresses_domain_model_number.remarks">Remarks</label>
 			
 			<!-- DOMAIN ADDRESS -->
+			<label index="tx_addresses_domain_model_address.type">Type</label>
+			<label index="tx_addresses_domain_model_address.street">Street</label>
+			<label index="tx_addresses_domain_model_address.postal_code">Postal code</label>
+			<label index="tx_addresses_domain_model_address.locality">Locality</label>
+			<label index="tx_addresses_domain_model_address.country">Country</label>
+			<label index="tx_addresses_domain_model_address.remarks">Remarks</label>
 			
 			<!-- TABS -->
 			<label index="tabs.contactInfo">Contact information</label>
@@ -146,6 +152,12 @@
 			<label index="tx_addresses_domain_model_number.remarks">Remarques</label>
 
 			<!-- DOMAIN ADDRESS -->
+			<label index="tx_addresses_domain_model_address.type">Type</label>
+			<label index="tx_addresses_domain_model_address.street">Rue</label>
+			<label index="tx_addresses_domain_model_address.postal_code">Code postal</label>
+			<label index="tx_addresses_domain_model_address.locality">Localité</label>
+			<label index="tx_addresses_domain_model_address.country">Pays</label>
+			<label index="tx_addresses_domain_model_address.remarks">Remarques</label>
 
 			<!-- TABS -->
 			<label index="tabs.contactInfo">Information de contact</label>

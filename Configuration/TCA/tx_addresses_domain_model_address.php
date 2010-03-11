@@ -2,7 +2,7 @@
 $TCA['tx_addresses_domain_model_address'] = array(
 	'ctrl' => $TCA['tx_addresses_domain_model_address']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'hidden,type,nature,label,address,street,street_number,building,room,locality,postal_code,country,region,remarks'
+		'showRecordFieldList' => 'hidden,type,nature,label,street,street_number,building,room,locality,postal_code,country,region,remarks'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_address']['feInterface'],
 	'columns' => array(
@@ -55,24 +55,17 @@ $TCA['tx_addresses_domain_model_address'] = array(
 				'default' => '1'
 			)
 		),
-		'uid_foreign' => array(
-			'exclude' => 1,
-			'label'     => 'uid_foreign (mandatory field)',
-			'config'    => array(
-				'type'   => 'input',
-				'hidden' => TRUE
-			)
-		),
-		// *not* editable combobox widget
+		// EXTJS note: *not* editable combobox widget
 		'type' => array(
 			'exclude' => 1,
 			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.type',
 			'config'  => array(
 				'type' => 'select',
 				'items'   => array(
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:fixed', 'fixed'),
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:mobile', 'mobile'),
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:fax', 'fax'),
+					Array('', ''),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:work', 'work'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:home', 'home'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:other', 'other'),
 				),
 				'size' => 1,
 				'minitems' => 0,
@@ -93,15 +86,6 @@ $TCA['tx_addresses_domain_model_address'] = array(
 		'label' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.label',
-			'config' => Array (
-				'type' => 'text',
-				'cols' => '20',
-				'rows' => '3'
-			)
-		),
-		'address' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.address',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '20',
@@ -198,7 +182,7 @@ $TCA['tx_addresses_domain_model_address'] = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'hidden,type,nature,label,address,street,street_number,building,room,locality,postal_code,country,region,remarks')
+		'0' => array('showitem' => 'type,street,postal_code,locality,country,remarks')
 	),
 	'palettes' => array(
 

@@ -51,6 +51,7 @@
 			<label index="tx_addresses_domain_model_person.phone">Phone</label>
 			<label index="tx_addresses_domain_model_person.fax">Fax</label>
 			<label index="tx_addresses_domain_model_person.email">Email</label>
+			<label index="tx_addresses_domain_model_person.website">Website</label>
 			<label index="tx_addresses_domain_model_person.company">Company</label>
 			<label index="tx_addresses_domain_model_person.country">Country</label>
 			<label index="tx_addresses_domain_model_person.hidden">Hidden</label>
@@ -72,6 +73,11 @@
 			<label index="tx_addresses_domain_model_number.type">Type</label>
 			<label index="tx_addresses_domain_model_number.remarks">Remarks</label>
 			
+			<!-- DOMAIN WEBSITE -->
+			<label index="tx_addresses_domain_model_website.website">Website</label>
+			<label index="tx_addresses_domain_model_website.type">Type</label>
+			<label index="tx_addresses_domain_model_website.remarks">Remarks</label>
+
 			<!-- DOMAIN ADDRESS -->
 			<label index="tx_addresses_domain_model_address.type">Type</label>
 			<label index="tx_addresses_domain_model_address.street">Street</label>
@@ -130,6 +136,7 @@
 			<label index="tx_addresses_domain_model_person.phone">Téléphone</label>
 			<label index="tx_addresses_domain_model_person.fax">Fax</label>
 			<label index="tx_addresses_domain_model_person.email">Email</label>
+			<label index="tx_addresses_domain_model_person.website">Site web</label>
 			<label index="tx_addresses_domain_model_person.company">Companie</label>
 			<label index="tx_addresses_domain_model_person.country">Pays</label>
 			<label index="tx_addresses_domain_model_person.hidden">Caché</label>
@@ -150,6 +157,11 @@
 			<label index="tx_addresses_domain_model_number.number">Numéro de téléphone</label>
 			<label index="tx_addresses_domain_model_number.type">Type</label>
 			<label index="tx_addresses_domain_model_number.remarks">Remarques</label>
+
+			<!-- DOMAIN WEBSITE -->
+			<label index="tx_addresses_domain_model_website.website">Site web</label>
+			<label index="tx_addresses_domain_model_website.type">Type</label>
+			<label index="tx_addresses_domain_model_website.remarks">Remarques</label>
 
 			<!-- DOMAIN ADDRESS -->
 			<label index="tx_addresses_domain_model_address.type">Type</label>

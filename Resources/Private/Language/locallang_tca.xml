@@ -37,6 +37,7 @@
 			<label index="address">Address</label>
 			<label index="addresses">Addresses</label>
 			<label index="email">Email</label>
+			<label index="website">Website</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="address">Addresse</label>
@@ -68,6 +69,7 @@
 			<label index="numbers">Numéros de contact</label>
 			<label index="address">Adresse</label>
 			<label index="addresses">Adresses</label>
+			<label index="website">Site web</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 		</languageKey>

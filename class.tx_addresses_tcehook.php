@@ -57,6 +57,10 @@ class tx_addresses_tcehook {
 			$this->processEmail($status, $table, $id, $fieldArray, $pObj);
 		}
 
+		if($table == 'tx_addresses_domain_model_website') {
+			$this->processWebsite($status, $table, $id, $fieldArray, $pObj);
+		}
+
 		if($table == 'tx_addresses_domain_model_address') {
 			$this->processAddress($status, $table, $id, $fieldArray, $pObj);
 		}
@@ -93,6 +97,24 @@ class tx_addresses_tcehook {
 	private function processEmail($status, $table, $id, &$fieldArray, $pObj) {
 		$values = $pObj->datamap[$table][$id];
 		$fieldArray['label'] = $values['email_address'];
+		if (isset($values['type']) && $values['type'] != '') {
+			$fieldArray['label'] = $fieldArray['label'] . ' (' . $values['type'] . ')';
+		}
+	}
+
+	/**
+	 * process label for table "tx_addresses_domain_model_number"
+	 *
+	 * @param	string		action status: new/update is relevant for us
+	 * @param	string		db table
+	 * @param	integer		record uid
+	 * @param	array		record
+	 * @param	object		parent object
+	 * @return	void
+	 */
+	private function processWebsite($status, $table, $id, &$fieldArray, $pObj) {
+		$values = $pObj->datamap[$table][$id];
+		$fieldArray['label'] = $values['website'];
 		if (isset($values['type']) && $values['type'] != '') {
 			$fieldArray['label'] = $fieldArray['label'] . ' (' . $values['type'] . ')';
 		}

@@ -71,7 +71,7 @@ t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_email');
 $TCA['tx_addresses_domain_model_email'] = array (
 	'ctrl' => array (
 	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:email',
-	'label'				=> 'email_address',
+	'label'				=> 'label',
 	'tstamp'            => 'tstamp',
 	'crdate'            => 'crdate',
 	'delete'            => 'deleted',
@@ -80,6 +80,22 @@ $TCA['tx_addresses_domain_model_email'] = array (
 	),
 	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_email.php',
 	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_email.png'
+	)
+);
+
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_website');
+$TCA['tx_addresses_domain_model_website'] = array (
+	'ctrl' => array (
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:website',
+	'label'				=> 'label',
+	'tstamp'            => 'tstamp',
+	'crdate'            => 'crdate',
+	'delete'            => 'deleted',
+	'enablecolumns'     => array (
+		'disabled' => 'hidden'
+	),
+	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_website.php',
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_website.png'
 	)
 );
 

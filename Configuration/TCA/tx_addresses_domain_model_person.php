@@ -219,7 +219,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		),
 		'tags' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.group',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.tags',
 			'config' => array(
 				'type' => 'select',
 				'size' => 10,
@@ -244,7 +244,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		),
 		'numbers' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.number',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.numbers',
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_addresses_domain_model_number',
@@ -254,7 +254,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		),
 		'emails' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.email',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.emails',
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_addresses_domain_model_email',
@@ -264,7 +264,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		),
 		'websites' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.website',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.websites',
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_addresses_domain_model_website',

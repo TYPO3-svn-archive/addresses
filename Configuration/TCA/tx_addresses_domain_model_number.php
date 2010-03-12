@@ -101,12 +101,12 @@ $TCA['tx_addresses_domain_model_number'] = array(
 			'config'  => array(
 				'type' => 'input',
 				'size' => '30',
-				'eval' => 'nbsp',
+				'eval' => 'required,nbsp',
 			)
 		),
 		'tags' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.group',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.tags',
 			'config' => array(
 				'type' => 'select',
 				'size' => 5,

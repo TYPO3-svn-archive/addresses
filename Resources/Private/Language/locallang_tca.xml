@@ -7,6 +7,7 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="address">Address</label>
+			<label index="organization">Organization</label>
 			<label index="group">Group</label>
 			<label index="select_value">Select value...</label>
 			<label index="single">Single</label>
@@ -24,6 +25,7 @@
 			<label index="france">France</label>
 			<label index="germany">Germany</label>
 			<label index="relations">Relations</label>
+			<label index="tag">Tag</label>
 			<label index="group">Group</label>
 			<label index="groups">Groups</label>
 			<label index="work">Work</label>
@@ -41,7 +43,7 @@
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="address">Addresse</label>
-			<label index="group">Groupe</label>
+			<label index="organization">Organization</label>
 			<label index="select_value">Sélectionner une valeur...</label>
 			<label index="single">Célibataire</label>
 			<label index="married">Marié</label>
@@ -58,6 +60,8 @@
 			<label index="france">France</label>
 			<label index="germany">Allemagne</label>
 			<label index="relations">Relations</label>
+			<label index="tag">Tag</label>
+			<label index="group">Groupe</label>
 			<label index="groups">Groupes</label>
 			<label index="work">Travail</label>
 			<label index="home">Maison</label>

@@ -9,6 +9,8 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Addresses');
 
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_person');
+t3lib_extMgm::addToInsertRecords('tx_addresses_domain_model_person');
 $TCA['tx_addresses_domain_model_person'] = Array (
 	'ctrl' => Array (
 		'label' => 'last_name',
@@ -32,8 +34,30 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		),
 );
 
-t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_person');
-t3lib_extMgm::addToInsertRecords('tx_addresses_domain_model_person');
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_organization');
+t3lib_extMgm::addToInsertRecords('tx_addresses_domain_model_organization');
+$TCA['tx_addresses_domain_model_organization'] = Array (
+	'ctrl' => Array (
+		'label' => 'last_name',
+		'label_alt' => 'first_name',
+		'label_alt_force' => 1,
+		'default_sortby' => 'ORDER BY last_name',
+		'tstamp' => 'tstamp',
+		'prependAtCopy' => 'LLL:EXT:lang/locallang_general.php:LGL.prependAtCopy',
+		'delete' => 'deleted',
+		'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:organization',
+		'enablecolumns' => Array (
+			'disabled' => 'hidden'
+		),
+		'thumbnail' => 'image',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_organization.php',
+		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_organization.png',
+		'dividers2tabs' => 1,
+		),
+		'feInterface' => Array (
+		'fe_admin_fieldList' => 'pid,hidden,first_name,last_name,title,address,phone,fax,mobile,website,email,locality,postal_code,company,country,remarks'
+		),
+);
 
 t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_number');
 $TCA['tx_addresses_domain_model_number'] = array (
@@ -102,7 +126,7 @@ $TCA['tx_addresses_domain_model_website'] = array (
 t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_tag');
 $TCA['tx_addresses_domain_model_tag'] = array (
 	'ctrl' => array (
-	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:group',
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:tag',
 	'label'				=> 'name',
 	'tstamp'            => 'tstamp',
 	'crdate'            => 'crdate',

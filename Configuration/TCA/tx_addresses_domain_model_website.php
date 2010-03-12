@@ -93,7 +93,7 @@ $TCA['tx_addresses_domain_model_website'] = array(
 		),
 		'tags' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.group',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.tags',
 			'config' => array(
 				'type' => 'select',
 				'size' => 5,

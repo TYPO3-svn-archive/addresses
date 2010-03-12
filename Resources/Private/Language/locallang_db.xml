@@ -28,7 +28,6 @@
 			<label index="tx_addresses_domain_model_person.crdate">Create date</label>
 			<label index="tx_addresses_domain_model_person.cruser_id">Create user</label>
 			<label index="tx_addresses_domain_model_person.upuser_id">Update user</label>
-			<label index="tx_addresses_domain_model_person.address">Address</label>
 			<label index="tx_addresses_domain_model_person.pid">PID</label>
 			<label index="tx_addresses_domain_model_person.postal_code">Postal code</label>
 			<label index="tx_addresses_domain_model_person.locality">Locality</label>
@@ -41,27 +40,30 @@
 			<label index="tx_addresses_domain_model_person.death_place">Death place</label>
 			<label index="tx_addresses_domain_model_person.nationality">Nationality</label>
 			<label index="tx_addresses_domain_model_person.religion">Religion</label>
-			<label index="tx_addresses_domain_model_person.org_type">Organisation type</label>
-			<label index="tx_addresses_domain_model_person.org_name">Organisation name</label>
-			<label index="tx_addresses_domain_model_person.website">Website</label>
 			<label index="tx_addresses_domain_model_person.street">Street</label>
 			<label index="tx_addresses_domain_model_person.street_number">Street number</label>
 			<label index="tx_addresses_domain_model_person.remarks">Remarks</label>
 			<label index="tx_addresses_domain_model_person.title">Title</label>
-			<label index="tx_addresses_domain_model_person.phone">Phone</label>
-			<label index="tx_addresses_domain_model_person.fax">Fax</label>
-			<label index="tx_addresses_domain_model_person.email">Email</label>
-			<label index="tx_addresses_domain_model_person.website">Website</label>
 			<label index="tx_addresses_domain_model_person.company">Company</label>
 			<label index="tx_addresses_domain_model_person.country">Country</label>
 			<label index="tx_addresses_domain_model_person.hidden">Hidden</label>
 			<label index="tx_addresses_domain_model_person.image">Image</label>
-			<label index="tx_addresses_domain_model_person.type">Type</label>
-			<label index="tx_addresses_domain_model_person.number">Number</label>
-			<label index="tx_addresses_domain_model_person.nature">Function</label>
-			<label index="tx_addresses_domain_model_person.number">Contact number</label>
+
+			<label index="tx_addresses_domain_model_person.numbers">Contact number</label>
+			<label index="tx_addresses_domain_model_person.emails">Email</label>
+			<label index="tx_addresses_domain_model_person.websites">Website</label>
 			<label index="tx_addresses_domain_model_person.addresses">Addresses</label>
 			<label index="tx_addresses_domain_model_person.label">Label</label>
+
+			<!-- DOMAIN ORGANIZATION -->
+			<label index="tx_addresses_domain_model_organization.name">Name</label>
+			<label index="tx_addresses_domain_model_organization.logo">Logo</label>
+			<label index="tx_addresses_domain_model_organization.remarks">Remarques</label>
+			
+			<label index="tx_addresses_domain_model_organization.numbers">Contact number</label>
+			<label index="tx_addresses_domain_model_organization.emails">Email</label>
+			<label index="tx_addresses_domain_model_organization.websites">Website</label>
+			<label index="tx_addresses_domain_model_organization.addresses">Addresses</label>
 
 			<!-- DOMAIN EMAIL -->
 			<label index="tx_addresses_domain_model_email.email_address">Email Address</label>
@@ -113,7 +115,6 @@
 			<label index="tx_addresses_domain_model_person.crdate">Création</label>
 			<label index="tx_addresses_domain_model_person.cruser_id">Créé par</label>
 			<label index="tx_addresses_domain_model_person.upuser_id">Mis à jour par</label>
-			<label index="tx_addresses_domain_model_person.address">Adresse</label>
 			<label index="tx_addresses_domain_model_person.pid">PID</label>
 			<label index="tx_addresses_domain_model_person.postal_code">Code postal</label>
 			<label index="tx_addresses_domain_model_person.locality">Localité</label>
@@ -126,28 +127,34 @@
 			<label index="tx_addresses_domain_model_person.death_place">Lieu de décés</label>
 			<label index="tx_addresses_domain_model_person.nationality">Nationalité</label>
 			<label index="tx_addresses_domain_model_person.religion">Religion</label>
-			<label index="tx_addresses_domain_model_person.org_type">Type d'organisation</label>
-			<label index="tx_addresses_domain_model_person.org_name">Nom de l'organisation</label>
-			<label index="tx_addresses_domain_model_person.website">Site internet</label>
 			<label index="tx_addresses_domain_model_person.street">Rue</label>
 			<label index="tx_addresses_domain_model_person.street_number">Numéro</label>
 			<label index="tx_addresses_domain_model_person.remarks">Remarque</label>
 			<label index="tx_addresses_domain_model_person.title">Titre</label>
-			<label index="tx_addresses_domain_model_person.phone">Téléphone</label>
-			<label index="tx_addresses_domain_model_person.fax">Fax</label>
 			<label index="tx_addresses_domain_model_person.email">Email</label>
-			<label index="tx_addresses_domain_model_person.website">Site web</label>
+			<label index="tx_addresses_domain_model_person.websites">Sites web</label>
 			<label index="tx_addresses_domain_model_person.company">Companie</label>
 			<label index="tx_addresses_domain_model_person.country">Pays</label>
 			<label index="tx_addresses_domain_model_person.hidden">Caché</label>
-			<label index="tx_addresses_domain_model_person.type">Type</label>
-			<label index="tx_addresses_domain_model_person.number">Numéro</label>
-			<label index="tx_addresses_domain_model_person.nature">Fonction</label>
-			<label index="tx_addresses_domain_model_person.number">Numéro de contact</label>
-			<label index="tx_addresses_domain_model_person.addresses">Adresses</label>
-			<label index="tx_addresses_domain_model_person.label">Label</label>
-			<label index="tx_addresses_domain_model_email.remarks">Remarques</label>
+			<label index="tx_addresses_domain_model_person.image">Image</label>
 
+			<label index="tx_addresses_domain_model_person.numbers">Numéros de contact</label>
+			<label index="tx_addresses_domain_model_person.emails">Emails</label>
+			<label index="tx_addresses_domain_model_person.websites">Sites internet</label>
+			<label index="tx_addresses_domain_model_person.addresses">Adresses</label>
+			<label index="tx_addresses_domain_model_person.label">Etiquette</label>
+
+			<!-- DOMAIN ORGANIZATION -->
+			<label index="tx_addresses_domain_model_organization.name">Name</label>
+			<label index="tx_addresses_domain_model_organization.logo">Logo</label>
+			<label index="tx_addresses_domain_model_organization.remarks">Remarques</label>
+
+			<label index="tx_addresses_domain_model_organization.numbers">Numéros de contact</label>
+			<label index="tx_addresses_domain_model_organization.emails">Emails</label>
+			<label index="tx_addresses_domain_model_organization.websites">Sites internet</label>
+			<label index="tx_addresses_domain_model_organization.addresses">Adresses</label>
+
+			
 			<!-- DOMAIN EMAIL -->
 			<label index="tx_addresses_domain_model_email.email_address">Adresse email</label>
 			<label index="tx_addresses_domain_model_email.type">Type</label>

@@ -191,6 +191,7 @@ CREATE TABLE tx_addresses_domain_model_sector (
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	organization int(11) unsigned DEFAULT '0' NOT NULL,
+	label tinytext NOT NULL,
 	name varchar(80) DEFAULT '' NOT NULL,
 	remarks text NOT NULL,
 	tags int(11) DEFAULT '0' NOT NULL,

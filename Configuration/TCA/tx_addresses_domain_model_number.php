@@ -52,7 +52,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 			'label'     => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
 			'config'    => array(
 				'type'    => 'check',
-				'default' => '1'
+				'default' => '0',
 			)
 		),
 		'label' => Array (
@@ -106,7 +106,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 		),
 		'tags' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.tags',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_number.tags',
 			'config' => array(
 				'type' => 'select',
 				'size' => 5,

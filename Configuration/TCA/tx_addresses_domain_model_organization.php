@@ -158,9 +158,19 @@ $TCA['tx_addresses_domain_model_organization'] = Array (
 				'foreign_label' => 'label',
 			)
 		),
+		'sectors' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_organization.sectors',
+			'config' => array(
+				'type' => 'inline',
+				'foreign_table' => 'tx_addresses_domain_model_sector',
+				'foreign_field' => 'organization',
+				'foreign_label' => 'label',
+			)
+		),
 	),
 	'types' => Array (
-		'1' => Array('showitem' => 'hidden,name,logo, remarks ,
+		'1' => Array('showitem' => 'hidden, name, logo, sectors, remarks ,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.contactInfo, numbers, emails, websites,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.addresses, addresses,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.tags, tags,

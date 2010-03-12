@@ -16,7 +16,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		'label' => 'last_name',
 		'label_alt' => 'first_name',
 		'label_alt_force' => 1,
-		'default_sortby' => 'ORDER BY last_name',
+		'default_sortby' => 'ORDER BY last_name ASC',
 		'tstamp' => 'tstamp',
 		'prependAtCopy' => 'LLL:EXT:lang/locallang_general.php:LGL.prependAtCopy',
 		'delete' => 'deleted',
@@ -38,10 +38,8 @@ t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_organization'
 t3lib_extMgm::addToInsertRecords('tx_addresses_domain_model_organization');
 $TCA['tx_addresses_domain_model_organization'] = Array (
 	'ctrl' => Array (
-		'label' => 'last_name',
-		'label_alt' => 'first_name',
-		'label_alt_force' => 1,
-		'default_sortby' => 'ORDER BY last_name',
+		'label' => 'name',
+		'default_sortby' => 'ORDER BY name ASC',
 		'tstamp' => 'tstamp',
 		'prependAtCopy' => 'LLL:EXT:lang/locallang_general.php:LGL.prependAtCopy',
 		'delete' => 'deleted',
@@ -75,22 +73,6 @@ $TCA['tx_addresses_domain_model_number'] = array (
 	)
 );
 
-t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_address');
-$TCA['tx_addresses_domain_model_address'] = array (
-	'ctrl' => array (
-	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:address',
-	'label'				=> 'label',
-	'tstamp'            => 'tstamp',
-	'crdate'            => 'crdate',
-	'delete'            => 'deleted',
-	'enablecolumns'     => array (
-		'disabled' => 'hidden'
-	),
-	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_address.php',
-	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_address.png'
-	)
-);
-
 t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_email');
 $TCA['tx_addresses_domain_model_email'] = array (
 	'ctrl' => array (
@@ -120,6 +102,38 @@ $TCA['tx_addresses_domain_model_website'] = array (
 	),
 	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_website.php',
 	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_website.png'
+	)
+);
+
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_sector');
+$TCA['tx_addresses_domain_model_sector'] = array (
+	'ctrl' => array (
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:sector',
+	'label'				=> 'label',
+	'tstamp'            => 'tstamp',
+	'crdate'            => 'crdate',
+	'delete'            => 'deleted',
+	'enablecolumns'     => array (
+		'disabled' => 'hidden'
+	),
+	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_sector.php',
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_sector.png'
+	)
+);
+
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_address');
+$TCA['tx_addresses_domain_model_address'] = array (
+	'ctrl' => array (
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:address',
+	'label'				=> 'label',
+	'tstamp'            => 'tstamp',
+	'crdate'            => 'crdate',
+	'delete'            => 'deleted',
+	'enablecolumns'     => array (
+		'disabled' => 'hidden'
+	),
+	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_address.php',
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_address.png'
 	)
 );
 

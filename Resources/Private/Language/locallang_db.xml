@@ -53,6 +53,7 @@
 			<label index="tx_addresses_domain_model_person.emails">Email</label>
 			<label index="tx_addresses_domain_model_person.websites">Website</label>
 			<label index="tx_addresses_domain_model_person.addresses">Addresses</label>
+			<label index="tx_addresses_domain_model_person.tags">Tags</label>
 			<label index="tx_addresses_domain_model_person.label">Label</label>
 
 			<!-- DOMAIN ORGANIZATION -->
@@ -60,25 +61,30 @@
 			<label index="tx_addresses_domain_model_organization.logo">Logo</label>
 			<label index="tx_addresses_domain_model_organization.remarks">Remarques</label>
 			
+			<label index="tx_addresses_domain_model_organization.sectors">Sectors</label>
 			<label index="tx_addresses_domain_model_organization.numbers">Contact number</label>
 			<label index="tx_addresses_domain_model_organization.emails">Email</label>
 			<label index="tx_addresses_domain_model_organization.websites">Website</label>
 			<label index="tx_addresses_domain_model_organization.addresses">Addresses</label>
+			<label index="tx_addresses_domain_model_organization.tags">Tags</label>
 
 			<!-- DOMAIN EMAIL -->
 			<label index="tx_addresses_domain_model_email.email_address">Email Address</label>
 			<label index="tx_addresses_domain_model_email.type">Type</label>
 			<label index="tx_addresses_domain_model_email.remarks">Remarks</label>
+			<label index="tx_addresses_domain_model_email.tags">Tags</label>
 
 			<!-- DOMAIN NUMBER -->
 			<label index="tx_addresses_domain_model_number.number">Phone number</label>
 			<label index="tx_addresses_domain_model_number.type">Type</label>
 			<label index="tx_addresses_domain_model_number.remarks">Remarks</label>
+			<label index="tx_addresses_domain_model_number.tags">Tags</label>
 			
 			<!-- DOMAIN WEBSITE -->
 			<label index="tx_addresses_domain_model_website.website">Website</label>
 			<label index="tx_addresses_domain_model_website.type">Type</label>
 			<label index="tx_addresses_domain_model_website.remarks">Remarks</label>
+			<label index="tx_addresses_domain_model_website.tags">Tags</label>
 
 			<!-- DOMAIN ADDRESS -->
 			<label index="tx_addresses_domain_model_address.type">Type</label>
@@ -87,6 +93,12 @@
 			<label index="tx_addresses_domain_model_address.locality">Locality</label>
 			<label index="tx_addresses_domain_model_address.country">Country</label>
 			<label index="tx_addresses_domain_model_address.remarks">Remarks</label>
+			<label index="tx_addresses_domain_model_address.tags">Tags</label>
+
+			<!-- DOMAIN SECTOR -->
+			<label index="tx_addresses_domain_model_sector.name">Nom</label>
+			<label index="tx_addresses_domain_model_sector.remarks">Remarques</label>
+			<label index="tx_addresses_domain_model_sector.tags">Tags</label>
 			
 			<!-- TABS -->
 			<label index="tabs.contactInfo">Contact information</label>
@@ -149,6 +161,7 @@
 			<label index="tx_addresses_domain_model_organization.logo">Logo</label>
 			<label index="tx_addresses_domain_model_organization.remarks">Remarques</label>
 
+			<label index="tx_addresses_domain_model_organization.sectors">Secteurs</label>
 			<label index="tx_addresses_domain_model_organization.numbers">Numéros de contact</label>
 			<label index="tx_addresses_domain_model_organization.emails">Emails</label>
 			<label index="tx_addresses_domain_model_organization.websites">Sites internet</label>
@@ -177,6 +190,10 @@
 			<label index="tx_addresses_domain_model_address.locality">Localité</label>
 			<label index="tx_addresses_domain_model_address.country">Pays</label>
 			<label index="tx_addresses_domain_model_address.remarks">Remarques</label>
+
+			<!-- DOMAIN SECTOR -->
+			<label index="tx_addresses_domain_model_sector.name">Nom</label>
+			<label index="tx_addresses_domain_model_sector.remarks">Remarques</label>
 
 			<!-- TABS -->
 			<label index="tabs.contactInfo">Information de contact</label>

@@ -1,10 +1,10 @@
 <?php
-$TCA['tx_addresses_domain_model_email'] = array(
-	'ctrl' => $TCA['tx_addresses_domain_model_email']['ctrl'],
+$TCA['tx_addresses_domain_model_sector'] = array(
+	'ctrl' => $TCA['tx_addresses_domain_model_sector']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'hidden,email_address,remarks'
+		'showRecordFieldList' => 'hidden,title,remarks'
 	),
-	'feInterface' => $TCA['tx_addresses_domain_model_number']['feInterface'],
+	'feInterface' => $TCA['tx_addresses_domain_model_sector']['feInterface'],
 	'columns' => array(
 		'uid' => Array (
 			'config' => Array (
@@ -12,21 +12,21 @@ $TCA['tx_addresses_domain_model_email'] = array(
 			)
 		),
 		'tstamp' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.tstamp',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_sector.tstamp',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'crdate' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.crdate',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_sector.crdate',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'cruser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.cruser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_sector.cruser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -37,7 +37,7 @@ $TCA['tx_addresses_domain_model_email'] = array(
 			),
 		),
 		'upuser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.upuser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_sector.upuser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -57,42 +57,25 @@ $TCA['tx_addresses_domain_model_email'] = array(
 		),
 		'label' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_number.label',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_sector.label',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '20',
 				'rows' => '3'
 			)
 		),
-		// EXTJS note: *not* editable combobox widget
-		'type' => array(
+		'name' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.type',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_sector.name',
 			'config'  => array(
-				'type' => 'select',
-				'items'   => array(
-					Array('', ''),
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:work', 'work'),
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:home', 'home'),
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:other', 'other'),
-				),
-				'size' => 1,
-				'minitems' => 0,
-				'maxitems' => 1,
-				'editable' => FALSE,
-			)
-		),
-		'email_address' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.email_address',
-			'config' => Array (
 				'type' => 'input',
+				'size' => '30',
 				'eval' => 'required',
 			)
 		),
 		'tags' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.tags',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_sector.tags',
 			'config' => array(
 				'type' => 'select',
 				'size' => 5,
@@ -104,7 +87,7 @@ $TCA['tx_addresses_domain_model_email'] = array(
 				'MM' => 'tx_addresses_domain_model_component_tag_mm',
 				'MM_match_fields' => array(
 					'tablenames' => 'tx_addresses_domain_model_tag',
-					'local_table' => 'tx_addresses_domain_model_email',
+					'local_table' => 'tx_addresses_domain_model_sector',
 				),
 				'allowed' => 'tx_addresses_domain_model_tag',
 				'wizards' => array(
@@ -117,7 +100,7 @@ $TCA['tx_addresses_domain_model_email'] = array(
 		),
 		'remarks' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.remarks',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_sector.remarks',
 			'config'  => array(
 				'type' => 'text',
 				'cols' => '30',
@@ -127,10 +110,11 @@ $TCA['tx_addresses_domain_model_email'] = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'type,email_address,remarks,tags')
+		'0' => array('showitem' => 'name,remarks,tags')
 	),
 	'palettes' => array(
 
 	)
 );
+
 ?>

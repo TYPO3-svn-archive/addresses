@@ -84,8 +84,8 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 			'config' => array (
 				'type' => 'select',
 				'items'   => array(
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.gender.m', 'm'),
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.gender.f', 'f')
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.gender.male', 'male'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.gender.female', 'female')
 				),
 				'size' => 1,
 				'minitems' => 0,
@@ -182,17 +182,6 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'max' => '40'
 			)
 		),
-		'website' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.website',
-			'config' => Array (
-				'type' => 'input',
-				'eval' => 'trim',
-				'size' => '20',
-				'max' => '80',
-				'validation' => 'http://',
-			)
-		),
 		'company' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.company',
@@ -228,7 +217,6 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'height' => 150
 			)
 		),
-		// itemselector widget
 		'tags' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.group',
@@ -238,13 +226,20 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'minitems' => 0,
 				'maxitems' => 9999,
 				'autoSizeMax' => 30,
-				'multiple' => 1,
-				'foreign_class' => 'Tx_Addresses_Domain_Model_Tag',
 				'foreign_table' => 'tx_addresses_domain_model_tag',
-				'MM' => 'tx_addresses_domain_model_contact_tag_mm',
+				'foreign_class' => 'Tx_Addresses_Domain_Model_Tag',
+				'MM' => 'tx_addresses_domain_model_component_tag_mm',
 				'MM_match_fields' => array(
-					'tablenames' => 'tx_addresses_domain_model_tag'
+					'tablenames' => 'tx_addresses_domain_model_tag',
+					'local_table' => 'tx_addresses_domain_model_person',
 				),
+				'allowed' => 'tx_addresses_domain_model_tag',
+				'wizards' => array(
+					'suggest' => array(
+					'type' => 'suggest',
+					),
+				),
+
 			)
 		),
 		'numbers' => array(
@@ -284,10 +279,10 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 			'config' => Array (
 				'type' => 'select',
 				'items' => Array (
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:single', '1'),
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:married', '2'),
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:divorced', '3'),
-					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:widowed', '4'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:single', 'single'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:married', 'married'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:divorced', 'divorced'),
+					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:widowed', 'widowed'),
 				),
 				'size' => 1,
 				'minitems' => 0,
@@ -307,7 +302,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		),
 	),
 	'types' => Array (
-		'1' => Array('showitem' => 'hidden,gender, first_name, last_name,company, image, remarks ,
+		'1' => Array('showitem' => 'hidden,gender,title, first_name, last_name, birth_date, marital_status, image, remarks ,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.contactInfo, numbers, emails,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.addresses, addresses,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.tags, tags,

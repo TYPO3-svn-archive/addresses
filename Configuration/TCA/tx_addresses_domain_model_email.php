@@ -80,6 +80,31 @@ $TCA['tx_addresses_domain_model_email'] = array(
 				'type' => 'input'
 			)
 		),
+		'tags' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.group',
+			'config' => array(
+				'type' => 'select',
+				'size' => 5,
+				'minitems' => 0,
+				'maxitems' => 9999,
+				'autoSizeMax' => 30,
+				'foreign_table' => 'tx_addresses_domain_model_tag',
+				'foreign_class' => 'Tx_Addresses_Domain_Model_Tag',
+				'MM' => 'tx_addresses_domain_model_component_tag_mm',
+				'MM_match_fields' => array(
+					'tablenames' => 'tx_addresses_domain_model_tag',
+					'local_table' => 'tx_addresses_domain_model_email',
+				),
+				'allowed' => 'tx_addresses_domain_model_tag',
+				'wizards' => array(
+					'suggest' => array(
+					'type' => 'suggest',
+					),
+				),
+
+			)
+		),
 		'remarks' => array(
 			'exclude' => 1,
 			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_email.remarks',
@@ -92,7 +117,7 @@ $TCA['tx_addresses_domain_model_email'] = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'type,email_address,remarks')
+		'0' => array('showitem' => 'type,email_address,remarks,tags')
 	),
 	'palettes' => array(
 

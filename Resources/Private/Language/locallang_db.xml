@@ -12,8 +12,8 @@
 			<label index="tx_addresses_domain_model_person.first_name">First name</label>
 			<label index="tx_addresses_domain_model_person.last_name">Last name</label>
 			<label index="tx_addresses_domain_model_person.gender">Gender</label>
-			<label index="tx_addresses_domain_model_person.gender.m">Male</label>
-			<label index="tx_addresses_domain_model_person.gender.f">Female</label>
+			<label index="tx_addresses_domain_model_person.gender.male">Male</label>
+			<label index="tx_addresses_domain_model_person.gender.female">Female</label>
 			<label index="tx_addresses_domain_model_person.title.I.1">Mr.</label>
 			<label index="tx_addresses_domain_model_person.title.I.2">Mrs.</label>
 			<label index="tx_addresses_domain_model_person.title.I.3">Miss</label>
@@ -91,8 +91,8 @@
 			<label index="tx_addresses_domain_model_person.first_name">Prénom</label>
 			<label index="tx_addresses_domain_model_person.last_name">Nom</label>
 			<label index="tx_addresses_domain_model_person.gender">Genre</label>
-			<label index="tx_addresses_domain_model_person.gender.m">Masculin</label>
-			<label index="tx_addresses_domain_model_person.gender.f">Féminin</label>
+			<label index="tx_addresses_domain_model_person.gender.male">Masculin</label>
+			<label index="tx_addresses_domain_model_person.gender.female">Féminin</label>
 			<label index="tx_addresses_domain_model_person.title.I.1">Monsieur</label>
 			<label index="tx_addresses_domain_model_person.title.I.2">Madame</label>
 			<label index="tx_addresses_domain_model_person.title.I.3">Mademoiselle</label>

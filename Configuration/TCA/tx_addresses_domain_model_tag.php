@@ -77,7 +77,7 @@ $TCA['tx_addresses_domain_model_tag'] = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'hidden;;;;1-1-1, name;;;;2-2-2, remarks')
+		'0' => array('showitem' => 'name')
 	),
 	'palettes' => array(
 

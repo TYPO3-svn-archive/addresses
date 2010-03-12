@@ -72,7 +72,7 @@ class Tx_Addresses_Domain_Model_Person extends Tx_Addresses_Domain_Model_Contact
 	/**
 	 * The person's marital status
 	 *
-	 * @var int marital_status
+	 * @var string marital_status
 	 */
 
 	protected $maritalStatus = '';

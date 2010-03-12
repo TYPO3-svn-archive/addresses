@@ -16,8 +16,8 @@ CREATE TABLE tx_addresses_domain_model_person (
 	status int(11) unsigned DEFAULT '0' NOT NULL,
 	first_name tinytext NOT NULL,
 	last_name tinytext NOT NULL,
-	marital_status int(11) unsigned DEFAULT '0' NOT NULL,
-	title varchar(40) DEFAULT '' NOT NULL,
+	marital_status  tinytext NOT NULL,
+	title varchar(128) DEFAULT '' NOT NULL,
 	birth_date int(11) DEFAULT '0' NOT NULL,
 	birth_place tinytext NOT NULL,
 	death_date int(11) DEFAULT '0' NOT NULL,
@@ -30,9 +30,9 @@ CREATE TABLE tx_addresses_domain_model_person (
 	addresses int(11) DEFAULT '0' NOT NULL,
 	preferred_language varchar(40) DEFAULT '' NOT NULL,
 	image tinyblob NOT NULL,
-	remarks text NOT NULL,
 	numbers int(11) DEFAULT '0' NOT NULL,
 	tags int(11) DEFAULT '0' NOT NULL,
+	remarks text NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
@@ -95,12 +95,21 @@ CREATE TABLE tx_addresses_domain_model_tag (
 );
 
 #
-# Table structure for table 'tx_addresses_domain_model_contact_tag_mm'
+# Table structure for table 'tx_addresses_domain_model_component_tag_mm'
 #
 
-CREATE TABLE tx_addresses_domain_model_contact_tag_mm (
+CREATE TABLE tx_addresses_domain_model_component_tag_mm (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	local_table varchar(128) DEFAULT '' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	tablenames varchar(128) DEFAULT '' NOT NULL,
+	pid_foreign int(11) DEFAULT '0' NOT NULL,
+	tstamp int(11) DEFAULT '0' NOT NULL,
+	crdate int(11) DEFAULT '0' NOT NULL,
+	cruser_id int(11) DEFAULT '0' NOT NULL,
+	sys_language_uid int(11) DEFAULT '0' NOT NULL,
+	deleted tinyint(4) DEFAULT '0' NOT NULL,
+	hidden tinyint(4) DEFAULT '0' NOT NULL,
 	sorting int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
 
@@ -130,6 +139,7 @@ CREATE TABLE tx_addresses_domain_model_number (
 	country int(11) unsigned DEFAULT '0' NOT NULL,
 	area_code tinytext NOT NULL,
 	extension tinytext NOT NULL,
+	tags int(11) DEFAULT '0' NOT NULL,
 	remarks text NOT NULL,
 
 	PRIMARY KEY (uid),
@@ -153,6 +163,7 @@ CREATE TABLE tx_addresses_domain_model_email (
 	label tinytext NOT NULL,
 	type tinytext NOT NULL,
 	email_address varchar(80) DEFAULT '' NOT NULL,
+	tags int(11) DEFAULT '0' NOT NULL,
 	remarks text NOT NULL,
 
 	PRIMARY KEY (uid),
@@ -174,6 +185,7 @@ CREATE TABLE tx_addresses_domain_model_sector (
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	organization int(11) unsigned DEFAULT '0' NOT NULL,
 	name varchar(80) DEFAULT '' NOT NULL,
+	tags int(11) DEFAULT '0' NOT NULL,
 	remarks text NOT NULL,
 
 	PRIMARY KEY (uid),
@@ -226,6 +238,7 @@ CREATE TABLE tx_addresses_domain_model_address (
 	city tinytext NOT NULL,
 	region varchar(100) DEFAULT '' NOT NULL,
 	country varchar(30) DEFAULT '' NOT NULL,
+	tags int(11) DEFAULT '0' NOT NULL,
 	remarks text NOT NULL,
 
 	PRIMARY KEY (uid),

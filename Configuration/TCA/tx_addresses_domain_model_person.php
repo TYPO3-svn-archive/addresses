@@ -84,6 +84,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 			'config' => array (
 				'type' => 'select',
 				'items'   => array(
+					Array('', ''),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.gender.male', 'male'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.gender.female', 'female')
 				),

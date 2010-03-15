@@ -90,20 +90,21 @@ CREATE TABLE tx_addresses_domain_model_tag (
 	tagtype tinyint(3) DEFAULT '0' NOT NULL,
 	category int(11) DEFAULT '0' NOT NULL,
 	name tinytext NOT NULL,
-	posts int(11) unsigned DEFAULT '0' NOT NULL,
-	description text NOT NULL,
-	quodvide int(11) DEFAULT '0' NOT NULL,
-	relations int(11) DEFAULT '0' NOT NULL,
+	alternative_name tinytext NOT NULL,
+	remarks text NOT NULL,
+	tags int(11) DEFAULT '0' NOT NULL,
+	parent_tag int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 );
 
 #
-# Table structure for table 'tx_addresses_domain_model_component_tag_mm'
+# Table structure for table 'tx_addresses_domain_model_entity_tag_mm'
 #
 
-CREATE TABLE tx_addresses_domain_model_component_tag_mm (
+CREATE TABLE tx_addresses_domain_model_entity_tag_mm (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	local_table varchar(128) DEFAULT '' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,

@@ -16,7 +16,7 @@ CREATE TABLE tx_addresses_domain_model_person (
 	status int(11) unsigned DEFAULT '0' NOT NULL,
 	first_name tinytext NOT NULL,
 	last_name tinytext NOT NULL,
-	marital_status  tinytext NOT NULL,
+	marital_status tinytext NOT NULL,
 	title varchar(128) DEFAULT '' NOT NULL,
 	birth_date int(11) DEFAULT '0' NOT NULL,
 	birth_place tinytext NOT NULL,

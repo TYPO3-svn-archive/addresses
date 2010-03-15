@@ -290,6 +290,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 			'config' => Array (
 				'type' => 'select',
 				'items' => Array (
+					Array('', ''),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:single', 'single'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:married', 'married'),
 					Array('LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:divorced', 'divorced'),

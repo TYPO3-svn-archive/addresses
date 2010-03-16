@@ -92,6 +92,8 @@
 			<label index="tx_addresses_domain_model_address.postal_code">Postal code</label>
 			<label index="tx_addresses_domain_model_address.locality">Locality</label>
 			<label index="tx_addresses_domain_model_address.country">Country</label>
+			<label index="tx_addresses_domain_model_address.latitude">Latitude</label>
+			<label index="tx_addresses_domain_model_address.longitude">Longitude</label>
 			<label index="tx_addresses_domain_model_address.remarks">Remarks</label>
 			<label index="tx_addresses_domain_model_address.tags">Tags</label>
 
@@ -189,7 +191,10 @@
 			<label index="tx_addresses_domain_model_address.postal_code">Code postal</label>
 			<label index="tx_addresses_domain_model_address.locality">Localité</label>
 			<label index="tx_addresses_domain_model_address.country">Pays</label>
+			<label index="tx_addresses_domain_model_address.latitude">Latitude</label>
+			<label index="tx_addresses_domain_model_address.longitude">Longitude</label>
 			<label index="tx_addresses_domain_model_address.remarks">Remarques</label>
+			<label index="tx_addresses_domain_model_address.tags">Tags</label>
 
 			<!-- DOMAIN SECTOR -->
 			<label index="tx_addresses_domain_model_sector.name">Nom</label>

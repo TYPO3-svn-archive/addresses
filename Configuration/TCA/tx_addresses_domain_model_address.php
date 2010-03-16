@@ -170,6 +170,26 @@ $TCA['tx_addresses_domain_model_address'] = array(
 				'max' => '30'
 			)
 		),
+		'latitude' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.latitude',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'eval' => 'trim',
+				'max' => '30'
+			)
+		),
+		'longitude' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.longitude',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'eval' => 'trim',
+				'max' => '30'
+			)
+		),
 		'tags' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_address.tags',
@@ -207,7 +227,7 @@ $TCA['tx_addresses_domain_model_address'] = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'type,street,postal_code,locality,country,remarks,tags')
+		'0' => array('showitem' => 'type,street,postal_code,locality,country,latitude,longitude,remarks,tags')
 	),
 	'palettes' => array(
 

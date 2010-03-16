@@ -252,6 +252,8 @@ CREATE TABLE tx_addresses_domain_model_address (
 	city tinytext NOT NULL,
 	region varchar(100) DEFAULT '' NOT NULL,
 	country varchar(30) DEFAULT '' NOT NULL,
+	latitude decimal(24,14) DEFAULT '0.00000000000000' NOT NULL,
+	longitude decimal(24,14) DEFAULT '0.00000000000000' NOT NULL,
 	remarks text NOT NULL,
 	tags int(11) DEFAULT '0' NOT NULL,
 

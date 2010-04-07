@@ -2,7 +2,7 @@
 $TCA['tx_addresses_domain_model_organization'] = Array (
 	'ctrl' => $TCA['tx_addresses_domain_model_organization']['ctrl'],
 	'interface' => Array (
-		'showRecordFieldList' => 'gender,first_name,last_name,birth_date,marital_status,country,preferred_language,numbers,emails,website,title,company,room,building,image,tags,region'
+		'showRecordFieldList' => 'gender,first_name,last_name,birth_date,marital_status,country,preferred_language,numbers,emails,website,title,company,room,building,tags,region'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_organization']['feInterface'],
 	'columns' => Array (
@@ -66,21 +66,6 @@ $TCA['tx_addresses_domain_model_organization'] = Array (
 				'type' => 'input',
 				'size' => '40',
 				'max' => '256'
-			)
-		),
-		'logo' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_organization.logo',
-			'config' => Array (
-				'type' => 'group',
-				'internal_type' => 'file',
-				'allowed' => $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-				'max_size' => '1000',
-				'uploadfolder' => 'uploads/pics',
-				'show_thumbs' => '1',
-				'size' => '3',
-				'maxitems' => '6',
-				'minitems' => '0'
 			)
 		),
 		'remarks' => Array (
@@ -158,6 +143,16 @@ $TCA['tx_addresses_domain_model_organization'] = Array (
 				'foreign_label' => 'label',
 			)
 		),
+		'images' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.images',
+			'config' => array(
+				'type' => 'inline',
+				'foreign_table' => 'tx_addresses_domain_model_image',
+				'foreign_field' => 'organization',
+				'foreign_label' => 'label',
+			)
+		),
 		'sectors' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_organization.sectors',
@@ -173,6 +168,7 @@ $TCA['tx_addresses_domain_model_organization'] = Array (
 		'1' => Array('showitem' => 'hidden, name, logo, sectors, remarks ,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.contactInfo, numbers, emails, websites,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.addresses, addresses,
+									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.images, images,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.tags, tags,
 									'),
 	),

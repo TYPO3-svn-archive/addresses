@@ -193,21 +193,6 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'max' => '80'
 			)
 		),
-		'image' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.image',
-			'config' => Array (
-				'type' => 'group',
-				'internal_type' => 'file',
-				'allowed' => $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-				'max_size' => '1000',
-				'uploadfolder' => 'uploads/pics',
-				'show_thumbs' => '1',
-				'size' => '3',
-				'maxitems' => '6',
-				'minitems' => '0'
-			)
-		),
 		'remarks' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.remarks',
@@ -283,6 +268,16 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'foreign_label' => 'label',
 			)
 		),
+		'images' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.images',
+			'config' => array(
+				'type' => 'inline',
+				'foreign_table' => 'tx_addresses_domain_model_image',
+				'foreign_field' => 'person',
+				'foreign_label' => 'label',
+			)
+		),
 		// ExtJS note: *not* editable combobox widget
 		'marital_status' => array(
 			'exclude' => 1,
@@ -314,9 +309,10 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		),
 	),
 	'types' => Array (
-		'1' => Array('showitem' => 'hidden,gender,title, first_name, last_name, birth_date, marital_status, image, remarks ,
+		'1' => Array('showitem' => 'hidden,gender,title, first_name, last_name, birth_date, marital_status, remarks ,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.contactInfo, numbers, emails, websites,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.addresses, addresses,
+									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.images, images,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.tags, tags,
 									'),
 	),

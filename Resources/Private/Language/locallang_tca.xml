@@ -41,6 +41,7 @@
 			<label index="email">Email</label>
 			<label index="website">Website</label>
 			<label index="sector">Sector</label>
+			<label index="image">Image</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="address">Addresse</label>
@@ -76,6 +77,7 @@
 			<label index="addresses">Adresses</label>
 			<label index="website">Site web</label>
 			<label index="sector">Secteur</label>
+			<label index="image">Image</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 		</languageKey>

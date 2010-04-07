@@ -137,6 +137,22 @@ $TCA['tx_addresses_domain_model_address'] = array (
 	)
 );
 
+t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_image');
+$TCA['tx_addresses_domain_model_image'] = array (
+	'ctrl' => array (
+	'title'             => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:image',
+	'label'				=> 'label',
+	'tstamp'            => 'tstamp',
+	'crdate'            => 'crdate',
+	'delete'            => 'deleted',
+	'enablecolumns'     => array (
+		'disabled' => 'hidden'
+	),
+	'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_addresses_domain_model_image.php',
+	'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Private/Icons/tx_addresses_domain_model_image.png'
+	)
+);
+
 t3lib_extMgm::allowTableOnStandardPages('tx_addresses_domain_model_tag');
 $TCA['tx_addresses_domain_model_tag'] = array (
 	'ctrl' => array (

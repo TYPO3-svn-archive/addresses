@@ -68,6 +68,10 @@ class tx_addresses_tcehook {
 		if($table == 'tx_addresses_domain_model_sector') {
 			$this->processSector($status, $table, $id, $fieldArray, $pObj);
 		}
+
+		if($table == 'tx_addresses_domain_model_image') {
+			$this->processImage($status, $table, $id, $fieldArray, $pObj);
+		}
 	}
 	
 	/**
@@ -160,6 +164,21 @@ class tx_addresses_tcehook {
 		#	$fieldArray['label'] = $fieldArray['label'] . ' (' . $values['type'] . ')';
 		#}
 		#$record = $this->getFullRecord($id, $table);
+	}
+
+	/**
+	 * process label for table "tx_addresses_domain_model_number"
+	 *
+	 * @param	string		action status: new/update is relevant for us
+	 * @param	string		db table
+	 * @param	integer		record uid
+	 * @param	array		record
+	 * @param	object		parent object
+	 * @return	void
+	 */
+	private function processImage($status, $table, $id, &$fieldArray, $pObj) {
+		$values = $pObj->datamap[$table][$id];
+		$fieldArray['label'] = $values['file_name'];
 	}
 
 	/**

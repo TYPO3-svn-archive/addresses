@@ -53,6 +53,7 @@
 			<label index="tx_addresses_domain_model_person.emails">Email</label>
 			<label index="tx_addresses_domain_model_person.websites">Website</label>
 			<label index="tx_addresses_domain_model_person.addresses">Addresses</label>
+			<label index="tx_addresses_domain_model_person.images">Images</label>
 			<label index="tx_addresses_domain_model_person.tags">Tags</label>
 			<label index="tx_addresses_domain_model_person.label">Label</label>
 
@@ -102,9 +103,15 @@
 			<label index="tx_addresses_domain_model_sector.remarks">Remarques</label>
 			<label index="tx_addresses_domain_model_sector.tags">Tags</label>
 			
+			<!-- DOMAIN IMAGE -->
+			<label index="tx_addresses_domain_model_image.image">Image</label>
+			<label index="tx_addresses_domain_model_image.remarks">Remarques</label>
+			<label index="tx_addresses_domain_model_image.tags">Tags</label>
+
 			<!-- TABS -->
 			<label index="tabs.contactInfo">Contact information</label>
 			<label index="tabs.addresses">Addresses</label>
+			<label index="tabs.images">Images</label>
 			<label index="tabs.tags">Tags</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
@@ -156,6 +163,7 @@
 			<label index="tx_addresses_domain_model_person.emails">Emails</label>
 			<label index="tx_addresses_domain_model_person.websites">Sites internet</label>
 			<label index="tx_addresses_domain_model_person.addresses">Adresses</label>
+			<label index="tx_addresses_domain_model_person.images">Images</label>
 			<label index="tx_addresses_domain_model_person.label">Etiquette</label>
 
 			<!-- DOMAIN ORGANIZATION -->
@@ -200,9 +208,15 @@
 			<label index="tx_addresses_domain_model_sector.name">Nom</label>
 			<label index="tx_addresses_domain_model_sector.remarks">Remarques</label>
 
+			<!-- DOMAIN IMAGE -->
+			<label index="tx_addresses_domain_model_image.image">Image</label>
+			<label index="tx_addresses_domain_model_image.remarks">Remarques</label>
+			<label index="tx_addresses_domain_model_image.tags">Tags</label>
+
 			<!-- TABS -->
 			<label index="tabs.contactInfo">Information de contact</label>
 			<label index="tabs.addresses">Addresses</label>
+			<label index="tabs.images">Images</label>
 			<label index="tabs.tags">Tags</label>
 		</languageKey>
 	</data>

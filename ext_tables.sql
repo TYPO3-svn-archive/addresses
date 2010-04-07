@@ -26,13 +26,13 @@ CREATE TABLE tx_addresses_domain_model_person (
 	religion tinytext NOT NULL,
 	company int(11) DEFAULT '0' NOT NULL,
 	preferred_language varchar(40) DEFAULT '' NOT NULL,
-	image tinyblob NOT NULL,
 	remarks text NOT NULL,
 
 	numbers int(11) DEFAULT '0' NOT NULL,
 	emails int(11) DEFAULT '0' NOT NULL,
 	websites int(11) DEFAULT '0' NOT NULL,
 	addresses int(11) DEFAULT '0' NOT NULL,
+	images int(11) DEFAULT '0' NOT NULL,
 	tags int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
@@ -53,7 +53,6 @@ CREATE TABLE tx_addresses_domain_model_organization (
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	name tinytext NOT NULL,
-	logo tinytext NOT NULL,
 	remarks text NOT NULL,
 
 	sectors int(11) DEFAULT '0' NOT NULL,
@@ -61,6 +60,7 @@ CREATE TABLE tx_addresses_domain_model_organization (
 	emails int(11) DEFAULT '0' NOT NULL,
 	websites int(11) DEFAULT '0' NOT NULL,
 	addresses int(11) DEFAULT '0' NOT NULL,
+	images int(11) DEFAULT '0' NOT NULL,
 	tags int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
@@ -136,7 +136,7 @@ CREATE TABLE tx_addresses_domain_model_number (
 	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
-	contact int(11) unsigned DEFAULT '0' NOT NULL,
+	person int(11) unsigned DEFAULT '0' NOT NULL,
 	organization int(11) unsigned DEFAULT '0' NOT NULL,
 	label tinytext NOT NULL,
 	type tinytext NOT NULL,
@@ -151,7 +151,8 @@ CREATE TABLE tx_addresses_domain_model_number (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY uid_foreign (contact)
+	KEY uid_foreign_person (person)
+	KEY uid_foreign_organization (organization)
 );
 
 #
@@ -166,7 +167,7 @@ CREATE TABLE tx_addresses_domain_model_email (
 	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
-	contact int(11) unsigned DEFAULT '0' NOT NULL,
+	person int(11) unsigned DEFAULT '0' NOT NULL,
 	organization int(11) unsigned DEFAULT '0' NOT NULL,
 	label tinytext NOT NULL,
 	type tinytext NOT NULL,
@@ -176,7 +177,8 @@ CREATE TABLE tx_addresses_domain_model_email (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY uid_foreign (contact)
+	KEY uid_foreign_person (person)
+	KEY uid_foreign_organization (organization)
 );
 
 #
@@ -199,7 +201,7 @@ CREATE TABLE tx_addresses_domain_model_sector (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY uid_foreign (organization)
+	KEY uid_foreign_organization (organization)
 );
 
 #
@@ -214,7 +216,7 @@ CREATE TABLE tx_addresses_domain_model_website (
 	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
-	contact int(11) unsigned DEFAULT '0' NOT NULL,
+	person int(11) unsigned DEFAULT '0' NOT NULL,
 	organization int(11) unsigned DEFAULT '0' NOT NULL,
 	label tinytext NOT NULL,
 	type tinytext NOT NULL,
@@ -224,7 +226,8 @@ CREATE TABLE tx_addresses_domain_model_website (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY uid_foreign (contact)
+	KEY uid_foreign_person (person)
+	KEY uid_foreign_organization (organization)
 );
 
 #
@@ -239,7 +242,7 @@ CREATE TABLE tx_addresses_domain_model_address (
 	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
-	contact int(11) unsigned DEFAULT '0' NOT NULL,
+	person int(11) unsigned DEFAULT '0' NOT NULL,
 	organization int(11) unsigned DEFAULT '0' NOT NULL,
 	type tinytext NOT NULL,
 	nature tinytext NOT NULL,
@@ -259,6 +262,32 @@ CREATE TABLE tx_addresses_domain_model_address (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY uid_foreign (contact)
+	KEY uid_foreign_person (person)
+	KEY uid_foreign_organization (organization)
 );
 
+#
+# Table structure for table 'tx_addresses_domain_model_website'
+#
+CREATE TABLE tx_addresses_domain_model_image (
+	uid int(11) unsigned DEFAULT '0' NOT NULL auto_increment,
+	pid int(11) unsigned DEFAULT '0' NOT NULL,
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	person int(11) unsigned DEFAULT '0' NOT NULL,
+	organization int(11) unsigned DEFAULT '0' NOT NULL,
+	label tinytext NOT NULL,
+	type tinytext NOT NULL,
+	file_name tinyblob NOT NULL,
+	remarks text NOT NULL,
+	tags int(11) DEFAULT '0' NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid),
+	KEY uid_foreign_person (person)
+	KEY uid_foreign_organization (organization)
+);

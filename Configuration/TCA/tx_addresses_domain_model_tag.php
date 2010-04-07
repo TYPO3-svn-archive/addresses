@@ -13,21 +13,21 @@ $TCA['tx_addresses_domain_model_tag'] = array(
 			)
 		),
 		'tstamp' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.tstamp',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_tag.tstamp',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'crdate' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.crdate',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_tag.crdate',
 			'config' => Array (
 				'type' => 'passthrough',
 				'eval' => 'date'
 			),
 		),
 		'cruser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.cruser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_tag.cruser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -38,7 +38,7 @@ $TCA['tx_addresses_domain_model_tag'] = array(
 			),
 		),
 		'upuser_id' => Array (
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.upuser_id',
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_tag.upuser_id',
 			'config' => Array (
 				'type' => 'passthrough',
 				'userFuncFormat' => 'Tx_Addresses_Utility_TCE::convertUidToValue',
@@ -67,7 +67,7 @@ $TCA['tx_addresses_domain_model_tag'] = array(
 		),
 		'remarks' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_contact.remarks',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_tag.remarks',
 			'config'  => array(
 				'type' => 'text',
 				'cols' => '30',

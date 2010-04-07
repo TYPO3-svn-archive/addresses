@@ -249,7 +249,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_addresses_domain_model_number',
-				'foreign_field' => 'contact',
+				'foreign_field' => 'person',
 				'foreign_label' => 'label',
 			)
 		),
@@ -259,7 +259,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_addresses_domain_model_email',
-				'foreign_field' => 'contact',
+				'foreign_field' => 'person',
 				'foreign_label' => 'label',
 			)
 		),
@@ -269,7 +269,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_addresses_domain_model_website',
-				'foreign_field' => 'contact',
+				'foreign_field' => 'person',
 				'foreign_label' => 'label',
 			)
 		),
@@ -279,7 +279,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_addresses_domain_model_address',
-				'foreign_field' => 'contact',
+				'foreign_field' => 'person',
 				'foreign_label' => 'label',
 			)
 		),

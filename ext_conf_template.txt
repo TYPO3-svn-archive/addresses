@@ -1,5 +1,5 @@
 # cat=basic/enable; type=boolean; label=Load BE module: Will load a BE module which is dedicated for managing many addresses. Note: you will need to reload the whole BE in order to applicate this option.
-loadBEModule = 1
+loadBEModule = 0
 
 # cat=basic/enable; type=boolean; label=Debug: Turn debugging on or off.
 debug = 0

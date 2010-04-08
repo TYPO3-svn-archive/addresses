@@ -94,7 +94,7 @@ CREATE TABLE tx_addresses_domain_model_tag (
 	alternative_name tinytext NOT NULL,
 	remarks text NOT NULL,
 	tags int(11) DEFAULT '0' NOT NULL,
-	parent_tag int(11) unsigned DEFAULT '0' NOT NULL,
+	tag int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting int(11) unsigned DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),

@@ -24,7 +24,7 @@ CREATE TABLE tx_addresses_domain_model_person (
 	death_place tinytext NOT NULL,
 	nationality tinytext NOT NULL,
 	religion tinytext NOT NULL,
-	company int(11) DEFAULT '0' NOT NULL,
+	organization int(11) DEFAULT '0' NOT NULL,
 	preferred_language varchar(40) DEFAULT '' NOT NULL,
 	remarks text NOT NULL,
 
@@ -253,7 +253,7 @@ CREATE TABLE tx_addresses_domain_model_address (
 	building varchar(20) DEFAULT '' NOT NULL,
 	room varchar(15) DEFAULT '' NOT NULL,
 	postal_code varchar(20) DEFAULT '' NOT NULL,
-	city tinytext NOT NULL,
+	locality tinytext NOT NULL,
 	region varchar(100) DEFAULT '' NOT NULL,
 	country varchar(30) DEFAULT '' NOT NULL,
 	latitude decimal(24,14) DEFAULT '0.00000000000000' NOT NULL,

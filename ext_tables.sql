@@ -141,7 +141,7 @@ CREATE TABLE tx_addresses_domain_model_number (
 	organization int(11) unsigned DEFAULT '0' NOT NULL,
 	label tinytext NOT NULL,
 	type tinytext NOT NULL,
-	number tinytext NOT NULL,
+	phone_number tinytext NOT NULL,
 	nature tinytext NOT NULL,
 	standard tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	country int(11) unsigned DEFAULT '0' NOT NULL,

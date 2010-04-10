@@ -76,7 +76,7 @@
 			<label index="tx_addresses_domain_model_email.tags">Tags</label>
 
 			<!-- DOMAIN NUMBER -->
-			<label index="tx_addresses_domain_model_number.number">Phone number</label>
+			<label index="tx_addresses_domain_model_number.phone_number">Phone number</label>
 			<label index="tx_addresses_domain_model_number.type">Type</label>
 			<label index="tx_addresses_domain_model_number.remarks">Remarks</label>
 			<label index="tx_addresses_domain_model_number.tags">Tags</label>

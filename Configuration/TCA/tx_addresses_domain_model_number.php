@@ -95,9 +95,9 @@ $TCA['tx_addresses_domain_model_number'] = array(
 				'eval' => 'required',
 			)
 		),
-		'number' => array(
+		'phone_number' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_number.number',
+			'label'   => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_number.phone_number',
 			'config'  => array(
 				'type' => 'input',
 				'size' => '30',
@@ -141,7 +141,7 @@ $TCA['tx_addresses_domain_model_number'] = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'type,number,remarks,tags')
+		'0' => array('showitem' => 'type, phone_number, remarks, tags')
 	),
 	'palettes' => array(
 

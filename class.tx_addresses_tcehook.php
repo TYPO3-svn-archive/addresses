@@ -86,7 +86,7 @@ class tx_addresses_tcehook {
 	 */
 	private function processNumber($status, $table, $id, &$fieldArray, $pObj) {
 		$values = $pObj->datamap[$table][$id];
-		$fieldArray['label'] = $values['number'];
+		$fieldArray['label'] = $values['phone_number'];
 		if (isset($values['type']) && $values['type'] != '') {
 			$fieldArray['label'] = $fieldArray['label'] . ' (' . $values['type'] . ')';
 		}

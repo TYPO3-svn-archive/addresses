@@ -24,7 +24,6 @@ CREATE TABLE tx_addresses_domain_model_person (
 	death_place tinytext NOT NULL,
 	nationality tinytext NOT NULL,
 	religion tinytext NOT NULL,
-	organization int(11) DEFAULT '0' NOT NULL,
 	preferred_language varchar(40) DEFAULT '' NOT NULL,
 	remarks text NOT NULL,
 

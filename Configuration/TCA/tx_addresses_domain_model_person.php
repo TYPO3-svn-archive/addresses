@@ -2,7 +2,7 @@
 $TCA['tx_addresses_domain_model_person'] = Array (
 	'ctrl' => $TCA['tx_addresses_domain_model_person']['ctrl'],
 	'interface' => Array (
-		'showRecordFieldList' => 'gender,first_name,last_name,birth_date,marital_status,country,preferred_language,numbers,emails,website,title,company,room,building,image,tags,region'
+		'showRecordFieldList' => 'gender,first_name,last_name,birth_date,marital_status,country,preferred_language,numbers,emails,website,title,room,building,image,tags,region'
 	),
 	'feInterface' => $TCA['tx_addresses_domain_model_person']['feInterface'],
 	'columns' => Array (
@@ -181,16 +181,6 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'size' => '20',
 				'eval' => 'trim',
 				'max' => '40'
-			)
-		),
-		'company' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.company',
-			'config' => Array (
-				'type' => 'input',
-				'eval' => 'trim',
-				'size' => '20',
-				'max' => '80'
 			)
 		),
 		'remarks' => Array (

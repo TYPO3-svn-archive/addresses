@@ -26,7 +26,7 @@
 /**
  * A single sector
  *
- * @version $Id: $
+ * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @valueobject

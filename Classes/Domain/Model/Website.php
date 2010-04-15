@@ -69,6 +69,13 @@ class Tx_Addresses_Domain_Model_Website extends Tx_Extbase_DomainObject_Abstract
 	protected $website = '';
 	
 	/**
+	 * The contact's tags
+	 *
+	 * @var array
+	 */
+	protected $tags = array();
+	
+	/**
 	 * Constructs this address
 	 *
 	 * @return
@@ -169,6 +176,34 @@ class Tx_Addresses_Domain_Model_Website extends Tx_Extbase_DomainObject_Abstract
 	 */
 	public function getWebsite() {
 		return $this->website;
+	}
+
+	/**
+	 * Sets this contact's tags
+	 *
+	 * @param array $tags The contact's tags
+	 * @return void
+	 */
+	public function setTags($tags) {
+		$this->tags = $tags;
+	}
+
+	/**
+	 * Returns the contact's tags
+	 *
+	 * @return array The contact's tags
+	 */
+	public function getTags() {
+		return $this->tags;
+	}
+
+	/**
+	 * Returns the contact's tags
+	 *
+	 * @return array The contact's tags
+	 */
+	public function addTag($tag) {
+		$this->tags[] = $tag;
 	}
 
 	/**

@@ -38,7 +38,14 @@ class Tx_Addresses_Domain_Model_Sector extends Tx_Extbase_DomainObject_AbstractV
 	 *
 	 * @var Object
 	 */
-	protected $organization;
+	protected $organization = '';
+	
+	/**
+	 * The label of the sector
+	 *
+	 * @var string
+	 */
+	protected $label = '';
 
 	/**
 	 * The sector name
@@ -46,13 +53,14 @@ class Tx_Addresses_Domain_Model_Sector extends Tx_Extbase_DomainObject_AbstractV
 	 * @var string
 	 */
 	protected $name = '';
-
+	
 	/**
-	 * The remarks of the email address
+	 * Constructs this address
 	 *
-	 * @var string
+	 * @return
 	 */
-	protected $remarks = '';
+	public function __construct() {
+	}
 	
 	/**
 	 * Sets the organization
@@ -73,6 +81,24 @@ class Tx_Addresses_Domain_Model_Sector extends Tx_Extbase_DomainObject_AbstractV
 		return $this->organization;
 	}
 	
+	/**
+	 * Sets the label
+	 *
+	 * @param string $label The label
+	 * @return void
+	 */
+	public function setLabel($label) {
+		$this->label = $label;
+	}
+
+	/**
+	 * Returns the label 
+	 *
+	 * @return string the label
+	 */
+	public function getLabel() {
+		return $this->label;
+	}
 
 	/**
 	 * Sets the name
@@ -91,25 +117,6 @@ class Tx_Addresses_Domain_Model_Sector extends Tx_Extbase_DomainObject_AbstractV
 	 */
 	public function getName() {
 		return $this->name;
-	}
-
-	/**
-	 * Sets the remarks
-	 *
-	 * @param string $remarks
-	 * @return void
-	 */
-	public function setRemarks($remarks) {
-		$this->remarks = $remarks;
-	}
-
-	/**
-	 * Returns the remarks
-	 *
-	 * @return string
-	 */
-	public function getRemarks() {
-		return $this->remarks;
 	}
 
 	/**

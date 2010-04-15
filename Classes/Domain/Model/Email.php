@@ -34,12 +34,33 @@
 class Tx_Addresses_Domain_Model_Email extends Tx_Extbase_DomainObject_AbstractValueObject {
 
 	/**
-	 * The uid of the parent contact
+	 * The uid of the parent person
 	 *
 	 * @var Object
 	 */
-	protected $contact;
+	protected $person = '';
+	
+	/**
+	 * The uid of the parent organization
+	 *
+	 * @var Object
+	 */
+	protected $organization = '';
+	
+	/**
+	 * The label of the sector
+	 *
+	 * @var string
+	 */
+	protected $label = '';
 
+	/**
+	 * The type
+	 *
+	 * @var string
+	 */
+	protected $type = '';
+	
 	/**
 	 * The email address
 	 *
@@ -55,25 +76,89 @@ class Tx_Addresses_Domain_Model_Email extends Tx_Extbase_DomainObject_AbstractVa
 	protected $remarks = '';
 	
 	/**
-	 * Sets the contact
+	 * Constructs this address
 	 *
-	 * @param Tx_Addresses_Domain_Model_Contact $contact The contact
+	 * @return
+	 */
+	public function __construct() {
+	}
+	
+	/**
+	 * Sets the person
+	 *
+	 * @param Tx_Addresses_Domain_Model_Person $person The person
 	 * @return void
 	 */
-	public function setContact(Tx_Addresses_Domain_Model_Contact $contact) {
-		$this->contact = $contact;
+	public function setPerson(Tx_Addresses_Domain_Model_Person $person) {
+		$this->person = $person;
 	}
 
 	/**
-	 * Returns the contact
+	 * Returns the person
 	 *
-	 * @return Tx_Addresses_Domain_Model_Contact the contact
+	 * @return Tx_Addresses_Domain_Model_Person the person
 	 */
-	public function getContact() {
-		return $this->contact;
+	public function getPerson() {
+		return $this->person;
 	}
 	
+	/**
+	 * Sets the organization
+	 *
+	 * @param Tx_Addresses_Domain_Model_Organization $organization The organization
+	 * @return void
+	 */
+	public function setOrganization(Tx_Addresses_Domain_Model_Organization $organization) {
+		$this->organization = $organization;
+	}
 
+	/**
+	 * Returns the organization
+	 *
+	 * @return Tx_Addresses_Domain_Model_Organization the organization
+	 */
+	public function getOrganization() {
+		return $this->organization;
+	}
+	
+	/**
+	 * Sets the label
+	 *
+	 * @param string $label The label
+	 * @return void
+	 */
+	public function setLabel($label) {
+		$this->label = $label;
+	}
+
+	/**
+	 * Returns the label 
+	 *
+	 * @return string the label
+	 */
+	public function getLabel() {
+		return $this->label;
+	}
+
+	/**
+	 * Sets the type
+	 *
+	 * @param string $type The type
+	 * @return void
+	 */
+	public function setType($type) {
+		$this->type = $type;
+	}
+
+	/**
+	 * Returns the type 
+	 *
+	 * @return string the type
+	 */
+	public function getType() {
+		return $this->type;
+	}
+	
 	/**
 	 * Sets the email address
 	 *
@@ -91,25 +176,6 @@ class Tx_Addresses_Domain_Model_Email extends Tx_Extbase_DomainObject_AbstractVa
 	 */
 	public function getEmailAddress() {
 		return $this->emailAddress;
-	}
-
-	/**
-	 * Sets the remarks
-	 *
-	 * @param string $remarks
-	 * @return void
-	 */
-	public function setRemarks($remarks) {
-		$this->remarks = $remarks;
-	}
-
-	/**
-	 * Returns the remarks
-	 *
-	 * @return string
-	 */
-	public function getRemarks() {
-		return $this->remarks;
 	}
 
 	/**

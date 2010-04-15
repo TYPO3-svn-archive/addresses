@@ -42,8 +42,7 @@ class Tx_Addresses_Domain_Model_Tag extends Tx_Extbase_DomainObject_AbstractValu
 	/*
 	 * Constructs this tag
 	 */
-	public function __construct($name) {
-		$this->name = $name;
+	public function __construct() {
 	}
 
 	/**

@@ -34,12 +34,26 @@
 class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractValueObject {
 
 	/**
-	 * The uid of the parent contact
+	 * The uid of the parent person
 	 *
 	 * @var Object
 	 */
-	protected $contact;
-
+	protected $person = '';
+	
+	/**
+	 * The uid of the parent organization
+	 *
+	 * @var Object
+	 */
+	protected $organization = '';
+	
+	/**
+	 * The label of the sector
+	 *
+	 * @var string
+	 */
+	protected $label = '';
+	
 	/**
 	 * The type
 	 *
@@ -47,6 +61,13 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	 */
 	protected $type = '';
 	
+	/**
+	 * The phoneNumber
+	 *
+	 * @var string
+	 */
+	protected $phoneNumber = '';
+
 	/**
 	 * The nature
 	 *
@@ -60,13 +81,6 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	 * @var Bool
 	 */
 	protected $standard = FALSE;
-	
-	/**
-	 * The label
-	 *
-	 * @var string
-	 */
-	protected $label = '';
 	
 	/**
 	 * The country
@@ -83,45 +97,76 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	protected $areaCode = '';
 	
 	/**
-	 * The number
-	 *
-	 * @var string
-	 */
-	protected $number = '';
-	
-	/**
 	 * The extension
 	 *
 	 * @var string
 	 */
 	protected $extension = '';
-
-	/**
-	 * The remarks
-	 *
-	 * @var string
-	 */
-	protected $remarks = '';
 	
 	/**
-	 * Sets the contact
+	 * Constructs this address
 	 *
-	 * @param Tx_Addresses_Domain_Model_Contact $contact The contact
+	 * @return
+	 */
+	public function __construct() {
+	}
+	
+	/**
+	 * Sets the person
+	 *
+	 * @param Tx_Addresses_Domain_Model_Person $person The person
 	 * @return void
 	 */
-	public function setContact(Tx_Addresses_Domain_Model_Contact $contact) {
-		$this->contact = $contact;
+	public function setPerson(Tx_Addresses_Domain_Model_Person $person) {
+		$this->person = $person;
 	}
 
 	/**
-	 * Returns the contact
+	 * Returns the person
 	 *
-	 * @return Tx_Addresses_Domain_Model_Contact the contact
+	 * @return Tx_Addresses_Domain_Model_Person the person
 	 */
-	public function getContact() {
-		return $this->contact;
+	public function getPerson() {
+		return $this->person;
 	}
 	
+	/**
+	 * Sets the organization
+	 *
+	 * @param Tx_Addresses_Domain_Model_Organization $organization The organization
+	 * @return void
+	 */
+	public function setOrganization(Tx_Addresses_Domain_Model_Organization $organization) {
+		$this->organization = $organization;
+	}
+
+	/**
+	 * Returns the organization
+	 *
+	 * @return Tx_Addresses_Domain_Model_Organization the organization
+	 */
+	public function getOrganization() {
+		return $this->organization;
+	}
+	
+	/**
+	 * Sets the label
+	 *
+	 * @param string $label The label
+	 * @return void
+	 */
+	public function setLabel($label) {
+		$this->label = $label;
+	}
+
+	/**
+	 * Returns the label 
+	 *
+	 * @return string the label
+	 */
+	public function getLabel() {
+		return $this->label;
+	}	
 
 	/**
 	 * Sets the type
@@ -140,6 +185,25 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	 */
 	public function getType() {
 		return $this->type;
+	}
+	
+	/**
+	 * Sets the phoneNumber
+	 *
+	 * @param string $phoneNumber The phoneNumber
+	 * @return void
+	 */
+	public function setPhoneNumber($phoneNumber) {
+		$this->phoneNumber = $phoneNumber;
+	}
+
+	/**
+	 * Returns the phoneNumber 
+	 *
+	 * @return string the phoneNumber
+	 */
+	public function getPhoneNumber() {
+		return $this->phoneNumber;
 	}
 	
 	/**
@@ -181,25 +245,6 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	}
 
 	/**
-	 * Sets the label
-	 *
-	 * @param string $label The label
-	 * @return void
-	 */
-	public function setLabel($label) {
-		$this->label = $label;
-	}
-
-	/**
-	 * Returns the label 
-	 *
-	 * @return string the label
-	 */
-	public function getLabel() {
-		return $this->label;
-	}
-	
-	/**
 	 * Sets the country
 	 *
 	 * @param string $country The country
@@ -238,25 +283,6 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	}	
 	
 	/**
-	 * Sets the number
-	 *
-	 * @param string $number The number
-	 * @return void
-	 */
-	public function setNumber($number) {
-		$this->number = $number;
-	}
-
-	/**
-	 * Returns the number 
-	 *
-	 * @return string the number
-	 */
-	public function getNumber() {
-		return $this->number;
-	}
-	
-	/**
 	 * Sets the extension
 	 *
 	 * @param string $extension The extension
@@ -273,25 +299,6 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	 */
 	public function getExtension() {
 		return $this->extension;
-	}
-	
-	/**
-	 * Sets the remarks
-	 *
-	 * @param string $remarks
-	 * @return void
-	 */
-	public function setRemarks($remarks) {
-		$this->remarks = $remarks;
-	}
-
-	/**
-	 * Returns the remarks
-	 *
-	 * @return string
-	 */
-	public function getRemarks() {
-		return $this->remarks;
 	}
 
 	/**

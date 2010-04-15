@@ -35,9 +35,23 @@
 class tx_addresses_domain_model_address extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
+	 * The uid of the parent person
+	 *
+	 * @var Object
+	 */
+	protected $person = '';
+	
+	/**
+	 * The uid of the parent organization
+	 *
+	 * @var Object
+	 */
+	protected $organization = '';
+	
+	/**
 	 * The type
 	 *
-	 * @var int
+	 * @var string
 	 */
 	protected $type = '';
 
@@ -91,11 +105,11 @@ class tx_addresses_domain_model_address extends Tx_Extbase_DomainObject_Abstract
 	protected $postalCode = '';
 	
 	/**
-	 * The city
+	 * The locality
 	 *
 	 * @var string
 	 */
-	protected $city = '';
+	protected $locality = '';
 	
 	/**
 	 * The region
@@ -110,13 +124,20 @@ class tx_addresses_domain_model_address extends Tx_Extbase_DomainObject_Abstract
 	 * @var string
 	 */
 	protected $country = '';
-
+	
 	/**
-	 * The remarks of the address
+	 * The latitude
 	 *
 	 * @var string
 	 */
-	protected $remarks = '';
+	protected $latitude = '';
+	
+	/**
+	 * The longitude
+	 *
+	 * @var string
+	 */
+	protected $longitude = '';
 
 
 	/**
@@ -126,7 +147,44 @@ class tx_addresses_domain_model_address extends Tx_Extbase_DomainObject_Abstract
 	 */
 	public function __construct() {
 	}
+	
+	/**
+	 * Sets the person
+	 *
+	 * @param Tx_Addresses_Domain_Model_Person $person The person
+	 * @return void
+	 */
+	public function setPerson(Tx_Addresses_Domain_Model_Person $person) {
+		$this->person = $person;
+	}
 
+	/**
+	 * Returns the person
+	 *
+	 * @return Tx_Addresses_Domain_Model_Person the person
+	 */
+	public function getPerson() {
+		return $this->person;
+	}
+	
+	/**
+	 * Sets the organization
+	 *
+	 * @param Tx_Addresses_Domain_Model_Organization $organization The organization
+	 * @return void
+	 */
+	public function setOrganization(Tx_Addresses_Domain_Model_Organization $organization) {
+		$this->organization = $organization;
+	}
+
+	/**
+	 * Returns the organization
+	 *
+	 * @return Tx_Addresses_Domain_Model_Organization the organization
+	 */
+	public function getOrganization() {
+		return $this->organization;
+	}
 
 	/**
 	 * Sets this address's type
@@ -282,22 +340,22 @@ class tx_addresses_domain_model_address extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
-	 * Sets the city
+	 * Sets the locality
 	 *
-	 * @param string $city The city
+	 * @param string $locality The locality
 	 * @return void
 	 */
-	public function setCity($city) {
-		$this->city = $city;
+	public function setLocality($locality) {
+		$this->locality = $locality;
 	}
 
 	/**
-	 * Returns the city
+	 * Returns the locality
 	 *
-	 * @return string The city
+	 * @return string The locality
 	 */
-	public function getCity() {
-		return $this->city;
+	public function getLocality() {
+		return $this->locality;
 	}
 	
 	/**
@@ -337,24 +395,43 @@ class tx_addresses_domain_model_address extends Tx_Extbase_DomainObject_Abstract
 	public function getCountry() {
 		return $this->country;
 	}
-
+	
 	/**
-	 * Sets the remarks for the address
+	 * Sets this address's latitude
 	 *
-	 * @param string $remarks
+	 * @param string $latitude The address's latitude
 	 * @return void
 	 */
-	public function setRemarks($remarks) {
-		$this->remarks = $remarks;
+	public function setLatitude($latitude) {
+		$this->latitude = $latitude;
 	}
 
 	/**
-	 * Returns the remarks
+	 * Returns the address's latitude
 	 *
-	 * @return string
+	 * @return string The address's latitude
 	 */
-	public function getRemarks() {
-		return $this->remarks;
+	public function getLatitude() {
+		return $this->latitude;
+	}
+	
+	/**
+	 * Sets this address's longitude
+	 *
+	 * @param string $longitude The address's longitude
+	 * @return void
+	 */
+	public function setLongitude($longitude) {
+		$this->longitude = $longitude;
+	}
+
+	/**
+	 * Returns the address's longitude
+	 *
+	 * @return string The address's longitude
+	 */
+	public function getLongitude() {
+		return $this->longitude;
 	}
 
 	/**
@@ -363,7 +440,7 @@ class tx_addresses_domain_model_address extends Tx_Extbase_DomainObject_Abstract
 	 * @return string
 	 */
 	public function __toString() {
-		return $this->street . ' ' . $this->streetNumber . ',' . $this->postalCode . ' ' . $this->city;
+		return $this->street . ', ' . $this->postalCode . ' ' . $this->locality;
 	}
 }
 ?>

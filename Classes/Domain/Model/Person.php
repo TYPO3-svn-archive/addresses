@@ -126,35 +126,12 @@ class Tx_Addresses_Domain_Model_Person extends Tx_Addresses_Domain_Model_Contact
 	 */
 	protected $religion = '';
 
-
-	/**
-	 * The company
-	 *
-	 * @var string
-	 */
-	protected $company = '';
-
-	/**
-	 * The address
-	 *
-	 * @var string
-	 */
-	protected $address = '';
-
 	/**
 	 * The preferred_language
 	 *
 	 * @var string
 	 */
 	protected $preferredLanguage = '';
-
-
-	/**
-	 * The image of the contact
-	 *
-	 * @var string
-	 */
-	protected $image = '';
 
 	/**
 	 * The remarks of the contact
@@ -401,25 +378,6 @@ class Tx_Addresses_Domain_Model_Person extends Tx_Addresses_Domain_Model_Contact
 	}
 
 	/**
-	 * Sets this person's company
-	 *
-	 * @param string $company The person's company
-	 * @return void
-	 */
-	public function setCompany($company) {
-		$this->company = $company;
-	}
-
-	/**
-	 * Returns the person's company
-	 *
-	 * @return string The person's company
-	 */
-	public function getCompany() {
-		return $this->company;
-	}
-
-	/**
 	 * Sets the person's preferred_language
 	 *
 	 * @param  string the person's preferred_language
@@ -436,25 +394,6 @@ class Tx_Addresses_Domain_Model_Person extends Tx_Addresses_Domain_Model_Contact
 	 */
 	public function getPreferredLanguage() {
 		return $this->preferredLanguage;
-	}
-
-	/**
-	 * Sets this person's image
-	 *
-	 * @param string $image The person's image
-	 * @return void
-	 */
-	public function setImage($image) {
-		$this->image = $image;
-	}
-
-	/**
-	 * Returns the person's image
-	 *
-	 * @return string The person's image
-	 */
-	public function getImage() {
-		return $this->image;
 	}
 
 	/**

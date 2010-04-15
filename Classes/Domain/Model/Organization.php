@@ -47,15 +47,15 @@ class Tx_Addresses_Domain_Model_Organization extends Tx_Addresses_Domain_Model_C
 	 * @var string
 	 */
 	protected $name = '';
-	
+
 	/**
-	 * The organization's sector
+	 * Constructs this organization
 	 *
-	 * @var string
+	 * @return
 	 */
-	protected $sector = '';
-	
-	
+	public function __construct() {
+	}
+		
 	/**
 	 * Sets this organization's name
 	 *
@@ -74,24 +74,5 @@ class Tx_Addresses_Domain_Model_Organization extends Tx_Addresses_Domain_Model_C
 	public function getName() {
 		return $this->name;
 	}
-
-	/**
-	 * Sets this organization's sector
-	 *
-	 * @param string $sector The organization's sector
-	 * @return void
-	 */
-	public function setSector($sector) {
-		$this->sector = $sector;
-	}
-
-	/**
-	 * Returns the organization's sector
-	 *
-	 * @return string The organization's sector
-	 */
-	public function getSector() {
-		return $this->sector;
-	}	
 }
 ?>

@@ -38,6 +38,27 @@ class Tx_Addresses_Domain_Model_Tag extends Tx_Extbase_DomainObject_AbstractValu
 	 * @var string
 	 */
 	protected $name;
+	
+	/**
+	 * The alternativeName
+	 *
+	 * @var string
+	 */
+	protected $alternativeName = '';
+	
+	/**
+	 * The remarks of the email address
+	 *
+	 * @var string
+	 */
+	protected $remarks = '';
+	
+	/**
+	 * The contact's tags
+	 *
+	 * @var array
+	 */
+	protected $tags = array();
 
 	/*
 	 * Constructs this tag
@@ -64,6 +85,73 @@ class Tx_Addresses_Domain_Model_Tag extends Tx_Extbase_DomainObject_AbstractValu
 		return $this->name;
 	}
 
+	/**
+	 * Sets this address's alternativeName
+	 *
+	 * @param string $alternativeName The address's alternativeName
+	 * @return void
+	 */
+	public function setAlternativeName($alternativeName) {
+		$this->alternativeName = $alternativeName;
+	}
+
+	/**
+	 * Returns the address's alternativeName
+	 *
+	 * @return string The address's alternativeName
+	 */
+	public function getAlternativeName() {
+		return $this->alternativeName;
+	}
+	
+	/**
+	 * Sets the remarks
+	 *
+	 * @param string $remarks
+	 * @return void
+	 */
+	public function setRemarks($remarks) {
+		$this->remarks = $remarks;
+	}
+
+	/**
+	 * Returns the remarks
+	 *
+	 * @return string
+	 */
+	public function getRemarks() {
+		return $this->remarks;
+	}
+	
+	/**
+	 * Sets this contact's tags
+	 *
+	 * @param array $tags The contact's tags
+	 * @return void
+	 */
+	public function setTags($tags) {
+		$this->tags = $tags;
+	}
+
+	/**
+	 * Returns the contact's tags
+	 *
+	 * @return array The contact's tags
+	 */
+	public function getTags() {
+		return $this->tags;
+	}
+
+	/**
+  	* Add the contact's tags
+	 *
+	 * @param Tx_Addresses_Domain_Model_Tag The tag
+	 * @return void
+	 */
+	public function addTag(Tx_Addresses_Domain_Model_Tag $tag) {
+  		$this->tags[] = $tag;
+	}
+	
 	/**
 	 * Returns this tag as a formatted string
 	 *

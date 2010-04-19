@@ -69,6 +69,13 @@ class Tx_Addresses_Domain_Model_Website extends Tx_Extbase_DomainObject_Abstract
 	protected $website = '';
 	
 	/**
+	 * The remarks of the email address
+	 *
+	 * @var string
+	 */
+	protected $remarks = '';
+	
+	/**
 	 * The contact's tags
 	 *
 	 * @var array
@@ -179,6 +186,25 @@ class Tx_Addresses_Domain_Model_Website extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
+	 * Sets the remarks
+	 *
+	 * @param string $remarks
+	 * @return void
+	 */
+	public function setRemarks($remarks) {
+		$this->remarks = $remarks;
+	}
+
+	/**
+	 * Returns the remarks
+	 *
+	 * @return string
+	 */
+	public function getRemarks() {
+		return $this->remarks;
+	}
+	
+	/**
 	 * Sets this contact's tags
 	 *
 	 * @param array $tags The contact's tags
@@ -198,12 +224,13 @@ class Tx_Addresses_Domain_Model_Website extends Tx_Extbase_DomainObject_Abstract
 	}
 
 	/**
-	 * Returns the contact's tags
-	 *
-	 * @return array The contact's tags
-	 */
-	public function addTag($tag) {
-		$this->tags[] = $tag;
+  	 * Add the contact's tags
+	 *
+	 * @param Tx_Addresses_Domain_Model_Tag The tag
+	 * @return void
+	 */
+	public function addTag(Tx_Addresses_Domain_Model_Tag $tag) {
+  		$this->tags[] = $tag;
 	}
 
 	/**

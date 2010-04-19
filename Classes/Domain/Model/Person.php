@@ -397,6 +397,180 @@ class Tx_Addresses_Domain_Model_Person extends Tx_Addresses_Domain_Model_Contact
 	}
 
 	/**
+	 * Sets this contact's numbers
+	 *
+	 * @param array $numbers The contact's numbers
+	 * @return void
+	 */
+	public function setNumbers($numbers) {
+		$this->numbers = $numbers;
+	}
+
+	/**
+	 * Returns the contact's numbers
+	 *
+	 * @return array The contact's numbers
+	 */
+	public function getNumbers() {
+		return $this->numbers;
+	}
+
+	/**
+  	 * Add the contact's numbers
+	 *
+	 * @param Tx_Addresses_Domain_Model_Number The number
+	 * @return void
+	 */
+	public function addNumber(Tx_Addresses_Domain_Model_Number $number) {
+  		$this->numbers[] = $number;
+	}
+	
+	/**
+	 * Sets this contact's emails
+	 *
+	 * @param array $emails The contact's emails
+	 * @return void
+	 */
+	public function setEmails($emails) {
+		$this->emails = $emails;
+	}
+
+	/**
+	 * Returns the contact's emails
+	 *
+	 * @return array The contact's emails
+	 */
+	public function getEmails() {
+		return $this->emails;
+	}
+
+	/**
+  	 * Add the contact's emails
+	 *
+	 * @param Tx_Addresses_Domain_Model_Email The email
+	 * @return void
+	 */
+	public function addEmail(Tx_Addresses_Domain_Model_Email $email) {
+  		$this->emails[] = $email;
+	}
+	
+	/**
+	 * Sets this contact's websites
+	 *
+	 * @param array $websites The contact's websites
+	 * @return void
+	 */
+	public function setWebsites($websites) {
+		$this->websites = $websites;
+	}
+
+	/**
+	 * Returns the contact's websites
+	 *
+	 * @return array The contact's websites
+	 */
+	public function getWebsites() {
+		return $this->websites;
+	}
+
+	/**
+  	 * Add the contact's websites
+	 *
+	 * @param Tx_Addresses_Domain_Model_Website The Website
+	 * @return void
+	 */
+	public function addWebsite(Tx_Addresses_Domain_Model_Website $website) {
+  		$this->websites[] = $website;
+	}
+	
+	/**
+	 * Sets this contact's addresses
+	 *
+	 * @param array $addresses The contact's addresses
+	 * @return void
+	 */
+	public function setAddresses($addresses) {
+		$this->addresses = $addresses;
+	}
+
+	/**
+	 * Returns the contact's addresses
+	 *
+	 * @return array The contact's addresses
+	 */
+	public function getAddresses() {
+		return $this->addresses;
+	}
+
+	/**
+  	 * Add the contact's addresses
+	 *
+	 * @param Tx_Addresses_Domain_Model_Addresse The addresse
+	 * @return void
+	 */
+	public function addAddresse(Tx_Addresses_Domain_Model_Addresse $addresse) {
+  		$this->addresses[] = $addresse;
+	}
+	
+	/**
+	 * Sets this contact's images
+	 *
+	 * @param array $images The contact's images
+	 * @return void
+	 */
+	public function setImages($images) {
+		$this->images = $images;
+	}
+
+	/**
+	 * Returns the contact's images
+	 *
+	 * @return array The contact's images
+	 */
+	public function getImages() {
+		return $this->images;
+	}
+
+	/**
+  	 * Add the contact's images
+	 *
+	 * @param Tx_Addresses_Domain_Model_Image The image
+	 * @return void
+	 */
+	public function addImage(Tx_Addresses_Domain_Model_Image $image) {
+  		$this->images[] = $image;
+	}
+	
+	/**
+	 * Sets this contact's tags
+	 *
+	 * @param array $tags The contact's tags
+	 * @return void
+	 */
+	public function setTags($tags) {
+		$this->tags = $tags;
+	}
+
+	/**
+	 * Returns the contact's tags
+	 *
+	 * @return array The contact's tags
+	 */
+	public function getTags() {
+		return $this->tags;
+	}
+
+	/**
+  	 * Add the contact's tags
+	 *
+	 * @param Tx_Addresses_Domain_Model_Tag The tag
+	 * @return void
+	 */
+	public function addTag(Tx_Addresses_Domain_Model_Tag $tag) {
+  		$this->tags[] = $tag;
+	}
+	
+	/**
 	 * Returns this address as a formatted string
 	 *
 	 * @return string

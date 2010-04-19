@@ -51,6 +51,7 @@ CREATE TABLE tx_addresses_domain_model_organization (
 	upuser_id int(11) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(3) unsigned DEFAULT '0' NOT NULL,
+	type tinytext NOT NULL,
 	name tinytext NOT NULL,
 	remarks text NOT NULL,
 

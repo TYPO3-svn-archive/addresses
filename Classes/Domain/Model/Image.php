@@ -24,14 +24,14 @@
 ***************************************************************/
 
 /**
- * A single number
+ * A single website
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  * @valueobject
  */
-class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractValueObject {
+class Tx_Addresses_Domain_Model_Website extends Tx_Extbase_DomainObject_AbstractValueObject {
 
 	/**
 	 * The uid of the parent person
@@ -46,14 +46,14 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	 * @var Object
 	 */
 	protected $organization = '';
-	
+
 	/**
-	 * The label of the sector
+	 * The label of the website
 	 *
 	 * @var string
 	 */
 	protected $label = '';
-	
+
 	/**
 	 * The type
 	 *
@@ -62,46 +62,11 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	protected $type = '';
 	
 	/**
-	 * The phoneNumber
+	 * The fileName of the website
 	 *
 	 * @var string
 	 */
-	protected $phoneNumber = '';
-
-	/**
-	 * The nature
-	 *
-	 * @var string
-	 */
-	protected $nature = '';
-	
-	/**
-	 * Is the number the default number?
-	 *
-	 * @var Bool
-	 */
-	protected $standard = FALSE;
-	
-	/**
-	 * The country
-	 *
-	 * @var string
-	 */
-	protected $country = '';
-	
-	/**
-	 * The area code
-	 *
-	 * @var string
-	 */
-	protected $areaCode = '';
-	
-	/**
-	 * The extension
-	 *
-	 * @var string
-	 */
-	protected $extension = '';
+	protected $fileName = '';
 	
 	/**
 	 * The remarks of the email address
@@ -162,7 +127,7 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	public function getOrganization() {
 		return $this->organization;
 	}
-	
+
 	/**
 	 * Sets the label
 	 *
@@ -180,7 +145,7 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	 */
 	public function getLabel() {
 		return $this->label;
-	}	
+	}
 
 	/**
 	 * Sets the type
@@ -202,119 +167,24 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	}
 	
 	/**
-	 * Sets the phoneNumber
+	 * Sets the fileName
 	 *
-	 * @param string $phoneNumber The phoneNumber
+	 * @param string $fileName The fileName
 	 * @return void
 	 */
-	public function setPhoneNumber($phoneNumber) {
-		$this->phoneNumber = $phoneNumber;
+	public function setFileName($fileName) {
+		$this->fileName = $fileName;
 	}
 
 	/**
-	 * Returns the phoneNumber 
+	 * Returns the fileName 
 	 *
-	 * @return string the phoneNumber
+	 * @return string the fileName
 	 */
-	public function getPhoneNumber() {
-		return $this->phoneNumber;
+	public function getFileName() {
+		return $fileName->fileName;
 	}
 	
-	/**
-	 * Sets the nature
-	 *
-	 * @param string $nature The nature
-	 * @return void
-	 */
-	public function setNature($nature) {
-		$this->nature = $nature;
-	}
-
-	/**
-	 * Returns the nature 
-	 *
-	 * @return string the nature
-	 */
-	public function getNature() {
-		return $this->nature;
-	}
-	
-	/**
-	 * Sets the standard flag
-	 *
-	 * @param Bool $standard The standard
-	 * @return void
-	 */
-	public function setStandard($standard) {
-		$this->standard = $standard;
-	}
-
-	/**
-	 * Returns the standard flag
-	 *
-	 * @return Bool the standard
-	 */
-	public function getStandard() {
-		return $this->standard;
-	}
-
-	/**
-	 * Sets the country
-	 *
-	 * @param string $country The country
-	 * @return void
-	 */
-	public function setCountry($country) {
-		$this->country = $country;
-	}
-
-	/**
-	 * Returns the country 
-	 *
-	 * @return string the country
-	 */
-	public function getCountry() {
-		return $this->country;
-	}
-	
-	/**
-	 * Sets the areaCode
-	 *
-	 * @param string $areaCode The areaCode
-	 * @return void
-	 */
-	public function setAreaCode($areaCode) {
-		$this->areaCode = $areaCode;
-	}
-
-	/**
-	 * Returns the areaCode 
-	 *
-	 * @return string the areaCode
-	 */
-	public function getAreaCode() {
-		return $this->areaCode;
-	}	
-	
-	/**
-	 * Sets the extension
-	 *
-	 * @param string $extension The extension
-	 * @return void
-	 */
-	public function setExtension($extension) {
-		$this->extension = $extension;
-	}
-
-	/**
-	 * Returns the extension 
-	 *
-	 * @return string the extension
-	 */
-	public function getExtension() {
-		return $this->extension;
-	}
-
 	/**
 	 * Sets the remarks
 	 *
@@ -362,7 +232,7 @@ class Tx_Addresses_Domain_Model_Number extends Tx_Extbase_DomainObject_AbstractV
 	public function addTag(Tx_Addresses_Domain_Model_Tag $tag) {
   		$this->tags[] = $tag;
 	}
-	
+
 	/**
 	 * Returns this address as a formatted string
 	 *

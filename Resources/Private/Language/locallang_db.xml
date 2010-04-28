@@ -48,6 +48,10 @@
 			<label index="tx_addresses_domain_model_person.country">Country</label>
 			<label index="tx_addresses_domain_model_person.hidden">Hidden</label>
 			<label index="tx_addresses_domain_model_person.image">Image</label>
+			<label index="tx_addresses_domain_model_person.fe_user">Frontend User</label>
+			<label index="tx_addresses_domain_model_person.fe_users">Frontend User data</label>
+			<label index="tx_addresses_domain_model_person.be_user">Backend User</label>
+			<label index="tx_addresses_domain_model_person.be_users">Backend User data</label>
 
 			<label index="tx_addresses_domain_model_person.numbers">Contact number</label>
 			<label index="tx_addresses_domain_model_person.emails">Email</label>
@@ -113,6 +117,7 @@
 			<label index="tabs.addresses">Addresses</label>
 			<label index="tabs.images">Images</label>
 			<label index="tabs.tags">Tags</label>
+			<label index="tabs.user">TYPO3 User</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 
@@ -158,6 +163,10 @@
 			<label index="tx_addresses_domain_model_person.country">Pays</label>
 			<label index="tx_addresses_domain_model_person.hidden">Caché</label>
 			<label index="tx_addresses_domain_model_person.image">Image</label>
+			<label index="tx_addresses_domain_model_person.fe_user">Utilisateur Frontend</label>
+			<label index="tx_addresses_domain_model_person.fe_users">Données Utilisateur Frontend</label>
+			<label index="tx_addresses_domain_model_person.be_user">Utilisateur Backend</label>
+			<label index="tx_addresses_domain_model_person.be_users">Données Utilisateur Backend</label>
 
 			<label index="tx_addresses_domain_model_person.numbers">Numéros de contact</label>
 			<label index="tx_addresses_domain_model_person.emails">Emails</label>
@@ -212,6 +221,7 @@
 			<label index="tx_addresses_domain_model_image.image">Image</label>
 			<label index="tx_addresses_domain_model_image.remarks">Remarques</label>
 			<label index="tx_addresses_domain_model_image.tags">Tags</label>
+			<label index="tx_addresses_domain_model_image.user">Utilisateur TYPO3</label>
 
 			<!-- TABS -->
 			<label index="tabs.contactInfo">Information de contact</label>

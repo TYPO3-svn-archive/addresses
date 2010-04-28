@@ -1,4 +1,20 @@
 #
+# Table structure for table 'fe_users'
+#
+CREATE TABLE fe_users (
+	person int(11) unsigned DEFAULT '0' NOT NULL,
+	organization int(11) unsigned DEFAULT '0' NOT NULL,
+);
+
+#
+# Table structure for table 'be_users'
+#
+CREATE TABLE fe_users (
+	person int(11) unsigned DEFAULT '0' NOT NULL,
+	organization int(11) unsigned DEFAULT '0' NOT NULL,
+);
+
+#
 # Table structure for table 'tx_addresses_domain_model_person'
 #
 CREATE TABLE tx_addresses_domain_model_person (
@@ -26,6 +42,10 @@ CREATE TABLE tx_addresses_domain_model_person (
 	religion tinytext NOT NULL,
 	preferred_language varchar(40) DEFAULT '' NOT NULL,
 	remarks text NOT NULL,
+	fe_user int(11) DEFAULT '0' NOT NULL,
+	fe_users int(11) DEFAULT '0' NOT NULL,
+	be_user int(11) DEFAULT '0' NOT NULL,
+	be_users int(11) DEFAULT '0' NOT NULL,
 
 	numbers int(11) DEFAULT '0' NOT NULL,
 	emails int(11) DEFAULT '0' NOT NULL,

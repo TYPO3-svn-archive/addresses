@@ -49,6 +49,10 @@ class tx_addresses_tcehook {
 	public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, $pObj) {
 
 		//&& ($status == 'new' || $status == 'update')
+		if($table == 'tx_addresses_domain_model_person') {
+			$this->processPerson($status, $table, $id, $fieldArray, $pObj);
+		}
+
 		if($table == 'tx_addresses_domain_model_number') {
 			$this->processNumber($status, $table, $id, $fieldArray, $pObj);
 		}
@@ -74,6 +78,28 @@ class tx_addresses_tcehook {
 		}
 	}
 	
+	/**
+	 * process table "tx_addresses_domain_model_person"
+	 *
+	 * @param	string		action status: new/update is relevant for us
+	 * @param	string		db table
+	 * @param	integer		record uid
+	 * @param	array		record
+	 * @param	object		parent object
+	 * @return	void
+	 */
+	private function processPerson($status, $table, $id, &$fieldArray, $pObj) {
+		global $TYPO3_DB;
+		$values = $pObj->datamap[$table][$id];
+		if (isset($fieldArray['fe_user']) && $fieldArray['fe_user'] != '') {
+			$fieldArray['fe_users'] = 1;
+			$TYPO3_DB->exec_UPDATEquery('fe_users', 'uid = ' . $fieldArray['fe_user'], array('person' => $id));
+		}
+		else if ($values['fe_user'] == '') {
+			$TYPO3_DB->exec_UPDATEquery('fe_users', 'person = ' . $id, array('person' => ''));
+		}
+	}
+
 	/**
 	 * process label for table "tx_addresses_domain_model_number"
 	 *

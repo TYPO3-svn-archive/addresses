@@ -20,7 +20,7 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		'tstamp' => 'tstamp',
 		'prependAtCopy' => 'LLL:EXT:lang/locallang_general.php:LGL.prependAtCopy',
 		'delete' => 'deleted',
-		'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:address',
+		'title' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_tca.xml:person',
 		'enablecolumns' => Array (
 			'disabled' => 'hidden'
 		),

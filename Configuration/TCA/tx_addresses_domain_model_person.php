@@ -344,11 +344,10 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 		),
 	),
 	'types' => Array (
-		'1' => Array('showitem' => 'hidden,gender,title, first_name, last_name, birth_date, marital_status, remarks ,
+		'1' => Array('showitem' => 'hidden,gender,title, first_name, last_name, birth_date, marital_status, remarks, tags ,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.contactInfo, numbers, emails, websites,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.addresses, addresses,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.images, images,
-									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.tags, tags,
 									--div--;LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tabs.user, fe_user, fe_users, be_user, be_users,
 									'),
 	),

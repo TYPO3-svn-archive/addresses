@@ -6,6 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="person">Person</label>
 			<label index="address">Address</label>
 			<label index="organization">Organization</label>
 			<label index="group">Group</label>
@@ -44,6 +45,7 @@
 			<label index="image">Image</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
+			<label index="person">Personne</label>
 			<label index="address">Addresse</label>
 			<label index="organization">Organization</label>
 			<label index="select_value">Sélectionner une valeur...</label>

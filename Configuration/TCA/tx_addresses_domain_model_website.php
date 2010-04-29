@@ -128,7 +128,7 @@ $TCA['tx_addresses_domain_model_website'] = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'website,remarks,tags')
+		'0' => array('showitem' => 'type, website, remarks, tags')
 	),
 	'palettes' => array(
 

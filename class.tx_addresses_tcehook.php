@@ -91,12 +91,23 @@ class tx_addresses_tcehook {
 	private function processPerson($status, $table, $id, &$fieldArray, $pObj) {
 		global $TYPO3_DB;
 		$values = $pObj->datamap[$table][$id];
+
+		// Frontend handling
 		if (isset($fieldArray['fe_user']) && $fieldArray['fe_user'] != '') {
 			$fieldArray['fe_users'] = 1;
 			$TYPO3_DB->exec_UPDATEquery('fe_users', 'uid = ' . $fieldArray['fe_user'], array('person' => $id));
 		}
 		else if ($values['fe_user'] == '') {
 			$TYPO3_DB->exec_UPDATEquery('fe_users', 'person = ' . $id, array('person' => ''));
+		}
+
+		// Backend handling
+		if (isset($fieldArray['be_user']) && $fieldArray['be_user'] != '') {
+			$fieldArray['be_users'] = 1;
+			$TYPO3_DB->exec_UPDATEquery('be_users', 'uid = ' . $fieldArray['be_user'], array('person' => $id));
+		}
+		else if ($values['be_user'] == '') {
+			$TYPO3_DB->exec_UPDATEquery('be_users', 'person = ' . $id, array('person' => ''));
 		}
 	}
 

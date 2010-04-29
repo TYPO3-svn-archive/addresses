@@ -217,27 +217,30 @@ $TCA['tx_addresses_domain_model_person'] = Array (
 				'maxitems' => 1,
 			)
 		),
-//		'be_user' => Array (
-//			'exclude' => 1,
-//			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.be_user',
-//			'config' => Array (
-//				'type' => 'group',
-//				'internal_type' => 'db',
-//				'allowed' => 'be_users',
-//				'size' => 1,
-//				'minitems' => 0,
-//				'maxitems' => 1,
-//				'foreign_table' => 'be_users',
-//			)
-//		),
-//		'be_users' => Array (
-//			'exclude' => 1,
-//			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.be_users',
-//			'config' => Array (
-//				'type' => 'user',
-//				'userFunc' => 'tx_addresses_tceforms->renderBeUser',
-//			)
-//		),
+		'be_user' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.be_user',
+			'config' => Array (
+				'type' => 'group',
+				'internal_type' => 'db',
+				'allowed' => 'be_users',
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
+				'foreign_table' => 'be_users',
+			)
+		),
+		'be_users' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.be_users',
+			'config' => Array (
+				'type' => 'inline',
+				'foreign_table' => 'be_users',
+				'foreign_field' => 'person',
+				'foreign_label' => 'username',
+				'maxitems' => 1,
+			)
+		),
 		'tags' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:addresses/Resources/Private/Language/locallang_db.xml:tx_addresses_domain_model_person.tags',

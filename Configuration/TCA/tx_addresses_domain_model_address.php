@@ -177,7 +177,8 @@ $TCA['tx_addresses_domain_model_address'] = array(
 				'type' => 'input',
 				'size' => '20',
 				'eval' => 'trim',
-				'max' => '30'
+				'max' => '30',
+				'default' => '0.00000000000000'
 			)
 		),
 		'longitude' => Array (
@@ -187,7 +188,8 @@ $TCA['tx_addresses_domain_model_address'] = array(
 				'type' => 'input',
 				'size' => '20',
 				'eval' => 'trim',
-				'max' => '30'
+				'max' => '30',
+				'default' => '0.00000000000000'
 			)
 		),
 		'tags' => array(
